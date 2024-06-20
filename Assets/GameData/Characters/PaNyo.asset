@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d96c66a2d03e7044b91e006111ba1c20, type: 3}
+  m_Name: PaNyo
+  m_EditorClassIdentifier: 
+  characterAnim: {fileID: 9100000, guid: a603b253fbfabd94588173e4a72a3bee, type: 2}
+  characterImage: {fileID: 1933068859, guid: a1b162575fbf5ff489ede23487d6670d, type: 3}
+  characterName: "\uD30C\uB1E8"
+  hpRate: 0.8
+  damageRatio: 1.3
+  characterSpeed: 3
+  avoid: 0
+  invincibleTime: 0.7

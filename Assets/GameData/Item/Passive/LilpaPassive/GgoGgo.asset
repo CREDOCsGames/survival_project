@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1f4669ec3ffcb344a7356cc6d5d1c79, type: 3}
+  m_Name: GgoGgo
+  m_EditorClassIdentifier: 
+  itemSprite: {fileID: 21300000, guid: 0718428e289daa04abe8a6ccf0b3886b, type: 3}
+  itemGrade: 1
+  itemName: "\uAF2C\uAF2C"
+  itemPrice: 99
+  maxCount: 2
+  hp: 0
+  recoverHp: 0
+  absorbHp: 0
+  defence: 0
+  physicDamage: 0
+  magicDamage: 0
+  shortDamage: 0
+  longDamage: 0
+  attackSpeed: 0
+  speed: 0
+  range: 0
+  luck: 0
+  critical: 0
+  percentDamage: 0
+  avoid: 0
+  coinRange: 0
+  increaseExp: 0
+  monsterSpeed: 0
+  salePercent: 0
+  summonASpd: 0
+  summonPDmg: 0
+  monsterDef: 0
+  dashCount: 0
+  buffNum: 0
+  exDmg: 0
+  isedolCount: 0
+  luckCoin: 0
+  luckDamage: 0
+  luckCritical: 0
+  doubleShot: 0
+  revive: 0
+  ggoGgo: 1
+  ilsoon: 0
+  wakgood: 0
+  ddilpa: 0
+  butterfly: 0
+  subscriptionFee: 0
+  spawnTree: 0
+  dotgu: 0
+  isReflect: 0
+  onePenetrate: 0
+  lowPenetrate: 0
+  penetrate: 0
+  vamAbsorb: 0
+  description: "\uAF2C\uAF2C\uB97C \uC18C\uD658\uD569\uB2C8\uB2E4. \n\uAF2C\uAF2C\uB294
+    <color=cyan>\uBCD1\uC544\uB9AC</color>\uBD80\uD130 \uC2DC\uC791\uD574 <color=cyan>10\uB77C\uC6B4\uB4DC</color>
+    \uC774\uD6C4 <color=cyan>\uAF2C\uAF2C</color>\uB85C \uC9C4\uD654\uD569\uB2C8\uB2E4.\n(\uBCD1\uC544\uB9AC
+    \uACF5\uACA9\uB825\uC740 \uB77C\uC6B4\uB4DC <color=lime>2\uBC30</color>, \uACF5\uACA9\uC8FC\uAE30
+    <color=lime>3\uCD08</color>\n\uAF2C\uAF2C \uACF5\uACA9\uB825\uC740 \uB77C\uC6B4\uB4DC
+    <color=lime>5\uBC30</color>, \uACF5\uACA9 \uC8FC\uAE30 <color=lime>2\uCD08 </color>\n\uBAAC\uC2A4\uD130
+    \uBC29\uC5B4\uB825 \uBB34\uC2DC)"
+  weight: 10

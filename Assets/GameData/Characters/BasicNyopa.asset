@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d96c66a2d03e7044b91e006111ba1c20, type: 3}
+  m_Name: BasicNyopa
+  m_EditorClassIdentifier: 
+  characterAnim: {fileID: 9100000, guid: a603b253fbfabd94588173e4a72a3bee, type: 2}
+  characterImage: {fileID: 2028838469, guid: 36222f973b81d0e439c89434f77bb7be, type: 3}
+  characterName: "\uB1E8\uD30C"
+  hpRate: 1
+  damageRatio: 1
+  characterSpeed: 3
+  avoid: 0
+  invincibleTime: 0.7

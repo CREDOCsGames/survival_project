@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1f4669ec3ffcb344a7356cc6d5d1c79, type: 3}
+  m_Name: DdangleGlass
+  m_EditorClassIdentifier: 
+  itemSprite: {fileID: 21300000, guid: 65d43b6a0bed65a418b5d5aea7cf1eb4, type: 3}
+  itemGrade: 2
+  itemName: "\uB561\uAE00\uC774 \uC548\uACBD"
+  itemPrice: 310
+  maxCount: 1
+  hp: 0
+  recoverHp: 0
+  absorbHp: 0
+  defence: 0
+  physicDamage: 0
+  magicDamage: 0
+  shortDamage: 0
+  longDamage: 0
+  attackSpeed: 0
+  speed: 0
+  range: 0
+  luck: 0
+  critical: 0
+  percentDamage: 0
+  avoid: 0
+  coinRange: 0
+  increaseExp: 0
+  monsterSpeed: 0
+  salePercent: 0
+  summonASpd: 0
+  summonPDmg: 0
+  monsterDef: 0
+  dashCount: 0
+  buffNum: 0
+  exDmg: 0
+  isedolCount: 0
+  luckCoin: 0
+  luckDamage: 0
+  luckCritical: 0
+  doubleShot: 0
+  revive: 0
+  ggoGgo: 0
+  ilsoon: 0
+  wakgood: 0
+  ddilpa: 0
+  butterfly: 0
+  subscriptionFee: 0
+  spawnTree: 0
+  dotgu: 0
+  isReflect: 0
+  onePenetrate: 0
+  lowPenetrate: 1
+  penetrate: 0
+  vamAbsorb: 0
+  description: "\uD22C\uC0AC\uCCB4\uAC00 <color=lime>\uBAA8\uB4E0 \uBAAC\uC2A4\uD130\uB97C
+    \uAD00\uD1B5</color>\uD569\uB2C8\uB2E4.\n\uAD00\uD1B5\uB41C \uD22C\uC0AC\uCCB4\uB294
+    <color=red>0.5\uBC30\uC758 \uACF5\uACA9\uB825</color>\uBD80\uD130 \uC810\uC810
+    \uAC10\uC18C\uD558\uC5EC <color=red>0.1\uBC30</color>\uAE4C\uC9C0 \uC904\uC5B4\uB4ED\uB2C8\uB2E4.\n(\uC0AC\uC6A9\uD558\uB358
+    \uAD00\uD1B5 \uD6A8\uACFC\uB294 \uC0AC\uB77C\uC9D1\uB2C8\uB2E4 .)"
+  weight: 151.2
