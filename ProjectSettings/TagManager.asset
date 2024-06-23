@@ -13,6 +13,7 @@ TagManager:
   - Tree
   - Thunder
   - CamBound
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -30,7 +31,7 @@ TagManager:
   - Panel
   - Wall
   - CharacterWallColl
-  - 
+  - Obstacle
   - 
   - 
   - 

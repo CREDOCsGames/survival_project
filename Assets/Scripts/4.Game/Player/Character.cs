@@ -57,7 +57,7 @@ public class Character : Singleton<Character>
 
     GameManager gameManager;
 
-    [HideInInspector] public Vector3 dir;
+    [HideInInspector] Vector3 dir;
     [HideInInspector] public Vector3 charDir => dir;
     [HideInInspector] public float x;
     [HideInInspector] public float z;

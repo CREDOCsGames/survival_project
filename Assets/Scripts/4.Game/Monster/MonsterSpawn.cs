@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Pool;
 
 public class MonsterSpawn : MonoBehaviour
@@ -42,7 +43,9 @@ public class MonsterSpawn : MonoBehaviour
             totalWeight += weightValue[i];
         }
 
-        InvokeRepeating("RendSpawnImage", 0.1f, Mathf.Clamp(spawnDelay / (1 + (gameManager.round - 1) * 0.1f), 0.5f, 1));
+        RendSpawnImage();
+
+        /*InvokeRepeating("RendSpawnImage", 0.1f, Mathf.Clamp(spawnDelay / (1 + (gameManager.round - 1) * 0.1f), 0.5f, 1));
         //InvokeRepeating("RendSpawnImage", 0.1f, 5f);
 
         if (gameManager.round > 10)
@@ -51,7 +54,7 @@ public class MonsterSpawn : MonoBehaviour
 
             if (gameManager.round > 20)
                 InvokeRepeating("RendSpawnImage", 1f, Mathf.Clamp(spawnDelay * 3f / (1 + (gameManager.round - 21) * 0.1f), 1.5f, 3));
-        }
+        }*/
 
         if (gameManager.round % 10 == 0)
         {

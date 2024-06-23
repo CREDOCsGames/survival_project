@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2100492170074265801}
   - component: {fileID: 405998318861722249}
   - component: {fileID: 738799171344922668}
+  - component: {fileID: 1961197510592707002}
   m_Layer: 7
   m_Name: BabyBat
   m_TagString: Monster
@@ -167,8 +168,25 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!114 &1961197510592707002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2378124750920518384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 359adba1a40804947a2ef8051c524904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  checkLayer:
+    serializedVersion: 2
+    m_Bits: 65536
+  detectSize: 0.7
 --- !u!1 &2387078157689682115
 GameObject:
   m_ObjectHideFlags: 0

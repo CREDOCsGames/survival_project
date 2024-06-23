@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Pool;
 
 public class Monster : MonoBehaviour
@@ -74,7 +75,7 @@ public class Monster : MonoBehaviour
     {
         freezeEffect.SetActive(isFreeze);
 
-        rigid.velocity = Vector3.zero;
+        /*rigid.velocity = Vector3.zero;
 
         if (isDead == false)
         {
@@ -85,7 +86,7 @@ public class Monster : MonoBehaviour
         if (isFreeze)
         {
             anim.speed = 0f;
-        }
+        }*/
 
         OnDead();
     }

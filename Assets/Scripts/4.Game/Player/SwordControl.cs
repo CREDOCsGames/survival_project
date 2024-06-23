@@ -90,7 +90,7 @@ public class SwordControl : Weapon
 
         if (xInput || zInput)
         {
-            dir = character.dir;
+            dir = character.charDir;
             beforeDir = dir;
         }
 

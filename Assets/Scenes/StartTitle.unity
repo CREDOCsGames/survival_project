@@ -5276,7 +5276,7 @@ MonoBehaviour:
   round: 1
   woodCount: 70
   woodMaxCount: 70
-  maxHp: 20
+  maxHp: 1000
   percentDamage: 0
   physicDamage: 10000
   magicDamage: 0
@@ -5297,7 +5297,7 @@ MonoBehaviour:
   dashCount: 2
   buffNum: 0
   exDmg: 0
-  isedolCount: 5
+  isedolCount: 0
   salePercent: 0
   increaseExp: 0
   coinRange: 0

@@ -370,7 +370,7 @@ public class GameManager : Singleton<GameManager>
 
         SceneManager.LoadScene(currentScene);
 
-        gameTime = Mathf.Clamp(initGameTime + (round - 1) * 3f, initGameTime, 60f);
+        //gameTime = Mathf.Clamp(initGameTime + (round - 1) * 3f, initGameTime, 60f);
 
         /*if (round != 8)
             gameTime = 0;
