@@ -1,7 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Node
@@ -16,8 +13,9 @@ public class Node
         this.nodeZ = nodeZ;
         this.canWalk = canWalk;
     }
-}
 
+    public int weight;
+}
 
 public class MapNode : MonoBehaviour
 {
@@ -29,10 +27,11 @@ public class MapNode : MonoBehaviour
     {
         mapColl = GetComponent<BoxCollider>();
 
-        Collider[] colls = Physics.OverlapBox(transform.position, new Vector3(mapColl.size.x, 0, mapColl.size.y) * 0.5f, Quaternion.identity, checkLayer);
+        Collider[] colls = Physics.OverlapBox(transform.position + new Vector3(mapColl.center.x, 0, mapColl.center.y), new Vector3(mapColl.size.x, 0, mapColl.size.y) * 0.5f, Quaternion.identity, checkLayer);
 
-        foreach(Collider collider in colls)
+        foreach (Collider collider in colls)
         {
+            Debug.Log(collider.name);
         }
     }
 
@@ -52,6 +51,7 @@ public class MapNode : MonoBehaviour
         Gizmos.color = Color.red;
         //Check that it is being run in Play Mode, so it doesn't try to draw this in Editor mode
         //Draw a cube where the OverlapBox is (positioned where your GameObject is as well as a size)
-        //Gizmos.DrawWireCube(transform.position, new Vector3(mapColl.size.x, 0, mapColl.size.y));
+
+        //Gizmos.DrawWireCube(transform.position + new Vector3(mapColl.center.x, 0, mapColl.center.y), new Vector3(mapColl.size.x, 0, mapColl.size.y));
     }
 }

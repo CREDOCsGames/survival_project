@@ -1,8 +1,9 @@
-using System.Diagnostics.CodeAnalysis;
-using UnityEditor.Experimental.GraphView;
+using System;
+using System.IO;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Experimental.GlobalIllumination;
 
 public class MonsterMove : MonoBehaviour
 {
@@ -13,24 +14,81 @@ public class MonsterMove : MonoBehaviour
     Character character;
     SpriteRenderer rend;
 
+    bool isNeedToChangeDir = true;
+    Vector3 dir;
+
+    NavMeshAgent agent;
+    NavMeshPath path;
+
     private void Start()
     {
         character = Character.Instance;
-        rend = GetComponent<SpriteRenderer>();
+        rend = transform.GetChild(1).GetComponent<SpriteRenderer>();
+        agent = GetComponent<NavMeshAgent>();
 
+        agent.updateRotation = false;
+        path = new NavMeshPath();
+
+        //agent.enabled = false;
+    }
+
+    private void Update()
+    {
+        Flip();
     }
 
     private void FixedUpdate()
     {
         //transform.position = Vector3.MoveTowards(transform.position, character.transform.position, speed * Time.deltaTime);
-        Move();
+        //Move();
+        if (agent.enabled)
+        {
+            agent.SetDestination(character.transform.position);
+
+            //
+            //agent.updateRotation = false;
+            //Debug.Log(agent.nextPosition);
+            //transform.position = agent.nextPosition * speed * Time.deltaTime;
+            //Debug.Log(agent.nextPosition);
+            //transform.position = Vector3.MoveTowards(transform.position, agent.nextPosition, speed * Time.deltaTime);
+        }
+            //agent.destination = character.transform.position;
+            //agent.SetDestination(character.transform.position);
     }
 
-    Vector3 dir;
+    Vector3[] corners;
+    int count = 1;
+
+    void Flip()
+    {
+        if (corners == null || corners != agent.path.corners)
+        {
+            if (agent.path.corners.Length > 1)
+            {
+                corners = agent.path.corners;
+                count = 1;
+            }
+
+            else
+            {
+                dir = (character.transform.position - transform.position).normalized;
+            }
+        }
+
+        if (corners != null)
+        {
+            dir = (corners[count] - transform.position).normalized;
+
+            if (transform.position == corners[count])
+                count++;
+        }
+
+        rend.flipX = dir.x < 0;
+    }
 
     void Move()
     {
-        if (chanage)
+        if (isNeedToChangeDir)
         {
             Vector3 characterPos = character.transform.position;
             dir = (characterPos - transform.position).normalized;
@@ -39,38 +97,13 @@ public class MonsterMove : MonoBehaviour
                 dir.y = 0;
         }
 
-        /*if (CheckObstacle(dir))
-        {
-            if (Mathf.Sign(dir.x) == Mathf.Sign(monNObDir.x))
-            {
-                Debug.Log("up");
-                dir = new Vector3(0, 0, dir.z);
-            }
+        CheckObstacle2();
 
-            else if(Mathf.Sign(dir.z) == Mathf.Sign(monNObDir.z))
-            {
-                Debug.Log("right");
-                dir = new Vector3(dir.x, 0, 0);
-            }
-        }*/
-
-        CheckObstacle();
-
-        /*Vector3 nextPos = transform.position + dir.normalized * speed * Time.deltaTime;
-
-        transform.position = nextPos;*/
-
-        if (dir.x < 0)
-            rend.flipX = true;
-
-        else if (dir.x >= 0)
-            rend.flipX = false;
+        rend.flipX = dir.x < 0;
 
         transform.position += dir * speed * Time.deltaTime;
         transform.position = new Vector3(transform.position.x, 0, transform.position.z);
     }
-
-    bool chanage = true;
 
     /*bool CheckObstacle(Vector3 dir)
     {
@@ -109,100 +142,164 @@ public class MonsterMove : MonoBehaviour
         return false;
     }*/
 
+    Vector3 obsDir = Vector3.zero;
+    bool canDetectRay = false;
+
     void CheckObstacle()
     {
         Debug.DrawRay(transform.position, dir * detectSize, Color.yellow);
 
-        RaycastHit hit;
-
-        if (chanage)
+        if (isNeedToChangeDir)
         {
-            if (Physics.Raycast(transform.position, dir, out hit, detectSize, checkLayer))
+            // 몬스터와 캐릭터 사이의 장애물 체크
+            if (Physics.Raycast(transform.position, dir, detectSize, checkLayer))
             {
-                if (Physics.Raycast(transform.position, new Vector3(dir.x, 0, 0).normalized, out hit, detectSize, checkLayer))
-                {
-                    dir = new Vector3(0, 0, dir.z).normalized;
-                    Debug.Log(dir);
-                    chanage = false;
-                }
-
-                else if (Physics.Raycast(transform.position, new Vector3(0, 0, dir.z).normalized, out hit, detectSize, checkLayer))
-                {
-                    dir = new Vector3(dir.x, 0, 0).normalized;
-                    Debug.Log(dir);
-                    chanage = false;
-                }
+                // 위아래 혹은 좌우 방향 장애물 체크 후 이동 방향 전환.
+                DirMeetObstacle();
+                Debug.Log(obsDir);
             }
         }
 
+        // 장애물을 만나 이동 방향이 변경된 경우 
         else
         {
-            if (character.charDir != Vector3.zero)
+            // 캐릭터가 이동해 이동 방향을 다시 계산해야 할 경우
+            //if (MathF.Sign(character.charDir.x) != Vector3.zero)
+            if(character.charDir != Vector3.zero)
             {
-                chanage = true;
+                obsDir = Vector3.zero;
+                isNeedToChangeDir = true;
                 return;
             }
+
+            canDetectRay = false;
         }
 
-        Collider[] colls = Physics.OverlapBox(transform.position, Vector3.one * detectSize, Quaternion.identity, checkLayer);
-
-        if (colls.Length == 0)
+        if (!canDetectRay)
         {
-            if (!chanage)
-                chanage = true;
-        }
+            //Collider[] colls = Physics.OverlapBox(transform.position, Vector3.one * detectSize, Quaternion.identity, checkLayer);
+            Collider[] colls = Physics.OverlapSphere(transform.position, detectSize, checkLayer);
 
-        else
-        {
-            if (chanage)
+            if (colls.Length == 0)
             {
-                if (Physics.Raycast(transform.position, new Vector3(dir.x, 0, 0).normalized, out hit, detectSize, checkLayer))
+                if (!isNeedToChangeDir)
                 {
-                    dir = new Vector3(0, 0, dir.z).normalized;
-                    Debug.Log(dir);
-                    chanage = false;
-                }
-
-                else if (Physics.Raycast(transform.position, new Vector3(0, 0, dir.z).normalized, out hit, detectSize, checkLayer))
-                {
-                    dir = new Vector3(dir.x, 0, 0).normalized;
-                    Debug.Log(dir);
-                    chanage = false;
+                    Debug.Log("obszero");
+                    obsDir = Vector3.zero;
+                    isNeedToChangeDir = true;
                 }
             }
 
             else
             {
-                if (Physics.Raycast(transform.position, new Vector3(dir.x, 0, 0).normalized, out hit, detectSize, checkLayer))
+                if (obsDir == Vector3.zero)
                 {
-                    dir = -dir;
-                    Debug.Log(dir);
-                    chanage = false;
+                    Debug.Log("!!");
+                    DirMeetObstacle();
                 }
 
-                else if (Physics.Raycast(transform.position, new Vector3(0, 0, dir.z).normalized, out hit, detectSize, checkLayer))
+                if (obsDir.x == 0)
                 {
-                    dir = -dir;
-                    Debug.Log(dir);
-                    chanage = false;
+                    obsDir = new Vector3(1, 0, dir.z).normalized;
+                }
+
+                else if (obsDir.z == 0)
+                {
+                    obsDir = new Vector3(dir.z, 0, 1).normalized;
                 }
             }
+        }
 
-            if (chanage)
+        if (obsDir != Vector3.zero)
+            dir = obsDir;
+    }
+
+    void CheckObstacle2()
+    {
+        //Debug.DrawRay(transform.position, dir.normalized * (detectSize + 0.2f), Color.yellow);
+
+        Collider[] colls = Physics.OverlapSphere(transform.position, detectSize, checkLayer);
+
+        if (colls.Length > 0)
+        {
+            if (isNeedToChangeDir)
             {
-                if (dir.x == 0)
+                if (Physics.Raycast(transform.position, dir, detectSize + 0.2f, checkLayer))
                 {
-                    dir = new Vector3(1, 0, dir.z).normalized;
-                    Debug.Log(dir);
+                    Debug.DrawRay(transform.position, dir.normalized * (detectSize + 0.2f), Color.magenta);
+
+                    if (Physics.Raycast(transform.position - new Vector3(dir.x, 0, 0).normalized * detectSize, new Vector3(0, 0, dir.z).normalized, detectSize + 0.2f, checkLayer))
+                    {
+                        Debug.DrawRay(transform.position - new Vector3(dir.x, 0, 0).normalized, new Vector3(0, 0, dir.z).normalized * (detectSize + 0.2f), Color.yellow);
+                        dir = new Vector3(dir.x, 0, 0).normalized;
+                        isNeedToChangeDir = false;
+                    }
+
+                    else if (Physics.Raycast(transform.position - new Vector3(0, 0, dir.z).normalized * detectSize, new Vector3(dir.x, 0, 0).normalized, detectSize + 0.2f, checkLayer))
+                    {
+                        Debug.DrawRay(transform.position - new Vector3(0, 0, dir.z).normalized, new Vector3(dir.x, 0, 0).normalized * (detectSize + 0.2f), Color.cyan);
+                        dir = new Vector3(0, 0, dir.z).normalized;
+                        isNeedToChangeDir = false;
+                    }
+
+                    /*else
+                    {
+                        Debug.Log("1");
+                        //Debug.DrawRay(transform.position, dir.normalized * (detectSize + 0.2f), Color.yellow);
+                        dir = new Vector3(dir.x, 0, 0).normalized;
+                        isNeedToChangeDir = false;
+                    }*/
                 }
 
-                else if (dir.z == 0)
+                else
                 {
-                    dir = new Vector3(dir.z, 0, 1).normalized;
-                    Debug.Log(dir);
+                    if (Physics.Raycast(transform.position - new Vector3(0, 0, dir.z) * detectSize, new Vector3(0, 0, dir.z).normalized, detectSize + 0.2f, checkLayer))
+                    {
+                        Debug.DrawRay(transform.position - new Vector3(0, 0, dir.z), dir.normalized * (detectSize + 0.2f), Color.yellow);
+                        dir = new Vector3(dir.x, 0, 0).normalized;
+                        isNeedToChangeDir = false;
+                    }
 
+                    else if (Physics.Raycast(transform.position - new Vector3(dir.x, 0, 0) * detectSize, new Vector3(dir.x, 0, 0).normalized, detectSize + 0.2f, checkLayer))
+                    {
+                        Debug.DrawRay(transform.position - new Vector3(dir.x, 0, 0), dir.normalized * (detectSize + 0.2f), Color.yellow);
+                        dir = new Vector3(0, 0, dir.z).normalized;
+                        isNeedToChangeDir = false;
+                    }
                 }
             }
+
+            else
+            {
+                if (character.charDir != Vector3.zero)
+                    isNeedToChangeDir = true;
+            }
+        }
+
+        else
+        {
+            if (!isNeedToChangeDir)
+            {
+                Debug.Log("!!");
+                isNeedToChangeDir = true;
+            }
+        }
+    }
+
+    void DirMeetObstacle()
+    {
+        if (Physics.Raycast(transform.position, new Vector3(dir.x, 0, 0).normalized, detectSize, checkLayer))
+        {
+            obsDir = isNeedToChangeDir ? new Vector3(0, 0, dir.z).normalized : -dir;
+            isNeedToChangeDir = false;
+            canDetectRay = true;
+        }
+
+        else if (Physics.Raycast(transform.position, new Vector3(0, 0, dir.z).normalized, detectSize, checkLayer))
+        {
+            obsDir = isNeedToChangeDir ? new Vector3(dir.x, 0, 0).normalized : -dir;
+            isNeedToChangeDir = false;
+            canDetectRay = true;
         }
     }
 
@@ -216,6 +313,7 @@ public class MonsterMove : MonoBehaviour
         Gizmos.color = Color.red;
         //Check that it is being run in Play Mode, so it doesn't try to draw this in Editor mode
         //Draw a cube where the OverlapBox is (positioned where your GameObject is as well as a size)
-        Gizmos.DrawWireCube(transform.position, new Vector3(1f, 1, 1f) * detectSize * 2f);
+        //Gizmos.DrawWireCube(transform.position, new Vector3(1f, 1, 1f) * detectSize * 2f);
+        Gizmos.DrawWireSphere(transform.position, detectSize);
     }
 }

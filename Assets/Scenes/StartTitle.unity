@@ -5273,7 +5273,7 @@ MonoBehaviour:
   initGameTime: 10000
   gameTime: 10000
   money: 5000000
-  round: 1
+  round: 20
   woodCount: 70
   woodMaxCount: 70
   maxHp: 1000

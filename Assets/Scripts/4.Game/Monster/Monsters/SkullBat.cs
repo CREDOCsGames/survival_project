@@ -69,7 +69,7 @@ public class SkullBat : Monster
         {
             if (!isFreeze)
             {
-                Move();
+                //Move();
 
                 if (!isPatern)
                     attackTime -= Time.deltaTime;

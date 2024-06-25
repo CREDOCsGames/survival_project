@@ -51,9 +51,9 @@ public class Monster : MonoBehaviour
     {
         gameManager = GameManager.Instance;
         character = Character.Instance;
-        rend = GetComponent<SpriteRenderer>();
+        rend = transform.GetChild(1).GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        coll = GetComponent<Collider>();
+        coll = transform.GetChild(1).GetComponent<Collider>();
 
         hp = stat.monsterMaxHp * (2 + Mathf.Floor(gameManager.round / 5) * Mathf.Floor(gameManager.round / 5) * (1 + Mathf.Floor(gameManager.round / 20))) * 0.5f;
         damage = stat.monsterDamage * (1 + Mathf.Floor(gameManager.round / 30)) + Mathf.Floor(gameManager.round / 5) * 2f;
@@ -159,6 +159,7 @@ public class Monster : MonoBehaviour
     {
         if (other.CompareTag("Character") && !isDead)
         {
+            Debug.Log("!");
             character.OnDamaged(damage);
         }
     }

@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Pool;
@@ -43,7 +44,8 @@ public class MonsterSpawn : MonoBehaviour
             totalWeight += weightValue[i];
         }
 
-        RendSpawnImage();
+        if (gameManager.round == 1)
+            RendSpawnImage();
 
         /*InvokeRepeating("RendSpawnImage", 0.1f, Mathf.Clamp(spawnDelay / (1 + (gameManager.round - 1) * 0.1f), 0.5f, 1));
         //InvokeRepeating("RendSpawnImage", 0.1f, 5f);
@@ -94,6 +96,7 @@ public class MonsterSpawn : MonoBehaviour
 
         Monster monster = pool.Get();
         monster.transform.position = pos;
+        monster.GetComponent<NavMeshAgent>().enabled = true;
     }
 
     void RendSpawnImage()
@@ -149,6 +152,7 @@ public class MonsterSpawn : MonoBehaviour
             monster.stat = MonsterInfo.Instance.monsterInfos[normalMonsterPrefab.Length + ((round / 10) - 1)];
             monster.transform.position = new Vector3(3, 0, -37);
             monster.transform.SetParent(bosssParent);
+            monster.GetComponent<NavMeshAgent>().enabled = true;
         }
 
         else if (round == 30)
