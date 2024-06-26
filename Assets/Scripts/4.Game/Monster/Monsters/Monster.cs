@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Pool;
@@ -41,6 +42,8 @@ public class Monster : MonoBehaviour
     bool beforeFreeze;
 
     protected Color initcolor;
+
+    public float Speed => speed;
 
     void Start()
     {

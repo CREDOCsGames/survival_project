@@ -44,8 +44,7 @@ public class MonsterSpawn : MonoBehaviour
             totalWeight += weightValue[i];
         }
 
-        if (gameManager.round == 1)
-            RendSpawnImage();
+        RendSpawnImage();
 
         /*InvokeRepeating("RendSpawnImage", 0.1f, Mathf.Clamp(spawnDelay / (1 + (gameManager.round - 1) * 0.1f), 0.5f, 1));
         //InvokeRepeating("RendSpawnImage", 0.1f, 5f);
@@ -132,7 +131,8 @@ public class MonsterSpawn : MonoBehaviour
 
     private Monster CreateMonster()
     {
-        int num = RandomMonster();
+        //int num = RandomMonster();
+        int num = 0;
         Monster monster = Instantiate(normalMonsterPrefab[num]).GetComponent<Monster>();
         monster.stat = MonsterInfo.Instance.monsterInfos[num];
         monster.SetManagedPool(pool);

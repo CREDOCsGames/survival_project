@@ -43,6 +43,7 @@ public class MonsterMove : MonoBehaviour
         //Move();
         if (agent.enabled)
         {
+            //agent.speed = GetComponent<Monster>().Speed;
             agent.SetDestination(character.transform.position);
 
             //
