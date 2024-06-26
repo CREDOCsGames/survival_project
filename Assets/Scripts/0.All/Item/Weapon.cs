@@ -19,7 +19,7 @@ public class Weapon : MonoBehaviour
 
     public void WeaponSetting()
     {
-        if (weaponInfo.Type == WEAPON_TYPE.½ºÅÂÇÁ)
+        if (weaponInfo.Type == WEAPON_TYPE.STAFF)
         {
             if (!gameManager.doubleShot)
                 weaponDamage = weaponInfo.MagicDamage * grade + gameManager.magicDamage + gameManager.longDamage;
@@ -36,7 +36,7 @@ public class Weapon : MonoBehaviour
             damageUI.damageText.color = Color.cyan;
         }
 
-        else if (weaponInfo.Type == WEAPON_TYPE.ÃÑ)
+        else if (weaponInfo.Type == WEAPON_TYPE.GUN)
         {
             if (!gameManager.doubleShot)
                 weaponDamage = weaponInfo.WeaponDamage * grade + gameManager.physicDamage + gameManager.longDamage;
@@ -47,7 +47,7 @@ public class Weapon : MonoBehaviour
             damageUI.damageText.color = Color.green;
         }
 
-        else if (weaponInfo.Type == WEAPON_TYPE.°Ë)
+        else if (weaponInfo.Type == WEAPON_TYPE.SWORD)
         {
             if (criRand <= gameManager.critical || gameManager.critical >= 100)
             {

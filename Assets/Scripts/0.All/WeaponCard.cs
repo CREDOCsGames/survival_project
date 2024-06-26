@@ -47,19 +47,19 @@ public class WeaponCard : MonoBehaviour
         weaponGrade.text = selectGrade.ToString();
         description.text = selectedWeapon.Description.ToString();
 
-        if (selectedWeapon.Type == WEAPON_TYPE.검)
+        if (selectedWeapon.Type == WEAPON_TYPE.SWORD)
             attackTypes.text = "(물리/근거리)";
 
-        else if (selectedWeapon.Type == WEAPON_TYPE.총)
+        else if (selectedWeapon.Type == WEAPON_TYPE.GUN)
             attackTypes.text = "(물리/원거리)";
 
-        else if (selectedWeapon.Type == WEAPON_TYPE.스태프)
+        else if (selectedWeapon.Type == WEAPON_TYPE.STAFF)
             attackTypes.text = "(마법/원거리)";
     }
 
     protected virtual void CardColor()
     {
-        if (selectGrade == Grade.일반)
+        if (selectGrade == Grade.NORMAL)
         {
             cardBack.color = new Color(0.142f, 0.142f, 0.142f, 0.8235f);
             cardBackLine.color = Color.black;
@@ -67,7 +67,7 @@ public class WeaponCard : MonoBehaviour
             weaponGrade.color = Color.white;
         }
 
-        else if (selectGrade == Grade.희귀)
+        else if (selectGrade == Grade.RARE)
         {
             cardBack.color = new Color(0f, 0.6f, 0.8f, 0.8235f);
             cardBackLine.color = Color.blue;
@@ -75,7 +75,7 @@ public class WeaponCard : MonoBehaviour
             weaponGrade.color = new Color(0.5f, 0.8f, 1f, 1f);
         }
 
-        else if (selectGrade == Grade.전설)
+        else if (selectGrade == Grade.LEGENDARY)
         {
             cardBack.color = new Color(0.5f, 0.2f, 0.4f, 0.8235f);
             cardBackLine.color = new Color(0.5f, 0f, 0.5f, 1f);
@@ -83,7 +83,7 @@ public class WeaponCard : MonoBehaviour
             weaponGrade.color = new Color(0.8f, 0.4f, 1f, 1f);
         }
 
-        else if (selectGrade == Grade.신화)
+        else if (selectGrade == Grade.MYTH)
         {
             cardBack.color = new Color(0.7f, 0.1f, 0.1f, 0.8235f);
             cardBackLine.color = Color.red;

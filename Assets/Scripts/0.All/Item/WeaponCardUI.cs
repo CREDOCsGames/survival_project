@@ -104,7 +104,7 @@ public class WeaponCardUI : WeaponCard
     {
         for (int i = 0; i < itemManager.storedWeapon.Length; i++)
         {
-            if (itemManager.storedWeapon[i] != null && selectGrade != Grade.½ÅÈ­)
+            if (itemManager.storedWeapon[i] != null && selectGrade != Grade.MYTH)
             {
                 if ((selectedWeapon.WeaponName == itemManager.storedWeapon[i].WeaponName) && (selectGrade == itemManager.weaponGrade[i]))
                 {

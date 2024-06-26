@@ -41,22 +41,22 @@ public class TreeShopWeaponInfo : MonoBehaviour
 
     void CardColor()
     {
-        if (selectGrade == Grade.¿œπ›)
+        if (selectGrade == Grade.NORMAL)
             gradeColor.color = new Color(0.142f, 0.142f, 0.142f, 1f);
 
-        else if (selectGrade == Grade.»Ò±Õ)
+        else if (selectGrade == Grade.RARE)
             gradeColor.color = new Color(0f, 0.6f, 0.8f, 1f);
 
-        else if (selectGrade == Grade.¿¸º≥)
+        else if (selectGrade == Grade.LEGENDARY)
             gradeColor.color = new Color(0.5f, 0.2f, 0.4f, 1f);
 
-        else if (selectGrade == Grade.Ω≈»≠)
+        else if (selectGrade == Grade.MYTH)
             gradeColor.color = new Color(0.7f, 0.1f, 0.1f, 1f);
     }
 
     public void SelectUpgrade()
     {
-        if (selectGrade != Grade.Ω≈»≠)
+        if (selectGrade != Grade.MYTH)
         {
             gameManager.woodCount -= treeShop.upgradeCost;
             itemManager.weaponGrade[siblingNum]++;

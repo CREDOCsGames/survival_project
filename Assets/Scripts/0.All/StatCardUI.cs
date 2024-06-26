@@ -36,7 +36,7 @@ public class StatCardUI : StatCardInfo
 
     void CardColor()
     {
-        if (cardGrade == Grade.¿œπ›)
+        if (cardGrade == Grade.NORMAL)
         {
             cardBack.color = new Color(0.142f, 0.142f, 0.142f, 1f);
             cardBackLine.color = Color.black;
@@ -44,7 +44,7 @@ public class StatCardUI : StatCardInfo
             statGrade.color = Color.white;
         }
 
-        else if (cardGrade == Grade.»Ò±Õ)
+        else if (cardGrade == Grade.RARE)
         {
             cardBack.color = new Color(0f, 0.6f, 0.8f, 1f);
             cardBackLine.color = Color.blue;
@@ -52,7 +52,7 @@ public class StatCardUI : StatCardInfo
             statGrade.color = new Color(0.5f, 0.8f, 1f, 1f);
         }
 
-        else if (cardGrade == Grade.¿¸º≥)
+        else if (cardGrade == Grade.LEGENDARY)
         {
             cardBack.color = new Color(0.5f, 0.2f, 0.4f, 1f);
             cardBackLine.color = new Color(0.5f, 0f, 0.5f, 1f);
@@ -60,7 +60,7 @@ public class StatCardUI : StatCardInfo
             statGrade.color = new Color(0.8f, 0.4f, 1f, 1);
         }
 
-        else if (cardGrade == Grade.Ω≈»≠)
+        else if (cardGrade == Grade.MYTH)
         {
             cardBack.color = new Color(0.7f, 0.1f, 0.1f, 1f);
             cardBackLine.color = Color.red;

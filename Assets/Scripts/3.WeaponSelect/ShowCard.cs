@@ -46,7 +46,7 @@ public class ShowCard : MonoBehaviour
         for (int i = 0; i < cards.Length; i++)
         {
             cards[i].selectedWeapon = cards[i].weaponInfos[i];
-            cards[i].selectedWeapon.weaponGrade = Grade.ÀÏ¹Ý;
+            cards[i].selectedWeapon.weaponGrade = Grade.NORMAL;
         }
     }
 

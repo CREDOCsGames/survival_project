@@ -2,10 +2,10 @@ using UnityEngine;
 
 public enum Grade
 {
-    ÀÏ¹Ý,
-    Èñ±Í,
-    Àü¼³,
-    ½ÅÈ­,
+    NORMAL,
+    RARE,
+    LEGENDARY,
+    MYTH,
 }
 
 [CreateAssetMenu(fileName = "new Weapon", menuName = "GameData/Item/Weapon")]
@@ -13,9 +13,9 @@ public class WeaponInfo : ScriptableObject
 {
     public enum WEAPON_TYPE
     {
-        ÃÑ,
-        °Ë,
-        ½ºÅÂÇÁ,
+        GUN,
+        SWORD,
+        STAFF,
     }
 
     [HideInInspector] public Grade weaponGrade;

@@ -354,16 +354,16 @@ public class ShopManager : Singleton<ShopManager>
                 image.sprite = itemManager.storedPassive[i].ItemSprite;
                 countText.text = itemManager.storedPassiveCount[i].ToString();
 
-                if (itemManager.storedPassive[i].ItemGrade == Grade.¿œπ›)
+                if (itemManager.storedPassive[i].ItemGrade == Grade.NORMAL)
                     back.color = new Color(0.53f, 0.53f, 0.53f, 0.8235f);
 
-                else if (itemManager.storedPassive[i].ItemGrade == Grade.»Ò±Õ)
+                else if (itemManager.storedPassive[i].ItemGrade == Grade.RARE)
                     back.color = new Color(0, 0.77f, 1, 0.8235f);
 
-                else if (itemManager.storedPassive[i].ItemGrade == Grade.¿¸º≥)
+                else if (itemManager.storedPassive[i].ItemGrade == Grade.LEGENDARY)
                     back.color = new Color(0.5f, 0.2f, 0.4f, 0.8235f);
 
-                else if (itemManager.storedPassive[i].ItemGrade == Grade.Ω≈»≠)
+                else if (itemManager.storedPassive[i].ItemGrade == Grade.MYTH)
                     back.color = new Color(1, 0.31f, 0.31f, 0.8235f);
 
                 if (itemManager.storedPassiveCount[i] > 1)
@@ -430,16 +430,16 @@ public class ShopManager : Singleton<ShopManager>
         Grade grade;
 
         if(gradeNum == 1)
-            grade = Grade.»Ò±Õ;
+            grade = Grade.RARE;
 
         else if (gradeNum == 2)
-            grade = Grade.¿¸º≥;
+            grade = Grade.LEGENDARY;
 
         else if (gradeNum == 3)
-            grade = Grade.Ω≈»≠;
+            grade = Grade.MYTH;
 
         else
-            grade = Grade.¿œπ›;
+            grade = Grade.NORMAL;
 
         return grade;
     }

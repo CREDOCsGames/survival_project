@@ -139,16 +139,16 @@ public class ShowStatCard : Singleton<ShowStatCard>
         Grade grade;
 
         if (gradeNum == 1)
-            grade = Grade.»Ò±Õ;
+            grade = Grade.RARE;
 
         else if (gradeNum == 2)
-            grade = Grade.¿¸º≥;
+            grade = Grade.LEGENDARY;
 
         else if (gradeNum == 3)
-            grade = Grade.Ω≈»≠;
+            grade = Grade.MYTH;
 
         else
-            grade = Grade.¿œπ›;
+            grade = Grade.NORMAL;
 
         return grade;
     }

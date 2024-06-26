@@ -34,7 +34,7 @@ public class TreeShop : Singleton<TreeShop>
 
             for (int i = 0; i < itemManager.storedWeapon.Length; i++)
             {
-                if (itemManager.storedWeapon[i] != null && itemManager.weaponGrade[i] != Grade.½ÅÈ­)
+                if (itemManager.storedWeapon[i] != null && itemManager.weaponGrade[i] != Grade.MYTH)
                 {
                     TreeShopWeaponInfo weapon;
                     weapon = Instantiate(weaponPrefab, weaponParent).GetComponent<TreeShopWeaponInfo>();

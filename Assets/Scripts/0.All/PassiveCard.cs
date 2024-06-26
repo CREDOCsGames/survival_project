@@ -45,7 +45,7 @@ public class PassiveCard : MonoBehaviour
 
     protected virtual void CardImage()
     {
-        if (selectedPassive.ItemGrade == Grade.¿œπ›)
+        if (selectedPassive.ItemGrade == Grade.NORMAL)
         {
             cardBack.color = new Color(0.142f, 0.142f, 0.142f, cardImageAlpha);
             cardBackLine.color = Color.black;
@@ -53,7 +53,7 @@ public class PassiveCard : MonoBehaviour
             itemGrade.color = Color.white;
         }
 
-        else if (selectedPassive.ItemGrade == Grade.»Ò±Õ)
+        else if (selectedPassive.ItemGrade == Grade.RARE)
         {
             cardBack.color = new Color(0f, 0.6f, 0.8f, cardImageAlpha);
             cardBackLine.color = Color.blue;
@@ -61,7 +61,7 @@ public class PassiveCard : MonoBehaviour
             itemGrade.color = new Color(0.5f, 0.8f, 1f, 1f);
         }
 
-        else if (selectedPassive.ItemGrade == Grade.¿¸º≥)
+        else if (selectedPassive.ItemGrade == Grade.LEGENDARY)
         {
             cardBack.color = new Color(0.5f, 0.2f, 0.4f, cardImageAlpha);
             cardBackLine.color = new Color(0.5f, 0f, 0.5f, 1f);
@@ -69,7 +69,7 @@ public class PassiveCard : MonoBehaviour
             itemGrade.color = new Color(0.8f, 0.4f, 1f, 1f);
         }
 
-        else if (selectedPassive.ItemGrade == Grade.Ω≈»≠)
+        else if (selectedPassive.ItemGrade == Grade.MYTH)
         {
             cardBack.color = new Color(0.7f, 0.1f, 0.1f, cardImageAlpha);
             cardBackLine.color = Color.red;
