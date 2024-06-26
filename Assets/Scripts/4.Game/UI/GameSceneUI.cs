@@ -209,7 +209,9 @@ public class GameSceneUI : Singleton<GameSceneUI>
     void SpawnTree()
     {
         for (int i = 0; i < 5; i++)
+        {
             SpawnOneTree();
+        }
     }
 
     void SpawnOneTree()

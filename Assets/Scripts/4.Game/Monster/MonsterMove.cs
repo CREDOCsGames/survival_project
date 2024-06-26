@@ -28,8 +28,6 @@ public class MonsterMove : MonoBehaviour
 
         agent.updateRotation = false;
         path = new NavMeshPath();
-
-        //agent.enabled = false;
     }
 
     private void Update()
@@ -43,9 +41,8 @@ public class MonsterMove : MonoBehaviour
         //Move();
         if (agent.enabled)
         {
-            //agent.speed = GetComponent<Monster>().Speed;
+            agent.speed = GetComponent<Monster>().Speed;
             agent.SetDestination(character.transform.position);
-
             //
             //agent.updateRotation = false;
             //Debug.Log(agent.nextPosition);

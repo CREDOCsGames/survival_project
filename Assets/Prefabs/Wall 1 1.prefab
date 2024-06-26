@@ -110,6 +110,7 @@ GameObject:
   - component: {fileID: 5179633963145760862}
   - component: {fileID: 3252734602502966963}
   - component: {fileID: 7740156853730228853}
+  - component: {fileID: 1005233414551663954}
   m_Layer: 16
   m_Name: Cube
   m_TagString: Untagged
@@ -182,3 +183,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &1005233414551663954
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3075972402805272323}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.1

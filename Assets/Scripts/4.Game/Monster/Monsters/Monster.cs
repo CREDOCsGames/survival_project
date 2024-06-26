@@ -162,7 +162,6 @@ public class Monster : MonoBehaviour
     {
         if (other.CompareTag("Character") && !isDead)
         {
-            Debug.Log("!");
             character.OnDamaged(damage);
         }
     }
