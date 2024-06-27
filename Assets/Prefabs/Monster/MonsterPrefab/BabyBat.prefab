@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6229552049790309985}
   - component: {fileID: 7712788725761189160}
   - component: {fileID: 8129587856583149474}
+  - component: {fileID: 8347476769310378390}
   m_Layer: 7
   m_Name: MonsterImage
   m_TagString: Untagged
@@ -28,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 1770007820282190432}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5320457567614347689}
   m_RootOrder: 1
@@ -119,6 +120,36 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.15, y: 0.18, z: 0}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8347476769310378390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1770007820282190432}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27cbc2faeb2722444acf9eb84865c70d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  freezeEffect: {fileID: 2387078157689682115}
+  rigid: {fileID: 738799171344922668}
+  isWalk: 0
+  isDead: 0
+  isAttacked: 0
+  isAttack: 0
+  hp: 0
+  maxHp: 0
+  stat:
+    monsterName: 
+    monsterMaxHp: 0
+    monsterDamage: 0
+    monsterSpeed: 0
+    monsterDefence: 0
+    monsterExp: 0
+    monsterCoin: 0
+  dir: {x: 0, y: 0, z: 0}
+  defence: 0
 --- !u!1 &2378124750920518384
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,8 +180,8 @@ Transform:
   m_GameObject: {fileID: 2378124750920518384}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6384015928809693684}
   - {fileID: 7380800176599615510}
@@ -183,9 +214,9 @@ NavMeshAgent:
   m_GameObject: {fileID: 2378124750920518384}
   m_Enabled: 0
   m_AgentTypeID: 0
-  m_Radius: 0.1
+  m_Radius: 0.01
   m_Speed: 1
-  m_Acceleration: 10
+  m_Acceleration: 100
   avoidancePriority: 50
   m_AngularSpeed: 0
   m_StoppingDistance: 0
@@ -289,8 +320,8 @@ Transform:
   m_GameObject: {fileID: 2387078157689682115}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5320457567614347689}
   m_RootOrder: 0
@@ -373,8 +404,8 @@ Transform:
   m_GameObject: {fileID: 3320297759258608929}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: -0.013, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5320457567614347689}
   m_RootOrder: 2

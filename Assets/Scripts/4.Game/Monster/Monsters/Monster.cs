@@ -55,7 +55,7 @@ public class Monster : MonoBehaviour
         gameManager = GameManager.Instance;
         character = Character.Instance;
         rend = transform.GetChild(1).GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>();
+        anim = transform.GetChild(1).GetComponent<Animator>();
         coll = transform.GetChild(1).GetComponent<Collider>();
 
         hp = stat.monsterMaxHp * (2 + Mathf.Floor(gameManager.round / 5) * Mathf.Floor(gameManager.round / 5) * (1 + Mathf.Floor(gameManager.round / 20))) * 0.5f;

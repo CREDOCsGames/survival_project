@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Pool;
 using UnityEngine.UI;
 
@@ -119,6 +120,7 @@ public class SkullBat : Monster
 
     void Attack()
     {
+        GetComponent<NavMeshAgent>().enabled = false;
         rand = Random.Range(0, 2);
 
         isWalk = false;
@@ -133,6 +135,7 @@ public class SkullBat : Monster
             isAttack = false;
             isWalk = true;
             isPatern = false;
+            GetComponent<NavMeshAgent>().enabled = true;
         }
 
         else if(rand == 1)
@@ -147,12 +150,13 @@ public class SkullBat : Monster
         yield return new WaitForSeconds(2.5f);
         isWalk = true;
         isPatern = false;
+        GetComponent<NavMeshAgent>().enabled = true;
     }
 
     int rand;
 
     public void Shoot()
-    {           
+    {
         for (int i = 0; i < bulletPoses.Length; i++)
         {
             MonsterBullet bullet = pool.Get();
@@ -166,7 +170,7 @@ public class SkullBat : Monster
 
     private MonsterBullet CreateBullet()
     {
-        MonsterBullet bullet = Instantiate(skullBullet, bulletPoses[0].position, transform.rotation).GetComponent<MonsterBullet>();
+        MonsterBullet bullet = Instantiate(skullBullet, bulletPoses[0].position, skullBullet.transform.rotation).GetComponent<MonsterBullet>();
         bullet.SetManagedPool(pool);
         return bullet;
     }

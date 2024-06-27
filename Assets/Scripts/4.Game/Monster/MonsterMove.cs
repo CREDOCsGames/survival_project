@@ -41,8 +41,8 @@ public class MonsterMove : MonoBehaviour
         //Move();
         if (agent.enabled)
         {
-            agent.speed = GetComponent<Monster>().Speed;
             agent.SetDestination(character.transform.position);
+            agent.speed = GetComponent<Monster>().Speed;
             //
             //agent.updateRotation = false;
             //Debug.Log(agent.nextPosition);
@@ -77,7 +77,7 @@ public class MonsterMove : MonoBehaviour
         {
             dir = (corners[count] - transform.position).normalized;
 
-            if (transform.position == corners[count])
+            if (transform.position == corners[count] && count < agent.path.corners.Length - 1)
                 count++;
         }
 
