@@ -109,7 +109,7 @@ public class StaffControl : Weapon
 
     void FireBullet()
     {
-        if (weaponInfo.WeaponName == "¾óÀ½ ½ºÅÂÇÁ")
+        if (weaponInfo.WeaponName == "ì–¼ìŒ ìŠ¤íƒœí”„")
         {
             if (canAttack == true)
             {
@@ -166,7 +166,7 @@ public class StaffControl : Weapon
 
                 else if (gameManager.attackSpeed < 0)
                 {
-                    // °ø¼ÓÀÌ À½¼öÀÎ °æ¿ìÀÌ¹Ç·Î À½¼ö¸¦ »© (+·Î ¸¸µé¾î) µô·¹ÀÌ¸¦ ´Ã¸°´Ù.
+                    // ê³µì†ì´ ìŒìˆ˜ì¸ ê²½ìš°ì´ë¯€ë¡œ ìŒìˆ˜ë¥¼ ë¹¼ (+ë¡œ ë§Œë“¤ì–´) ë”œë ˆì´ë¥¼ ëŠ˜ë¦°ë‹¤.
                     if (delay >= ((bulletDelay - (grade * 0.1f)) - (gameManager.attackSpeed * 0.1f)))
                     {
                         canAttack = true;
@@ -175,7 +175,7 @@ public class StaffControl : Weapon
                 }
             }
         }
-        if (weaponInfo.WeaponName == "È­¿° ½ºÅÂÇÁ")
+        if (weaponInfo.WeaponName == "í™”ì—¼ ìŠ¤íƒœí”„")
         {
             if (canAttack == true)
             {
@@ -244,7 +244,7 @@ public class StaffControl : Weapon
             }
         }
 
-        if (weaponInfo.WeaponName == "¹ø°³ ½ºÅÂÇÁ")
+        if (weaponInfo.WeaponName == "ë²ˆê°œ ìŠ¤íƒœí”„")
         {
             if (canAttack == true)
             {

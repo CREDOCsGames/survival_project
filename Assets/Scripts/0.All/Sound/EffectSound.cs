@@ -19,8 +19,8 @@ public class EffectSound : MonoBehaviour
 
     IEnumerator CheckPlay()
     {
-        while (source.isPlaying)        // ¸¸¾à ÇÃ·¹À× ÁßÀÌ¶ó¸é
-            yield return null;          // ÇÑÇÁ·¹ÀÓ ´ë±â
+        while (source.isPlaying)        // ë§Œì•½ í”Œë ˆì‰ ì¤‘ì´ë¼ë©´
+            yield return null;          // í•œí”„ë ˆì„ ëŒ€ê¸°
 
         DestroyPool();
     }

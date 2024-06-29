@@ -32,7 +32,7 @@ public class AutoTarget : Bullet
             DestroyBullet();
         }
 
-        // ÃÑ¾Ë °¢µµ
+        // ì´ì•Œ ê°ë„
         angle = Mathf.Atan2(dir.z, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(90, -angle, 0);
     }

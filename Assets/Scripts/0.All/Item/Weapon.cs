@@ -26,7 +26,7 @@ public class Weapon : MonoBehaviour
 
             else if (gameManager.doubleShot)
             {
-                if (weaponInfo.WeaponName == "¹ø°³ ½ºÅÂÇÁ")
+                if (weaponInfo.WeaponName == "ë²ˆê°œ ìŠ¤íƒœí”„")
                     weaponDamage = weaponInfo.MagicDamage * grade + gameManager.magicDamage + gameManager.longDamage;
 
                 else

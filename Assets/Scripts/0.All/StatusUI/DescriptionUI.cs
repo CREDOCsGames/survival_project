@@ -35,63 +35,63 @@ public class DescriptionUI : MonoBehaviour
         switch(num)
         {
             case 0:
-                descriptionText.text = "Ä³¸¯ÅÍÀÇ ÃÖ´ë Ã¼·Â°ú °ü·ÃµÈ ´É·ÂÄ¡.\n1ÀÌÇÏ·Î ¶³¾îÁ®µµ Ä³¸¯ÅÍÀÇ ÃÖ´ë Ã¼·ÂÀº 1·Î Àû¿ëµË´Ï´Ù.";
+                descriptionText.text = "ìºë¦­í„°ì˜ ìµœëŒ€ ì²´ë ¥ê³¼ ê´€ë ¨ëœ ëŠ¥ë ¥ì¹˜.\n1ì´í•˜ë¡œ ë–¨ì–´ì ¸ë„ ìºë¦­í„°ì˜ ìµœëŒ€ ì²´ë ¥ì€ 1ë¡œ ì ìš©ë©ë‹ˆë‹¤.";
                 break;
 
             case 1:
-                descriptionText.text = "Ä³¸¯ÅÍ°¡ 1ÃÊ¸¶´Ù ÀÚµ¿À¸·Î È¸º¹ÇÏ´Â Ã¼·Â ¼öÄ¡¿Í °ü·ÃµÈ ´É·ÂÄ¡.\n0ÀÌÇÏÀÎ °æ¿ì Àû¿ëµÇÁö ¾Ê½À´Ï´Ù.";
+                descriptionText.text = "ìºë¦­í„°ê°€ 1ì´ˆë§ˆë‹¤ ìžë™ìœ¼ë¡œ íšŒë³µí•˜ëŠ” ì²´ë ¥ ìˆ˜ì¹˜ì™€ ê´€ë ¨ëœ ëŠ¥ë ¥ì¹˜.\n0ì´í•˜ì¸ ê²½ìš° ì ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.";
                 break;
 
             case 2:
-                descriptionText.text = "Ä³¸¯ÅÍ°¡ ¸ó½ºÅÍ¸¦ °ø°ÝÇßÀ» °æ¿ì È¸º¹ÇÏ´Â Ã¼·Â ¼öÄ¡¿Í °ü·ÃµÈ ´É·ÂÄ¡.\n0ÀÌÇÏÀÎ °æ¿ì Àû¿ëµÇÁö ¾Ê°í, ÃÖ´ë Àû¿ëÄ¡´Â 1ÀÔ´Ï´Ù.\nÆø¹ß °ø°Ý¿¡´Â Àû¿ëµÇÁö ¾Ê½À´Ï´Ù.\n°ËÀº ÈÖµÎ¸£±â¿¡¸¸ Àû¿ëµË´Ï´Ù.";
+                descriptionText.text = "ìºë¦­í„°ê°€ ëª¬ìŠ¤í„°ë¥¼ ê³µê²©í–ˆì„ ê²½ìš° íšŒë³µí•˜ëŠ” ì²´ë ¥ ìˆ˜ì¹˜ì™€ ê´€ë ¨ëœ ëŠ¥ë ¥ì¹˜.\n0ì´í•˜ì¸ ê²½ìš° ì ìš©ë˜ì§€ ì•Šê³ , ìµœëŒ€ ì ìš©ì¹˜ëŠ” 1ìž…ë‹ˆë‹¤.\ní­ë°œ ê³µê²©ì—ëŠ” ì ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.\nê²€ì€ íœ˜ë‘ë¥´ê¸°ì—ë§Œ ì ìš©ë©ë‹ˆë‹¤.";
                 break;
 
             case 3:
-                descriptionText.text = "Ä³¸¯ÅÍ°¡ ¸ó½ºÅÍ¿¡°Ô °ø°Ý¹ÞÀ» °æ¿ì ÀÔ´Â ÇÇÇØ¸¦ °¨¼Ò½ÃÄÑ ÁÖ´Â ´É·ÂÄ¡.\n0ÀÌÇÏÀÎ °æ¿ì ÇÇÇØ¸¦ ´õ ÀÔ½À´Ï´Ù.";
+                descriptionText.text = "ìºë¦­í„°ê°€ ëª¬ìŠ¤í„°ì—ê²Œ ê³µê²©ë°›ì„ ê²½ìš° ìž…ëŠ” í”¼í•´ë¥¼ ê°ì†Œì‹œì¼œ ì£¼ëŠ” ëŠ¥ë ¥ì¹˜.\n0ì´í•˜ì¸ ê²½ìš° í”¼í•´ë¥¼ ë” ìž…ìŠµë‹ˆë‹¤.";
                 break;
 
             case 4:
-                descriptionText.text = "Ä³¸¯ÅÍ°¡ ¸ó½ºÅÍ¿¡°Ô °ø°Ý¹ÞÀ» °æ¿ì ÇÇÇØ¸¦ ¹«½ÃÇÏ´Â È®·ü°ú °ü·ÃµÈ ´É·ÂÄ¡.\n0ÀÌÇÏÀÎ °æ¿ì Àû¿ëµÇÁö ¾Ê½À´Ï´Ù.";
+                descriptionText.text = "ìºë¦­í„°ê°€ ëª¬ìŠ¤í„°ì—ê²Œ ê³µê²©ë°›ì„ ê²½ìš° í”¼í•´ë¥¼ ë¬´ì‹œí•˜ëŠ” í™•ë¥ ê³¼ ê´€ë ¨ëœ ëŠ¥ë ¥ì¹˜.\n0ì´í•˜ì¸ ê²½ìš° ì ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.";
                 break;
 
             case 5:
-                descriptionText.text = "¸ðµç °ø°Ý·ÂÀÇ ÇÕ»êÀÌ ³¡³­ÈÄ °öÇØÁö´Â °ø°Ý·Â ¹èÀ²°ª°ú °ü·ÃµÈ ´É·ÂÄ¡.\n°¢ Ä³¸¯ÅÍ¸¶´Ù ´Ù¸¥ ¹èÀ²À» °¡Áý´Ï´Ù.";
+                descriptionText.text = "ëª¨ë“  ê³µê²©ë ¥ì˜ í•©ì‚°ì´ ëë‚œí›„ ê³±í•´ì§€ëŠ” ê³µê²©ë ¥ ë°°ìœ¨ê°’ê³¼ ê´€ë ¨ëœ ëŠ¥ë ¥ì¹˜.\nê° ìºë¦­í„°ë§ˆë‹¤ ë‹¤ë¥¸ ë°°ìœ¨ì„ ê°€ì§‘ë‹ˆë‹¤.";
                 break;
 
             case 6:
-                descriptionText.text = "°Ë/ÃÑ·ù ¹«±âÀÇ °ø°Ý·Â¿Í °ü·ÃµÈ ´É·ÂÄ¡.\n¹«±â¿¡ Àû¿ëµÇ´Â °ø°Ý·Â ÇÕÀÇ ¼öÄ¡°¡ 0ÀÌÇÏ°¡ µÇ¸é °ø°ÝÀÌ ºÒ°¡´ÉÇÕ´Ï´Ù.";
+                descriptionText.text = "ê²€/ì´ë¥˜ ë¬´ê¸°ì˜ ê³µê²©ë ¥ì™€ ê´€ë ¨ëœ ëŠ¥ë ¥ì¹˜.\në¬´ê¸°ì— ì ìš©ë˜ëŠ” ê³µê²©ë ¥ í•©ì˜ ìˆ˜ì¹˜ê°€ 0ì´í•˜ê°€ ë˜ë©´ ê³µê²©ì´ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤.";
                 break;
 
             case 7:
-                descriptionText.text = "½ºÅÂÇÁ·ù ¹«±âÀÇ °ø°Ý·Â, °Ë½Å ´¢ÆÄÀÇ °Ë±â¿Í °ü·ÃµÈ ´É·ÂÄ¡.\n¹«±â¿¡ Àû¿ëµÇ´Â °ø°Ý·Â ÇÕÀÇ ¼öÄ¡°¡ 0ÀÌÇÏ°¡ µÇ¸é °ø°ÝÀÌ ºÒ°¡´ÉÇÕ´Ï´Ù.";
+                descriptionText.text = "ìŠ¤íƒœí”„ë¥˜ ë¬´ê¸°ì˜ ê³µê²©ë ¥, ê²€ì‹  ë‡¨íŒŒì˜ ê²€ê¸°ì™€ ê´€ë ¨ëœ ëŠ¥ë ¥ì¹˜.\në¬´ê¸°ì— ì ìš©ë˜ëŠ” ê³µê²©ë ¥ í•©ì˜ ìˆ˜ì¹˜ê°€ 0ì´í•˜ê°€ ë˜ë©´ ê³µê²©ì´ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤.";
                 break;
 
             case 8:
-                descriptionText.text = "°Ë·ù ¹«±âÀÇ °ø°Ý·Â°ú °ü·ÃµÈ ´É·ÂÄ¡.\n¹«±â¿¡ Àû¿ëµÇ´Â °ø°Ý·Â ÇÕÀÇ ¼öÄ¡°¡ 0ÀÌÇÏ°¡ µÇ¸é °ø°ÝÀÌ ºÒ°¡´ÉÇÕ´Ï´Ù.";
+                descriptionText.text = "ê²€ë¥˜ ë¬´ê¸°ì˜ ê³µê²©ë ¥ê³¼ ê´€ë ¨ëœ ëŠ¥ë ¥ì¹˜.\në¬´ê¸°ì— ì ìš©ë˜ëŠ” ê³µê²©ë ¥ í•©ì˜ ìˆ˜ì¹˜ê°€ 0ì´í•˜ê°€ ë˜ë©´ ê³µê²©ì´ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤.";
                 break;
 
             case 9:
-                descriptionText.text = "ÃÑ/½ºÅÂÇÁ·ù ¹«±âÀÇ °ø°Ý·Â, °Ë½Å ´¢ÆÄÀÇ °Ë±â¿Í °ü·ÃµÈ ´É·ÂÄ¡.\n¹«±â¿¡ Àû¿ëµÇ´Â °ø°Ý·Â ÇÕÀÇ ¼öÄ¡°¡ 0ÀÌÇÏ°¡ µÇ¸é °ø°ÝÀÌ ºÒ°¡´ÉÇÕ´Ï´Ù.";
+                descriptionText.text = "ì´/ìŠ¤íƒœí”„ë¥˜ ë¬´ê¸°ì˜ ê³µê²©ë ¥, ê²€ì‹  ë‡¨íŒŒì˜ ê²€ê¸°ì™€ ê´€ë ¨ëœ ëŠ¥ë ¥ì¹˜.\në¬´ê¸°ì— ì ìš©ë˜ëŠ” ê³µê²©ë ¥ í•©ì˜ ìˆ˜ì¹˜ê°€ 0ì´í•˜ê°€ ë˜ë©´ ê³µê²©ì´ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤.";
                 break;
 
             case 10:
-                descriptionText.text = "°ø°Ý½ÃÀÇ °Ë·ù ¹«±âÀÇ ÈÖµÎ¸£´Â ¼Óµµ,\nÃÑ°ú ½ºÅÂÇÁ·ù ¹«±âÀÇ Åõ»çÃ¼ ¹ß»ç ¼Óµµ¿Í °ü·ÃµÈ ´É·ÂÄ¡.\n0ÀÌÇÏÀÎ °æ¿ì ¹«±âÀÇ ±âº» °ø°Ý ¼Óµµ·Î Àû¿ëµË´Ï´Ù.";
+                descriptionText.text = "ê³µê²©ì‹œì˜ ê²€ë¥˜ ë¬´ê¸°ì˜ íœ˜ë‘ë¥´ëŠ” ì†ë„,\nì´ê³¼ ìŠ¤íƒœí”„ë¥˜ ë¬´ê¸°ì˜ íˆ¬ì‚¬ì²´ ë°œì‚¬ ì†ë„ì™€ ê´€ë ¨ëœ ëŠ¥ë ¥ì¹˜.\n0ì´í•˜ì¸ ê²½ìš° ë¬´ê¸°ì˜ ê¸°ë³¸ ê³µê²© ì†ë„ë¡œ ì ìš©ë©ë‹ˆë‹¤.";
                 break;
 
             case 11:
-                descriptionText.text = "Ä³¸¯ÅÍ°¡ ÀÌµ¿ÇÏ´Â ¼Óµµ¿Í °ü·ÃµÈ ´É·ÂÄ¡.\n1ÀÌÇÏ·Î ¶³¾îÁö¸é Ä³¸¯ÅÍÀÇ ÀÌµ¿¼Óµµ´Â 1·Î Àû¿ëµË´Ï´Ù.";
+                descriptionText.text = "ìºë¦­í„°ê°€ ì´ë™í•˜ëŠ” ì†ë„ì™€ ê´€ë ¨ëœ ëŠ¥ë ¥ì¹˜.\n1ì´í•˜ë¡œ ë–¨ì–´ì§€ë©´ ìºë¦­í„°ì˜ ì´ë™ì†ë„ëŠ” 1ë¡œ ì ìš©ë©ë‹ˆë‹¤.";
                 break;
 
             case 12:
-                descriptionText.text = "°ø°Ý½Ã °Ë·ù ¹«±âÀÇ ÈÖµÎ¸£±â°¡ ½ÃÀüµÇ´Â °Å¸®,\nÅõ»çÃ¼°¡ ¹ß»çµÇ°í »ç¶óÁö´Â »ç°Å¸®¿Í °ü·ÃµÈ ´É·ÂÄ¡.\n »ç°Å¸® ÃÖ¼Ò Àû¿ë ¼öÄ¡´Â ±âº» »ç°Å¸®ÀÇ Àý¹ÝÀÔ´Ï´Ù.";
+                descriptionText.text = "ê³µê²©ì‹œ ê²€ë¥˜ ë¬´ê¸°ì˜ íœ˜ë‘ë¥´ê¸°ê°€ ì‹œì „ë˜ëŠ” ê±°ë¦¬,\níˆ¬ì‚¬ì²´ê°€ ë°œì‚¬ë˜ê³  ì‚¬ë¼ì§€ëŠ” ì‚¬ê±°ë¦¬ì™€ ê´€ë ¨ëœ ëŠ¥ë ¥ì¹˜.\n ì‚¬ê±°ë¦¬ ìµœì†Œ ì ìš© ìˆ˜ì¹˜ëŠ” ê¸°ë³¸ ì‚¬ê±°ë¦¬ì˜ ì ˆë°˜ìž…ë‹ˆë‹¤.";
                 break;
 
             case 13:
-                descriptionText.text = "ÀÌÆÄ¸®³ª¹«¿¡¼­ Æ¯º° ¾ÆÀÌÅÛÀÇ µîÀå È®·ü,\n½ºÅÂÇÁ·ùÀÇ Æ¯¼ö ´É·Â ¹ßµ¿,\nÆ¯¼ö ÆÐ½Ãºê ¾ÆÀÌÅÛÀÇ ¹ßµ¿ Á¶°Ç,\n»óÁ¡ ¾ÆÀÌÅÛ µî±Þ È®·üµî°ú °ü·ÃµÈ ´É·ÂÄ¡.\n0ÀÌÇÏÀÎ °æ¿ì Àû¿ëµÇÁö ¾Ê°í, ÃÖ´ë Àû¿ëÄ¡´Â 100ÀÔ´Ï´Ù.";
+                descriptionText.text = "ì´íŒŒë¦¬ë‚˜ë¬´ì—ì„œ íŠ¹ë³„ ì•„ì´í…œì˜ ë“±ìž¥ í™•ë¥ ,\nìŠ¤íƒœí”„ë¥˜ì˜ íŠ¹ìˆ˜ ëŠ¥ë ¥ ë°œë™,\níŠ¹ìˆ˜ íŒ¨ì‹œë¸Œ ì•„ì´í…œì˜ ë°œë™ ì¡°ê±´,\nìƒì  ì•„ì´í…œ ë“±ê¸‰ í™•ë¥ ë“±ê³¼ ê´€ë ¨ëœ ëŠ¥ë ¥ì¹˜.\n0ì´í•˜ì¸ ê²½ìš° ì ìš©ë˜ì§€ ì•Šê³ , ìµœëŒ€ ì ìš©ì¹˜ëŠ” 100ìž…ë‹ˆë‹¤.";
                 break;
 
             case 14:
-                descriptionText.text = "°Ë·ù ¹«±âÀÇ °ø°Ý·ÂÀÌ 1.5¹è·Î ´õ °­ÇÏ°Ô Àû¿ëµÇ´Â È®·ü°ú °ü·ÃµÈ ´É·ÂÄ¡.\n0ÀÌÇÏÀÎ °æ¿ì Àû¿ëµÇÁö ¾Ê½À´Ï´Ù.";
+                descriptionText.text = "ê²€ë¥˜ ë¬´ê¸°ì˜ ê³µê²©ë ¥ì´ 1.5ë°°ë¡œ ë” ê°•í•˜ê²Œ ì ìš©ë˜ëŠ” í™•ë¥ ê³¼ ê´€ë ¨ëœ ëŠ¥ë ¥ì¹˜.\n0ì´í•˜ì¸ ê²½ìš° ì ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.";
                 break;
         }
     }

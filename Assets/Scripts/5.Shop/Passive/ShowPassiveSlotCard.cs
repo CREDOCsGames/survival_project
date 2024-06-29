@@ -97,21 +97,21 @@ public class ShowPassiveSlotCard : MonoBehaviour
         stats[13] = selectedPassive.PercentDamage;
         stats[14] = selectedPassive.Avoid;
 
-        statTypes[0] = "ÃÖ´ë Ã¼·Â";
-        statTypes[1] = "Ã¼·Â È¸º¹";
-        statTypes[2] = "Ã¼·Â Èí¼ö";
-        statTypes[3] = "¹æ¾î·Â";
-        statTypes[4] = "¹°¸® °ø°İ·Â";
-        statTypes[5] = "¸¶¹ı °ø°İ·Â";
-        statTypes[6] = "±Ù°Å¸® °ø°İ·Â";
-        statTypes[7] = "¿ø°Å¸® °ø°İ·Â";
-        statTypes[8] = "°ø°İ ¼Óµµ";
-        statTypes[9] = "ÀÌµ¿ ¼Óµµ";
-        statTypes[10] = "Çà¿î";
-        statTypes[11] = "»ç°Å¸®";
-        statTypes[12] = "Å©¸®Æ¼ÄÃ";
-        statTypes[13] = "°ø°İ·Â ¹èÀ²";
-        statTypes[14] = "È¸ÇÇÀ²";
+        statTypes[0] = "ìµœëŒ€ ì²´ë ¥";
+        statTypes[1] = "ì²´ë ¥ íšŒë³µ";
+        statTypes[2] = "ì²´ë ¥ í¡ìˆ˜";
+        statTypes[3] = "ë°©ì–´ë ¥";
+        statTypes[4] = "ë¬¼ë¦¬ ê³µê²©ë ¥";
+        statTypes[5] = "ë§ˆë²• ê³µê²©ë ¥";
+        statTypes[6] = "ê·¼ê±°ë¦¬ ê³µê²©ë ¥";
+        statTypes[7] = "ì›ê±°ë¦¬ ê³µê²©ë ¥";
+        statTypes[8] = "ê³µê²© ì†ë„";
+        statTypes[9] = "ì´ë™ ì†ë„";
+        statTypes[10] = "í–‰ìš´";
+        statTypes[11] = "ì‚¬ê±°ë¦¬";
+        statTypes[12] = "í¬ë¦¬í‹°ì»¬";
+        statTypes[13] = "ê³µê²©ë ¥ ë°°ìœ¨";
+        statTypes[14] = "íšŒí”¼ìœ¨";
     }
 
     void DescriptionInfo()

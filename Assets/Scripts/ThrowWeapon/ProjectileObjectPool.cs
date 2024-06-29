@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -24,13 +22,13 @@ public class ProjectileObjectPool : MonoBehaviour
         gameManager = GameManager.Instance;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.collider.CompareTag("Monster") && collision.collider.GetComponent<Monster>() != null)
-        {
-            Monster monster = collision.collider.GetComponent<Monster>();
+        Debug.Log(other.gameObject.tag);
 
-            //Instantiate(effectPrefab, transform.position, transform.rotation);
+        if (other.CompareTag("Monster") && other.transform.parent.GetComponent<Monster>() != null)
+        {
+            Monster monster = other.transform.parent.GetComponent<Monster>();
 
             DamageUI damage = damagePool.Get();
 
@@ -51,6 +49,18 @@ public class ProjectileObjectPool : MonoBehaviour
         this.pool = pool;
     }
 
+    public void DestroyProjectile()
+    {
+        if (gameObject.activeSelf)
+        {
+            pool.Release(this);
+        }
+    }
+
+    public void SetDamage(float damage)
+    {
+        projectileDamage = damage;
+    }
 
     private DamageUI CreateDamageUI()
     {
@@ -75,16 +85,5 @@ public class ProjectileObjectPool : MonoBehaviour
         Destroy(damageUIPool.gameObject);
     }
 
-    public void DestroyProjectile()
-    { 
-        if (gameObject.activeSelf)
-        {
-            pool.Release(this);
-        }
-    }
 
-    public void SetDamage(float damage)
-    {
-        projectileDamage = damage;
-    }
 }

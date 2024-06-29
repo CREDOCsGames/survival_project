@@ -29,7 +29,7 @@ public class TreeShop : Singleton<TreeShop>
         {
             ShopPanel.SetActive(true);
 
-            dialogText.text = "???: °¡Áö°í ÀÖ´Â ³ª¹«¸¦ ³ª´² ÁÖÁö ¾ÊÀ¸·Ã...?";
+            dialogText.text = "???: ê°€ì§€ê³  ìžˆëŠ” ë‚˜ë¬´ë¥¼ ë‚˜ëˆ  ì£¼ì§€ ì•Šìœ¼ë ¨...?";
             upgradeCostText.text = (-upgradeCost).ToString();
 
             for (int i = 0; i < itemManager.storedWeapon.Length; i++)
@@ -46,7 +46,7 @@ public class TreeShop : Singleton<TreeShop>
         else 
         {
             ShopPanel.SetActive(false);
-            dialogText.text = "???: ³ª¹«¸¦ ÃæºÐÈ÷ °¡Áö°í ÀÖÁö ¾Ê±¸³ª...";
+            dialogText.text = "???: ë‚˜ë¬´ë¥¼ ì¶©ë¶„ížˆ ê°€ì§€ê³  ìžˆì§€ ì•Šêµ¬ë‚˜...";
         }
     }
 

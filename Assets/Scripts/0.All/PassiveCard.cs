@@ -98,21 +98,21 @@ public class PassiveCard : MonoBehaviour
         stats[14] = selectedPassive.Avoid;
 
         statTypes = new string[15];
-        statTypes[0] = "ÃÖ´ë Ã¼·Â";
-        statTypes[1] = "Ã¼·Â È¸º¹";
-        statTypes[2] = "Ã¼·Â Èí¼ö";
-        statTypes[3] = "¹æ¾î·Â";
-        statTypes[4] = "¹°¸® °ø°İ·Â";
-        statTypes[5] = "¸¶¹ı °ø°İ·Â";
-        statTypes[6] = "±Ù°Å¸® °ø°İ·Â";
-        statTypes[7] = "¿ø°Å¸® °ø°İ·Â";
-        statTypes[8] = "°ø°İ ¼Óµµ";
-        statTypes[9] = "ÀÌµ¿ ¼Óµµ";
-        statTypes[10] = "Çà¿î";
-        statTypes[11] = "»ç°Å¸®";
-        statTypes[12] = "Å©¸®Æ¼ÄÃ";
-        statTypes[13] = "°ø°İ·Â ¹èÀ²";
-        statTypes[14] = "È¸ÇÇÀ²";
+        statTypes[0] = "ìµœëŒ€ ì²´ë ¥";
+        statTypes[1] = "ì²´ë ¥ íšŒë³µ";
+        statTypes[2] = "ì²´ë ¥ í¡ìˆ˜";
+        statTypes[3] = "ë°©ì–´ë ¥";
+        statTypes[4] = "ë¬¼ë¦¬ ê³µê²©ë ¥";
+        statTypes[5] = "ë§ˆë²• ê³µê²©ë ¥";
+        statTypes[6] = "ê·¼ê±°ë¦¬ ê³µê²©ë ¥";
+        statTypes[7] = "ì›ê±°ë¦¬ ê³µê²©ë ¥";
+        statTypes[8] = "ê³µê²© ì†ë„";
+        statTypes[9] = "ì´ë™ ì†ë„";
+        statTypes[10] = "í–‰ìš´";
+        statTypes[11] = "ì‚¬ê±°ë¦¬";
+        statTypes[12] = "í¬ë¦¬í‹°ì»¬";
+        statTypes[13] = "ê³µê²©ë ¥ ë°°ìœ¨";
+        statTypes[14] = "íšŒí”¼ìœ¨";
 
         passiveIntVariables = new int[4];
         passiveIntVariables[0] = selectedPassive.DashCount;
@@ -218,7 +218,7 @@ public class PassiveCard : MonoBehaviour
 
         for (int i = 0; i < passiveIntVariables.Length; i++)
         {
-            if (i == 1 && passiveIntVariables[i] != 0) // ¹öÇÁ Æ÷¼Ç
+            if (i == 1 && passiveIntVariables[i] != 0) // ë²„í”„ í¬ì…˜
                 gameManager.passiveIntVariables[i] = passiveIntVariables[i];
 
             else
@@ -254,9 +254,9 @@ public class PassiveCard : MonoBehaviour
 
                 else if (i == 13)
                 {
-                    gameManager.passiveBoolVariables[14] = false;   // ÇÏ³ª °üÅë
-                    gameManager.passiveBoolVariables[15] = false;   // µ©°¨ °üÅë
-                    gameManager.passiveBoolVariables[16] = false;   //  Ç®°üÅë
+                    gameManager.passiveBoolVariables[14] = false;   // í•˜ë‚˜ ê´€í†µ
+                    gameManager.passiveBoolVariables[15] = false;   // ë€ê° ê´€í†µ
+                    gameManager.passiveBoolVariables[16] = false;   //  í’€ê´€í†µ
                 }
 
                 else if (i == 14)
@@ -284,14 +284,14 @@ public class PassiveCard : MonoBehaviour
 
     void Ddilpa()
     {
-        // ¸¶µ©(5) > ¹°µ©(4)
+        // ë§ˆë€(5) > ë¬¼ë€(4)
         gameManager.stats[4] += Mathf.Round((gameManager.stats[5] / 2) * 10) * 0.1f;
         gameManager.stats[5] = 0;
     }
 
     void Butterfly()
     {
-        // ¹°µ©(4) > ¸¶µ©(5)
+        // ë¬¼ë€(4) > ë§ˆë€(5)
         gameManager.stats[5] += Mathf.Round((gameManager.stats[4] / 2) * 10) * 0.1f;
         gameManager.stats[4] = 0;
     }

@@ -48,13 +48,13 @@ public class WeaponCard : MonoBehaviour
         description.text = selectedWeapon.Description.ToString();
 
         if (selectedWeapon.Type == WEAPON_TYPE.SWORD)
-            attackTypes.text = "(¹°¸®/±Ù°Å¸®)";
+            attackTypes.text = "(ë¬¼ë¦¬/ê·¼ê±°ë¦¬)";
 
         else if (selectedWeapon.Type == WEAPON_TYPE.GUN)
-            attackTypes.text = "(¹°¸®/¿ø°Å¸®)";
+            attackTypes.text = "(ë¬¼ë¦¬/ì›ê±°ë¦¬)";
 
         else if (selectedWeapon.Type == WEAPON_TYPE.STAFF)
-            attackTypes.text = "(¸¶¹ı/¿ø°Å¸®)";
+            attackTypes.text = "(ë§ˆë²•/ì›ê±°ë¦¬)";
     }
 
     protected virtual void CardColor()
@@ -118,7 +118,7 @@ public class WeaponCard : MonoBehaviour
             {
                 canBuy = true;
 
-                if (selectedWeapon.WeaponName == "¹ø°³ ½ºÅÂÇÁ")
+                if (selectedWeapon.WeaponName == "ë²ˆê°œ ìŠ¤íƒœí”„")
                 {
                     if (character.thunderCount == 0)
                         character.thunderMark.SetActive(true);
@@ -147,7 +147,7 @@ public class WeaponCard : MonoBehaviour
     {
         bool canBuy = false;
 
-        if (selectedWeapon.Type == WEAPON_TYPE.°Ë)
+        if (selectedWeapon.Type == WEAPON_TYPE.ê²€)
         {
             if (itemManager.equipFullCount < 6 && gameManager.money >= price)
             {
@@ -165,8 +165,8 @@ public class WeaponCard : MonoBehaviour
             }
         }
 
-        // °Ë½ÅÄ³¸¯ÅÍ´Â °Ë¿Ü¿£ ³¢Áö ¸øÇÏ°Ô
-        else if (selectedWeapon.Type != WEAPON_TYPE.°Ë)
+        // ê²€ì‹ ìºë¦­í„°ëŠ” ê²€ì™¸ì—” ë¼ì§€ ëª»í•˜ê²Œ
+        else if (selectedWeapon.Type != WEAPON_TYPE.ê²€)
         {
             if (character.characterNum != (int)CHARACTER_NUM.Legendary)
             {
@@ -174,7 +174,7 @@ public class WeaponCard : MonoBehaviour
                 {
                     canBuy = true;
 
-                    if (selectedWeapon.WeaponName == "¹ø°³ ½ºÅÂÇÁ")
+                    if (selectedWeapon.WeaponName == "ë²ˆê°œ ìŠ¤íƒœí”„")
                     {
                         if (character.thunderCount == 0)
                             character.thunderMark.SetActive(true);

@@ -9,11 +9,8 @@ public class BowCatchBar : MonoBehaviour
 
     bool isCatch = false;
 
-    GameManager gameManager;
-
     private void Start()
     {
-        gameManager = GameManager.Instance;
         catchBar.gameObject.SetActive(false);
         catchBar.value = 0;
     }

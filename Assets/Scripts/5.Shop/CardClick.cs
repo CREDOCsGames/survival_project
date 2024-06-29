@@ -101,13 +101,13 @@ public class CardClick : MonoBehaviour
         description.text = selectedWeapon.Description.ToString();
 
         if (selectedWeapon.Type == WEAPON_TYPE.SWORD)
-            attackTypes.text = "(¹°¸®/±Ù°Å¸®)";
+            attackTypes.text = "(ë¬¼ë¦¬/ê·¼ê±°ë¦¬)";
 
         else if (selectedWeapon.Type == WEAPON_TYPE.GUN)
-            attackTypes.text = "(¹°¸®/¿ø°Å¸®)";
+            attackTypes.text = "(ë¬¼ë¦¬/ì›ê±°ë¦¬)";
 
         else if (selectedWeapon.Type == WEAPON_TYPE.STAFF)
-            attackTypes.text = "(¸¶¹ı/¿ø°Å¸®)";
+            attackTypes.text = "(ë§ˆë²•/ì›ê±°ë¦¬)";
     }
 
     public void CardImage(int num)
@@ -179,7 +179,7 @@ public class CardClick : MonoBehaviour
             itemManager.weaponGrade[selectedNum] = Grade.NORMAL;
             itemManager.equipFullCount--;
 
-            if (selectedWeapon.WeaponName == "¹ø°³ ½ºÅÂÇÁ")
+            if (selectedWeapon.WeaponName == "ë²ˆê°œ ìŠ¤íƒœí”„")
             {
                 StaffControl thunderStaff = character.weaponPoses[selectedNum].GetChild(0).gameObject.GetComponent<StaffControl>();
                 itemManager.thunderCount = thunderStaff.thunderCount;
@@ -228,7 +228,7 @@ public class CardClick : MonoBehaviour
                             itemManager.weaponGrade[i] = Grade.NORMAL;
                             itemManager.equipFullCount--;
 
-                            if (selectedWeapon.WeaponName == "¹ø°³ ½ºÅÂÇÁ")
+                            if (selectedWeapon.WeaponName == "ë²ˆê°œ ìŠ¤íƒœí”„")
                             {
 
                                 StaffControl selectedThunderStaff = character.weaponPoses[selectedNum].GetChild(0).gameObject.GetComponent<StaffControl>();

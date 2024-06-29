@@ -68,15 +68,15 @@ public class TitleOption : MonoBehaviour
 
         for (int i = 0; i < (int)KeyAction.COUNT; i++)
         {
-            if (!KeySetting.keys.ContainsKey((KeyAction)i))                 // Dictionary keys¿¡ °ªÀÌ ¾ø´Ù¸é
+            if (!KeySetting.keys.ContainsKey((KeyAction)i))                 // Dictionary keysì— ê°’ì´ ì—†ë‹¤ë©´
             {
-                KeySetting.keys.Add((KeyAction)i, (KeyCode)defaultKeys[i]);          // keys°ª¿¡ default°ª ´ëÀÔ
+                KeySetting.keys.Add((KeyAction)i, (KeyCode)defaultKeys[i]);          // keysê°’ì— defaultê°’ ëŒ€ìž…
             }
         }
 
         for (int i = 0; i < keyTexts.Length; i++)
         {
-            keyTexts[i].text = KeySetting.keys[(KeyAction)i].ToString();    // keyText¿¡ keysÀÇ keyCode°ª ´ëÀÔ
+            keyTexts[i].text = KeySetting.keys[(KeyAction)i].ToString();    // keyTextì— keysì˜ keyCodeê°’ ëŒ€ìž…
         }
     }
 
@@ -105,14 +105,14 @@ public class TitleOption : MonoBehaviour
         Cursor.SetCursor(useCursorNormal, cursorHotSpot, CursorMode.ForceSoftware);
     }
 
-    // GUI, Å° ÀÔ·ÂµîÀÇ ÀÌº¥Æ®°¡ ¹ß»ýÇÒ ¶§ È£ÃâµÇ´Â ÇÔ¼ö.
+    // GUI, í‚¤ ìž…ë ¥ë“±ì˜ ì´ë²¤íŠ¸ê°€ ë°œìƒí•  ë•Œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜.
     private void OnGUI()
     {
-        Event keyEvent = Event.current;     // Áö±Ý ÁøÇàµÇ°í ÀÖ´Â ÀÌº¥Æ® È®ÀÎ
+        Event keyEvent = Event.current;     // ì§€ê¸ˆ ì§„í–‰ë˜ê³  ìžˆëŠ” ì´ë²¤íŠ¸ í™•ì¸
 
-        if (keyEvent.isKey)                 // Å°º¸µå ÀÔ·ÂÀÌ ÀÖ´Ù¸é 
+        if (keyEvent.isKey)                 // í‚¤ë³´ë“œ ìž…ë ¥ì´ ìžˆë‹¤ë©´ 
         {
-            KeySetting.keys[(KeyAction)key] = keyEvent.keyCode;     // Áö±Ý ÀÔ·ÂµÈ Å°¸¦ ¹Þ¾Æ¿Í KeySetting Å¬·¡½ºÀÇ DictionaryÇü º¯¼ö keysÀÇ key¹øÂ°¿¡ µî·Ï.
+            KeySetting.keys[(KeyAction)key] = keyEvent.keyCode;     // ì§€ê¸ˆ ìž…ë ¥ëœ í‚¤ë¥¼ ë°›ì•„ì™€ KeySetting í´ëž˜ìŠ¤ì˜ Dictionaryí˜• ë³€ìˆ˜ keysì˜ keyë²ˆì§¸ì— ë“±ë¡.
 
             switch((KeyAction)key)
             {
@@ -139,7 +139,7 @@ public class TitleOption : MonoBehaviour
 
             KeyCode keycode = keyEvent.keyCode;
 
-            // ¶È°°Àº Å°°¡ Á¸ÀçÇÏ¸é Á¸ÀçÇÏ´ø Å°¸¦ noneÀ¸·Î ±³Ã¼
+            // ë˜‘ê°™ì€ í‚¤ê°€ ì¡´ìž¬í•˜ë©´ ì¡´ìž¬í•˜ë˜ í‚¤ë¥¼ noneìœ¼ë¡œ êµì²´
             for (int i = 0; i < defaultKeys.Length; i++)
             {
                 if (i != checkKey)
@@ -188,7 +188,7 @@ public class TitleOption : MonoBehaviour
 
     public void ChangeKey(int num)
     {
-        key = num;      // ¹öÆ°¿¡ ÇÔ¼ö¸¦ µî·Ï½ÃÅ°°í num°ªÀ» ¹Þ¾Æ¿Í key°ª¿¡ num°ªÀ» ´ëÀÔ
+        key = num;      // ë²„íŠ¼ì— í•¨ìˆ˜ë¥¼ ë“±ë¡ì‹œí‚¤ê³  numê°’ì„ ë°›ì•„ì™€ keyê°’ì— numê°’ì„ ëŒ€ìž…
         checkKey = key;
     }
 

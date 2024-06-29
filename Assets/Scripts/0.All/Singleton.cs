@@ -1,13 +1,13 @@
 using UnityEngine;
 
 public class Singleton<T> : MonoBehaviour
-    where T : MonoBehaviour                             // T ÀÚ·áÇüÀº Monobehaviour¸¦ »ó¼ÓÇÏ°í ÀÖ¾î¾ß ÇÑ´Ù.
+    where T : MonoBehaviour                             // T ìë£Œí˜•ì€ Monobehaviourë¥¼ ìƒì†í•˜ê³  ìˆì–´ì•¼ í•œë‹¤.
 {
     static T instance;
     public static T Instance => instance;
 
-    protected virtual void Awake()                              // ObjectPoolÀÇ Awake¿¡¼­ È£ÃâÇÏ±â À§ÇØ Protected
+    protected virtual void Awake()                              // ObjectPoolì˜ Awakeì—ì„œ í˜¸ì¶œí•˜ê¸° ìœ„í•´ Protected
     {
-        instance = this as T;                           // ³ª(Singleton)À» TÇüÀ¸·Î º¯È¯ÈÄ ´ëÀÔ
+        instance = this as T;                           // ë‚˜(Singleton)ì„ Tí˜•ìœ¼ë¡œ ë³€í™˜í›„ ëŒ€ì…
     }
 }

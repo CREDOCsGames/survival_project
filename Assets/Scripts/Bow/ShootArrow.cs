@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShootArrow : FireProjectile
@@ -8,11 +7,6 @@ public class ShootArrow : FireProjectile
 
     void Update()
     {
-        mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouse.y = 0;
-
-        dir = mouse - transform.position;
-
         FireAppliedCoolTime();
     }
 

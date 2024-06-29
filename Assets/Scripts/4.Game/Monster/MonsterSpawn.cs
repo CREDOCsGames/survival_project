@@ -95,7 +95,8 @@ public class MonsterSpawn : MonoBehaviour
 
         Monster monster = pool.Get();
         monster.transform.position = pos;
-        monster.GetComponent<NavMeshAgent>().enabled = true;
+        if (monster.GetComponent<NavMeshAgent>())
+            monster.GetComponent<NavMeshAgent>().enabled = true;
     }
 
     void RendSpawnImage()

@@ -22,7 +22,7 @@ public class ItemManager : Singleton<ItemManager>
     [HideInInspector] public bool[] cardLocks;
     [HideInInspector] public Grade[] cardGrades;
 
-    [HideInInspector] public int[] passiveCounts;       // ÆÐ½Ãºê ÅÛ ÃÖ´ë°¹¼ö
+    [HideInInspector] public int[] passiveCounts;       // íŒ¨ì‹œë¸Œ í…œ ìµœëŒ€ ê°œìˆ˜
 
     public Grade[] selectedGrades;
 

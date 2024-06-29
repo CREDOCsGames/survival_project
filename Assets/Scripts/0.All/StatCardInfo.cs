@@ -35,10 +35,10 @@ public class StatCardInfo : MonoBehaviour
     [ContextMenu("MakeJsonFile")]
     public void MakeJsonFile()
     {
-        StatJson statJson = new StatJson(GetStatArray(11));      // ±×·¡¼­ item¹è¿­À» °¡Áö´Â Å¬·¡½º¸¦ ÇÏ³ª ¸¸µé¾î¼­ ¿©·¯ °´Ã¼¸¦ ÀúÀåÇÒ ¼ö ÀÖ°Ô ¸¸µê
+        StatJson statJson = new StatJson(GetStatArray(11));      // ê·¸ë˜ì„œ itemë°°ì—´ì„ ê°€ì§€ëŠ” í´ë˜ìŠ¤ë¥¼ í•˜ë‚˜ ë§Œë“¤ì–´ì„œ ì—¬ëŸ¬ ê°ì²´ë¥¼ ì €ì¥í•  ìˆ˜ ìˆê²Œ ë§Œë“¦
 
-        // ToJson(obj, bool): bool°ªÀÌ trueÀÎ °æ¿ì °¡µ¶¼ºÀÌ ÁÁ°Ô, falseÀÎ °æ¿ì ÃÖ¼Ò°ªÀ¸·Î obj°ªÀ» Ãâ·Â
-        string json = JsonUtility.ToJson(statJson, true);       // JsonÀº °´Ã¼ ÇÏ³ª¸¸ ÀúÀå°¡´É
+        // ToJson(obj, bool): boolê°’ì´ trueì¸ ê²½ìš° ê°€ë…ì„±ì´ ì¢‹ê²Œ, falseì¸ ê²½ìš° ìµœì†Œê°’ìœ¼ë¡œ objê°’ì„ ì¶œë ¥
+        string json = JsonUtility.ToJson(statJson, true);       // Jsonì€ ê°ì²´ í•˜ë‚˜ë§Œ ì €ì¥ ê°€ëŠ¥
         SaveFile("statData", json);
     }
 
@@ -48,7 +48,7 @@ public class StatCardInfo : MonoBehaviour
 
         for (int i = 0; i < stats.Length; i++)
         {
-            Stat newStat = new Stat("°­ÀÎÇÔ", "Ã¼·Â", "½ºÅÈ ÀÌ¹ÌÁö", 1);
+            Stat newStat = new Stat("ê°•ì¸í•¨", "ì²´ë ¥", "ìŠ¤íƒ¯ ì´ë¯¸ì§€", 1);
             stats[i] = newStat;
         }
 
@@ -62,7 +62,7 @@ public class StatCardInfo : MonoBehaviour
         sw.Write(text);
         sw.Close();
 
-        Debug.Log("ÆÄÀÏ ÀúÀå ¿Ï·á");
+        Debug.Log("íŒŒì¼ ì €ì¥ ì™„ë£Œ");
     }
 
     [ContextMenu("RoadJsonFile")]
@@ -74,7 +74,7 @@ public class StatCardInfo : MonoBehaviour
         Stat[] stats = statJson.stats;
 
         this.statInfos = stats;
-        Debug.Log("¾ÆÀÌÅÛ µ¥ÀÌÅÍ ·Îµå ¿Ï·á");
+        Debug.Log("ì•„ì´í…œ ë°ì´í„° ë¡œë“œ ì™„ë£Œ");
     }
 
     private string LoadFile(string fileName)

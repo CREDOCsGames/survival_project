@@ -15,8 +15,6 @@ public class FireProjectile : MonoBehaviour
     protected float initCoolTime = 1f;
     protected bool canFire = true;
 
-    protected Vector3 bulletPos;
-
     protected Vector3 dir, mouse;
 
     protected ProjectileObjectPool projectile;
@@ -49,9 +47,22 @@ public class FireProjectile : MonoBehaviour
     protected virtual void SettingProjectile()
     {
         projectile = projectilePool.Get();
-        bulletPos = new Vector3(normalFirePos.position.x, 0f, normalFirePos.position.z);
-        projectile.transform.position = bulletPos;
+        projectile.transform.position = new Vector3(normalFirePos.position.x, 0f, normalFirePos.position.z);
         FireDirection();
+    }
+
+    protected void FireDirection()
+    {
+        mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouse.y = 0;
+
+        dir = mouse - transform.position;
+    }
+
+    protected virtual void SetInitFire()
+    {
+        coolTime = initCoolTime;
+        canFire = true;
     }
 
     protected virtual void FireAppliedCoolTime()
@@ -64,20 +75,6 @@ public class FireProjectile : MonoBehaviour
 
         if (coolTime <= 0)
             SetInitFire();
-    }
-
-    protected virtual void SetInitFire()
-    {
-        coolTime = initCoolTime;
-        canFire = true;
-    }
-
-    protected void FireDirection()
-    {
-        mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouse.y = 0;
-
-        dir = mouse - transform.position;
     }
 
     protected virtual ProjectileObjectPool CreatePool()
@@ -101,11 +98,5 @@ public class FireProjectile : MonoBehaviour
     protected virtual void OnDestroyPool(ProjectileObjectPool bullet)
     {
         Destroy(bullet.gameObject);
-    }
-
-    protected virtual void OnDestroy()
-    {
-        if (projectilePool != null)
-            projectilePool.Clear();
     }
 }

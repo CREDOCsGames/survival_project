@@ -108,7 +108,7 @@ public class Logging : Singleton<Logging>
                                 isArrowClear = true;
                                 arrowParent.GetChild(count).GetComponent<Image>().color = Color.red;
                                 isLogging = false;
-                                StartCoroutine(ActiveText("½ÇÆÐ...", Color.red));
+                                StartCoroutine(ActiveText("ì‹¤íŒ¨...", Color.red));
                                 isKeyPush = false;
                             }
                         }
@@ -127,7 +127,7 @@ public class Logging : Singleton<Logging>
                         isSuccess = true;
                         isStart = false;
 
-                        StartCoroutine(ActiveText("¼º°ø!", Color.cyan));
+                        StartCoroutine(ActiveText("ì„±ê³µ!", Color.cyan));
                     }
                 }
 
@@ -138,7 +138,7 @@ public class Logging : Singleton<Logging>
                         isStart = false;
                         checkKey = KeyCode.None;
                         isLogging = false;
-                        StartCoroutine(ActiveText("½Ã°£ ÃÊ°ú...", Color.red));
+                        StartCoroutine(ActiveText("ì‹œê°„ ì´ˆê³¼...", Color.red));
                     }
                 }
             }
@@ -150,7 +150,7 @@ public class Logging : Singleton<Logging>
             {
                 arrowParent.gameObject.SetActive(false);
                 isLogging = false;
-                StartCoroutine(ActiveText("¹ú¸ñ Á¾·á!", Color.yellow));
+                StartCoroutine(ActiveText("ë²Œëª© ì¢…ë£Œ!", Color.yellow));
                 coroutineEnd = true;
             }
         }

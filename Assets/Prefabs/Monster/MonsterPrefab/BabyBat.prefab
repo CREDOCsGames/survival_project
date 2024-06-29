@@ -12,10 +12,9 @@ GameObject:
   - component: {fileID: 6229552049790309985}
   - component: {fileID: 7712788725761189160}
   - component: {fileID: 8129587856583149474}
-  - component: {fileID: 8347476769310378390}
   m_Layer: 7
   m_Name: MonsterImage
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,36 +119,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.15, y: 0.18, z: 0}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8347476769310378390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1770007820282190432}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27cbc2faeb2722444acf9eb84865c70d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  freezeEffect: {fileID: 2387078157689682115}
-  rigid: {fileID: 738799171344922668}
-  isWalk: 0
-  isDead: 0
-  isAttacked: 0
-  isAttack: 0
-  hp: 0
-  maxHp: 0
-  stat:
-    monsterName: 
-    monsterMaxHp: 0
-    monsterDamage: 0
-    monsterSpeed: 0
-    monsterDefence: 0
-    monsterExp: 0
-    monsterCoin: 0
-  dir: {x: 0, y: 0, z: 0}
-  defence: 0
 --- !u!1 &2378124750920518384
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,7 +132,6 @@ GameObject:
   - component: {fileID: 5477607329959436068}
   - component: {fileID: 405998318861722249}
   - component: {fileID: 1961197510592707002}
-  - component: {fileID: 3077940670338159857}
   m_Layer: 7
   m_Name: BabyBat
   m_TagString: Monster
@@ -274,26 +242,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 65536
   detectSize: 1
---- !u!95 &3077940670338159857
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2378124750920518384}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5f7be58fbd8c01b4daa10c6c15fcd6ae, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2387078157689682115
 GameObject:
   m_ObjectHideFlags: 0
