@@ -4,7 +4,6 @@ public class CheckObstacle : MonoBehaviour
 {
     [SerializeField] LayerMask obstacleLayer;
 
-
     /*private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Character"))
@@ -31,7 +30,16 @@ public class CheckObstacle : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.gameObject.name);
+
         if (other.CompareTag("Obstacle"))
+        {
+            Debug.Log("yes");
+            transform.parent.parent.GetComponent<LogTree>().canLog = false;
+            transform.parent.GetComponent<SpriteRenderer>().color = Color.red;
+        }
+
+        if(other.gameObject.layer == obstacleLayer)
         {
             Debug.Log("yes");
             transform.parent.parent.GetComponent<LogTree>().canLog = false;
@@ -46,6 +54,13 @@ public class CheckObstacle : MonoBehaviour
             Debug.Log("no");
             transform.parent.parent.GetComponent<LogTree>().canLog = true;
             transform.parent.GetComponent<SpriteRenderer>().color = Color.blue;
+        }
+
+        if (other.gameObject.layer == obstacleLayer)
+        {
+            Debug.Log("yes");
+            transform.parent.parent.GetComponent<LogTree>().canLog = false;
+            transform.parent.GetComponent<SpriteRenderer>().color = Color.red;
         }
     }
 
