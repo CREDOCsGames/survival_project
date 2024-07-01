@@ -5,7 +5,6 @@ public class ProjectileObjectPool : MonoBehaviour
 {
     [SerializeField] protected DamageUI damageUI;
     [SerializeField] float projectileDamage;
-    //public GameObject effectPrefab;
 
     protected IObjectPool<ProjectileObjectPool> pool;
     protected IObjectPool<DamageUI> damagePool;
@@ -24,8 +23,6 @@ public class ProjectileObjectPool : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.tag);
-
         if (other.CompareTag("Monster") && other.transform.parent.GetComponent<Monster>() != null)
         {
             Monster monster = other.transform.parent.GetComponent<Monster>();

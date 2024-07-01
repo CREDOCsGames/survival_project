@@ -5273,7 +5273,7 @@ MonoBehaviour:
   initGameTime: 10000
   gameTime: 10000
   money: 5000000
-  round: 20
+  round: 1
   woodCount: 70
   woodMaxCount: 70
   maxHp: 1000000
@@ -5294,7 +5294,7 @@ MonoBehaviour:
   passiveIntVariables: 
   passiveFloatVariables: []
   passiveBoolVariables: 
-  dashCount: 2
+  dashCount: 20
   buffNum: 0
   exDmg: 0
   isedolCount: 0
