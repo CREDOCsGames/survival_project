@@ -30,18 +30,19 @@ public class CheckObstacle : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.name);
+        Debug.Log(other.gameObject.layer.ToString());
+        Debug.Log(obstacleLayer.ToString());
 
-        if (other.CompareTag("Obstacle"))
+        if(other.CompareTag("Obstacle"))
         {
-            Debug.Log("yes");
+            Debug.Log("ye");
             transform.parent.parent.GetComponent<LogTree>().canLog = false;
             transform.parent.GetComponent<SpriteRenderer>().color = Color.red;
         }
 
         if(other.gameObject.layer == obstacleLayer)
         {
-            Debug.Log("yes");
+            Debug.Log("s");
             transform.parent.parent.GetComponent<LogTree>().canLog = false;
             transform.parent.GetComponent<SpriteRenderer>().color = Color.red;
         }
@@ -49,18 +50,10 @@ public class CheckObstacle : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Obstacle"))
-        {
-            Debug.Log("no");
-            transform.parent.parent.GetComponent<LogTree>().canLog = true;
-            transform.parent.GetComponent<SpriteRenderer>().color = Color.blue;
-        }
-
         if (other.gameObject.layer == obstacleLayer)
         {
-            Debug.Log("yes");
-            transform.parent.parent.GetComponent<LogTree>().canLog = false;
-            transform.parent.GetComponent<SpriteRenderer>().color = Color.red;
+            transform.parent.parent.GetComponent<LogTree>().canLog = true;
+            transform.parent.GetComponent<SpriteRenderer>().color = Color.blue;
         }
     }
 
