@@ -180,7 +180,7 @@ public class Monster : MonoBehaviour
         }
     }
 
-    // ¹æ¾î·Â ¾øÀÌ ¹Ù·Î ±ğÀÌ´Â ´ë¹ÌÁö
+    // ë°©ì–´ë ¥ ì—†ì´ ë°”ë¡œ ê¹ì´ëŠ” ëŒ€ë¯¸ì§€
     public void PureOnDamaged(float damage)
     {
         hp -= damage;

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public enum CHARACTER_NUM
@@ -12,6 +13,7 @@ public enum CHARACTER_NUM
 public class Character : Singleton<Character>
 {
     [SerializeField] public SpriteRenderer rend;
+    [SerializeField] Animator anim;
     [SerializeField] ParticleSystem particle;
     [SerializeField] GameObject gardianAngel;
     [SerializeField] GameObject gardianEffect;
@@ -48,7 +50,8 @@ public class Character : Singleton<Character>
     [SerializeField]  public Transform[] summonPos;
     [HideInInspector] public int summonNum;
 
-    Animator anim;
+    [SerializeField] LayerMask obstacleLayer;
+
     Collider ground;
 
     bool isRun, isAttacked = false;
@@ -80,6 +83,8 @@ public class Character : Singleton<Character>
 
     public Transform weaponParent;
 
+    NavMeshAgent agent;
+
     protected override void Awake()
     {
         base.Awake();
@@ -88,9 +93,10 @@ public class Character : Singleton<Character>
 
     void Start()
     {
-        anim = GetComponent<Animator>();
         particle.GetComponentInChildren<Renderer>().enabled = false;
         gameObject.GetComponent<SpecialAttack>().enabled = false;
+        agent = GetComponent<NavMeshAgent>();
+        agent.enabled = false;
 
         gameManager = GameManager.Instance;
         transform.position = new Vector3(0f, 0f, -40f);
@@ -107,6 +113,8 @@ public class Character : Singleton<Character>
         dashCoolTime = 4;
         dashCount = gameManager.dashCount;
         initDashCoolTime = dashCoolTime;
+
+        
 
         gameObject.SetActive(false);
     }
@@ -163,11 +171,8 @@ public class Character : Singleton<Character>
         {
             HpSetting();
 
-            //isRun = false;
-
             if (currentHp > 0 && (!gameManager.isClear || !gameManager.isBossDead))
             {
-                //Move();
                 Dash();
                 AutoRecoverHp();
             }
@@ -177,9 +182,6 @@ public class Character : Singleton<Character>
                 isBuff = false;
                 buffTime = 5;
             }
-
-            /*anim.SetFloat("moveSpeed", 1 + (speed * 0.1f));
-            anim.SetBool("isRun", isRun);*/
         }
 
         SummonPet();
@@ -300,7 +302,7 @@ public class Character : Singleton<Character>
         {
             Vector3 beforePos;
             Vector3 afterPos;
-
+            Debug.DrawRay(transform.position, new Vector3(x, 0, z) * 4);
             if (dashCount > 0)
             {
                 if (rend.flipX == true)
@@ -327,7 +329,13 @@ public class Character : Singleton<Character>
                     else
                         afterPos = ground.bounds.ClosestPoint(afterPos);
 
+                    afterPos = new Vector3(afterPos.x, transform.position.y, afterPos.z);
+
+                    agent.enabled = false;
+
                     transform.position = Vector3.Lerp(beforePos, afterPos, 1);
+
+                    agent.enabled = true;
 
                     dashCount--;
                     Invoke("ParticleOff", 0.4f);
@@ -466,8 +474,8 @@ public class Character : Singleton<Character>
 
         dir = (Vector3.right * x + Vector3.forward * z).normalized;
 
-        transform.position += dir * speed * Time.deltaTime;
-        //rigid.MovePosition(transform.position + dir * speed * Time.deltaTime);
+        agent.speed = speed;
+        agent.Move(dir * speed * Time.deltaTime);
 
         if (ground == null)
             ground = GameSceneUI.Instance.ground;

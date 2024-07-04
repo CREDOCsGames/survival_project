@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CheckCharacter : MonoBehaviour
@@ -18,6 +15,7 @@ public class CheckCharacter : MonoBehaviour
         {
             arrow.SetActive(true);
             transform.parent.GetComponent<LogTree>().canLog = true;
+            arrow.GetComponent<SpriteRenderer>().color = Color.blue;
         }
     }
 
@@ -28,8 +26,6 @@ public class CheckCharacter : MonoBehaviour
             Vector3 logDir = -(Character.Instance.transform.position - transform.position).normalized;
 
             Dir(logDir);
-
-            //Debug.Log(transform.parent.GetComponent<LogTree>().canLog);
         }
     }
 

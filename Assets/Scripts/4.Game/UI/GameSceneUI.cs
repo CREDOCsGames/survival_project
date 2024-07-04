@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Analytics;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -172,6 +173,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
 
         chestCount = 0;
         treeShopCount = 1;
+        character.GetComponent<NavMeshAgent>().enabled = true;
     }
 
     IEnumerator BlinkBossSceneText()

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using UnityEngine.TextCore.Text;
 
@@ -34,7 +35,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] public float critical;
     [SerializeField] public float avoid;
 
-    #region Ư�� �нú�
+    #region 특수 패시브
     [HideInInspector] public int[] passiveIntVariables;
     [HideInInspector] public float[] passiveFloatVariables;
     [HideInInspector] public bool[] passiveBoolVariables;
@@ -352,7 +353,7 @@ public class GameManager : Singleton<GameManager>
     public void ToNextScene(string sceneName)
     {
         Character character = Character.Instance;
-
+        character.GetComponent<NavMeshAgent>().enabled = false;
         character.transform.position = characterSpawnPos;
         currentScene = sceneName;
         character.thunderMark.transform.localScale = new Vector3(Mathf.Clamp(4f + range * 0.5f, 1, 12), Mathf.Clamp(4f + range * 0.5f, 1, 12), 0);
