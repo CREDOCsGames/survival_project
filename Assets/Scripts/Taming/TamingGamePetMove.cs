@@ -24,22 +24,23 @@ public class TamingGamePetMove : MonoBehaviour
         rectTranform = GetComponent<RectTransform>();
         areaRect = moveArea.rect;
 
-        /*Debug.Log(areaRect.xMin);
-        Debug.Log(areaRect.xMax);
-        Debug.Log(areaRect.yMin);
-        Debug.Log(areaRect.yMax);*/
-
-        StartCoroutine(GetRandomDir());
+        StartCoroutine(GetRandomOffset());
+        StartCoroutine(Dash());
     }
 
     private void Update()
+    {
+        MoveRandomDir();
+    }
+
+    void MoveRandomDir()
     {
         float x = Mathf.PerlinNoise(Time.time * noiseScale + offsetX, 0f) * 2 - 1;
         float y = Mathf.PerlinNoise(0f, Time.time * noiseScale + offsetY) * 2 - 1;
 
         dir = new Vector3(x, y, 0f).normalized;
 
-        if (isTurn) 
+        if (isTurn)
         {
             dir = -dir;
         }
@@ -57,7 +58,20 @@ public class TamingGamePetMove : MonoBehaviour
         }
     }
 
-    IEnumerator GetRandomDir()
+    IEnumerator Dash()
+    {
+        while (true)
+        {
+            float xPos = Random.Range(areaRect.xMin, areaRect.xMax);
+            float yPos = Random.Range(areaRect.yMin, areaRect.yMax);
+
+            rectTranform.localPosition = new Vector3(xPos, yPos, 0f);
+
+            yield return new WaitForSeconds(3f);
+        }
+    }
+
+    IEnumerator GetRandomOffset()
     {
         while (true)
         {
