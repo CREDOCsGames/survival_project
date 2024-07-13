@@ -6,7 +6,7 @@ public class LogTree : MonoBehaviour
 {
     [SerializeField] GameObject obstacle;
 
-    public bool canLog = false;
+    [HideInInspector] public bool canLog = false;
 
     private void Start()
     {
@@ -15,7 +15,6 @@ public class LogTree : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //if (transform.GetChild(1).GetComponent<CheckObstacle>().canLog == false)
         if (canLog == false)
             return;
 
@@ -34,6 +33,20 @@ public class LogTree : MonoBehaviour
     {
         Vector3 logDir = (Character.Instance.transform.position - transform.position).normalized;
 
-        return new Vector3(90, 0, Mathf.Atan2(logDir.z, logDir.x) * Mathf.Rad2Deg + 90);
+        float angle = Mathf.Atan2(logDir.z, logDir.x) * Mathf.Rad2Deg;
+
+        if (angle > 0 && angle <= 90)
+            angle = -90;
+
+        else if (angle > 90 && angle <= 180)
+            angle = 180;
+
+        else if (angle > -90 && angle <= 0)
+            angle = 0;
+
+        else if (angle > -180 && angle <= -90)
+            angle = 90;
+
+        return new Vector3(90, 0, -angle);
     }
 }

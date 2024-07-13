@@ -12,7 +12,7 @@ public class TamingViewUI : MonoBehaviour
     {
         tamingGauge.value = 0;
 
-        Cursor.visible = false;
+        Cursor.visible = false;     // esc 누르면 다시 초기화됨.
     }
 
     private void Update()

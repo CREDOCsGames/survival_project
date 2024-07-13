@@ -4956,7 +4956,7 @@ GameObject:
   - component: {fileID: 289213144344291190}
   - component: {fileID: 4918108379380069775}
   - component: {fileID: 289213144344291184}
-  - component: {fileID: 6879116882300157037}
+  - component: {fileID: 2030790823311812204}
   m_Layer: 6
   m_Name: Lilpa
   m_TagString: Character
@@ -5053,6 +5053,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 86c228ecf84dce54abcbd77bb43b2936, type: 2}
   - {fileID: 11400000, guid: 440ed7bc70a7f9148ad6568dbd53b530, type: 2}
   - {fileID: 11400000, guid: fca81d4bdf76aca498603fcbcf9759cb, type: 2}
+  currentController:
+  - {fileID: 9100000, guid: a603b253fbfabd94588173e4a72a3bee, type: 2}
+  - {fileID: 9100000, guid: 6d23459f301113241b2b65fa13ef4d1f, type: 2}
   dashCoolTime: 2
   initDashCoolTime: 0
   dashCount: 2
@@ -5101,7 +5104,8 @@ MonoBehaviour:
   shield: 0
   currentCharacterInfo: {fileID: 0}
   weaponParent: {fileID: 4566666533326533890}
---- !u!114 &6879116882300157037
+  isCanControll: 1
+--- !u!114 &2030790823311812204
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5110,13 +5114,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 289213144344291185}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69e8b0eed55d6b3468cb1d0f37d53b03, type: 3}
+  m_Script: {fileID: 11500000, guid: 801c189cc52364a40b0f16fdf61d1407, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultAttack: {fileID: 289213144614210456}
-  monsterLayer:
+  layerMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 262144
 --- !u!1 &289213144374507397
 GameObject:
   m_ObjectHideFlags: 0

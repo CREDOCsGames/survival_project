@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CheckObstacle : MonoBehaviour
+public class CheckCantObstacleSet : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {

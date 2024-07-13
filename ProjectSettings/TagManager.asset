@@ -14,7 +14,8 @@ TagManager:
   - Thunder
   - CamBound
   - Obstacle
-  - Bush
+  - MouseInteraction
+  - MouseInteration
   layers:
   - Default
   - TransparentFX
@@ -34,7 +35,7 @@ TagManager:
   - CharacterWallColl
   - Obstacle
   - bush
-  - 
+  - MouseInteraction
   - 
   - 
   - 

@@ -88,10 +88,11 @@ public class GameSceneUI : Singleton<GameSceneUI>
     GameManager gameManager;
     Character character;
     SoundManager soundManager;
-    TreeShop treeShop;
 
     [HideInInspector] public int chestCount;
     [HideInInspector] public int treeShopCount;
+
+    [SerializeField] LayerMask interactionLayer;
 
     bool bgmChange;
 
@@ -115,7 +116,6 @@ public class GameSceneUI : Singleton<GameSceneUI>
         treeShopPanel.SetActive(false);
 
         gameManager = GameManager.Instance;
-        treeShop = TreeShop.Instance;
 
         //monsterSpawn.SetActive(false);
 
@@ -166,7 +166,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
         if (gameManager.round == 1)
             gameManager.gameStartTime = Time.realtimeSinceStartup;
 
-        SpawnTree();
+        StartCoroutine(SpawnTree());
 
         if (gameManager.spawnTree)
             InvokeRepeating("SpawnOneTree", 10f, 10f);
@@ -208,18 +208,33 @@ public class GameSceneUI : Singleton<GameSceneUI>
         bossSceneText.gameObject.SetActive(false);
     }
 
-    void SpawnTree()
+    IEnumerator SpawnTree()
     {
         for (int i = 0; i < 10; i++)
         {
             SpawnOneTree();
+
+            yield return null;
         }
     }
 
     void SpawnOneTree()
     {
         GameObject tree = Instantiate(treePrefab);
-        tree.transform.position = TreePos();
+
+        tree.transform.position = SpawnTreePos();
+    }
+
+    Vector3 SpawnTreePos()
+    {
+        Vector3 spawnPos = TreePos();
+
+        while (Physics.OverlapSphere(spawnPos, 2, interactionLayer).Length > 0)
+        {
+            spawnPos = TreePos();
+        }
+
+        return spawnPos;
     }
 
     Vector3 TreePos()

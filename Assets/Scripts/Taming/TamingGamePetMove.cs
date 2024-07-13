@@ -1,6 +1,13 @@
 using System.Collections;
 using UnityEngine;
 
+enum MoveType
+{
+    DIRECT,
+    RANDOM,
+    COUNT,
+}
+
 public class TamingGamePetMove : MonoBehaviour
 {
     [SerializeField] RectTransform moveArea;
@@ -16,6 +23,8 @@ public class TamingGamePetMove : MonoBehaviour
 
     bool isTurn = false;
 
+    MoveType moveType;
+
     public float noiseScale = 0.5f;  // 노이즈 스케일
     private float offsetX, offsetY;  // 노이즈 오프셋
 
@@ -24,13 +33,23 @@ public class TamingGamePetMove : MonoBehaviour
         rectTranform = GetComponent<RectTransform>();
         areaRect = moveArea.rect;
 
-        StartCoroutine(GetRandomOffset());
+        StartCoroutine(SetMoveType());
         StartCoroutine(Dash());
+        StartCoroutine(GetRandomSpeed());
     }
 
     private void Update()
     {
-        MoveRandomDir();
+        switch (moveType)
+        {
+            case MoveType.DIRECT:
+                MoveDirectly();
+                break;
+
+            case MoveType.RANDOM:
+                MoveRandomDir();
+                break;
+        }
     }
 
     void MoveRandomDir()
@@ -58,6 +77,17 @@ public class TamingGamePetMove : MonoBehaviour
         }
     }
 
+    void MoveDirectly()
+    {
+        nextPos = rectTranform.localPosition + dir * Time.deltaTime * moveSpeed * 1.5f;
+
+        if (areaRect.Contains(nextPos))
+            rectTranform.localPosition = nextPos;
+
+        else
+            dir = -dir;
+    }
+
     IEnumerator Dash()
     {
         while (true)
@@ -67,20 +97,54 @@ public class TamingGamePetMove : MonoBehaviour
 
             rectTranform.localPosition = new Vector3(xPos, yPos, 0f);
 
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(1.5f);
         }
     }
 
-    IEnumerator GetRandomOffset()
+    IEnumerator SetMoveType()
     {
         while (true)
         {
-            isTurn = false;
+            moveType = (MoveType)Random.Range(0, 2);
 
-            offsetX = Random.Range(0f, 100f);
-            offsetY = Random.Range(0f, 100f);
+            switch (moveType)
+            {
+                case MoveType.DIRECT:
+                    GetRandomOffset();
+                    break;
+
+                case MoveType.RANDOM:
+                    GetRandomDir();
+                    break;
+            }
 
             yield return new WaitForSeconds(2f);
         }
+    }
+
+    IEnumerator GetRandomSpeed()
+    {
+        while (true) 
+        {
+            moveSpeed = Random.Range(200f, 400f);
+
+            yield return new WaitForSeconds(1.5f);
+        }
+    }
+
+    void GetRandomDir()
+    {
+        float x = Random.Range(-1f, 1f);
+        float y = Random.Range(-1f, 1f);
+
+        dir = new Vector3(x, y, 0f).normalized;
+    }
+
+    void GetRandomOffset()
+    {
+        isTurn = false;
+
+        offsetX = Random.Range(0f, 100f);
+        offsetY = Random.Range(0f, 100f);
     }
 }

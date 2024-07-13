@@ -12,7 +12,7 @@ public class MonsterMove : MonoBehaviour
 
     Vector3 dir;
 
-    NavMeshAgent agent;
+    public NavMeshAgent agent;
 
     private void Start()
     {

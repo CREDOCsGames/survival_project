@@ -58,9 +58,6 @@ public class ClassChangeUI : OptionUI
     {
         character.CharacterSetting(characterNum);
 
-        if(characterNum == 3)
-            character.gameObject.GetComponent<SpecialAttack>().enabled = true;
-
         ReturnToGame();
     }
 

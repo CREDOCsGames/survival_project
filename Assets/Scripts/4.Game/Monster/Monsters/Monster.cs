@@ -115,6 +115,7 @@ public class Monster : MonoBehaviour
         rend.color = Color.white;
         initcolor = rend.color;
         rend.sortingOrder = 2;
+        GetComponent<MonsterMove>().agent.enabled = false;
     }
 
     public void Move()

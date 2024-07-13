@@ -26,6 +26,7 @@ public class Character : Singleton<Character>
     public int level;
     [SerializeField] public float maxExp;
     [SerializeField] public CharacterInfo[] characterInfos;
+    [SerializeField] public RuntimeAnimatorController[] currentController;
     //[SerializeField] public CharacterInfo[] characterInfos2;
 
     [HideInInspector] public float dashCoolTime;
@@ -85,6 +86,8 @@ public class Character : Singleton<Character>
 
     NavMeshAgent agent;
 
+    public bool isCanControll = true;
+
     protected override void Awake()
     {
         base.Awake();
@@ -94,7 +97,6 @@ public class Character : Singleton<Character>
     void Start()
     {
         particle.GetComponentInChildren<Renderer>().enabled = false;
-        gameObject.GetComponent<SpecialAttack>().enabled = false;
         agent = GetComponent<NavMeshAgent>();
         agent.enabled = false;
 
@@ -171,7 +173,7 @@ public class Character : Singleton<Character>
         {
             HpSetting();
 
-            if (currentHp > 0 && (!gameManager.isClear || !gameManager.isBossDead))
+            if (currentHp > 0 && (!gameManager.isClear || !gameManager.isBossDead) && isCanControll)
             {
                 Dash();
                 AutoRecoverHp();
@@ -191,6 +193,9 @@ public class Character : Singleton<Character>
     {
         if (gameManager.currentScene == "Game" && !gameManager.isPause)
         {
+            if (!isCanControll)
+                return;
+
             isRun = false;
 
             if (currentHp > 0 && (!gameManager.isClear || !gameManager.isBossDead))
@@ -431,19 +436,16 @@ public class Character : Singleton<Character>
             if (Input.GetKey((KeyCode)PlayerPrefs.GetInt("Key_Left")))
             {
                 x = -1;
-                rend.flipX = true;
 
                 if (!isLeftRight && Input.GetKey((KeyCode)PlayerPrefs.GetInt("Key_Right")))
                 {
                     x = 1;
-                    rend.flipX = false;
                 }
             }
 
             else if (Input.GetKey((KeyCode)PlayerPrefs.GetInt("Key_Right")))
             {
                 x = 1;
-                rend.flipX = false;
                 isLeftRight = true;
             }
 
@@ -488,6 +490,13 @@ public class Character : Singleton<Character>
 
         else if (dir == Vector3.zero)
             isRun = false;
+
+        Flip();
+    }
+
+    void Flip()
+    {
+        rend.flipX = dir.x < 0;
     }
 
     int avoidRand;
@@ -643,5 +652,35 @@ public class Character : Singleton<Character>
         yield return new WaitForSeconds(2f);
         rend.color = Color.white;
         isAttacked = false;
+    }
+
+    public IEnumerator MoveToTree(Vector3 logPos)
+    {
+        isCanControll = false;
+
+        anim.SetFloat("moveSpeed", 1 + (speed * 0.1f));
+        anim.SetBool("isRun", true);
+
+        dir = (logPos - transform.position).normalized;
+
+        Flip();
+
+        while (transform.position != logPos)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, logPos, Time.deltaTime * speed);
+
+            if (transform.position == logPos)
+            {
+                ChangeAnimationController(1);
+                anim.SetBool("isLogging", true);
+            }
+
+            yield return null;
+        }
+    }
+
+    public void ChangeAnimationController(int num)
+    {
+        anim.runtimeAnimatorController = currentController[num];
     }
 }
