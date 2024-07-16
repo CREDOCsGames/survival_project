@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Analytics;
@@ -12,22 +13,16 @@ public class GameSceneUI : Singleton<GameSceneUI>
     Texture2D cursorNormal;
     [SerializeField] public Collider ground;
     [SerializeField] GameObject treePrefab;
+    [SerializeField] GameObject bushPrefab;
     [SerializeField] public GameObject monsterSpawn;
     [SerializeField] GameObject tutoPanel;
     [SerializeField] GameObject selectPanel;
-    [SerializeField] GameObject treeShopPanel;
+    public GameObject tamingGame;
 
     [Header("HP")]
-    [SerializeField] Image chararcterImage;
     [SerializeField] Text hpText;
-    [SerializeField] Text maxHpText;
-    [SerializeField] Text SheildText;
     [SerializeField] Slider hpBar;
-    [SerializeField] Slider sheildBar;
-
-    [Header("EXP")]
-    [SerializeField] Text lvText;
-    [SerializeField] Slider expBar;
+    [SerializeField] Slider recoveryGaugeBar;
 
     [Header("COIN")]
     [SerializeField] Text coinText;
@@ -113,7 +108,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
         clearImage.gameObject.SetActive(false);
         tutoPanel.SetActive(false);
         selectPanel.SetActive(false);
-        treeShopPanel.SetActive(false);
+        tamingGame.SetActive(false);
 
         gameManager = GameManager.Instance;
 
@@ -161,12 +156,10 @@ public class GameSceneUI : Singleton<GameSceneUI>
         else
             soundManager.PlayBGM(1, true);
 
-        chararcterImage.sprite = character.rend.sprite;
-
         if (gameManager.round == 1)
             gameManager.gameStartTime = Time.realtimeSinceStartup;
 
-        StartCoroutine(SpawnTree());
+        StartCoroutine(SpawnTreeAndBush());
 
         if (gameManager.spawnTree)
             InvokeRepeating("SpawnOneTree", 10f, 10f);
@@ -208,39 +201,49 @@ public class GameSceneUI : Singleton<GameSceneUI>
         bossSceneText.gameObject.SetActive(false);
     }
 
-    IEnumerator SpawnTree()
+    IEnumerator SpawnTreeAndBush()
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 25; i++)
         {
-            SpawnOneTree();
+            SpawnOneBushOrTree(treePrefab);
+            yield return null;      // 보통 0.002초
+        }
 
+        for (int i = 0; i < 15; i++)
+        {
+            SpawnOneBushOrTree(bushPrefab);
             yield return null;
         }
     }
 
-    void SpawnOneTree()
+    void SpawnOneBushOrTree(GameObject spawnObject)
     {
-        GameObject tree = Instantiate(treePrefab);
-
-        tree.transform.position = SpawnTreePos();
+        Instantiate(spawnObject, SpawnTreeAndBushPos(), spawnObject.transform.rotation);
     }
 
-    Vector3 SpawnTreePos()
-    {
-        Vector3 spawnPos = TreePos();
 
-        while (Physics.OverlapSphere(spawnPos, 2, interactionLayer).Length > 0)
+    Vector3 SpawnTreeAndBushPos()
+    {
+        Vector3 spawnPos = TreeAndBushPos();
+        
+        while (true)
         {
-            spawnPos = TreePos();
+            if (Physics.OverlapSphere(spawnPos, 2f, interactionLayer).Length <= 0)
+            {
+                break;
+            }
+            
+            spawnPos = TreeAndBushPos();
         }
 
         return spawnPos;
     }
 
-    Vector3 TreePos()
+    Vector3 TreeAndBushPos()
     {
         float groundX = ground.bounds.size.x;
         float groundZ = ground.bounds.size.z;
+
         groundX = UnityEngine.Random.Range((groundX / 2f) * -1f + ground.bounds.center.x, (groundX / 2f) + ground.bounds.center.x);
         groundZ = UnityEngine.Random.Range((groundZ / 2f) * -1f + ground.bounds.center.z, (groundZ / 2f) + ground.bounds.center.z);
 
@@ -260,7 +263,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
     private void Update()
     {
         HpUI();
-        ExpUI();
+        RecoveryGauegeUI();
         CoinUI();
         WoodUI();
         RoundUI();
@@ -299,14 +302,12 @@ public class GameSceneUI : Singleton<GameSceneUI>
                         {
                             statCardParent.gameObject.SetActive(false);
                             chestPassive.gameObject.SetActive(false);
-                            treeShopPanel.SetActive(true);
                         }
 
                         else 
                         {
                             statCardParent.gameObject.SetActive(false);
                             chestPassive.gameObject.SetActive(false);
-                            treeShopPanel.SetActive(false);
 
                             if (gameManager.woodCount < 5 && !selectPanel.activeSelf)
                                 gameManager.ToNextScene("Shop");
@@ -574,32 +575,14 @@ public class GameSceneUI : Singleton<GameSceneUI>
 
     void HpUI()
     {
-        if (gameManager.currentScene == "Game" && character.maxExp != 0)
-        {
-            maxHpText.text = character.maxHp.ToString();
-            hpText.text = character.currentHp.ToString("0.#");
+        hpText.text = string.Format($"{character.currentHp.ToString("0.#")} / {character.maxHp.ToString()}");
 
-            if (character.shield > 0)
-            {
-                SheildText.gameObject.SetActive(true);
-                SheildText.text = $"+ {character.shield.ToString("0.#")}";
-            }
-
-            else
-                SheildText.gameObject.SetActive(false);
-
-            hpBar.value = (character.currentHp / character.maxHp);
-            sheildBar.value = (character.shield / character.maxHp);
-        }
+        hpBar.value = (character.currentHp / character.maxHp);
     }
 
-    void ExpUI()
+    public void RecoveryGauegeUI()
     {
-        if (character.maxExp != 0)
-        {
-            lvText.text = character.level.ToString();
-            expBar.value = 1 - (character.exp / character.maxExp);
-        }
+        recoveryGaugeBar.value = Mathf.Clamp(character.currentRecoveryGauge / character.maxRecoveryGauge, 0f, 1f);
     }
 
     void CoinUI()

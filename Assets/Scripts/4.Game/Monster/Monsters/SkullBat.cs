@@ -110,7 +110,6 @@ public class SkullBat : Monster
                     {
                         gameManager.money += 500;
                         SoundManager.Instance.PlayES("LevelUp");
-                        character.level++;
                     }
                     Destroy(gameObject);
                 }

@@ -44,7 +44,7 @@ public class MonsterSpawn : MonoBehaviour
             totalWeight += weightValue[i];
         }
 
-        RendSpawnImage();
+        //RendSpawnImage();
 
         /*InvokeRepeating("RendSpawnImage", 0.1f, Mathf.Clamp(spawnDelay / (1 + (gameManager.round - 1) * 0.1f), 0.5f, 1));
         //InvokeRepeating("RendSpawnImage", 0.1f, 5f);

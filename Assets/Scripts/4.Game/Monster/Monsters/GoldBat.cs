@@ -127,7 +127,6 @@ public class GoldBat : Monster
                     {
                         gameManager.money += 200;
                         SoundManager.Instance.PlayES("LevelUp");
-                        character.level++;
                     }
                     Destroy(gameObject);
                 }

@@ -115,7 +115,6 @@ public class Monster : MonoBehaviour
         rend.color = Color.white;
         initcolor = rend.color;
         rend.sortingOrder = 2;
-        GetComponent<MonsterMove>().agent.enabled = false;
     }
 
     public void Move()
@@ -253,6 +252,7 @@ public class Monster : MonoBehaviour
     {
         if (hp <= 0 || (gameManager.isClear && gameManager.isBossDead) || character.isDead)
         {
+            GetComponent<MonsterMove>().agent.enabled = false;
             rend.sortingOrder = 0;
             anim.speed = 1f;
             isDead = true;

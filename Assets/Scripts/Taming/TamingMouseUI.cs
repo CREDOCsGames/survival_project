@@ -39,6 +39,10 @@ public class TamingMouseUI : MonoBehaviour
                          rect2.localPosition.y - rect2.rect.height / 2,
                          rect2.rect.width, rect2.rect.height);
 
-        return rectUI.Overlaps(rectPet);
+        bool isOverlap = rectUI.Overlaps(rectPet);
+
+        rect2.GetComponent<TamingGamePetMove>().moveSpeed = isOverlap ? rect2.GetComponent<TamingGamePetMove>().DefalutSpeed + 100f : rect2.GetComponent<TamingGamePetMove>().DefalutSpeed;
+
+        return isOverlap;
     }
 }

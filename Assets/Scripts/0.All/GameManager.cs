@@ -365,7 +365,7 @@ public class GameManager : Singleton<GameManager>
             character.maxHp = maxHp;
 
         character.shield = 0f;
-        character.currentHp = character.maxHp;
+        //character.currentHp = character.maxHp;
         character.dashCount = dashCount;
         character.dashCoolTime = character.initDashCoolTime;
 

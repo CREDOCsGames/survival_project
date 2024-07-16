@@ -7,7 +7,11 @@ public class CheckCharacter : MonoBehaviour
 
     private void Start()
     {
-        arrow.gameObject.SetActive(false);
+        if (arrow != null)
+        {
+            arrow.gameObject.SetActive(false);
+        }
+
         clickUI.gameObject.SetActive(false);
     }
 
@@ -15,19 +19,22 @@ public class CheckCharacter : MonoBehaviour
     {
         if (other.CompareTag("Character"))
         {
-            arrow.SetActive(true);
+            if (arrow != null)
+            {
+                arrow.SetActive(true);
+                arrow.GetComponent<SpriteRenderer>().color = Color.blue;
+            }
+
             clickUI.SetActive(true);
-            transform.parent.GetComponent<LogTree>().canLog = true;
-            arrow.GetComponent<SpriteRenderer>().color = Color.blue;
+            transform.parent.GetComponent<IMouseInteraction>().CanInteraction(true);
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Character"))
+        if (arrow != null && other.CompareTag("Character"))
         {
             Vector3 logDir = -(Character.Instance.transform.position - transform.position).normalized;
-
             ArrowRatateToDir(logDir);
         }
     }
@@ -36,9 +43,13 @@ public class CheckCharacter : MonoBehaviour
     {
         if (other.CompareTag("Character"))
         {
-            arrow.SetActive(false);
+            if (arrow != null)
+            {
+                arrow.SetActive(false);
+            }
+
             clickUI.SetActive(false);
-            transform.parent.GetComponent<LogTree>().canLog = false;
+            transform.parent.GetComponent<IMouseInteraction>().CanInteraction(false);
         }
     }
 

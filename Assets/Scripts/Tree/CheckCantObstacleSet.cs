@@ -6,7 +6,7 @@ public class CheckCantObstacleSet : MonoBehaviour
     {
         if(other.CompareTag("Obstacle"))
         {
-            transform.parent.parent.GetComponent<LogTree>().canLog = false;
+            transform.parent.parent.GetComponent<IMouseInteraction>().CanInteraction(false);
             transform.parent.GetComponent<SpriteRenderer>().color = Color.red;
         }
     }
@@ -15,7 +15,7 @@ public class CheckCantObstacleSet : MonoBehaviour
     {
         if (other.CompareTag("Obstacle"))
         {
-            transform.parent.parent.GetComponent<LogTree>().canLog = true;
+            transform.parent.parent.GetComponent<IMouseInteraction>().CanInteraction(true);
             transform.parent.GetComponent<SpriteRenderer>().color = Color.blue;
         }
     }

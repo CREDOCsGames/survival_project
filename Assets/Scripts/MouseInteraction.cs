@@ -4,7 +4,9 @@ using UnityEngine;
 
 public interface IMouseInteraction
 {
-    void InteractionFuc();
+    void InteractionFuc(GameObject hitObject);
+    void CanInteraction(bool canInteraction);
+    IEnumerator EndInteraction(Animator anim, float waitTime);
 }
 
 public class MouseInteraction : MonoBehaviour
@@ -20,7 +22,7 @@ public class MouseInteraction : MonoBehaviour
 
             if (hit.Length > 0)
             {
-                hit[0].transform.gameObject.GetComponent<IMouseInteraction>().InteractionFuc();
+                hit[0].transform.gameObject.GetComponent<IMouseInteraction>().InteractionFuc(hit[0].transform.gameObject);
             }
         }
     }

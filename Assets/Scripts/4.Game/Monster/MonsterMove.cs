@@ -4,7 +4,6 @@ using UnityEngine.AI;
 public class MonsterMove : MonoBehaviour
 {
     [SerializeField] float speed;
-    [SerializeField] LayerMask checkLayer;
     [SerializeField] float detectSize;
 
     Character character;

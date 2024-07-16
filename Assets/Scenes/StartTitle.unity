@@ -5272,11 +5272,11 @@ MonoBehaviour:
   damageStorage: {fileID: 1692643827}
   initGameTime: 10000
   gameTime: 10000
-  money: 5000000
+  money: 0
   round: 1
-  woodCount: 70
+  woodCount: 0
   woodMaxCount: 70
-  maxHp: 1000000
+  maxHp: 100
   percentDamage: 0
   physicDamage: 10000
   magicDamage: 0

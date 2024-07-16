@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 enum MoveType
 {
@@ -11,7 +12,10 @@ enum MoveType
 public class TamingGamePetMove : MonoBehaviour
 {
     [SerializeField] RectTransform moveArea;
-    [SerializeField] float moveSpeed = 300;
+    [SerializeField] ParticleSystem dashParticle;
+    [SerializeField] float defaultSpeed = 300f;
+    [HideInInspector] public float moveSpeed;
+    float speedRatio = 1;
 
     RectTransform rectTranform;
 
@@ -22,34 +26,66 @@ public class TamingGamePetMove : MonoBehaviour
     Vector3 dir;
 
     bool isTurn = false;
+    bool isDash = false;
+    public bool isCatch = true;
 
-    MoveType moveType;
+    MoveType moveType = MoveType.RANDOM;
 
     public float noiseScale = 0.5f;  // 노이즈 스케일
     private float offsetX, offsetY;  // 노이즈 오프셋
 
+    public float DefalutSpeed => defaultSpeed;
+
+    float scaleX;
+
     private void Start()
     {
         rectTranform = GetComponent<RectTransform>();
+        dashParticle.GetComponentInChildren<Renderer>().enabled = false;
         areaRect = moveArea.rect;
 
+        moveSpeed = defaultSpeed;
+
+        scaleX = transform.localScale.x;
+
+        StartCoroutine(GetRandomSpeedRatio());
         StartCoroutine(SetMoveType());
         StartCoroutine(Dash());
-        StartCoroutine(GetRandomSpeed());
     }
 
     private void Update()
     {
-        switch (moveType)
+        if (isCatch)
         {
-            case MoveType.DIRECT:
-                MoveDirectly();
-                break;
+            if (!isDash)
+            {
+                switch (moveType)
+                {
+                    case MoveType.DIRECT:
+                        MoveDirectly();
+                        break;
 
-            case MoveType.RANDOM:
-                MoveRandomDir();
-                break;
+                    case MoveType.RANDOM:
+                        MoveRandomDir();
+                        break;
+                }
+            }
+
+            Flip();
         }
+
+        else
+            StopAllCoroutines();
+    }
+
+    void Flip()
+    {
+        if (dir.x == 0)
+            return;
+
+        scaleX = dir.x > 0 ? scaleX : -scaleX;
+
+        transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
     }
 
     void MoveRandomDir()
@@ -64,7 +100,7 @@ public class TamingGamePetMove : MonoBehaviour
             dir = -dir;
         }
 
-        nextPos = rectTranform.localPosition + dir * Time.deltaTime * moveSpeed;
+        nextPos = rectTranform.localPosition + dir * Time.deltaTime * moveSpeed * speedRatio;
 
         if (areaRect.Contains(nextPos))
         {
@@ -79,7 +115,7 @@ public class TamingGamePetMove : MonoBehaviour
 
     void MoveDirectly()
     {
-        nextPos = rectTranform.localPosition + dir * Time.deltaTime * moveSpeed * 1.5f;
+        nextPos = rectTranform.localPosition + dir * Time.deltaTime * moveSpeed * speedRatio * 1.5f;
 
         if (areaRect.Contains(nextPos))
             rectTranform.localPosition = nextPos;
@@ -92,13 +128,32 @@ public class TamingGamePetMove : MonoBehaviour
     {
         while (true)
         {
+            yield return new WaitForSeconds(1.5f);
+
+            isDash = true;
+
+            if (scaleX < 0)
+                dashParticle.transform.localScale = new Vector3(-1, 1, 1);
+
+            else if (scaleX > 0)
+                dashParticle.transform.localScale = new Vector3(1, 1, 1);
+
             float xPos = Random.Range(areaRect.xMin, areaRect.xMax);
             float yPos = Random.Range(areaRect.yMin, areaRect.yMax);
 
+            dashParticle.GetComponentInChildren<Renderer>().enabled = true;
+            
             rectTranform.localPosition = new Vector3(xPos, yPos, 0f);
 
-            yield return new WaitForSeconds(1.5f);
+            Invoke("ParticleOff", 0.2f);
+
+            isDash = false;
         }
+    }
+
+    void ParticleOff()
+    {
+        dashParticle.GetComponentInChildren<Renderer>().enabled = false;
     }
 
     IEnumerator SetMoveType()
@@ -110,11 +165,11 @@ public class TamingGamePetMove : MonoBehaviour
             switch (moveType)
             {
                 case MoveType.DIRECT:
-                    GetRandomOffset();
+                    GetRandomDir();
                     break;
 
                 case MoveType.RANDOM:
-                    GetRandomDir();
+                    GetRandomOffset();
                     break;
             }
 
@@ -122,11 +177,11 @@ public class TamingGamePetMove : MonoBehaviour
         }
     }
 
-    IEnumerator GetRandomSpeed()
+    IEnumerator GetRandomSpeedRatio()
     {
         while (true) 
         {
-            moveSpeed = Random.Range(200f, 400f);
+            speedRatio = Random.Range(1f, 2f);
 
             yield return new WaitForSeconds(1.5f);
         }

@@ -151,7 +151,6 @@ public class EndUI : Singleton<EndUI>
 
     void SettingStatText()
     {
-        lv.text = character.level.ToString();
         maxHp.text = character.maxHp.ToString();
         reHp.text = gameManager.recoverHp.ToString("0.#");
         apHp.text = gameManager.absorbHp.ToString("0.#");

@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -19,15 +20,11 @@ public class Character : Singleton<Character>
     [SerializeField] GameObject gardianEffect;
 
     [SerializeField] Slider playerHpBar;
-    [SerializeField] Slider shielBar;
 
     [Header("Stat")]
     [SerializeField] public int characterNum;
-    public int level;
-    [SerializeField] public float maxExp;
     [SerializeField] public CharacterInfo[] characterInfos;
-    [SerializeField] public RuntimeAnimatorController[] currentController;
-    //[SerializeField] public CharacterInfo[] characterInfos2;
+    [SerializeField] RuntimeAnimatorController[] currentController;
 
     [HideInInspector] public float dashCoolTime;
     [HideInInspector] public float initDashCoolTime;
@@ -43,6 +40,10 @@ public class Character : Singleton<Character>
     [HideInInspector] public float maxHp;
     [HideInInspector] public float currentHp;
     [HideInInspector] public float speed;
+    public float maxRecoveryGauge;
+    [HideInInspector] public float currentRecoveryGauge;
+    public GameObject fruitUI;
+    float recoveryValue = 10f;
 
     [Header("Summon")]
     [SerializeField] GameObject ggoGgoPrefab;
@@ -108,15 +109,12 @@ public class Character : Singleton<Character>
         gardianEffect.SetActive(false);
 
         CharacterSetting(characterNum);
-        maxExp = 10;
-        level = 1;
-        levelUpCount = 0;
         recoverTime = 1;
         dashCoolTime = 4;
         dashCount = gameManager.dashCount;
         initDashCoolTime = dashCoolTime;
 
-        
+        fruitUI.gameObject.SetActive(false);
 
         gameObject.SetActive(false);
     }
@@ -128,7 +126,14 @@ public class Character : Singleton<Character>
         anim.runtimeAnimatorController = characterInfos[characterNum].CharacterAnim;
         gameManager.stats[0] = Mathf.Round(gameManager.stats[0] * characterInfos[characterNum].HpRate);
         maxHp = gameManager.stats[0];
+#if UNITY_EDITOR_WIN
         currentHp = maxHp;
+#endif
+
+#if UNITY_EDITOR
+        currentHp = 10;
+#endif
+        currentRecoveryGauge = 0;
         gameManager.stats[9] += characterInfos[characterNum].CharacterSpeed;
         gameManager.stats[13] += characterInfos[characterNum].DamageRatio;
         gameManager.stats[14] += characterInfos[characterNum].Avoid;
@@ -151,21 +156,6 @@ public class Character : Singleton<Character>
 
     void Update()
     {
-        if (exp >= maxExp)
-        {
-            SoundManager.Instance.PlayES("LevelUp");
-            level++;
-            levelUpCount++;
-            gameManager.stats[0] += 1;
-            if (gameManager.maxHp > 1)
-                maxHp = gameManager.maxHp;
-
-            else
-                maxHp = 1f;
-            exp = exp - maxExp;
-            maxExp = 10 * level;
-        }
-
         if (gameManager.revive)
             gardianAngel.SetActive(true);
 
@@ -173,8 +163,9 @@ public class Character : Singleton<Character>
         {
             HpSetting();
 
-            if (currentHp > 0 && (!gameManager.isClear || !gameManager.isBossDead) && isCanControll)
+            if (currentHp > 0 && (!gameManager.isClear || !gameManager.isBossDead))
             {
+                UseRecoveyGauege();
                 Dash();
                 AutoRecoverHp();
             }
@@ -212,7 +203,28 @@ public class Character : Singleton<Character>
             currentHp = maxHp;
 
         playerHpBar.value = 1 - (currentHp / maxHp);
-        shielBar.value = (shield / 10f);
+    }
+
+    void UseRecoveyGauege()
+    {
+        if (!isCanControll)
+            return;
+
+        if (currentRecoveryGauge >= recoveryValue && Input.GetKeyDown(KeyCode.Q))
+        {
+            StartCoroutine(ConvertRecoveryGauge());
+        }
+    }
+
+    IEnumerator ConvertRecoveryGauge()
+    {
+        isCanControll = false;
+        currentHp += recoveryValue;
+        currentRecoveryGauge -= recoveryValue;
+
+        yield return new WaitForSeconds(2f);
+
+        isCanControll = true;
     }
 
     void SummonPet()
@@ -303,11 +315,14 @@ public class Character : Singleton<Character>
 
     void Dash()
     {
+        if (!isCanControll)
+            return;
+
         if (gameManager.dashCount > 0)
         {
             Vector3 beforePos;
             Vector3 afterPos;
-            Debug.DrawRay(transform.position, new Vector3(x, 0, z) * 4);
+
             if (dashCount > 0)
             {
                 if (rend.flipX == true)
@@ -496,6 +511,9 @@ public class Character : Singleton<Character>
 
     void Flip()
     {
+        if (dir.x == 0)
+            return;
+
         rend.flipX = dir.x < 0;
     }
 
@@ -654,7 +672,7 @@ public class Character : Singleton<Character>
         isAttacked = false;
     }
 
-    public IEnumerator MoveToTree(Vector3 logPos)
+    public IEnumerator MoveToInteractableObject(Vector3 logPos, GameObject interactionObejct)
     {
         isCanControll = false;
 
@@ -673,6 +691,7 @@ public class Character : Singleton<Character>
             {
                 ChangeAnimationController(1);
                 anim.SetBool("isLogging", true);
+                StartCoroutine(interactionObejct.GetComponent<IMouseInteraction>().EndInteraction(anim, 3));
             }
 
             yield return null;
