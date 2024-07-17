@@ -85,7 +85,10 @@ public class LogTree : MonoBehaviour, IMouseInteraction
         yield return new WaitForSeconds(waitTime);
 
         SpawnObstacle();
-        gameManager.woodCount++;
+
+        int rand = Random.Range(1, 4);
+
+        gameManager.woodCount += rand;
         anim.SetBool("isLogging", false);
         character.isCanControll = true;
         character.ChangeAnimationController(0);

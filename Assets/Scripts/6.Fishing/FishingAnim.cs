@@ -32,6 +32,6 @@ public class FishingAnim : Singleton<FishingAnim>
 
     public void IsCatchingEnd()
     {
-        fishing.isCatchingStart = false;
+        StartCoroutine(fishing.FishingEnd());
     }
 }

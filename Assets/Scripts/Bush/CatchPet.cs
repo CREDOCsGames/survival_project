@@ -25,6 +25,8 @@ public class CatchPet : MonoBehaviour, IMouseInteraction
 
         character.isCanControll = true;
         gameSceneUI.tamingGame.SetActive(false);
+        gameObject.SetActive(false);
+        isCanInteraction = true;
     }
 
     public void InteractionFuc(GameObject hitObject)

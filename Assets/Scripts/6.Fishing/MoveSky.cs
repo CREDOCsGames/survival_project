@@ -1,22 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MoveSky : MonoBehaviour
 {
     [SerializeField] float moveSpeed;
 
-    Renderer rend;
-    Vector3 offset;
+    RawImage skyImage;
+    Rect imageRect;
 
     void Start()
     {
-        rend = GetComponent<Renderer>();
+        skyImage = GetComponent<RawImage>();
     }
 
     void Update()
     {
-        offset = new Vector2(Time.time * moveSpeed, 0);
-        rend.material.mainTextureOffset = offset;
+        imageRect = skyImage.uvRect;
+        imageRect.x += moveSpeed * Time.deltaTime;
+
+        skyImage.uvRect = imageRect;
     }
 }

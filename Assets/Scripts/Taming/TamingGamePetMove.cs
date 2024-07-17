@@ -83,9 +83,7 @@ public class TamingGamePetMove : MonoBehaviour
         if (dir.x == 0)
             return;
 
-        scaleX = dir.x > 0 ? scaleX : -scaleX;
-
-        transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
+        transform.localScale = new Vector3(dir.x > 0 ? scaleX : -scaleX, transform.localScale.y, transform.localScale.z);
     }
 
     void MoveRandomDir()
