@@ -1,8 +1,5 @@
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Fishing : Singleton<Fishing>
@@ -32,7 +29,10 @@ public class Fishing : Singleton<Fishing>
 
         gameManager = GameManager.Instance;
         fishingAnim = FishingAnim.Instance;
+    }
 
+    private void Start()
+    {
         gameObject.SetActive(false);
     }
 
@@ -157,6 +157,8 @@ public class Fishing : Singleton<Fishing>
         if (currentFishCount <= 0)
         {
             Character.Instance.isCanControll = true;
+            gameManager.fish1 = catchItemsCount[0];
+            gameManager.fish2 = catchItemsCount[1];
             gameObject.SetActive(false);
         }
 

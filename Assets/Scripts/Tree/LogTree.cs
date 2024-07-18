@@ -55,7 +55,7 @@ public class LogTree : MonoBehaviour, IMouseInteraction
         return new Vector3(90, 0, -angle);
     }
 
-    public void InteractionFuc(GameObject hitObject)
+    public void InteractionLeftButtonFuc(GameObject hitObject)
     {
         if (canLog)
         {
@@ -98,5 +98,10 @@ public class LogTree : MonoBehaviour, IMouseInteraction
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, 2);
+    }
+
+    public void InteractionRightButtonFuc(GameObject hitObject)
+    {
+        
     }
 }

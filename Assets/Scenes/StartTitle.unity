@@ -5274,8 +5274,10 @@ MonoBehaviour:
   gameTime: 10000
   money: 0
   round: 1
-  woodCount: 0
+  woodCount: 30
   woodMaxCount: 70
+  fish1: 4
+  fish2: 2
   maxHp: 100
   percentDamage: 0
   physicDamage: 10000

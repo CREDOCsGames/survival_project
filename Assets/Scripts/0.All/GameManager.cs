@@ -17,6 +17,8 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] public int round;
     [SerializeField] public int woodCount;
     [SerializeField] public int woodMaxCount;
+    public int fish1 = 0;
+    public int fish2 = 0;
 
     [Header("StatData")]
     [SerializeField] public float maxHp;

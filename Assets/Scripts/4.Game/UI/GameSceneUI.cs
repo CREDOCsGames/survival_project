@@ -27,8 +27,10 @@ public class GameSceneUI : Singleton<GameSceneUI>
     [Header("COIN")]
     [SerializeField] Text coinText;
 
-    [Header("Wood")]
+    [Header("Items")]
     [SerializeField] Text woodCount;
+    [SerializeField] Text fish1Count;
+    [SerializeField] Text fish2Count;
 
     [Header("Time")]
     [SerializeField] Text timeText;
@@ -89,6 +91,8 @@ public class GameSceneUI : Singleton<GameSceneUI>
 
     [SerializeField] LayerMask interactionLayer;
 
+    [SerializeField] GameObject fishingGame;
+
     bool bgmChange;
 
     protected override void Awake()
@@ -109,6 +113,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
         tutoPanel.SetActive(false);
         selectPanel.SetActive(false);
         tamingGame.SetActive(false);
+        fishingGame.SetActive(true);
 
         gameManager = GameManager.Instance;
 
@@ -265,7 +270,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
         HpUI();
         RecoveryGauegeUI();
         CoinUI();
-        WoodUI();
+        ItemsCountUI();
         RoundUI();
         TimeUI();
         DashUI();
@@ -590,9 +595,11 @@ public class GameSceneUI : Singleton<GameSceneUI>
         coinText.text = gameManager.money.ToString();
     }
 
-    void WoodUI()
+    void ItemsCountUI()
     {
         woodCount.text = gameManager.woodCount.ToString();
+        fish1Count.text = gameManager.fish1.ToString();
+        fish2Count.text = gameManager.fish2.ToString();
     }
 
     void RoundUI()

@@ -4,7 +4,9 @@ using UnityEngine;
 
 public interface IMouseInteraction
 {
-    void InteractionFuc(GameObject hitObject);
+    void InteractionLeftButtonFuc(GameObject hitObject);
+    void InteractionRightButtonFuc(GameObject hitObject);
+
     void CanInteraction(bool canInteraction);
     IEnumerator EndInteraction(Animator anim, float waitTime);
 }
@@ -22,7 +24,20 @@ public class MouseInteraction : MonoBehaviour
 
             if (hit.Length > 0)
             {
-                hit[0].transform.gameObject.GetComponent<IMouseInteraction>().InteractionFuc(hit[0].transform.gameObject);
+                if (hit[0].transform.gameObject.GetComponent<IMouseInteraction>() != null)
+                    hit[0].transform.gameObject.GetComponent<IMouseInteraction>().InteractionLeftButtonFuc(hit[0].transform.gameObject);
+            }
+        }
+
+        else if (Input.GetMouseButtonUp(1))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit[] hit = Physics.RaycastAll(ray, 100, layerMask);
+
+            if (hit.Length > 0)
+            {
+                if (hit[0].transform.gameObject.GetComponent<IMouseInteraction>() != null)
+                    hit[0].transform.gameObject.GetComponent<IMouseInteraction>().InteractionRightButtonFuc(hit[0].transform.gameObject);
             }
         }
     }

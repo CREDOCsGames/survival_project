@@ -29,7 +29,7 @@ public class CatchPet : MonoBehaviour, IMouseInteraction
         isCanInteraction = true;
     }
 
-    public void InteractionFuc(GameObject hitObject)
+    public void InteractionLeftButtonFuc(GameObject hitObject)
     {
         if (isCanInteraction)
         {
@@ -38,5 +38,10 @@ public class CatchPet : MonoBehaviour, IMouseInteraction
             gameSceneUI.tamingGame.GetComponent<TamingViewUI>().catchPet = hitObject;
             gameSceneUI.tamingGame.SetActive(true);
         }
+    }
+
+    public void InteractionRightButtonFuc(GameObject hitObject)
+    {
+        
     }
 }

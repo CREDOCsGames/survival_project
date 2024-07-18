@@ -20,7 +20,7 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
         canGather = canInteraction;
     }
 
-    public void InteractionFuc(GameObject hitObject)
+    public void InteractionLeftButtonFuc(GameObject hitObject)
     {
         if (canGather)
         {
@@ -57,6 +57,11 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, 2);
+    }
+
+    public void InteractionRightButtonFuc(GameObject hitObject)
+    {
+        
     }
 #endif
 }
