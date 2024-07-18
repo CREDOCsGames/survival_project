@@ -12,7 +12,9 @@ public class Fishing : Singleton<Fishing>
     [SerializeField] Text catchText;
     [SerializeField] Text maxFishingCount;
     [SerializeField] Text currentFishingCount;
+    [SerializeField] Text[] catchItemsText;
 
+    int[] catchItemsCount = { 0, 0, 0 };
     bool isCatch = false;
     [HideInInspector] public bool isCatchingStart = false;
     
@@ -30,6 +32,8 @@ public class Fishing : Singleton<Fishing>
 
         gameManager = GameManager.Instance;
         fishingAnim = FishingAnim.Instance;
+
+        gameObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -37,27 +41,29 @@ public class Fishing : Singleton<Fishing>
         maxFishCount = 5;
         currentFishCount = maxFishCount;
 
-        roundText.text = string.Format($"{gameManager.round} + 일차");
+        roundText.text = $"{gameManager.round} 일차";
 
         maxFishingCount.text = maxFishCount.ToString();
         currentFishingCount.text = currentFishCount.ToString();
+
+        for(int i=0;i<catchItemsText.Length; i++)
+        {
+            catchItemsText[i].text = catchItemsCount[i].ToString();
+        }
 
         Initialize();
     }
 
     void Update()
     {
-        if(currentFishCount <= 0)
-            gameObject.SetActive(false);
-
         if (!isCatch && isCatchingStart)
         {
             /*if (Input.GetMouseButtonUp(0))
             {*/
-                catchBar.gameObject.SetActive(true);
-                isCatchingStart = false;
+            catchBar.gameObject.SetActive(true);
+            isCatchingStart = false;
 
-                randSpeedRatio = Random.Range(1, 5);
+            randSpeedRatio = Random.Range(1, 5);
             //}
         }
 
@@ -117,19 +123,44 @@ public class Fishing : Singleton<Fishing>
     {
         int rand = Random.Range(0, 100);
 
-        if(rand <95)
+        rand += (int)((randSpeedRatio - 1) * 5);
+
+        if (rand < 33)
+        {
+            catchItemsCount[0]++;
+            catchItemsText[0].text = catchItemsCount[0].ToString();
             fishingAnim.isSomeCatch = 1;
+        }
+
+        else if (rand < 66)
+        {
+            catchItemsCount[1]++;
+            catchItemsText[1].text = catchItemsCount[1].ToString();
+            fishingAnim.isSomeCatch = 1;
+        }
 
         else
+        {
+            catchItemsCount[2]++;
+            catchItemsText[2].text = catchItemsCount[2].ToString();
             fishingAnim.isSomeCatch = 2;
+        }
     }
 
     public IEnumerator FishingEnd()
     {
+        currentFishCount--;
+        currentFishingCount.text = currentFishCount.ToString();
+
         yield return new WaitForSeconds(2f);
 
+        if (currentFishCount <= 0)
+        {
+            Character.Instance.isCanControll = true;
+            gameObject.SetActive(false);
+        }
+
         Initialize();
-        currentFishCount--;
     }
 
     public void Initialize()
