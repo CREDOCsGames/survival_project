@@ -12,13 +12,14 @@ public class GameManager : Singleton<GameManager>
 
     [Header("GameData")]
     [SerializeField] float initGameTime;
-    [SerializeField] float gameTime;
+    [SerializeField] public float gameDayTime;
+    [SerializeField] public float gameNightTime;
     [SerializeField] public int money;
     [SerializeField] public int round;
     [SerializeField] public int woodCount;
     [SerializeField] public int woodMaxCount;
-    public int fish1 = 0;
-    public int fish2 = 0;
+    public int fishHighGradeCount = 0;
+    public int fishLowGradeCount = 0;
 
     [Header("StatData")]
     [SerializeField] public float maxHp;
@@ -124,7 +125,7 @@ public class GameManager : Singleton<GameManager>
 */
         //InitSetting();
         InitArray();
-        currentGameTime = gameTime;
+        currentGameTime = gameDayTime;
         isPause = false;
         Time.timeScale = 1;
         isPause = false;
@@ -135,7 +136,7 @@ public class GameManager : Singleton<GameManager>
     void InitSetting()
     {
         initGameTime = 20;
-        gameTime = initGameTime;
+        gameDayTime = initGameTime;
         money = 0;
         woodCount = 0;
         woodMaxCount = 70;
@@ -381,7 +382,7 @@ public class GameManager : Singleton<GameManager>
         else
             gameTime = 30;*/
 
-        currentGameTime = gameTime;
+        currentGameTime = gameDayTime;
 
         isClear = false;
     }

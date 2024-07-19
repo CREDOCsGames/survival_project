@@ -598,8 +598,8 @@ public class GameSceneUI : Singleton<GameSceneUI>
     void ItemsCountUI()
     {
         woodCount.text = gameManager.woodCount.ToString();
-        fish1Count.text = gameManager.fish1.ToString();
-        fish2Count.text = gameManager.fish2.ToString();
+        fish1Count.text = gameManager.fishLowGradeCount.ToString();
+        fish2Count.text = gameManager.fishHighGradeCount.ToString();
     }
 
     void RoundUI()

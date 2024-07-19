@@ -19,25 +19,31 @@ public class MouseInteraction : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit[] hit = Physics.RaycastAll(ray, 100, layerMask);
-
-            if (hit.Length > 0)
-            {
-                if (hit[0].transform.gameObject.GetComponent<IMouseInteraction>() != null)
-                    hit[0].transform.gameObject.GetComponent<IMouseInteraction>().InteractionLeftButtonFuc(hit[0].transform.gameObject);
-            }
+            MouseInteractionFuc((gameObject) => { gameObject.GetComponent<IMouseInteraction>().InteractionLeftButtonFuc(gameObject); });
         }
 
         else if (Input.GetMouseButtonUp(1))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit[] hit = Physics.RaycastAll(ray, 100, layerMask);
+            MouseInteractionFuc((gameObject) => { gameObject.GetComponent<IMouseInteraction>().InteractionRightButtonFuc(gameObject); });
+        }
+    }
 
-            if (hit.Length > 0)
+    void MouseInteractionFuc(System.Action<GameObject> interactionFuc)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit[] hit = Physics.RaycastAll(ray, 100, layerMask);
+
+        if (hit.Length <= 0)
+            return;
+
+        for (int i = 0; i < hit.Length; i++)
+        {
+            var interactable = hit[i].transform.gameObject.GetComponent<IMouseInteraction>();
+
+            if (interactable != null)
             {
-                if (hit[0].transform.gameObject.GetComponent<IMouseInteraction>() != null)
-                    hit[0].transform.gameObject.GetComponent<IMouseInteraction>().InteractionRightButtonFuc(hit[0].transform.gameObject);
+                interactionFuc(hit[i].transform.gameObject);
+                return;
             }
         }
     }
