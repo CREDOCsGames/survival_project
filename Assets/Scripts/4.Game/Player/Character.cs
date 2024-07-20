@@ -189,7 +189,7 @@ public class Character : Singleton<Character>
 
             isRun = false;
 
-            if (currentHp > 0 && (!gameManager.isClear || !gameManager.isBossDead))
+            if (currentHp > 0)
                 Move();
 
             anim.SetFloat("moveSpeed", 1 + (speed * 0.1f));
@@ -344,7 +344,7 @@ public class Character : Singleton<Character>
                         afterPos = transform.position + new Vector3(x, 0, z) * 4;
 
                     if (ground == null)
-                        ground = GameSceneUI.Instance.ground;
+                        ground = GamesceneManager.Instance.ground;
 
                     else
                         afterPos = ground.bounds.ClosestPoint(afterPos);
@@ -495,7 +495,7 @@ public class Character : Singleton<Character>
         agent.Move(dir * speed * Time.deltaTime);
 
         if (ground == null)
-            ground = GameSceneUI.Instance.ground;
+            ground = GamesceneManager.Instance.ground;
 
         else
             transform.position = ground.bounds.ClosestPoint(transform.position);

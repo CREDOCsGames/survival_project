@@ -22,12 +22,12 @@ public class FishBuff : MonoBehaviour
     Buff buffType;
     int buffValue;
 
-    public void SetBuff(int _buffType, int _buffValue)
+    public void SetBuff(Buff _buffType, int _buffValue)
     {
-        currentBuffImage.sprite = buffImages[_buffType];
+        currentBuffImage.sprite = buffImages[(int)_buffType];
         buffValueText.text = _buffValue.ToString();
 
-        buffType = (Buff)_buffType;
+        buffType = _buffType;
         buffValue = _buffValue;
     }
 }

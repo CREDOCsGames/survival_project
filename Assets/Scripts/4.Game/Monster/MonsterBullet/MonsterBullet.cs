@@ -14,13 +14,15 @@ public class MonsterBullet : MonoBehaviour
     [HideInInspector] public Vector3 monsPos;
 
     protected GameManager gameManager;
+    protected GamesceneManager gameSceneManager;
 
     protected float realDamage;
 
     private void Start()
     {
         gameManager = GameManager.Instance;
-        realDamage = bulletDamage * (1 + Mathf.Floor(gameManager.round / 30)) + Mathf.Floor(gameManager.round / 5) * 2f;  // Æ®¸®°Å¿¡µµ ÀÖÀ½
+        gameSceneManager = GamesceneManager.Instance;
+        realDamage = bulletDamage * (1 + Mathf.Floor(gameManager.round / 30)) + Mathf.Floor(gameManager.round / 5) * 2f;  // íŠ¸ë¦¬ê±°ì—ë„ ìˆìŒ
     }
 
     void Update()

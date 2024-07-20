@@ -30,7 +30,7 @@ public class GoldBat : Monster
             hp = 55000;
 
         maxHp = hp;
-        ground = GameSceneUI.Instance.ground;
+        ground = GamesceneManager.Instance.ground;
         attackTime = 5;
         initAttackTime = 5;
         dashSpeed = 8;
@@ -55,7 +55,7 @@ public class GoldBat : Monster
 
         freezeEffect.SetActive(isFreeze);
 
-        if (gameManager.currentGameTime <= 0 && !isBerserk)
+        if (gamesceneManager.currentGameTime <= 0 && !isBerserk)
         {
             int round = gameManager.round;
             isBerserk = true;

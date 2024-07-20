@@ -136,7 +136,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 1095790938, guid: 1388e8d5953d2c7459e3bb8390f2aa4c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -173,7 +173,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39414ab968e033b4e9ce300e897391c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fruitUI: {fileID: 3517399654191483346, guid: 7e949ac991baea841a5fa52078ebd85c, type: 3}
   defaultGaugeUpValue: 10
 --- !u!1 &4745647549878778500
 GameObject:

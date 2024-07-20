@@ -15,9 +15,9 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
         character = Character.Instance;
     }
 
-    public void CanInteraction(bool canInteraction)
+    public void CanInteraction(bool _canInteraction)
     {
-        canGather = canInteraction;
+        canGather = _canInteraction;
     }
 
     public void InteractionLeftButtonFuc(GameObject hitObject)
@@ -62,6 +62,11 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
     public void InteractionRightButtonFuc(GameObject hitObject)
     {
         
+    }
+
+    public bool ReturnCaneInteraction()
+    {
+        return canGather;
     }
 #endif
 }

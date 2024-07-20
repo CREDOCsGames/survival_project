@@ -7,7 +7,8 @@ public interface IMouseInteraction
     void InteractionLeftButtonFuc(GameObject hitObject);
     void InteractionRightButtonFuc(GameObject hitObject);
 
-    void CanInteraction(bool canInteraction);
+    void CanInteraction(bool _canInteraction);
+    bool ReturnCaneInteraction();
     IEnumerator EndInteraction(Animator anim, float waitTime);
 }
 
@@ -30,6 +31,9 @@ public class MouseInteraction : MonoBehaviour
 
     void MouseInteractionFuc(System.Action<GameObject> interactionFuc)
     {
+        if (GamesceneManager.Instance.isNight)
+            return;
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit[] hit = Physics.RaycastAll(ray, 100, layerMask);
 

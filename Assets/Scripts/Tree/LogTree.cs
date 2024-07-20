@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LogTree : MonoBehaviour, IMouseInteraction
@@ -12,14 +11,22 @@ public class LogTree : MonoBehaviour, IMouseInteraction
 
     Character character;
     GameManager gameManager;
+    GamesceneManager gamesceneManager;
 
-    Vector3 obstaclePos;
+    Vector3 obstacleAngle;
 
     private void Start()
     {
         canLog = false;
         character = Character.Instance;
         gameManager = GameManager.Instance;
+        gamesceneManager = GamesceneManager.Instance;
+    }
+
+    private void Update()
+    {
+        if (gamesceneManager.isNight && canLog)
+            canLog = false;
     }
 
     Vector3 LogAngle()
@@ -59,25 +66,22 @@ public class LogTree : MonoBehaviour, IMouseInteraction
     {
         if (canLog)
         {
-            obstaclePos = LogAngle();
+            obstacleAngle = LogAngle();
 
-            StartCoroutine(character.MoveToInteractableObject(logPoses[posNum].position, this.gameObject));
+            StartCoroutine(character.MoveToInteractableObject(logPoses[posNum].position, gameObject));
         }
     }
 
     void SpawnObstacle()
     {
-        GameObject brokenTree = Instantiate(obstacle);
-
-        brokenTree.transform.position = transform.position;
-        brokenTree.transform.eulerAngles = obstaclePos;
+        Instantiate(obstacle, transform.position, Quaternion.Euler(obstacleAngle), GamesceneManager.Instance.treeParent);
 
         Destroy(gameObject);
     }
 
-    public void CanInteraction(bool canInteraction)
+    public void CanInteraction(bool _canInteraction)
     {
-        canLog = canInteraction;
+        canLog = _canInteraction;
     }
 
     public IEnumerator EndInteraction(Animator anim, float waitTime)
@@ -103,5 +107,10 @@ public class LogTree : MonoBehaviour, IMouseInteraction
     public void InteractionRightButtonFuc(GameObject hitObject)
     {
         
+    }
+
+    public bool ReturnCaneInteraction()
+    {
+        return canLog;
     }
 }

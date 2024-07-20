@@ -32,6 +32,7 @@ public class Monster : MonoBehaviour
 
     protected GameManager gameManager;
     protected Character character;
+    protected GamesceneManager gamesceneManager;
 
     protected IEnumerator runningCoroutine;
 
@@ -53,6 +54,7 @@ public class Monster : MonoBehaviour
     protected void StartSetting()
     {
         gameManager = GameManager.Instance;
+        gamesceneManager = GamesceneManager.Instance;
         character = Character.Instance;
         rend = transform.GetChild(1).GetComponent<SpriteRenderer>();
         anim = transform.GetChild(1).GetComponent<Animator>();
@@ -265,7 +267,7 @@ public class Monster : MonoBehaviour
             if (hp <= 0 && !isAttacked)
             {
                 SubscriptionFee();
-                if (gameManager.currentGameTime > 0)
+                if (gamesceneManager.currentGameTime > 0)
                 {
                     int coinValue = Random.Range(stat.monsterCoin - 2, stat.monsterCoin + 1);
                     DropCoin.Instance.Drop(transform.position, coinValue);

@@ -11,9 +11,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
 {
     Texture2D cursorAttack;
     Texture2D cursorNormal;
-    [SerializeField] public Collider ground;
-    [SerializeField] GameObject treePrefab;
-    [SerializeField] GameObject bushPrefab;
+
     [SerializeField] public GameObject monsterSpawn;
     [SerializeField] GameObject tutoPanel;
     [SerializeField] GameObject selectPanel;
@@ -85,15 +83,16 @@ public class GameSceneUI : Singleton<GameSceneUI>
     GameManager gameManager;
     Character character;
     SoundManager soundManager;
+    GamesceneManager gamesceneManager;
 
     [HideInInspector] public int chestCount;
     [HideInInspector] public int treeShopCount;
 
-    [SerializeField] LayerMask interactionLayer;
-
     [SerializeField] GameObject fishingGame;
 
     bool bgmChange;
+
+    Color initTimeColor;
 
     protected override void Awake()
     {
@@ -142,6 +141,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
     {
         character = Character.Instance;
         soundManager = SoundManager.Instance;
+        gamesceneManager = GamesceneManager.Instance;
 
         cursorNormal = gameManager.useCursorNormal;
         cursorAttack = gameManager.useCursorAttack;
@@ -164,14 +164,11 @@ public class GameSceneUI : Singleton<GameSceneUI>
         if (gameManager.round == 1)
             gameManager.gameStartTime = Time.realtimeSinceStartup;
 
-        StartCoroutine(SpawnTreeAndBush());
-
-        if (gameManager.spawnTree)
-            InvokeRepeating("SpawnOneTree", 10f, 10f);
-
         chestCount = 0;
         treeShopCount = 1;
         character.GetComponent<NavMeshAgent>().enabled = true;
+
+        initTimeColor = timeText.color;
     }
 
     IEnumerator BlinkBossSceneText()
@@ -205,66 +202,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
 
         bossSceneText.gameObject.SetActive(false);
     }
-
-    IEnumerator SpawnTreeAndBush()
-    {
-        for (int i = 0; i < 25; i++)
-        {
-            SpawnOneBushOrTree(treePrefab);
-            yield return null;      // 보통 0.002초
-        }
-
-        for (int i = 0; i < 15; i++)
-        {
-            SpawnOneBushOrTree(bushPrefab);
-            yield return null;
-        }
-    }
-
-    void SpawnOneBushOrTree(GameObject spawnObject)
-    {
-        Instantiate(spawnObject, SpawnTreeAndBushPos(), spawnObject.transform.rotation);
-    }
-
-
-    Vector3 SpawnTreeAndBushPos()
-    {
-        Vector3 spawnPos = TreeAndBushPos();
-        
-        while (true)
-        {
-            if (Physics.OverlapSphere(spawnPos, 2f, interactionLayer).Length <= 0)
-            {
-                break;
-            }
-            
-            spawnPos = TreeAndBushPos();
-        }
-
-        return spawnPos;
-    }
-
-    Vector3 TreeAndBushPos()
-    {
-        float groundX = ground.bounds.size.x;
-        float groundZ = ground.bounds.size.z;
-
-        groundX = UnityEngine.Random.Range((groundX / 2f) * -1f + ground.bounds.center.x, (groundX / 2f) + ground.bounds.center.x);
-        groundZ = UnityEngine.Random.Range((groundZ / 2f) * -1f + ground.bounds.center.z, (groundZ / 2f) + ground.bounds.center.z);
-
-        if(Mathf.Abs(groundX) < 3f)
-        {
-            groundX = groundX < 0f ? groundX - 3f : groundX + 3f;
-        }
-
-        if (Mathf.Abs(groundZ) < 3f)
-        {
-            groundZ = groundZ < 0f ? groundZ - 3f : groundZ + 3f;
-        }
-
-        return new Vector3(groundX, 0, groundZ);
-    }
-
+    
     private void Update()
     {
         HpUI();
@@ -292,9 +230,6 @@ public class GameSceneUI : Singleton<GameSceneUI>
                     }
 
                     roundClearText.SetActive(true);
-
-                    if (gameManager.spawnTree)
-                        CancelInvoke("SpawnOneTree");
                 }
 
                 if (roundClearText.GetComponent<TypingText>().isOver == true)
@@ -314,11 +249,11 @@ public class GameSceneUI : Singleton<GameSceneUI>
                             statCardParent.gameObject.SetActive(false);
                             chestPassive.gameObject.SetActive(false);
 
-                            if (gameManager.woodCount < 5 && !selectPanel.activeSelf)
+                            /*if (gameManager.woodCount < 5 && !selectPanel.activeSelf)
                                 gameManager.ToNextScene("Shop");
 
                             else if (gameManager.woodCount >= 5)
-                                selectPanel.SetActive(true);
+                                selectPanel.SetActive(true);*/
                         }
                     }
 
@@ -341,9 +276,6 @@ public class GameSceneUI : Singleton<GameSceneUI>
             {
                 if (gameManager.isBossDead)
                 {
-                    if (gameManager.spawnTree)
-                        CancelInvoke("SpawnOneTree");
-
                     gameManager.isClear = true;
 
                     if (!gameClearUI.activeSelf)
@@ -440,9 +372,6 @@ public class GameSceneUI : Singleton<GameSceneUI>
 
         else if (character.isDead)
         {
-            if (gameManager.spawnTree)
-                CancelInvoke("SpawnOneTree");
-
             if (!gameOverUI.activeSelf || !gameOverIsedolText)
                 gameManager.gameEndTime = Time.realtimeSinceStartup;
 
@@ -609,13 +538,20 @@ public class GameSceneUI : Singleton<GameSceneUI>
 
     void TimeUI()
     {
-        if (gameManager.currentGameTime >= 5)
-            timeText.text = ((int)gameManager.currentGameTime).ToString();
+        if (gamesceneManager.currentGameTime >= 5)
+        {
+            if (timeText.color != initTimeColor)
+                timeText.color = initTimeColor;
+
+            timeText.text = ((int)gamesceneManager.currentGameTime).ToString();
+        }
 
         else
         {
+            if(timeText.color != Color.red)
             timeText.color = Color.red;
-            timeText.text = (gameManager.currentGameTime).ToString("F2");
+
+            timeText.text = (gamesceneManager.currentGameTime).ToString("F2");
         }
     }
 

@@ -5,8 +5,12 @@ public class CheckCharacter : MonoBehaviour
     [SerializeField] GameObject arrow;
     [SerializeField] GameObject clickUI;
 
+    GamesceneManager gamesceneManager;
+
     private void Start()
     {
+        gamesceneManager = GamesceneManager.Instance;
+
         if (arrow != null)
         {
             arrow.gameObject.SetActive(false);
@@ -17,6 +21,9 @@ public class CheckCharacter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (gamesceneManager.isNight)
+            return;
+
         if (other.CompareTag("Character"))
         {
             if (arrow != null)
@@ -32,8 +39,32 @@ public class CheckCharacter : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        if (gamesceneManager.isNight)
+        {
+            if (arrow != null)
+            {
+                arrow.gameObject.SetActive(false);
+            }
+
+            clickUI.SetActive(false);
+
+            return;
+        }
+
         if (arrow != null && other.CompareTag("Character"))
         {
+            if (!transform.parent.GetComponent<IMouseInteraction>().ReturnCaneInteraction())
+            {
+                if (arrow != null)
+                {
+                    arrow.SetActive(true);
+                    arrow.GetComponent<SpriteRenderer>().color = Color.blue;
+                }
+
+                clickUI.SetActive(true);
+                transform.parent.GetComponent<IMouseInteraction>().CanInteraction(true);
+            }
+
             Vector3 logDir = -(Character.Instance.transform.position - transform.position).normalized;
             ArrowRatateToDir(logDir);
         }
@@ -41,6 +72,9 @@ public class CheckCharacter : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (gamesceneManager.isNight)
+            return;
+
         if (other.CompareTag("Character"))
         {
             if (arrow != null)

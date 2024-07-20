@@ -52,7 +52,7 @@ public class SkullBat : Monster
 
         freezeEffect.SetActive(isFreeze);
 
-        if (gameManager.currentGameTime <= 0 && !isBerserk)
+        if (gamesceneManager.currentGameTime <= 0 && !isBerserk)
         {
             int round = gameManager.round;
             isBerserk = true;

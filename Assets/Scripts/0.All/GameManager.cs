@@ -73,8 +73,6 @@ public class GameManager : Singleton<GameManager>
     [HideInInspector] public bool vamAbsorb;
     #endregion
 
-    [HideInInspector] public float currentGameTime;
-
     [HideInInspector] public string currentScene;
 
     Scene scene;
@@ -125,7 +123,6 @@ public class GameManager : Singleton<GameManager>
 */
         //InitSetting();
         InitArray();
-        currentGameTime = gameDayTime;
         isPause = false;
         Time.timeScale = 1;
         isPause = false;
@@ -312,11 +309,6 @@ public class GameManager : Singleton<GameManager>
         scene = SceneManager.GetActiveScene();
         //currentScene = scene.name;
 
-        if (currentGameTime <= 0)
-        {
-            isClear = true;
-        }
-
         if (scene.buildIndex > 1)
         {
             StatSetting();
@@ -342,12 +334,6 @@ public class GameManager : Singleton<GameManager>
     {
         if (currentScene == "Game")
         {
-            if (Character.Instance.currentHp > 0)
-                currentGameTime -= Time.deltaTime;
-
-            if (currentGameTime <= 0)
-                currentGameTime = 0;
-
             if (money <= 0)
                 money = 0;
         }
@@ -381,8 +367,6 @@ public class GameManager : Singleton<GameManager>
 
         else
             gameTime = 30;*/
-
-        currentGameTime = gameDayTime;
 
         isClear = false;
     }

@@ -5,7 +5,8 @@ public class SkullBullet : MonsterBullet
     void Start()
     {
         gameManager = GameManager.Instance;
-        realDamage = bulletDamage * (1 + Mathf.Floor(gameManager.round / 30)) + Mathf.Floor(gameManager.round / 5) * 2f;  // Æ®¸®°Å¿¡µµ ÀÖÀ½
+        gameSceneManager = GamesceneManager.Instance;
+        realDamage = bulletDamage * (1 + Mathf.Floor(gameManager.round / 30)) + Mathf.Floor(gameManager.round / 5) * 2f;  // íŠ¸ë¦¬ê±°ì—ë„ ìžˆìŒ
     }
 
     // Update is called once per frame
@@ -32,10 +33,10 @@ public class SkullBullet : MonsterBullet
     {
         if (other.tag == "Character")
         {
-            if (gameManager.currentGameTime > 0)
+            if (gameSceneManager.currentGameTime > 0)
                 realDamage = bulletDamage * (1 + Mathf.Floor(gameManager.round / 30)) + Mathf.Floor(gameManager.round / 5) * 2f;
 
-            else if (gameManager.currentGameTime <= 0)
+            else if (gameSceneManager.currentGameTime <= 0)
                 realDamage = (bulletDamage * (1 + Mathf.Floor(gameManager.round / 30)) + Mathf.Floor(gameManager.round / 5) * 2f) * 2f;
 
             other.GetComponent<Character>().OnDamaged(realDamage);
@@ -48,7 +49,7 @@ public class SkullBullet : MonsterBullet
     {
         speed = (randNum == 0) ? 6f : 2f;
 
-        if (GameManager.Instance.currentGameTime <= 0)
+        if (GamesceneManager.Instance.currentGameTime <= 0)
         {
             if (GameManager.Instance.round == 10)
                 speed = speed * 1.2f;

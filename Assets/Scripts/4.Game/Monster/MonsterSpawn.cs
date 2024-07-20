@@ -25,6 +25,7 @@ public class MonsterSpawn : MonoBehaviour
     float totalWeight = 0;
 
     GameManager gameManager;
+    GamesceneManager gamesceneManager;
     Character character;
 
     private void Awake()
@@ -36,8 +37,9 @@ public class MonsterSpawn : MonoBehaviour
     {
         gameManager = GameManager.Instance;
         character = Character.Instance;
+        gamesceneManager = GamesceneManager.Instance;
         weightValue = new float[] { 100, 0, 0, 0 };
-        ground = GameSceneUI.Instance.ground;
+        ground = GamesceneManager.Instance.ground;
 
         for (int i = 0; i < weightValue.Length; i++)
         {
@@ -66,7 +68,7 @@ public class MonsterSpawn : MonoBehaviour
 
     private void Update()
     {
-        if (gameManager.currentGameTime <= 0 || character.isDead)
+        if (gamesceneManager.currentGameTime <= 0 || character.isDead)
             CancelInvoke("RendSpawnImage");
 
         if (bosssParent.transform.childCount == 0)

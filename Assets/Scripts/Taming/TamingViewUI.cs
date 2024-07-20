@@ -26,8 +26,6 @@ public class TamingViewUI : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(tamingGauge.value);
-
         if (tamingGauge.value < 1)
         {
             tamingGauge.value += isGaugeUp ? Time.deltaTime * gaugeSpeed : -Time.deltaTime * gaugeSpeed * 0.8f;

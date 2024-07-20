@@ -9,12 +9,14 @@ public class Tree : MonoBehaviour
     int potionsNum;
 
     GameManager gameManager;
+    GamesceneManager gamesceneManager;
 
     bool isAttaked = false;
 
     private void Start()
     {
         gameManager = GameManager.Instance;
+        gamesceneManager = GamesceneManager.Instance;
         potionsNum = gameManager.buffNum;
     }
 
@@ -33,7 +35,7 @@ public class Tree : MonoBehaviour
 
                 float num = Random.Range(0f, 100f);
 
-                if (num < 3 + Mathf.Clamp(gameManager.luck, 0f, 100f) * 0.4f && gameManager.currentGameTime > 0)
+                if (num < 3 + Mathf.Clamp(gameManager.luck, 0f, 100f) * 0.4f && gamesceneManager.currentGameTime > 0)
                 {
                     SoundManager.Instance.PlayES("ItemGet");
                     GameSceneUI.Instance.chestCount++;
