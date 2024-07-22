@@ -109,7 +109,7 @@ public class LogTree : MonoBehaviour, IMouseInteraction
         
     }
 
-    public bool ReturnCaneInteraction()
+    public bool ReturnCanInteraction()
     {
         return canLog;
     }

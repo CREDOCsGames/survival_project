@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2230978341100291097}
   - component: {fileID: 2230978341100291084}
   - component: {fileID: 7343825617200019158}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EnhancedArrow
   m_TagString: myBullet
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 2398599765071620071}
   - component: {fileID: 3285831500780197137}
   - component: {fileID: 6870942308922358138}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: NormalArrow
   m_TagString: myBullet
   m_Icon: {fileID: 0}
@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 5259115044987806317}
   - component: {fileID: 6701059924879593298}
   - component: {fileID: 5168834379577065003}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -318,7 +318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageUI: {fileID: 7694887781048525286, guid: 45a00b432fc93984ebeefaf1b44503d3, type: 3}
-  projectileDamage: 0
+  isPenetrate: 0
 --- !u!114 &5259115044987806317
 MonoBehaviour:
   m_ObjectHideFlags: 0

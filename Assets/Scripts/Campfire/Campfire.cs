@@ -30,7 +30,6 @@ public class Campfire : MonoBehaviour, IMouseInteraction
 
         fireInitScale = fireImage.transform.localScale;
 
-        interactionUI.SetActive(false);
         buffIcon.SetActive(false);
         debuffIcon.SetActive(false);
     }
@@ -38,32 +37,6 @@ public class Campfire : MonoBehaviour, IMouseInteraction
     private void Update()
     {
         ChangeFireImageScale();
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (gamesceneManager.isNight || canInteraction)
-        {
-            return;
-        }
-
-        if (other.CompareTag("Character"))
-        {
-            interactionUI.SetActive(true);
-            canInteraction = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (gamesceneManager.isNight)
-            return;
-
-        if (other.CompareTag("Character"))
-        {
-            interactionUI.SetActive(false);
-            canInteraction = false;
-        }
     }
 
     void ChangeFireImageScale()
@@ -183,7 +156,7 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         yield return new WaitForSeconds(waitTime);
     }
 
-    public bool ReturnCaneInteraction()
+    public bool ReturnCanInteraction()
     {
         return canInteraction;
     }

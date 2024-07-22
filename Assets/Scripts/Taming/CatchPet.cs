@@ -23,6 +23,7 @@ public class CatchPet : MonoBehaviour, IMouseInteraction
     {
         yield return new WaitForSeconds(waitTime);
 
+        Cursor.visible = true;
         character.isCanControll = true;
         gameSceneUI.tamingGame.SetActive(false);
         gameObject.SetActive(false);
@@ -31,8 +32,6 @@ public class CatchPet : MonoBehaviour, IMouseInteraction
 
     public void InteractionLeftButtonFuc(GameObject hitObject)
     {
-        Debug.Log(isCanInteraction);
-
         if (isCanInteraction)
         {
             character.isCanControll = false;
@@ -47,7 +46,7 @@ public class CatchPet : MonoBehaviour, IMouseInteraction
 
     }
 
-    public bool ReturnCaneInteraction()
+    public bool ReturnCanInteraction()
     {
         return isCanInteraction;
     }

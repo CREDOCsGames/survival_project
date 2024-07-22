@@ -64,7 +64,7 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
         
     }
 
-    public bool ReturnCaneInteraction()
+    public bool ReturnCanInteraction()
     {
         return canGather;
     }

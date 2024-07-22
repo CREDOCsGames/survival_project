@@ -25,7 +25,7 @@ TagManager:
   - UI
   - Player
   - Monster
-  - Bullet
+  - Weapon
   - Coin
   - Ground
   - MonsterOverlap
@@ -34,9 +34,9 @@ TagManager:
   - Wall
   - CharacterWallColl
   - Obstacle
-  - bush
+  - Bush
   - MouseInteraction
-  - 
+  - CharacterChecker
   - 
   - 
   - 

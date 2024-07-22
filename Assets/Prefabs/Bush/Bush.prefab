@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 632544854061768544}
   - component: {fileID: 5927185803636976845}
   - component: {fileID: 428181457429613125}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: CharacterChecker
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -16,8 +16,7 @@ public class Character : Singleton<Character>
     [SerializeField] public SpriteRenderer rend;
     [SerializeField] Animator anim;
     [SerializeField] ParticleSystem particle;
-    [SerializeField] GameObject gardianAngel;
-    [SerializeField] GameObject gardianEffect;
+    [SerializeField] float particleScale;
 
     [SerializeField] Slider playerHpBar;
 
@@ -105,8 +104,6 @@ public class Character : Singleton<Character>
         transform.position = new Vector3(0f, 0f, -40f);
 
         thunderMark.transform.localScale = new Vector3(Mathf.Clamp(4f + gameManager.range * 0.5f, 1, 12), Mathf.Clamp(4f + gameManager.range * 0.5f, 1, 12), 0);
-        gardianAngel.SetActive(false);
-        gardianEffect.SetActive(false);
 
         CharacterSetting(characterNum);
         recoverTime = 1;
@@ -123,15 +120,16 @@ public class Character : Singleton<Character>
     {
         StatChangeCheck(num);
 
-        anim.runtimeAnimatorController = characterInfos[characterNum].CharacterAnim;
+        anim.runtimeAnimatorController = currentController[characterNum];
         gameManager.stats[0] = Mathf.Round(gameManager.stats[0] * characterInfos[characterNum].HpRate);
         maxHp = gameManager.stats[0];
+
 #if UNITY_EDITOR_WIN
         currentHp = maxHp;
 #endif
 
 #if UNITY_EDITOR
-        currentHp = 10;
+        currentHp = maxHp;
 #endif
         currentRecoveryGauge = 0;
         gameManager.stats[9] += characterInfos[characterNum].CharacterSpeed;
@@ -156,9 +154,6 @@ public class Character : Singleton<Character>
 
     void Update()
     {
-        if (gameManager.revive)
-            gardianAngel.SetActive(true);
-
         if (gameManager.currentScene == "Game" && !gameManager.isPause)
         {
             HpSetting();
@@ -185,7 +180,11 @@ public class Character : Singleton<Character>
         if (gameManager.currentScene == "Game" && !gameManager.isPause)
         {
             if (!isCanControll)
+            {
+                isRun = false;
+                anim.SetBool("isRun", isRun);
                 return;
+            }
 
             isRun = false;
 
@@ -326,10 +325,10 @@ public class Character : Singleton<Character>
             if (dashCount > 0)
             {
                 if (rend.flipX == true)
-                    particle.transform.localScale = new Vector3(-1, 1, 1);
+                    particle.transform.localScale = new Vector3(-1, 1, 1) * particleScale;
 
                 else if (rend.flipX == false)
-                    particle.transform.localScale = new Vector3(1, 1, 1);
+                    particle.transform.localScale = new Vector3(1, 1, 1) * particleScale;
 
                 if (Input.GetKeyDown((KeyCode)PlayerPrefs.GetInt("Key_Dash")))
                 {
@@ -358,7 +357,7 @@ public class Character : Singleton<Character>
                     agent.enabled = true;
 
                     dashCount--;
-                    Invoke("ParticleOff", 0.4f);
+                    Invoke("ParticleOff", 0.2f);
 
                     if (currentCoroutine != null)
                         StopCoroutine(currentCoroutine);
@@ -514,7 +513,7 @@ public class Character : Singleton<Character>
         if (dir.x == 0)
             return;
 
-        rend.flipX = dir.x < 0;
+        rend.flipX = dir.x > 0;
     }
 
     int avoidRand;
@@ -660,12 +659,10 @@ public class Character : Singleton<Character>
     IEnumerator OnRevive()
     {
         rend.color = new Color(1, 1, 1, 0.5f);
-        gardianEffect.SetActive(true);
 
         yield return new WaitForSeconds(2.5f);
         gameManager.passiveBoolVariables[4] = false;    // gameManager.revive = false
         currentHp = Mathf.Ceil(maxHp * 0.5f);
-        gardianAngel.SetActive(false);
 
         yield return new WaitForSeconds(2f);
         rend.color = Color.white;

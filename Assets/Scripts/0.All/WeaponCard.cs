@@ -207,7 +207,7 @@ public class WeaponCard : MonoBehaviour
         itemManager.equipFullCount++;
         itemManager.GetWeaponInfo(selectedWeapon);
         itemManager.weaponGrade[itemManager.weaponCount] = selectGrade;
-        character.Equip();
+        //character.Equip();
         Destroy(gameObject);
     }
 

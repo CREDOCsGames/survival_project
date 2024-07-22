@@ -7,10 +7,13 @@ public class CheckCharacter : MonoBehaviour
 
     GamesceneManager gamesceneManager;
 
-    private void Start()
+    private void Awake()
     {
         gamesceneManager = GamesceneManager.Instance;
+    }
 
+    private void Start()
+    {
         if (arrow != null)
         {
             arrow.gameObject.SetActive(false);
@@ -51,9 +54,9 @@ public class CheckCharacter : MonoBehaviour
             return;
         }
 
-        if (arrow != null && other.CompareTag("Character"))
+        if (other.CompareTag("Character"))
         {
-            if (!transform.parent.GetComponent<IMouseInteraction>().ReturnCaneInteraction())
+            if (!transform.parent.GetComponent<IMouseInteraction>().ReturnCanInteraction())
             {
                 if (arrow != null)
                 {
@@ -65,8 +68,11 @@ public class CheckCharacter : MonoBehaviour
                 transform.parent.GetComponent<IMouseInteraction>().CanInteraction(true);
             }
 
-            Vector3 logDir = -(Character.Instance.transform.position - transform.position).normalized;
-            ArrowRatateToDir(logDir);
+            if (arrow != null)
+            {
+                Vector3 logDir = -(Character.Instance.transform.position - transform.position).normalized;
+                ArrowRatateToDir(logDir);
+            }
         }
     }
 

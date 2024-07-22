@@ -30,7 +30,6 @@ public class SwordControl : Weapon
 
     bool isSwing = false;
 
-    int x, z;
     bool xInput;
     bool zInput;
 

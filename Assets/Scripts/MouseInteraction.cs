@@ -8,7 +8,7 @@ public interface IMouseInteraction
     void InteractionRightButtonFuc(GameObject hitObject);
 
     void CanInteraction(bool _canInteraction);
-    bool ReturnCaneInteraction();
+    bool ReturnCanInteraction();
     IEnumerator EndInteraction(Animator anim, float waitTime);
 }
 

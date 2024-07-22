@@ -28,7 +28,10 @@ public class TamingViewUI : MonoBehaviour
     {
         if (tamingGauge.value < 1)
         {
-            tamingGauge.value += isGaugeUp ? Time.deltaTime * gaugeSpeed : -Time.deltaTime * gaugeSpeed * 0.8f;
+            if (tamingPet.activeSelf)
+            {
+                tamingGauge.value += isGaugeUp ? Time.deltaTime * gaugeSpeed : -Time.deltaTime * gaugeSpeed * 0.8f;
+            }
 
             if (tamingGauge.value <= 0)
             {

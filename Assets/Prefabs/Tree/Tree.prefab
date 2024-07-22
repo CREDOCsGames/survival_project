@@ -433,7 +433,7 @@ GameObject:
   - component: {fileID: 3072002469404352374}
   - component: {fileID: 4352276052961228892}
   - component: {fileID: 8658673562048213958}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: CharacterChecker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
