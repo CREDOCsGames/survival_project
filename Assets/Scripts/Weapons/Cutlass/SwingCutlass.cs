@@ -10,14 +10,20 @@ public class SwingCutlass : MonoBehaviour
     [SerializeField] BoxCollider collder;
     Animator anim;
     Character character;
+    GameManager gameManager;
 
     bool canAttack;
 
+    float coolTime = 1;
+    float initCoolTime;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
         character = Character.Instance;
+        gameManager = GameManager.Instance;
+
+        initCoolTime = coolTime;
 
         collder.enabled = false;
 
@@ -36,6 +42,7 @@ public class SwingCutlass : MonoBehaviour
 
         if (Input.GetMouseButton(0) && character.isCanControll)
         {
+            character.canWeaponChange = false;
             collder.enabled = true;
             anim.SetTrigger("RightAttack");
             canAttack = false;
@@ -50,8 +57,10 @@ public class SwingCutlass : MonoBehaviour
 
     IEnumerator AttackDelay()
     {
-        yield return new WaitForSeconds(1);
+        coolTime = initCoolTime * character.attackSpeed;
+        yield return new WaitForSeconds(coolTime);
 
         canAttack = true;
+        character.canWeaponChange = true;
     }
 }

@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Debuff
+{
+    RECOVERY_HEALTH,
+    ATTACK_SPEED,
+    SPEED,
+    POWER,
+    COUNT,
+}
+
 public class Campfire : MonoBehaviour, IMouseInteraction
 {
     [SerializeField] GameObject interactionUI;
@@ -10,6 +19,7 @@ public class Campfire : MonoBehaviour, IMouseInteraction
     [SerializeField] GameObject fireImage;
 
     GameManager gameManager;
+    Character character;
     GamesceneManager gamesceneManager;
 
     bool canInteraction = false;
@@ -18,7 +28,7 @@ public class Campfire : MonoBehaviour, IMouseInteraction
     Dictionary<Buff, int> buffValues = new Dictionary<Buff, int>();
     Buff beforeBuff = Buff.COUNT;
 
-    Dictionary<Buff, int> debuffValues = new Dictionary<Buff, int>();
+    Dictionary<Debuff, int> debuffValues = new Dictionary<Debuff, int>();
 
     bool isWoodRefill = false;
     bool buffInteraction = true;
@@ -26,9 +36,16 @@ public class Campfire : MonoBehaviour, IMouseInteraction
     private void Start()
     {
         gameManager = GameManager.Instance;
+        character = Character.Instance;
         gamesceneManager = GamesceneManager.Instance;
 
         fireInitScale = fireImage.transform.localScale;
+
+        for (int i = 0; i < (int)Buff.COUNT; i++)
+        {
+            buffValues.Add((Buff)i, 1);
+            debuffValues.Add((Debuff)i, 0);
+        }
 
         buffIcon.SetActive(false);
         debuffIcon.SetActive(false);
@@ -52,17 +69,50 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         if (isWoodRefill)
             return;
 
-        Buff debuffType = (Buff)Random.Range(0, (int)Buff.COUNT);
+        Debuff debuffType = (Debuff)Random.Range(0, (int)Debuff.COUNT);
 
-        if (!buffValues.ContainsKey(debuffType))
-            buffValues.Add(debuffType, 1);
+        debuffValues[debuffType] = 1;
 
-        debuffIcon.GetComponent<CampFireDebuff>().SetDebuff(debuffType, buffValues[debuffType]);
+        character.recoverHpRatio = gameManager.recoverHp * (10 - debuffValues[Debuff.RECOVERY_HEALTH]) * 0.1f;
+
+        character.attackSpeed = gameManager.attackSpeed * (10 + debuffValues[Debuff.ATTACK_SPEED]) * 0.1f;
+
+        character.speed = gameManager.speed * (10 - debuffValues[Debuff.SPEED] * 2) * 0.1f;
+
+        gameManager.percentDamage = (100 - (debuffValues[Debuff.POWER]) * 20) * 0.01f;
+
+        debuffIcon.GetComponent<CampFireDebuff>().SetDebuff(debuffType);
         debuffIcon.SetActive(true);
+    }
+
+    void OnBuff()
+    {
+        for (int i = 0; i < buffValues.Count; i++)
+        {
+            if (i != (int)beforeBuff)
+            {
+                buffValues[(Buff)i] = 0;
+            }
+        }
+
+        // 이거 clamp로 처리하기
+
+        character.maxHp = buffValues[Buff.MAXHEALTH] != 0 ? gameManager.maxHp * ((15 * buffValues[Buff.MAXHEALTH]) + (5 * (buffValues[Buff.MAXHEALTH] - 1))) : gameManager.maxHp;
+
+        character.recoverHpRatio = buffValues[Buff.RECOVERY_HEALTH] != 0 ? gameManager.recoverHp * (10 + buffValues[Buff.RECOVERY_HEALTH]) * 0.1f : gameManager.recoverHp;
+
+        character.speed = buffValues[Buff.SPEED] != 0 ? gameManager.speed * (100 + (Mathf.Pow(buffValues[Buff.SPEED], 2) + buffValues[Buff.SPEED] + 8) * 0.5f) * 0.01f : gameManager.speed;
+        character.avoid = buffValues[Buff.SPEED] != 0 ? gameManager.avoid + (1 + 2 * buffValues[Buff.SPEED]) * 0.01f : gameManager.avoid;
+        gameManager.dashCount = buffValues[Buff.SPEED] == 3 ? 1 : 0;
+
+        gameManager.percentDamage = (100 + 10 * (buffValues[Buff.POWER])) * 0.01f;
+        character.defence = gameManager.defence + 5 * buffValues[Buff.POWER];
     }
 
     public void ToNightScene()
     {
+        OnBuff();
+        OnDebuff();
         canInteraction = false;
         isWoodRefill = false;
         interactionUI.SetActive(false);
@@ -70,6 +120,16 @@ public class Campfire : MonoBehaviour, IMouseInteraction
 
     public void ToDayScene()
     {
+        OffBuffNDebuff();
+        character.maxHp = gameManager.maxHp;
+        character.recoverHpRatio = gameManager.recoverHp;
+        character.speed = gameManager.speed;
+        character.defence = gameManager.defence;
+        character.attackSpeed = gameManager.attackSpeed;
+        character.avoid = gameManager .avoid;
+        gameManager.dashCount = 0;
+        gameManager.percentDamage = 1;
+
         buffInteraction = true;
     }
 
@@ -77,12 +137,12 @@ public class Campfire : MonoBehaviour, IMouseInteraction
     {
         for (int i = 0; i < (int)Buff.COUNT; i++)
         {
-            if (!buffValues.ContainsKey((Buff)i))
-                buffValues.Add((Buff)i, 1);
-
             buffValues[(Buff)i] = 1;
-            debuffValues[(Buff)i] = 1;
+            debuffValues[(Debuff)i] = 0;
         }
+
+        OnBuff();
+        OnDebuff();
 
         debuffIcon.SetActive(false);
         buffIcon.SetActive(false);
@@ -107,9 +167,6 @@ public class Campfire : MonoBehaviour, IMouseInteraction
 
         Buff buffType = (Buff)Random.Range(0, (int)Buff.COUNT);
 
-        if (!buffValues.ContainsKey(buffType))
-            buffValues.Add(buffType, 1);
-
         if (gameManager.fishHighGradeCount > 0)
         {
             if (buffValues[buffType] < 2)
@@ -128,7 +185,7 @@ public class Campfire : MonoBehaviour, IMouseInteraction
 
         beforeBuff = buffType;
 
-        buffIcon.GetComponent<FishBuff>().SetBuff(buffType, buffValues[buffType]);
+        buffIcon.GetComponent<FishBuffIcon>().SetBuffIcon(buffType, buffValues[buffType]);
         buffIcon.SetActive(true);
 
         StartCoroutine(BuffCoolTime(1.5f));

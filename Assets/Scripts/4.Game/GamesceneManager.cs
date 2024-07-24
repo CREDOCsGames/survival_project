@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class GamesceneManager : Singleton<GamesceneManager>
 {
@@ -23,6 +24,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
     private void Start()
     {
         gameManager = GameManager.Instance;
+        Character.Instance.GetComponent<NavMeshAgent>().enabled = true;
 
         StartCoroutine(DayRoutine());
     }
@@ -41,11 +43,11 @@ public class GamesceneManager : Singleton<GamesceneManager>
         StartCoroutine(SpawnTree());
         StartCoroutine(SpawnBush());
 
-        campFire.GetComponent<Campfire>().ToDayScene();
-
         currentGameTime = gameManager.gameDayTime;
 
         yield return new WaitForSeconds(gameManager.gameDayTime);
+
+        campFire.GetComponent<Campfire>().ToNightScene();
 
         StartCoroutine(NightRoutine()); 
     }
@@ -54,9 +56,6 @@ public class GamesceneManager : Singleton<GamesceneManager>
     {
         isNight = true;
         nightFilter.SetActive(true);
-
-        campFire.GetComponent<Campfire>().OnDebuff();
-        campFire.GetComponent<Campfire>().ToNightScene();
 
         currentGameTime = gameManager.gameNightTime;
 
@@ -67,7 +66,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
         gameManager.round++;
 
-        campFire.GetComponent <Campfire>().OffBuffNDebuff();
+        campFire.GetComponent<Campfire>().ToDayScene();
 
         if (gameManager.round <= 30)
             StartCoroutine(DayRoutine());

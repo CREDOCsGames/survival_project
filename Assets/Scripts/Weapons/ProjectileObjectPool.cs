@@ -38,7 +38,7 @@ public class ProjectileObjectPool : MonoBehaviour
             damage.transform.position = transform.position;
             damage.gameObject.transform.SetParent(gameManager.damageStorage);
 
-            monster.OnDamaged(damage.realDamage);
+            monster.OnDamaged(damage.realDamage * gameManager.percentDamage);
 
             if (!isPenetrate)
                 DestroyProjectile();

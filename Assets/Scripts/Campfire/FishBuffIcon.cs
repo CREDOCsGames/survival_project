@@ -6,28 +6,22 @@ using UnityEngine.UI;
 
 public enum Buff
 {
+    MAXHEALTH,
+    RECOVERY_HEALTH,
     SPEED,
     POWER,
-    ATTACK_SPEED,
-    MAXHEALTH,
     COUNT,
 }
 
-public class FishBuff : MonoBehaviour
+public class FishBuffIcon : MonoBehaviour
 {
     [SerializeField] Sprite[] buffImages;
     [SerializeField] Image currentBuffImage;
     [SerializeField] Text buffValueText;
 
-    Buff buffType;
-    int buffValue;
-
-    public void SetBuff(Buff _buffType, int _buffValue)
+    public void SetBuffIcon(Buff _buffType, int _buffValue)
     {
         currentBuffImage.sprite = buffImages[(int)_buffType];
         buffValueText.text = _buffValue.ToString();
-
-        buffType = _buffType;
-        buffValue = _buffValue;
     }
 }

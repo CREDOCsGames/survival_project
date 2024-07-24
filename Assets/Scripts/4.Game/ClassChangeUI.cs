@@ -56,8 +56,6 @@ public class ClassChangeUI : OptionUI
 
     public void SelectChangeYes()
     {
-        character.CharacterSetting(characterNum);
-
         ReturnToGame();
     }
 

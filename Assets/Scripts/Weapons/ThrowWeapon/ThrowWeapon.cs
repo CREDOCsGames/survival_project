@@ -1,11 +1,8 @@
 public class ThrowWeapon : FireProjectile
 {
-    Character character;
-
     protected override void Start()
     {
         base.Start();
-        character = Character.Instance;
         initCoolTime = 2f;
     }
 

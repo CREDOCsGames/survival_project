@@ -9,9 +9,9 @@ public class CampFireDebuff : MonoBehaviour
     [SerializeField] Image currentDEbuffImage;
     [SerializeField] Text debuffValueText;
 
-    public void SetDebuff(Buff _buffType, int _buffValue)
+    public void SetDebuff(Debuff _buffType)
     {
         currentDEbuffImage.sprite = debuffImages[(int)_buffType];
-        debuffValueText.text = _buffValue.ToString();
+        debuffValueText.text = "1";
     }
 }

@@ -37,7 +37,7 @@ public class CharacterSelect : MonoBehaviour
         character.GetComponent<NavMeshAgent>().enabled = false;
         character.GetComponent<Character>().characterNum = num;
         //character.SetActive(false);
-        SceneManager.LoadScene("WeaponSelect");
+        gameManager.ToNextScene("Game");
     }
 
     public void TitleScene()

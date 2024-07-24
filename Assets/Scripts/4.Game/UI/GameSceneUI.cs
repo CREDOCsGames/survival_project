@@ -509,7 +509,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
 
     void HpUI()
     {
-        hpText.text = $"{character.currentHp.ToString("0.#")} / {character.maxHp.ToString()}";
+        hpText.text = $"{character.currentHp} / {character.maxHp}";
 
         hpBar.value = (character.currentHp / character.maxHp);
     }

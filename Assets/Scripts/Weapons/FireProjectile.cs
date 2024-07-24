@@ -19,6 +19,8 @@ public class FireProjectile : MonoBehaviour
 
     protected ProjectileObjectPool projectile;
 
+    protected Character character;
+
     protected virtual void Awake()
     {
         projectilePool = new ObjectPool<ProjectileObjectPool>(CreatePool, OnGetPool, OnReleasePool, OnDestroyPool, maxSize: poolCount);
@@ -27,12 +29,18 @@ public class FireProjectile : MonoBehaviour
     protected virtual void Start()
     {
         gameManager = GameManager.Instance;
+        character = Character.Instance;
         coolTime = initCoolTime;
     }
 
     protected virtual void Fire()
     {
-        if (Input.GetMouseButton(0) && !(gameManager.isClear || gameManager.isPause))
+        if(Input.GetMouseButton(0))
+        {
+            character.canWeaponChange = false;
+        }
+
+        if (Input.GetMouseButtonUp(0) && !(gameManager.isClear || gameManager.isPause))
         {
             SetFire();
         }
@@ -61,8 +69,9 @@ public class FireProjectile : MonoBehaviour
 
     protected virtual void SetInitFire()
     {
-        coolTime = initCoolTime;
+        coolTime = initCoolTime * character.attackSpeed;
         canFire = true;
+        character.canWeaponChange = true;
     }
 
     protected virtual void FireAppliedCoolTime()

@@ -8,15 +8,11 @@ public class FireBullet : FireProjectile
 
     int bulletCount = 4;
 
-    Character character;
-
     Coroutine currentCoroutine;
 
     protected override void Start()
     {
         base.Start();
-
-        character = Character.Instance;
 
         foreach (Transform bullet in bulletParent)
         {
@@ -30,6 +26,9 @@ public class FireBullet : FireProjectile
         {
             FireAppliedCoolTime();
         }
+
+        else if (bulletCount <= 0)
+            character.canWeaponChange = true;
 
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.R))
@@ -48,6 +47,7 @@ public class FireBullet : FireProjectile
     {
         if (Input.GetMouseButton(0) && !(gameManager.isClear || gameManager.isPause))
         {
+            character.canWeaponChange = false;
             SetFire();
             bulletParent.GetChild(bulletCount - 1).gameObject.SetActive(false);
             bulletCount--;

@@ -122,7 +122,7 @@ public class GameManager : Singleton<GameManager>
         PlayerPrefs.SetInt("BagicClear", 0);
 */
         //InitSetting();
-        InitArray();
+        //InitArray();
         isPause = false;
         Time.timeScale = 1;
         isPause = false;
@@ -139,18 +139,19 @@ public class GameManager : Singleton<GameManager>
         woodMaxCount = 70;
         round = 1;
         maxHp = 30;
-        recoverHp = 0;
+        recoverHp = 1;
         absorbHp = 0;
-        defence = 0;
+        defence = 3;
         physicDamage = 0;
         magicDamage = 0;
         shortDamage = 0;
         longDamage = 0;
         attackSpeed = 0;
-        speed = 0;
+        speed = 3;
         range = 0;
         luck = 0;
         critical = 5;
+        avoid = 1;
 
         dashCount = 0;
         buffNum = 0;
@@ -324,10 +325,10 @@ public class GameManager : Singleton<GameManager>
 
     public void StatSetting()
     {
-        StatArray();
+        /*StatArray();
         IntVariableArray();
         FloatVariableArray();
-        BoolVariableArray();
+        BoolVariableArray();*/
     }
 
     void OnGameScene()
@@ -344,6 +345,7 @@ public class GameManager : Singleton<GameManager>
         Character character = Character.Instance;
         character.GetComponent<NavMeshAgent>().enabled = false;
         character.transform.position = characterSpawnPos;
+        
         currentScene = sceneName;
         character.thunderMark.transform.localScale = new Vector3(Mathf.Clamp(4f + range * 0.5f, 1, 12), Mathf.Clamp(4f + range * 0.5f, 1, 12), 0);
 

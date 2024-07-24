@@ -2,6 +2,7 @@ using System.Collections;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public enum CHARACTER_NUM
@@ -38,7 +39,12 @@ public class Character : Singleton<Character>
     [HideInInspector] public float exp;
     [HideInInspector] public float maxHp;
     [HideInInspector] public float currentHp;
+    [HideInInspector] public float recoverHpRatio;
     [HideInInspector] public float speed;
+    [HideInInspector] public float avoid;
+    [HideInInspector] public float attackSpeed;
+    [HideInInspector] public float defence;
+
     public float maxRecoveryGauge;
     [HideInInspector] public float currentRecoveryGauge;
     public GameObject fruitUI;
@@ -83,6 +89,7 @@ public class Character : Singleton<Character>
     [HideInInspector] public CharacterInfo currentCharacterInfo;
 
     public Transform weaponParent;
+    public bool canWeaponChange = true;
 
     NavMeshAgent agent;
 
@@ -105,38 +112,22 @@ public class Character : Singleton<Character>
 
         thunderMark.transform.localScale = new Vector3(Mathf.Clamp(4f + gameManager.range * 0.5f, 1, 12), Mathf.Clamp(4f + gameManager.range * 0.5f, 1, 12), 0);
 
-        CharacterSetting(characterNum);
+        maxHp = gameManager.maxHp;
+        currentHp = maxHp;
+        speed = gameManager.speed;
+        avoid = gameManager.avoid;
+        recoverHpRatio = gameManager.recoverHp;
+        attackSpeed = gameManager.attackSpeed;
+        defence = gameManager.defence;
+
         recoverTime = 1;
         dashCoolTime = 4;
         dashCount = gameManager.dashCount;
         initDashCoolTime = dashCoolTime;
 
         fruitUI.gameObject.SetActive(false);
-
-        gameObject.SetActive(false);
     }
-
-    public void CharacterSetting(int num)
-    {
-        StatChangeCheck(num);
-
-        anim.runtimeAnimatorController = currentController[characterNum];
-        gameManager.stats[0] = Mathf.Round(gameManager.stats[0] * characterInfos[characterNum].HpRate);
-        maxHp = gameManager.stats[0];
-
-#if UNITY_EDITOR_WIN
-        currentHp = maxHp;
-#endif
-
-#if UNITY_EDITOR
-        currentHp = maxHp;
-#endif
-        currentRecoveryGauge = 0;
-        gameManager.stats[9] += characterInfos[characterNum].CharacterSpeed;
-        gameManager.stats[13] += characterInfos[characterNum].DamageRatio;
-        gameManager.stats[14] += characterInfos[characterNum].Avoid;
-    }
-
+    
     void StatChangeCheck(int num)
     {
         int beforeNum = characterNum;
@@ -162,7 +153,7 @@ public class Character : Singleton<Character>
             {
                 UseRecoveyGauege();
                 Dash();
-                AutoRecoverHp();
+                //AutoRecoverHp();
             }
 
             else if (gameManager.isClear && gameManager.isBossDead)
@@ -172,7 +163,19 @@ public class Character : Singleton<Character>
             }
         }
 
+        temp();
+
         SummonPet();
+    }
+
+    void temp()
+    {
+        Debug.Log("Speed: " + speed);
+        Debug.Log("avoid: " + avoid);
+        Debug.Log("recover: " + recoverHpRatio);
+        Debug.Log("attackSpeed: " + attackSpeed);
+        Debug.Log("damage: " + gameManager.percentDamage);
+        Debug.Log("defence: " + defence);
     }
 
     private void FixedUpdate()
@@ -218,10 +221,10 @@ public class Character : Singleton<Character>
     IEnumerator ConvertRecoveryGauge()
     {
         isCanControll = false;
-        currentHp += recoveryValue;
+        currentHp += recoveryValue * recoverHpRatio;
         currentRecoveryGauge -= recoveryValue;
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         isCanControll = true;
     }
@@ -258,45 +261,6 @@ public class Character : Singleton<Character>
 
         if (summonNum >= 3)
             summonNum = 0;
-    }
-
-    void OnBuff()
-    {
-        if (gameManager.buffNum == 1)
-        {
-            if (gameManager.speed <= 1f)
-                speed = 1f;
-
-            else
-                speed = gameManager.speed;
-
-            gameManager.attackSpeed = gameManager.stats[8] + 5f;
-            gameManager.percentDamage = gameManager.stats[13];
-        }
-
-        else if (gameManager.buffNum == 2)
-        {
-            if (gameManager.speed <= 1f)
-                speed = 1f + 2f;
-
-            else
-                speed = gameManager.speed + 2f;
-
-            gameManager.attackSpeed = gameManager.stats[8];
-            gameManager.percentDamage = gameManager.stats[13];
-        }
-
-        else if (gameManager.buffNum == 3)
-        {
-            if (gameManager.speed <= 1f)
-                speed = 1f;
-
-            else
-                speed = gameManager.speed;
-
-            gameManager.attackSpeed = gameManager.stats[8];
-            gameManager.percentDamage = gameManager.stats[13] + 0.5f;
-        }
     }
 
     void AutoRecoverHp()
@@ -465,27 +429,6 @@ public class Character : Singleton<Character>
 
             if (Input.GetKeyUp((KeyCode)PlayerPrefs.GetInt("Key_Right")))
                 isLeftRight = false;
-        }
-
-        if (!isBuff)
-        {
-            if (gameManager.speed <= 1)
-                speed = 1;
-
-            else
-                speed = gameManager.speed;
-        }
-
-        else if (isBuff)
-        {
-            OnBuff();
-            buffTime -= Time.deltaTime;
-
-            if (buffTime <= 0)
-            {
-                isBuff = false;
-                buffTime = 5;
-            }
         }
 
         dir = (Vector3.right * x + Vector3.forward * z).normalized;
