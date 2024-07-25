@@ -23,20 +23,20 @@ public class GameManager : Singleton<GameManager>
 
     [Header("StatData")]
     [SerializeField] public float maxHp;
-    [HideInInspector] public float percentDamage;
-    /*[HideInInspector]*/ public float physicDamage;
+    /*[HideInInspector]*/ public float percentDamage;
+    [HideInInspector] public float physicDamage;
     [HideInInspector] public float magicDamage;
     [HideInInspector] public float shortDamage;
-    /*[HideInInspector]*/ public float longDamage;
+    [HideInInspector] public float longDamage;
     [SerializeField] public float recoverHp;
     [SerializeField] public float absorbHp;
-    [SerializeField] public float defence;
+    [SerializeField] public int defence;
     [SerializeField] public float attackSpeed;
     [SerializeField] public float speed;
     [SerializeField] public float range;
     [SerializeField] public float luck;
     [SerializeField] public float critical;
-    [SerializeField] public float avoid;
+    [SerializeField] public int avoid;
 
     #region 특수 패시브
     [HideInInspector] public int[] passiveIntVariables;
@@ -248,7 +248,6 @@ public class GameManager : Singleton<GameManager>
         maxHp = stats[0];
         recoverHp = stats[1];
         absorbHp = stats[2];
-        defence = stats[3];
         physicDamage = stats[4];
         magicDamage = stats[5];
         shortDamage = stats[6];
@@ -261,7 +260,6 @@ public class GameManager : Singleton<GameManager>
         critical = stats[12];
         if (!Character.Instance.isBuff)
             percentDamage = stats[13];
-        avoid = stats[14];
     }
 
     void IntVariableArray()

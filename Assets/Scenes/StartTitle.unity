@@ -5280,12 +5280,12 @@ MonoBehaviour:
   fishHighGradeCount: 2
   fishLowGradeCount: 100
   maxHp: 100
-  percentDamage: 0
+  percentDamage: 1
   physicDamage: 10000
   magicDamage: 0
   shortDamage: 0
   longDamage: 50
-  recoverHp: 0
+  recoverHp: 10
   absorbHp: 2
   defence: 3
   attackSpeed: 1

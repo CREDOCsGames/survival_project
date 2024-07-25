@@ -41,9 +41,9 @@ public class Character : Singleton<Character>
     [HideInInspector] public float currentHp;
     [HideInInspector] public float recoverHpRatio;
     [HideInInspector] public float speed;
-    [HideInInspector] public float avoid;
+    [HideInInspector] public int avoid;
     [HideInInspector] public float attackSpeed;
-    [HideInInspector] public float defence;
+    [HideInInspector] public int defence;
 
     public float maxRecoveryGauge;
     [HideInInspector] public float currentRecoveryGauge;
@@ -163,19 +163,7 @@ public class Character : Singleton<Character>
             }
         }
 
-        temp();
-
         SummonPet();
-    }
-
-    void temp()
-    {
-        Debug.Log("Speed: " + speed);
-        Debug.Log("avoid: " + avoid);
-        Debug.Log("recover: " + recoverHpRatio);
-        Debug.Log("attackSpeed: " + attackSpeed);
-        Debug.Log("damage: " + gameManager.percentDamage);
-        Debug.Log("defence: " + defence);
     }
 
     private void FixedUpdate()
@@ -341,6 +329,11 @@ public class Character : Singleton<Character>
                 }
             }
         }
+    }
+
+    public void InitailizeDashCool()
+    {
+        dashCoolTime = initDashCoolTime;
     }
 
     void ParticleOff()

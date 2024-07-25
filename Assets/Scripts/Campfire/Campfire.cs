@@ -33,6 +33,13 @@ public class Campfire : MonoBehaviour, IMouseInteraction
     bool isWoodRefill = false;
     bool buffInteraction = true;
 
+    int[] mxHps = { 0, 15, 30, 50 };
+    int[] reHps = { 0, 20, 30, 40 };
+    int[] speeds = { 0, 5, 7, 10 };
+    int[] avoids = { 0, 3, 5, 7 };
+    int[] dmgs = { 0, 10, 15, 20 };
+    int[] dfs = { 0, 0, 5, 10 };
+
     private void Start()
     {
         gameManager = GameManager.Instance;
@@ -91,22 +98,21 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         {
             if (i != (int)beforeBuff)
             {
-                buffValues[(Buff)i] = 0;
+                buffValues[(Buff)i] = 3;
             }
         }
 
-        // 이거 clamp로 처리하기
+        character.maxHp = gameManager.maxHp * (100 + mxHps[buffValues[Buff.MAXHEALTH]]) * 0.01f;
 
-        character.maxHp = buffValues[Buff.MAXHEALTH] != 0 ? gameManager.maxHp * ((15 * buffValues[Buff.MAXHEALTH]) + (5 * (buffValues[Buff.MAXHEALTH] - 1))) : gameManager.maxHp;
+        character.recoverHpRatio = gameManager.recoverHp * (100 + reHps[buffValues[Buff.RECOVERY_HEALTH]]) * 0.01f;
 
-        character.recoverHpRatio = buffValues[Buff.RECOVERY_HEALTH] != 0 ? gameManager.recoverHp * (10 + buffValues[Buff.RECOVERY_HEALTH]) * 0.1f : gameManager.recoverHp;
-
-        character.speed = buffValues[Buff.SPEED] != 0 ? gameManager.speed * (100 + (Mathf.Pow(buffValues[Buff.SPEED], 2) + buffValues[Buff.SPEED] + 8) * 0.5f) * 0.01f : gameManager.speed;
-        character.avoid = buffValues[Buff.SPEED] != 0 ? gameManager.avoid + (1 + 2 * buffValues[Buff.SPEED]) * 0.01f : gameManager.avoid;
+        character.speed = gameManager.speed * (100 + speeds[buffValues[Buff.SPEED]]) * 0.01f;
+        character.avoid = gameManager.avoid +  avoids[buffValues[Buff.SPEED]];
         gameManager.dashCount = buffValues[Buff.SPEED] == 3 ? 1 : 0;
+        character.dashCount = gameManager.dashCount;
 
-        gameManager.percentDamage = (100 + 10 * (buffValues[Buff.POWER])) * 0.01f;
-        character.defence = gameManager.defence + 5 * buffValues[Buff.POWER];
+        gameManager.percentDamage = (100 + dmgs[buffValues[Buff.POWER]]) * 0.01f;
+        character.defence = gameManager.defence + dfs[buffValues[Buff.POWER]];
     }
 
     public void ToNightScene()
@@ -130,6 +136,8 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         gameManager.dashCount = 0;
         gameManager.percentDamage = 1;
 
+        character.InitailizeDashCool();
+
         buffInteraction = true;
     }
 
@@ -139,6 +147,8 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         {
             buffValues[(Buff)i] = 1;
             debuffValues[(Debuff)i] = 0;
+
+            Debug.Log("dsafasf");
         }
 
         OnBuff();
