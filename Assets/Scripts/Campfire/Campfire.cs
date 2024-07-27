@@ -23,6 +23,7 @@ public class Campfire : MonoBehaviour, IMouseInteraction
     GamesceneManager gamesceneManager;
 
     bool canInteraction = false;
+    bool canCookFish = false;
     Vector3 fireInitScale;
 
     Dictionary<Buff, int> buffValues = new Dictionary<Buff, int>();
@@ -31,7 +32,6 @@ public class Campfire : MonoBehaviour, IMouseInteraction
     Dictionary<Debuff, int> debuffValues = new Dictionary<Debuff, int>();
 
     bool isWoodRefill = false;
-    bool buffInteraction = true;
 
     int[] mxHps = { 0, 15, 30, 50 };
     int[] reHps = { 0, 20, 30, 40 };
@@ -98,11 +98,12 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         {
             if (i != (int)beforeBuff)
             {
-                buffValues[(Buff)i] = 3;
+                buffValues[(Buff)i] = 0;
             }
         }
 
         character.maxHp = gameManager.maxHp * (100 + mxHps[buffValues[Buff.MAXHEALTH]]) * 0.01f;
+        character.currentHp = character.maxHp;
 
         character.recoverHpRatio = gameManager.recoverHp * (100 + reHps[buffValues[Buff.RECOVERY_HEALTH]]) * 0.01f;
 
@@ -137,8 +138,6 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         gameManager.percentDamage = 1;
 
         character.InitailizeDashCool();
-
-        buffInteraction = true;
     }
 
     public void OffBuffNDebuff()
@@ -147,8 +146,6 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         {
             buffValues[(Buff)i] = 1;
             debuffValues[(Debuff)i] = 0;
-
-            Debug.Log("dsafasf");
         }
 
         OnBuff();
@@ -160,17 +157,36 @@ public class Campfire : MonoBehaviour, IMouseInteraction
 
     public void InteractionLeftButtonFuc(GameObject hitObject)
     {
-        if (!canInteraction || gameManager.woodCount < 10 || isWoodRefill)
+        if (!canInteraction)
+            return;
+
+        OnFire();
+
+        OnFish();
+    }
+
+    public void InteractionRightButtonFuc(GameObject hitObject)
+    {
+        
+    }
+
+
+
+    void OnFire()
+    {
+        if (isWoodRefill || gameManager.woodCount < 10)
             return;
 
         gameManager.woodCount -= 10;
         fireImage.transform.localScale = fireInitScale;
         isWoodRefill = true;
+
+        StartCoroutine(BuffCoolTime(1.5f));
     }
 
-    public void InteractionRightButtonFuc(GameObject hitObject)
+    void OnFish()
     {
-        if (!canInteraction || !buffInteraction || (gameManager.fishLowGradeCount <= 0 && gameManager.fishHighGradeCount <= 0))
+        if (!canCookFish || !isWoodRefill || gameManager.fishLowGradeCount <= 0 && gameManager.fishHighGradeCount <= 0)
             return;
 
         interactionUI.SetActive(false);
@@ -203,13 +219,13 @@ public class Campfire : MonoBehaviour, IMouseInteraction
 
     IEnumerator BuffCoolTime(float time)
     {
-        buffInteraction = false;
+        canCookFish = false;
         yield return new WaitForSeconds(time);
 
         if (!gamesceneManager.isNight)
         {
             interactionUI.SetActive(true);
-            buffInteraction = true;
+            canCookFish = true;
         }
     }
 

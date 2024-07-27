@@ -257,7 +257,7 @@ public class OptionUI : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().buildIndex > 2)
         {
-            Destroy(ItemManager.Instance.gameObject);
+            //Destroy(ItemManager.Instance.gameObject);
         }
 
         if (SceneManager.GetActiveScene().buildIndex > 1)
