@@ -4,6 +4,7 @@ public class CheckCharacter : MonoBehaviour
 {
     [SerializeField] GameObject arrow;
     [SerializeField] GameObject clickUI;
+    [SerializeField] Collider coll;
 
     GamesceneManager gamesceneManager;
 
@@ -22,11 +23,33 @@ public class CheckCharacter : MonoBehaviour
         clickUI.gameObject.SetActive(false);
     }
 
+    private void Update()
+    {
+        if (gamesceneManager == null)
+            gamesceneManager = GamesceneManager.Instance;
+
+        if (gamesceneManager.isNight)
+        {
+            if (coll.enabled)
+                coll.enabled = false;
+
+            if (arrow != null)
+            {
+                arrow.gameObject.SetActive(false);
+            }
+
+            clickUI.SetActive(false);
+        }
+
+        else
+        {
+            if (!coll.enabled)
+                coll.enabled = true;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (gamesceneManager.isNight)
-            return;
-
         if (other.CompareTag("Character"))
         {
             if (arrow != null)
@@ -42,32 +65,8 @@ public class CheckCharacter : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (gamesceneManager.isNight)
-        {
-            if (arrow != null)
-            {
-                arrow.gameObject.SetActive(false);
-            }
-
-            clickUI.SetActive(false);
-
-            return;
-        }
-
         if (other.CompareTag("Character"))
         {
-            if (!transform.parent.GetComponent<IMouseInteraction>().ReturnCanInteraction())
-            {
-                if (arrow != null)
-                {
-                    arrow.SetActive(true);
-                    arrow.GetComponent<SpriteRenderer>().color = Color.blue;
-                }
-
-                clickUI.SetActive(true);
-                transform.parent.GetComponent<IMouseInteraction>().CanInteraction(true);
-            }
-
             if (arrow != null)
             {
                 Vector3 logDir = -(Character.Instance.transform.position - transform.position).normalized;

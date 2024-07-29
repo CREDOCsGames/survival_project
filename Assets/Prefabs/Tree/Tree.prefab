@@ -482,6 +482,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrow: {fileID: 5077988449566647711}
   clickUI: {fileID: 7412166656126384603}
+  coll: {fileID: 4352276052961228892}
 --- !u!1 &7007229096887857488
 GameObject:
   m_ObjectHideFlags: 0

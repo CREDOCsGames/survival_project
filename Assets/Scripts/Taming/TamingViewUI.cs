@@ -13,7 +13,7 @@ public class TamingViewUI : MonoBehaviour
 
     [HideInInspector] public GameObject catchPet;
 
-    private void Start()
+    private void OnEnable()
     {
         tamingGauge.value = 0.5f;
 
@@ -39,17 +39,22 @@ public class TamingViewUI : MonoBehaviour
                 failText.gameObject.SetActive(true);
 
                 if (catchPet != null)
+                {
                     StartCoroutine(catchPet.GetComponent<IMouseInteraction>().EndInteraction(null, 2));
+                }
             }
         }
 
         else
         {
-            tamingPet.GetComponent<TamingGamePetMove>().isCatch = false;
+            tamingPet.GetComponent<TamingGamePetMove>().isCatch = true;
             catchText.gameObject.SetActive(true);
 
             if (catchPet != null)
+            {
+                Character.Instance.TamingPet(GameManager.Instance.round);
                 StartCoroutine(catchPet.GetComponent<IMouseInteraction>().EndInteraction(null, 3));
+            }
         }
     }
 }

@@ -56,6 +56,8 @@ public class Campfire : MonoBehaviour, IMouseInteraction
 
         buffIcon.SetActive(false);
         debuffIcon.SetActive(false);
+
+        fireImage.transform.localScale = Vector3.zero;
     }
 
     private void Update()
@@ -65,9 +67,9 @@ public class Campfire : MonoBehaviour, IMouseInteraction
 
     void ChangeFireImageScale()
     {
-        if (!isWoodRefill && !gamesceneManager.isNight)
+        if (isWoodRefill && gamesceneManager.isNight)
         {
-            fireImage.transform.localScale = fireInitScale * (gamesceneManager.currentGameTime / gameManager.gameDayTime);
+            fireImage.transform.localScale = fireInitScale * (gamesceneManager.currentGameTime / gameManager.gameNightTime);
         }
     }
 
@@ -116,12 +118,27 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         character.defence = gameManager.defence + dfs[buffValues[Buff.POWER]];
     }
 
+    void InitializeBuff()
+    {
+        character.maxHp = gameManager.maxHp * (100 + mxHps[buffValues[Buff.MAXHEALTH]]) * 0.01f;
+        character.currentHp = character.maxHp;
+
+        character.recoverHpRatio = gameManager.recoverHp * (100 + reHps[buffValues[Buff.RECOVERY_HEALTH]]) * 0.01f;
+
+        character.speed = gameManager.speed * (100 + speeds[buffValues[Buff.SPEED]]) * 0.01f;
+        character.avoid = gameManager.avoid + avoids[buffValues[Buff.SPEED]];
+        gameManager.dashCount = buffValues[Buff.SPEED] == 3 ? 1 : 0;
+        character.dashCount = gameManager.dashCount;
+
+        gameManager.percentDamage = (100 + dmgs[buffValues[Buff.POWER]]) * 0.01f;
+        character.defence = gameManager.defence + dfs[buffValues[Buff.POWER]];
+    }
+
     public void ToNightScene()
     {
         OnBuff();
         OnDebuff();
         canInteraction = false;
-        isWoodRefill = false;
         interactionUI.SetActive(false);
     }
 
@@ -136,6 +153,7 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         character.avoid = gameManager .avoid;
         gameManager.dashCount = 0;
         gameManager.percentDamage = 1;
+        isWoodRefill = false;
 
         character.InitailizeDashCool();
     }
@@ -148,8 +166,7 @@ public class Campfire : MonoBehaviour, IMouseInteraction
             debuffValues[(Debuff)i] = 0;
         }
 
-        OnBuff();
-        OnDebuff();
+        InitializeBuff();
 
         debuffIcon.SetActive(false);
         buffIcon.SetActive(false);

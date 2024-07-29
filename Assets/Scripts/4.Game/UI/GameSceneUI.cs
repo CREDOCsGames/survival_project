@@ -35,6 +35,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
 
     [Header("Round")]
     [SerializeField] Text roundText;
+    [SerializeField] Text dayNightAlarmText;
 
     [Header("Dash")]
     [SerializeField] GameObject dash;
@@ -113,6 +114,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
         selectPanel.SetActive(false);
         tamingGame.SetActive(false);
         fishingGame.SetActive(true);
+        dayNightAlarmText.gameObject.SetActive(false);
 
         gameManager = GameManager.Instance;
 
@@ -584,5 +586,35 @@ public class GameSceneUI : Singleton<GameSceneUI>
             nextScene = "Logging";
 
         SelectScene(nextScene);
+    }
+
+    public void DayNightAlarmUpdate(bool isNight)
+    {
+        dayNightAlarmText.gameObject.SetActive(true);
+        
+        dayNightAlarmText.text = isNight ? "밤이 되었습니다." : "아침이 밝았습니다.";
+
+        StartCoroutine(FadeAwayAlarmText(1.5f));
+    }
+
+    IEnumerator FadeAwayAlarmText(float time)
+    {
+        Color textColor = dayNightAlarmText.color;
+        float initTime = time;
+
+        while(dayNightAlarmText.color.a > 0)
+        {
+            time -= Time.deltaTime;
+            textColor.a = time / initTime;
+            dayNightAlarmText.color = textColor;
+
+            yield return null;
+        }
+
+        yield return null;
+
+        textColor.a = 1;
+        dayNightAlarmText.color = textColor;
+        dayNightAlarmText.gameObject.SetActive(false);
     }
 }

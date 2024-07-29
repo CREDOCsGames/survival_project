@@ -27,7 +27,7 @@ public class TamingGamePetMove : MonoBehaviour
 
     bool isTurn = false;
     bool isDash = false;
-    public bool isCatch = true;
+    public bool isCatch = false;
 
     MoveType moveType = MoveType.RANDOM;
 
@@ -38,15 +38,19 @@ public class TamingGamePetMove : MonoBehaviour
 
     float scaleX;
 
-    private void Start()
+    private void Awake()
     {
         rectTranform = GetComponent<RectTransform>();
         dashParticle.GetComponentInChildren<Renderer>().enabled = false;
         areaRect = moveArea.rect;
 
-        moveSpeed = defaultSpeed;
-
         scaleX = transform.localScale.x;
+    }
+
+    private void OnEnable()
+    {
+        isCatch = false;
+        moveSpeed = defaultSpeed;
 
         StartCoroutine(GetRandomSpeedRatio());
         StartCoroutine(SetMoveType());
@@ -55,7 +59,7 @@ public class TamingGamePetMove : MonoBehaviour
 
     private void Update()
     {
-        if (isCatch)
+        if (!isCatch)
         {
             if (!isDash)
             {

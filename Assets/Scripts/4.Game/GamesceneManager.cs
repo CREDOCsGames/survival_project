@@ -1,11 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class GamesceneManager : Singleton<GamesceneManager>
 {
+    [SerializeField] GameObject monsterSpawner;
     [SerializeField] public Transform treeParent;
     [SerializeField] Transform bushParent;
     [SerializeField] GameObject treePrefab;
@@ -20,11 +19,16 @@ public class GamesceneManager : Singleton<GamesceneManager>
     [HideInInspector] public bool isNight = false;
 
     GameManager gameManager;
+    Character character;
+    GameSceneUI gameSceneUI;
 
     private void Start()
     {
         gameManager = GameManager.Instance;
-        Character.Instance.GetComponent<NavMeshAgent>().enabled = true;
+        character = Character.Instance;
+        gameSceneUI = GameSceneUI.Instance;
+
+        character.GetComponent<NavMeshAgent>().enabled = true;
 
         StartCoroutine(DayRoutine());
     }
@@ -38,6 +42,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
     IEnumerator DayRoutine()
     {
         isNight = false;
+        gameSceneUI.DayNightAlarmUpdate(isNight);
         nightFilter.SetActive(false);
         
         StartCoroutine(SpawnTree());
@@ -55,7 +60,9 @@ public class GamesceneManager : Singleton<GamesceneManager>
     IEnumerator NightRoutine()
     {
         isNight = true;
+        gameSceneUI.DayNightAlarmUpdate(isNight);
         nightFilter.SetActive(true);
+        //monsterSpawner.SetActive(true);
 
         currentGameTime = gameManager.gameNightTime;
 
@@ -65,6 +72,9 @@ public class GamesceneManager : Singleton<GamesceneManager>
         gameManager.fishHighGradeCount = 0;*/
 
         gameManager.round++;
+
+        if (character.IsTamingPet)
+            character.TamedPed.GetComponent<Pet>().RunAway();
 
         campFire.GetComponent<Campfire>().ToDayScene();
 

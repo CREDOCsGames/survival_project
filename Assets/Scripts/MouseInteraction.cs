@@ -16,8 +16,18 @@ public class MouseInteraction : MonoBehaviour
 {
     [SerializeField] LayerMask layerMask;
 
+    Character character;
+
+    private void Start()
+    {
+        character = Character.Instance;
+    }
+
     private void Update()
     {
+        if (!character.isCanControll)
+            return;
+
         if (Input.GetMouseButtonUp(0))
         {
             MouseInteractionFuc((gameObject) => { gameObject.GetComponent<IMouseInteraction>().InteractionLeftButtonFuc(gameObject); });

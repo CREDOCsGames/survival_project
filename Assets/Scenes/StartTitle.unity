@@ -5272,7 +5272,7 @@ MonoBehaviour:
   damageStorage: {fileID: 1692643827}
   initGameTime: 10000
   gameDayTime: 5
-  gameNightTime: 5
+  gameNightTime: 1
   money: 0
   round: 1
   woodCount: 30

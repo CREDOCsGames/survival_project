@@ -51,6 +51,7 @@ public class Character : Singleton<Character>
     float recoveryValue = 10f;
 
     [Header("Summon")]
+    [SerializeField] GameObject tamedPet;
     [SerializeField] GameObject ggoGgoPrefab;
     [SerializeField] GameObject ilsoonPrefab;
     [SerializeField] GameObject wakgoodPrefab;
@@ -95,6 +96,14 @@ public class Character : Singleton<Character>
 
     public bool isCanControll = true;
 
+    bool isTamingPet = false;
+    int getPetRound = 0;
+
+    public bool IsTamingPet => isTamingPet;
+    public int GetPetRound => getPetRound;
+
+    public GameObject TamedPed => tamedPet;
+
     protected override void Awake()
     {
         base.Awake();
@@ -126,6 +135,8 @@ public class Character : Singleton<Character>
         initDashCoolTime = dashCoolTime;
 
         fruitUI.gameObject.SetActive(false);
+
+        tamedPet.SetActive(false);
     }
     
     void StatChangeCheck(int num)
@@ -249,6 +260,20 @@ public class Character : Singleton<Character>
 
         if (summonNum >= 3)
             summonNum = 0;
+    }
+
+    public void TamingPet(int round)
+    {
+        isTamingPet = true;
+        getPetRound = round;
+
+        tamedPet.SetActive(true);
+    }
+
+    public void RunAwayPet()
+    {
+        isTamingPet = false;
+        tamedPet.SetActive(false);
     }
 
     void AutoRecoverHp()

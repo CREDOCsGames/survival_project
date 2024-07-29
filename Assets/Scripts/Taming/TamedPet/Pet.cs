@@ -38,7 +38,6 @@ public class Pet : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
         pool = new ObjectPool<DamageUI>(CreateDamageUI, OnGetDamageUI, OnReleaseDamageUI, OnDestroyDamageUI, maxSize: 10);
 
     }
@@ -176,6 +175,12 @@ public class Pet : MonoBehaviour
     public void EndAttack()
     {
 
+    }
+
+    public void RunAway()
+    {
+        if (character.GetPetRound + 5 == gameManager.round)
+            character.RunAwayPet();
     }
 
     private DamageUI CreateDamageUI()
