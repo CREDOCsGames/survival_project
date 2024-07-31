@@ -90,6 +90,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
     [HideInInspector] public int treeShopCount;
 
     [SerializeField] GameObject fishingGame;
+    [SerializeField] GameObject weaponUI;
 
     bool bgmChange;
 
@@ -115,6 +116,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
         tamingGame.SetActive(false);
         fishingGame.SetActive(true);
         dayNightAlarmText.gameObject.SetActive(false);
+        weaponUI.SetActive(false);
 
         gameManager = GameManager.Instance;
 
@@ -214,6 +216,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
         RoundUI();
         TimeUI();
         DashUI();
+        WeaponUI();
         SettingStatText();
 
         if (!character.isDead)
@@ -560,6 +563,15 @@ public class GameSceneUI : Singleton<GameSceneUI>
 
             timeText.text = (gamesceneManager.currentGameTime).ToString("F2");
         }
+    }
+
+    void WeaponUI()
+    {
+        if(gamesceneManager.isNight)
+            weaponUI.SetActive(true);
+
+        else
+            weaponUI.SetActive(false);
     }
 
     public void OnOffStatWindow()

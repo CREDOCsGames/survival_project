@@ -17,12 +17,15 @@ public class SwingCutlass : MonoBehaviour
     float coolTime = 1;
     float initCoolTime;
 
-    private void Start()
+    private void Awake()
     {
         anim = GetComponent<Animator>();
         character = Character.Instance;
         gameManager = GameManager.Instance;
+    }
 
+    private void OnEnable()
+    {
         initCoolTime = coolTime;
 
         collder.enabled = false;

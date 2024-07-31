@@ -11,7 +11,8 @@ public class GamesceneManager : Singleton<GamesceneManager>
     [SerializeField] GameObject bushPrefab;
     [SerializeField] GameObject campFire;
     [SerializeField] LayerMask interactionLayer;
-    [SerializeField] public Collider ground;
+    [SerializeField] public Collider walkableArea;
+    [SerializeField] Collider treeBushSpawnArea;
     [SerializeField] GameObject nightFilter;
 
     [HideInInspector] public float currentGameTime;
@@ -35,7 +36,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
     private void Update()
     {
-        if (Character.Instance.currentHp > 0 && currentGameTime >= 0)
+        if (character.currentHp > 0 && currentGameTime >= 0)
             currentGameTime -= Time.deltaTime;
     }
 
@@ -44,9 +45,12 @@ public class GamesceneManager : Singleton<GamesceneManager>
         isNight = false;
         gameSceneUI.DayNightAlarmUpdate(isNight);
         nightFilter.SetActive(false);
+        //monsterSpawner.SetActive(false);
         
         StartCoroutine(SpawnTree());
         StartCoroutine(SpawnBush());
+
+        character.weaponParent.gameObject.SetActive(false); 
 
         currentGameTime = gameManager.gameDayTime;
 
@@ -62,7 +66,8 @@ public class GamesceneManager : Singleton<GamesceneManager>
         isNight = true;
         gameSceneUI.DayNightAlarmUpdate(isNight);
         nightFilter.SetActive(true);
-        //monsterSpawner.SetActive(true);
+
+        character.weaponParent.gameObject.SetActive(true);
 
         currentGameTime = gameManager.gameNightTime;
 
@@ -138,11 +143,11 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
     Vector3 TreeAndBushPos()
     {
-        float groundX = ground.bounds.size.x;
-        float groundZ = ground.bounds.size.z;
+        float groundX = treeBushSpawnArea.bounds.size.x;
+        float groundZ = treeBushSpawnArea.bounds.size.z;
 
-        groundX = Random.Range((groundX / 2f) * -1f + ground.bounds.center.x, (groundX / 2f) + ground.bounds.center.x);
-        groundZ = Random.Range((groundZ / 2f) * -1f + ground.bounds.center.z, (groundZ / 2f) + ground.bounds.center.z);
+        groundX = Random.Range((groundX / 2f) * -1f + treeBushSpawnArea.bounds.center.x, (groundX / 2f) + treeBushSpawnArea.bounds.center.x);
+        groundZ = Random.Range((groundZ / 2f) * -1f + treeBushSpawnArea.bounds.center.z, (groundZ / 2f) + treeBushSpawnArea.bounds.center.z);
 
         if (Mathf.Abs(groundX) < 3f)
         {

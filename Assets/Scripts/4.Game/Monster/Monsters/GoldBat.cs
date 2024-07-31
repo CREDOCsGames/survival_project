@@ -30,7 +30,7 @@ public class GoldBat : Monster
             hp = 55000;
 
         maxHp = hp;
-        ground = GamesceneManager.Instance.ground;
+        ground = GamesceneManager.Instance.walkableArea;
         attackTime = 5;
         initAttackTime = 5;
         dashSpeed = 8;

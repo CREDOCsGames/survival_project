@@ -6,6 +6,7 @@ using UnityEngine.Pool;
 
 public class MonsterSpawn : MonoBehaviour
 {
+    [SerializeField] Collider[] spawnPoses;
     [SerializeField] GameObject[] normalMonsterPrefab;
     [SerializeField] GameObject[] bossMonsterPrefab;
     [SerializeField] Transform storageParent;
@@ -19,14 +20,14 @@ public class MonsterSpawn : MonoBehaviour
 
     private IObjectPool<Monster> pool;
 
-    [HideInInspector] public Vector3 spawnPos;
-
     float[] weightValue;
     float totalWeight = 0;
 
     GameManager gameManager;
     GamesceneManager gamesceneManager;
     Character character;
+
+    Coroutine currentCoroutine;
 
     private void Awake()
     {
@@ -38,62 +39,50 @@ public class MonsterSpawn : MonoBehaviour
         gameManager = GameManager.Instance;
         character = Character.Instance;
         gamesceneManager = GamesceneManager.Instance;
+
         weightValue = new float[] { 100, 0, 0, 0 };
-        ground = GamesceneManager.Instance.ground;
+        //ground = GamesceneManager.Instance.walkableArea;
 
         for (int i = 0; i < weightValue.Length; i++)
         {
             totalWeight += weightValue[i];
         }
 
-            RendSpawnImage();
-            RendSpawnImage();
-            RendSpawnImage();
-            RendSpawnImage();
-            RendSpawnImage();
-            RendSpawnImage();
-            RendSpawnImage();
-        
-
-        /*InvokeRepeating("RendSpawnImage", 0.1f, Mathf.Clamp(spawnDelay / (1 + (gameManager.round - 1) * 0.1f), 0.5f, 1));
-        //InvokeRepeating("RendSpawnImage", 0.1f, 5f);
-
-        if (gameManager.round > 10)
-        {
-            InvokeRepeating("RendSpawnImage", 0.5f, Mathf.Clamp(spawnDelay * 2f / (1 + (gameManager.round - 11) * 0.1f), 1, 2));
-
-            if (gameManager.round > 20)
-                InvokeRepeating("RendSpawnImage", 1f, Mathf.Clamp(spawnDelay * 3f / (1 + (gameManager.round - 21) * 0.1f), 1.5f, 3));
-        }*/
-
-        if (gameManager.round % 10 == 0)
-        {
-            gameManager.isBossDead = false;
-            RendBossSpawnImage(gameManager.round);
-        }
+        StartCoroutine(UpdateSpawn());
     }
 
     private void Update()
     {
-        if (gamesceneManager.currentGameTime <= 0 || character.isDead)
-            CancelInvoke("RendSpawnImage");
-
         if (bosssParent.transform.childCount == 0)
             gameManager.isBossDead = true;
     }
 
+    IEnumerator UpdateSpawn()
+    {
+        while (true)
+        {
+            yield return new WaitUntil(() => gamesceneManager.isNight);
+
+            currentCoroutine = StartCoroutine(RendSpawnImage(5));
+
+            yield return new WaitUntil(() => !gamesceneManager.isNight);
+
+            StopCoroutine(currentCoroutine);
+        }
+    }
+
     Vector3 SpawnPosition()
     {
-        Vector3 playerPos = character.transform.position;
-        Vector3 randPoint = Random.onUnitSphere * spawnRange;
-        randPoint.y = 0;
+        int rand = Random.Range(0, spawnPoses.Length);
+        Collider spawnTransform = spawnPoses[rand];
 
-        spawnPos = randPoint + playerPos;
+        float randX = spawnTransform.bounds.size.x;
+        float randZ = spawnTransform.bounds.size.z;
 
-        float distance = Vector3.Magnitude(playerPos - spawnPos);
+        randX = Random.Range(-(randX / 2), (randX / 2));
+        randZ = Random.Range(-(randZ / 2), (randZ / 2));
 
-        if(distance < 2)
-            SpawnPosition();
+        Vector3 spawnPos = spawnPoses[rand].transform.position + new Vector3(randX, 0, randZ);
 
         return spawnPos;
     }
@@ -104,37 +93,57 @@ public class MonsterSpawn : MonoBehaviour
 
         Monster monster = pool.Get();
         monster.transform.position = pos;
+
         if (monster.GetComponent<NavMeshAgent>())
             monster.GetComponent<NavMeshAgent>().enabled = true;
     }
 
-    void RendSpawnImage()
+    IEnumerator RendSpawnImage(float time)
     {
-        Vector3 pos = ground.bounds.ClosestPoint(SpawnPosition());
-        GameObject spawnMark = Instantiate(spawnImage, pos, spawnImage.transform.rotation);
-        spawnMark.transform.SetParent(storageParent);
-        Destroy(spawnMark, 1f);
-        StartCoroutine(SpawnMonster(pos));
+        while (gamesceneManager.isNight)
+        {
+            //Vector3 pos = ground.bounds.ClosestPoint(SpawnPosition());
+            Vector3 pos = SpawnPosition();
+            GameObject spawnMark = Instantiate(spawnImage, pos, spawnImage.transform.rotation, storageParent);
+            Destroy(spawnMark, 1f);
+            StartCoroutine(SpawnMonster(pos));
+
+            SpawnSubordinateMonster(pos, Random.Range(4, 7));
+
+            yield return new WaitForSeconds(time);
+        }
+    }
+
+    void SpawnSubordinateMonster(Vector3 pos, int count)
+    {
+        Vector3 spawnPos;
+
+        for (int i = 0; i < count; i++)
+        {
+            spawnPos = pos + Random.onUnitSphere * 2;
+            spawnPos.y = 0;
+
+            GameObject spawnMark = Instantiate(spawnImage, spawnPos, spawnImage.transform.rotation, storageParent);
+            Destroy(spawnMark, 1f);
+            StartCoroutine(SpawnMonster(spawnPos));
+        }
     }
 
     void RendBossSpawnImage(int round)
     {
         if (round != 30)
         {
-            GameObject spawnMark = Instantiate(bossSpawnImage, new Vector3(3, 0, -37), bossSpawnImage.transform.rotation);
+            GameObject spawnMark = Instantiate(bossSpawnImage, new Vector3(3, 0, -37), bossSpawnImage.transform.rotation, bosssParent);
             Destroy(spawnMark, 2.1f);
-            spawnMark.transform.SetParent(bosssParent);
             StartCoroutine(CreateBossMonster(round));
         }
 
         else if (round == 30)
         {
-            GameObject spawnMark = Instantiate(bossSpawnImage, new Vector3(3, 0, -37), bossSpawnImage.transform.rotation);
+            GameObject spawnMark = Instantiate(bossSpawnImage, new Vector3(3, 0, -37), bossSpawnImage.transform.rotation, bosssParent);
             Destroy(spawnMark, 2.1f);
-            spawnMark.transform.SetParent(bosssParent);
-            GameObject spawnMark2 = Instantiate(bossSpawnImage, new Vector3(-3, 0, -37), bossSpawnImage.transform.rotation);
+            GameObject spawnMark2 = Instantiate(bossSpawnImage, new Vector3(-3, 0, -37), bossSpawnImage.transform.rotation, bosssParent);
             Destroy(spawnMark2, 2.1f);
-            spawnMark2.transform.SetParent(bosssParent);
             StartCoroutine(CreateBossMonster(round));
         }
     }

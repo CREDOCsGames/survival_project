@@ -63,7 +63,7 @@ public class Monster : MonoBehaviour
         hp = stat.monsterMaxHp * (2 + Mathf.Floor(gameManager.round / 5) * Mathf.Floor(gameManager.round / 5) * (1 + Mathf.Floor(gameManager.round / 20))) * 0.5f;
         damage = stat.monsterDamage * (1 + Mathf.Floor(gameManager.round / 30)) + Mathf.Floor(gameManager.round / 5) * 2f;
         maxHp = hp;
-        initScale = transform.localScale;
+        initScale = transform.GetChild(1).localScale;
         speed = stat.monsterSpeed * (1 - gameManager.monsterSlow * 0.01f);
         initSpeed = speed;
         defence = stat.monsterDefence * (1 + Mathf.Floor(gameManager.round / 5) * 0.5f) * (1 - gameManager.monsterDef);
@@ -112,8 +112,7 @@ public class Monster : MonoBehaviour
         beforeFreeze = false;
         anim.speed = 1f;
         transform.position = Vector3.zero;
-        transform.localScale = initScale;
-        initScale = transform.localScale;
+        transform.GetChild(1).localScale = initScale;
         rend.color = Color.white;
         initcolor = rend.color;
         rend.sortingOrder = 2;
@@ -252,7 +251,7 @@ public class Monster : MonoBehaviour
 
     public void OnDead()
     {
-        if (hp <= 0 || (gameManager.isClear && gameManager.isBossDead) || character.isDead)
+        if (hp <= 0 || (gameManager.isClear && gameManager.isBossDead) || character.isDead || !gamesceneManager.isNight)
         {
             GetComponent<MonsterMove>().agent.enabled = false;
             rend.sortingOrder = 0;

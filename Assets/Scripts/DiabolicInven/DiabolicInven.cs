@@ -2,17 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DiabolicInven : MonoBehaviour
+public class DiabolicInven : Singleton<DiabolicInven>
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] Transform slotParent;
+    [SerializeField] Transform itemImageParent;
+    [SerializeField] GameObject itemImage;
+
+    DiabolicInvenSlot[] slots;
+
+    private void Start()
     {
-        
+        slots = new DiabolicInvenSlot[slotParent.childCount];
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            slots[i] = slotParent.GetChild(i).GetComponent<DiabolicInvenSlot>();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void InstantItemImage(Vector3 instanctPos)
     {
-        
+        Instantiate(itemImage, itemImageParent).GetComponent<DiabolicSlotItem>().ItemSetOnInventory(instanctPos);
     }
 }

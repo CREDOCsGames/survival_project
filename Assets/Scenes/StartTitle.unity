@@ -5271,8 +5271,8 @@ MonoBehaviour:
   bulletStorage: {fileID: 1005871281}
   damageStorage: {fileID: 1692643827}
   initGameTime: 10000
-  gameDayTime: 5
-  gameNightTime: 1
+  gameDayTime: 3
+  gameNightTime: 10
   money: 0
   round: 1
   woodCount: 30
@@ -5297,7 +5297,7 @@ MonoBehaviour:
   passiveIntVariables: 
   passiveFloatVariables: []
   passiveBoolVariables: 
-  dashCount: 0
+  dashCount: 1000
   buffNum: 0
   exDmg: 0
   isedolCount: 0

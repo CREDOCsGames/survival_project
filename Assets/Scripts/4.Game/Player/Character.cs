@@ -320,7 +320,7 @@ public class Character : Singleton<Character>
                         afterPos = transform.position + new Vector3(x, 0, z) * 4;
 
                     if (ground == null)
-                        ground = GamesceneManager.Instance.ground;
+                        ground = GamesceneManager.Instance.walkableArea;
 
                     else
                         afterPos = ground.bounds.ClosestPoint(afterPos);
@@ -455,7 +455,7 @@ public class Character : Singleton<Character>
         agent.Move(dir * speed * Time.deltaTime);
 
         if (ground == null)
-            ground = GamesceneManager.Instance.ground;
+            ground = GamesceneManager.Instance.walkableArea;
 
         else
             transform.position = ground.bounds.ClosestPoint(transform.position);
