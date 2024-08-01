@@ -50,7 +50,7 @@ public class PieceItemInvenSlot : MonoBehaviour
         if (pieceInven.items[indexNum] == null || isDragging)
             return;
 
-        dragUI.OnDragUI(pieceInven.items[indexNum]);
+        dragUI.SettingDragUI(pieceInven.items[indexNum]);
         isDragging = true;
     }
 
@@ -66,6 +66,8 @@ public class PieceItemInvenSlot : MonoBehaviour
     {
         if (!isDragging)
             return;
+
+        DiabolicInven.Instance.InstantItemImage(dragUI.DragItem);
 
         dragUI.OffDragUI();
         isDragging = false;

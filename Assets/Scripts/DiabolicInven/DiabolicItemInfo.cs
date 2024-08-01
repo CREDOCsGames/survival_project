@@ -10,7 +10,7 @@ public class ItemShape
     public int Width => _width;
     public int Height => _height;
     public bool[] Shape => _shape;
-
+/*
     public ItemShape(int width, int height)
     {
         _width = width;
@@ -23,6 +23,7 @@ public class ItemShape
         _width = shape.GetLength(0);
         _height = shape.GetLength(1);
         _shape = new bool[_width * _height];
+
         for (int x = 0; x < _width; x++)
         {
             for (int y = 0; y < _height; y++)
@@ -36,7 +37,7 @@ public class ItemShape
     {
         y = (_height - 1) - y;
         return x + _width * y;
-    }
+    }*/
 }
 
 [CreateAssetMenu(fileName = "new Item", menuName = "GameData/DiabolicItem")]

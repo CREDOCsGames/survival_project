@@ -10,47 +10,36 @@ public class DiabolicInvenSlot : MonoBehaviour
 
     bool isEmpty = true;
 
-    bool inPointer = false;
-
     public bool IsEmpty => isEmpty;
+
+    DragUI dragUI;
 
     private void Start()
     {
         inven = DiabolicInven.Instance;
+        dragUI = DragUI.Instance;
         canSetImage.gameObject.SetActive(false);
-    }
-
-    private void Update()
-    {
-        if (!inPointer)
-            return;
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            DropDragItem();
-        }
     }
 
     public void PointerEnter()
     {
-        inPointer = true;
-        ChangeCanSetImageColor();
+        if (dragUI.DragItem == null)
+            return;
+
+        inven.ChangeSlotsColor(transform.GetSiblingIndex());
     }
 
     public void PointerExit()
     {
-        inPointer = false;
-        OffCanSetImage();
+        if (dragUI.DragItem == null)
+            return;
+
+        inven.OffSlotSetImage();
     }
 
-    public void ChangeSlotEmpty(bool _isEmpty)
+    public void ChangeCanSetImageColor(bool canImageSet)
     {
-        isEmpty = _isEmpty;
-    }
-
-    public void ChangeCanSetImageColor()
-    {
-        canSetImage.color = isEmpty ? Color.blue : Color.red;
+        canSetImage.color = canImageSet ? Color.blue : Color.red;
         canSetImage.gameObject.SetActive(true);
     }
 
@@ -59,12 +48,8 @@ public class DiabolicInvenSlot : MonoBehaviour
         canSetImage.gameObject.SetActive(false);
     }
 
-    public void DropDragItem()
+    public void ChagneEmptyState(bool _isEmpty)
     {
-        if (!isEmpty)
-            return;
-
-        inven.InstantItemImage(GetComponent<RectTransform>().localPosition);
-        isEmpty = false;
+        isEmpty = _isEmpty;
     }
 }

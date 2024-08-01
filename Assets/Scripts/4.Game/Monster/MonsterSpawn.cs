@@ -71,33 +71,6 @@ public class MonsterSpawn : MonoBehaviour
         }
     }
 
-    Vector3 SpawnPosition()
-    {
-        int rand = Random.Range(0, spawnPoses.Length);
-        Collider spawnTransform = spawnPoses[rand];
-
-        float randX = spawnTransform.bounds.size.x;
-        float randZ = spawnTransform.bounds.size.z;
-
-        randX = Random.Range(-(randX / 2), (randX / 2));
-        randZ = Random.Range(-(randZ / 2), (randZ / 2));
-
-        Vector3 spawnPos = spawnPoses[rand].transform.position + new Vector3(randX, 0, randZ);
-
-        return spawnPos;
-    }
-
-    IEnumerator SpawnMonster(Vector3 pos)
-    {
-        yield return new WaitForSeconds(1);
-
-        Monster monster = pool.Get();
-        monster.transform.position = pos;
-
-        if (monster.GetComponent<NavMeshAgent>())
-            monster.GetComponent<NavMeshAgent>().enabled = true;
-    }
-
     IEnumerator RendSpawnImage(float time)
     {
         while (gamesceneManager.isNight)
@@ -113,6 +86,48 @@ public class MonsterSpawn : MonoBehaviour
             yield return new WaitForSeconds(time);
         }
     }
+
+    Vector3 SpawnPosition()
+    {
+        int rand = Random.Range(0, spawnPoses.Length);
+        Collider spawnTransform = spawnPoses[rand];
+
+        float randX = spawnTransform.bounds.size.x;
+        float randZ = spawnTransform.bounds.size.z;
+
+        randX = Random.Range(-(randX / 2), (randX / 2));
+        randZ = Random.Range(-(randZ / 2), (randZ / 2));
+
+        Vector3 spawnPos = spawnTransform.transform.position + new Vector3(randX, 0, randZ);
+
+        return spawnPos;
+    }
+
+    IEnumerator SpawnMonster(Vector3 pos)
+    {
+        yield return new WaitForSeconds(1);
+
+        Monster monster = pool.Get();
+
+        NavMeshHit hit;
+
+        if (NavMesh.SamplePosition(pos, out hit, 500, NavMesh.AllAreas))
+        {
+            monster.transform.position = hit.position;
+        }
+
+        if (monster.GetComponent<NavMeshAgent>())
+        {
+            monster.GetComponent<NavMeshAgent>().enabled = true;
+
+            if (!monster.GetComponent<NavMeshAgent>().isOnNavMesh)
+            {
+                Debug.Log("not");
+                Debug.Break();
+            }
+        }
+    }
+
 
     void SpawnSubordinateMonster(Vector3 pos, int count)
     {

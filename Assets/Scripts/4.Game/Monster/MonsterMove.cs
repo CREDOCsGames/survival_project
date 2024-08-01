@@ -5,13 +5,14 @@ public class MonsterMove : MonoBehaviour
 {
     [SerializeField] float speed;
     [SerializeField] float detectSize;
+    [SerializeField] LayerMask groundLayer;
 
     Character character;
     SpriteRenderer rend;
 
     Vector3 dir;
 
-    public NavMeshAgent agent;
+    [HideInInspector] public NavMeshAgent agent;
 
     private void Start()
     {

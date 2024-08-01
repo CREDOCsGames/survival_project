@@ -239,6 +239,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   detectSize: 1
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1024
   agent: {fileID: 0}
 --- !u!1 &2387078157689682115
 GameObject:
@@ -340,7 +343,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2360768902883065048
 Transform:
   m_ObjectHideFlags: 0
@@ -349,7 +352,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3320297759258608929}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.013, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children: []

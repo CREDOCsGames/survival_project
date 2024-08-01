@@ -12,19 +12,19 @@ public class DiabolicSlotItem : MonoBehaviour
         dragUI = DragUI.Instance;
     }
 
-    public void ItemSetOnInventory(Vector3 instantPos)
+    public void ItemSetOnInventory(Vector3 instantPos, DiabolicItemInfo item)
     {
-        SetImage();
+        SetImage(item);
         GetComponent<RectTransform>().anchoredPosition = instantPos;
     }
 
-    void SetImage()
+    void SetImage(DiabolicItemInfo item)
     {
         if(dragUI == null)
             dragUI = DragUI.Instance;
 
         GetComponent<RectTransform>().localScale = dragUI.transform.localScale;
         GetComponent<RectTransform>().pivot = dragUI.GetComponent<RectTransform>().pivot;
-        itemImage.sprite = dragUI.DragItem.ItemSprite;
+        itemImage.sprite = item.ItemSprite;
     }
 }
