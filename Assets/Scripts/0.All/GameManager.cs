@@ -1,7 +1,19 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
-using UnityEngine.TextCore.Text;
+
+public enum Status
+{
+    MAXHP,
+    DAMAGE,
+    RECOVER,
+    DEFENCE,
+    ATTACK_SPEED,
+    SPEED,
+    CRITICAL,
+    AVOID,
+}
 
 public class GameManager : Singleton<GameManager>       
 {
@@ -22,12 +34,8 @@ public class GameManager : Singleton<GameManager>
     public int fishLowGradeCount = 0;
 
     [Header("StatData")]
-    [SerializeField] public float maxHp;
+    [SerializeField] public int maxHp;
     /*[HideInInspector]*/ public float percentDamage;
-    [HideInInspector] public float physicDamage;
-    [HideInInspector] public float magicDamage;
-    [HideInInspector] public float shortDamage;
-    [HideInInspector] public float longDamage;
     [SerializeField] public float recoverHp;
     [SerializeField] public float absorbHp;
     [SerializeField] public int defence;
@@ -37,47 +45,11 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] public float luck;
     [SerializeField] public float critical;
     [SerializeField] public int avoid;
-
-    #region 특수 패시브
-    [HideInInspector] public int[] passiveIntVariables;
-    [HideInInspector] public float[] passiveFloatVariables;
-    [HideInInspector] public bool[] passiveBoolVariables;
-    /*[HideInInspector]*/ public int dashCount;
-    [HideInInspector] public int buffNum;
-    [HideInInspector] public int exDmg;
-    /*[HideInInspector]*/ public int isedolCount;
-    [HideInInspector] public float salePercent;
-    [HideInInspector] public float increaseExp;
-    [HideInInspector] public float coinRange;
-    [HideInInspector] public float monsterSlow;
-    [HideInInspector] public float summonASpd;
-    [HideInInspector] public float summonPDmg;
-    [HideInInspector] public float monsterDef;
-    [HideInInspector] public bool luckCoin;
-    [HideInInspector] public bool luckDamage;
-    [HideInInspector] public bool luckCritical;
-    [HideInInspector] public bool doubleShot;
-    [HideInInspector] public bool revive;
-    [HideInInspector] public bool ggoGgoSummon;
-    [HideInInspector] public bool ilsoonSummon;
-    [HideInInspector] public bool wakgoodSummon;
-    [HideInInspector] public bool ddilpa;
-    [HideInInspector] public bool butterfly;
-    [HideInInspector] public bool subscriptionFee;
-    [HideInInspector] public bool spawnTree;
-    [HideInInspector] public bool dotgu;
-    [HideInInspector] public bool isReflect;
-    [HideInInspector] public bool onePenetrate;
-    [HideInInspector] public bool lowPenetrate;
-    [HideInInspector] public bool penetrate;
-    [HideInInspector] public bool vamAbsorb;
-    #endregion
+    [SerializeField] public int dashCount;
 
     [HideInInspector] public string currentScene;
 
     Scene scene;
-
-    [HideInInspector] public float[] stats;
 
     [HideInInspector] public bool isPause;
     [HideInInspector] public bool isClear;
@@ -86,19 +58,16 @@ public class GameManager : Singleton<GameManager>
     [HideInInspector] public float gameStartTime;
     [HideInInspector] public float gameEndTime;
 
-    [HideInInspector] public int feeMoney = 0;
-    [HideInInspector] public int subMoney = 0;
-
     [HideInInspector] public Texture2D useCursorNormal;
     [HideInInspector] public Texture2D useCursorAttack;
 
     [HideInInspector] public int cursorSize;
 
-    [HideInInspector] public float maxAbs;
-
     [HideInInspector] public bool isTuto = false;
 
     public Vector3 characterSpawnPos = new Vector3(0, 0, -40);
+
+    public Dictionary<Status, int> status = new Dictionary<Status, int>();
 
     protected override void Awake()
     {
@@ -121,8 +90,8 @@ public class GameManager : Singleton<GameManager>
         PlayerPrefs.SetInt("BossTuto", 1);
         PlayerPrefs.SetInt("BagicClear", 0);
 */
-        //InitSetting();
-        //InitArray();
+        InitSetting();
+
         isPause = false;
         Time.timeScale = 1;
         isPause = false;
@@ -142,10 +111,6 @@ public class GameManager : Singleton<GameManager>
         recoverHp = 1;
         absorbHp = 0;
         defence = 3;
-        physicDamage = 0;
-        magicDamage = 0;
-        shortDamage = 0;
-        longDamage = 0;
         attackSpeed = 0;
         speed = 3;
         range = 0;
@@ -153,154 +118,14 @@ public class GameManager : Singleton<GameManager>
         critical = 5;
         avoid = 1;
 
-        dashCount = 0;
-        buffNum = 0;
-        exDmg = 0;
-        isedolCount = 0;
-
-        salePercent = 0;
-        increaseExp = 0;
-        coinRange = 0;
-        monsterSlow = 0;
-        summonASpd = 0;
-        summonPDmg = 0;
-        monsterDef = 0;
-
-        luckCoin = false;
-        luckDamage = false;
-        luckCritical = false;
-        doubleShot = false;
-        revive = false;
-        ggoGgoSummon = false;
-        ilsoonSummon = false;
-        wakgoodSummon = false;
-        ddilpa = false;
-        butterfly = false;
-        subscriptionFee = false;
-        spawnTree = false;
-        dotgu = false;
-        isReflect = false;
-        onePenetrate = false;
-        lowPenetrate = false;
-        penetrate = false;
-    }
-
-    void InitArray()
-    {
-        stats = new float[15];
-        stats[0] = maxHp;
-        stats[1] = recoverHp;
-        stats[2] = absorbHp;
-        stats[3] = defence;
-        stats[4] = physicDamage;
-        stats[5] = magicDamage;
-        stats[6] = shortDamage;
-        stats[7] = longDamage;
-        stats[8] = attackSpeed;
-        stats[9] = speed;
-        stats[10] = luck;
-        stats[11] = range;
-        stats[12] = critical;
-        stats[13] = percentDamage;
-        stats[14] = avoid;
-
-        passiveIntVariables = new int[4];
-
-        passiveIntVariables[0] = dashCount;
-        passiveIntVariables[1] = buffNum;
-        passiveIntVariables[2] = exDmg;
-        passiveIntVariables[3] = isedolCount;
-
-        passiveFloatVariables = new float[7];
-
-        passiveFloatVariables[0] = coinRange;
-        passiveFloatVariables[1] = increaseExp;
-        passiveFloatVariables[2] = monsterSlow;
-        passiveFloatVariables[3] = salePercent;
-        passiveFloatVariables[4] = summonASpd;
-        passiveFloatVariables[5] = summonPDmg;
-        passiveFloatVariables[6] = monsterDef;
-
-        passiveBoolVariables = new bool[18];
-
-        passiveBoolVariables[0] = luckCoin;
-        passiveBoolVariables[1] = luckDamage;
-        passiveBoolVariables[2] = luckCritical;
-        passiveBoolVariables[3] = doubleShot;
-        passiveBoolVariables[4] = revive;
-        passiveBoolVariables[5] = ggoGgoSummon;
-        passiveBoolVariables[6] = ilsoonSummon;
-        passiveBoolVariables[7] = wakgoodSummon;
-        passiveBoolVariables[8] = ddilpa;
-        passiveBoolVariables[9] = butterfly;
-        passiveBoolVariables[10] = subscriptionFee;
-        passiveBoolVariables[11] = spawnTree;
-        passiveBoolVariables[12] = dotgu;
-        passiveBoolVariables[13] = isReflect;
-        passiveBoolVariables[14] = onePenetrate;
-        passiveBoolVariables[15] = lowPenetrate;
-        passiveBoolVariables[16] = penetrate;
-        passiveBoolVariables[17] = vamAbsorb;
-    }
-
-    void StatArray()
-    {
-        maxHp = stats[0];
-        recoverHp = stats[1];
-        absorbHp = stats[2];
-        physicDamage = stats[4];
-        magicDamage = stats[5];
-        shortDamage = stats[6];
-        longDamage = stats[7];
-        if (!Character.Instance.isBuff)
-            attackSpeed = stats[8];
-        speed = stats[9];
-        luck = stats[10];
-        range = stats[11];
-        critical = stats[12];
-        if (!Character.Instance.isBuff)
-            percentDamage = stats[13];
-    }
-
-    void IntVariableArray()
-    {
-        dashCount = passiveIntVariables[0];
-        buffNum = passiveIntVariables[1];
-        exDmg = passiveIntVariables[2];
-        isedolCount = passiveIntVariables[3];
-    }
-
-    void FloatVariableArray()
-    {
-        coinRange = passiveFloatVariables[0];
-        increaseExp = passiveFloatVariables[1];
-        monsterSlow = passiveFloatVariables[2];
-        salePercent = passiveFloatVariables[3];
-        summonASpd = passiveFloatVariables[4];
-        summonPDmg = passiveFloatVariables[5];
-        monsterDef = passiveFloatVariables[6];
-    }
-
-    void BoolVariableArray()
-    {
-        luckCoin = passiveBoolVariables[0];
-        luckDamage = passiveBoolVariables[1];
-        luckCritical = passiveBoolVariables[2];
-        doubleShot = passiveBoolVariables[3];
-        revive = passiveBoolVariables[4];
-        ggoGgoSummon = passiveBoolVariables[5];
-        ilsoonSummon = passiveBoolVariables[6];
-        wakgoodSummon = passiveBoolVariables[7];
-        ddilpa = passiveBoolVariables[8];
-        butterfly = passiveBoolVariables[9];
-        subscriptionFee = passiveBoolVariables[10];
-        spawnTree = passiveBoolVariables[11];
-        dotgu = passiveBoolVariables[12];
-        isReflect = passiveBoolVariables[13];
-        onePenetrate = passiveBoolVariables[14];
-        lowPenetrate = passiveBoolVariables[15];
-        penetrate = passiveBoolVariables[16];
-        vamAbsorb = passiveBoolVariables[17];
+        status.Add(Status.MAXHP, maxHp);
+        status.Add(Status.DAMAGE, 1);
+        status.Add(Status.RECOVER, 10);
+        status.Add(Status.DEFENCE, 1);
+        status.Add(Status.ATTACK_SPEED, 1);
+        status.Add(Status.SPEED, 3);
+        status.Add(Status.CRITICAL, 5);
+        status.Add(Status.AVOID, 1);
     }
 
     private void Update()
@@ -310,23 +135,8 @@ public class GameManager : Singleton<GameManager>
 
         if (scene.buildIndex > 1)
         {
-            StatSetting();
             OnGameScene();
         }
-
-        if (vamAbsorb)
-            maxAbs = 2f;
-
-        else if(!vamAbsorb)
-            maxAbs = 1f;
-    }
-
-    public void StatSetting()
-    {
-        /*StatArray();
-        IntVariableArray();
-        FloatVariableArray();
-        BoolVariableArray();*/
     }
 
     void OnGameScene()

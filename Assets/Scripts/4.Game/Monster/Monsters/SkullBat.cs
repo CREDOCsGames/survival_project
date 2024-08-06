@@ -60,7 +60,7 @@ public class SkullBat : Monster
             float berserkDam = (round == 20) ? 1.5f : 2f;
             damage = stat.monsterDamage * (1 + Mathf.Floor(gameManager.round / 30)) + Mathf.Floor(gameManager.round / 5) * 2f * berserkDam;
             float berserkSpd = (round == 20) ? 1.2f : 1.5f;
-            speed = stat.monsterSpeed * (1 - gameManager.monsterSlow * 0.01f) * berserkSpd;
+            speed = stat.monsterSpeed * berserkSpd;
             initSpeed = speed;
             initAttackTime = (round == 20) ? 3.5f : 2.5f;
             rend.color = initcolor;

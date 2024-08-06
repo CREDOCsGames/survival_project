@@ -1,9 +1,7 @@
 using UnityEngine;
 using System.Linq;
 using UnityEditor;
-using Unity.VisualScripting;
 using System.Collections;
-using static UnityEngine.GridBrushBase;
 using UnityEngine.Pool;
 
 public class Pet : MonoBehaviour
@@ -39,7 +37,6 @@ public class Pet : MonoBehaviour
     private void Awake()
     {
         pool = new ObjectPool<DamageUI>(CreateDamageUI, OnGetDamageUI, OnReleaseDamageUI, OnDestroyDamageUI, maxSize: 10);
-
     }
 
     private void Start()

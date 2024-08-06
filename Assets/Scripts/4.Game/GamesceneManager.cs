@@ -45,7 +45,6 @@ public class GamesceneManager : Singleton<GamesceneManager>
         isNight = false;
         gameSceneUI.DayNightAlarmUpdate(isNight);
         nightFilter.SetActive(false);
-        //monsterSpawner.SetActive(false);
         
         StartCoroutine(SpawnTree());
         StartCoroutine(SpawnBush());
@@ -89,7 +88,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
     IEnumerator SpawnTree()
     {
-        if ((gameManager.round - 1) % 5 == 0)
+        if (gameManager.round % 5 == 1)
         {
             foreach (Transform trees in treeParent)
             {
@@ -99,7 +98,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
             for (int i = 0; i < 25; i++)
             {
                 SpawnOneBushOrTree(treePrefab, treeParent);
-                yield return null;      // 보통 0.002초
+                yield return null;      // 약 0.002초
             }
         }
     }
@@ -148,16 +147,6 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
         groundX = Random.Range((groundX / 2f) * -1f + treeBushSpawnArea.bounds.center.x, (groundX / 2f) + treeBushSpawnArea.bounds.center.x);
         groundZ = Random.Range((groundZ / 2f) * -1f + treeBushSpawnArea.bounds.center.z, (groundZ / 2f) + treeBushSpawnArea.bounds.center.z);
-
-        if (Mathf.Abs(groundX) < 3f)
-        {
-            groundX = groundX < 0f ? groundX - 3f : groundX + 3f;
-        }
-
-        if (Mathf.Abs(groundZ) < 3f)
-        {
-            groundZ = groundZ < 0f ? groundZ - 3f : groundZ + 3f;
-        }
 
         return new Vector3(groundX, 0, groundZ);
     }

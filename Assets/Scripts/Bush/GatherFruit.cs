@@ -52,21 +52,22 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
         character.currentRecoveryGauge += defaultGaugeUpValue * ratio;
     }
 
-#if UNITY_EDITOR
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 2);
-    }
 
     public void InteractionRightButtonFuc(GameObject hitObject)
     {
-        
+
     }
 
     public bool ReturnCanInteraction()
     {
         return canGather;
+    }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, 2);
     }
 #endif
 }

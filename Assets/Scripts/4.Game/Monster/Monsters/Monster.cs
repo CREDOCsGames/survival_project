@@ -64,9 +64,9 @@ public class Monster : MonoBehaviour
         damage = stat.monsterDamage * (1 + Mathf.Floor(gameManager.round / 30)) + Mathf.Floor(gameManager.round / 5) * 2f;
         maxHp = hp;
         initScale = transform.GetChild(1).localScale;
-        speed = stat.monsterSpeed * (1 - gameManager.monsterSlow * 0.01f);
+        speed = stat.monsterSpeed;
         initSpeed = speed;
-        defence = stat.monsterDefence * (1 + Mathf.Floor(gameManager.round / 5) * 0.5f) * (1 - gameManager.monsterDef);
+        defence = stat.monsterDefence * (1 + Mathf.Floor(gameManager.round / 5) * 0.5f);
         isWalk = true;
         isDead = false;
         isAttacked = false;
@@ -101,8 +101,8 @@ public class Monster : MonoBehaviour
         hp = stat.monsterMaxHp * (2 + Mathf.Floor(gameManager.round / 5) * Mathf.Floor(gameManager.round / 5) * (1 + Mathf.Floor(gameManager.round / 20) * 0.5f)) * 0.5f;
         damage = stat.monsterDamage * (1 + Mathf.Floor(gameManager.round / 30)) + Mathf.Floor(gameManager.round / 5) * 2f;
         maxHp = hp;
-        speed = stat.monsterSpeed * (1 - gameManager.monsterSlow * 0.01f);
-        defence = stat.monsterDefence * (1 + Mathf.Floor(gameManager.round / 5) * 0.5f) * (1 - gameManager.monsterDef);
+        speed = stat.monsterSpeed;
+        defence = stat.monsterDefence * (1 + Mathf.Floor(gameManager.round / 5) * 0.5f);
         initSpeed = speed;
         isWalk = true;
         isDead = false;
@@ -164,20 +164,6 @@ public class Monster : MonoBehaviour
         if (other.CompareTag("Character") && !isDead)
         {
             character.OnDamaged(damage);
-        }
-    }
-
-    public void SubscriptionFee()
-    {
-        if (gameManager.subscriptionFee)
-        {
-            int feeRand = Random.Range(0, 100);
-
-            if (feeRand < 4)
-            {
-                gameManager.feeMoney += 38;
-                gameManager.money += 38;
-            }
         }
     }
 
@@ -262,13 +248,6 @@ public class Monster : MonoBehaviour
             if (runningCoroutine != null)
                 StopCoroutine(runningCoroutine);
             coll.enabled = false;
-
-            if (hp <= 0 && !isAttacked)
-            {
-                SubscriptionFee();
-
-                character.exp += stat.monsterExp * (1 + gameManager.increaseExp);
-            }
 
             isAttacked = true;
 

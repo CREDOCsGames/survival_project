@@ -45,7 +45,7 @@ public class Cage : MonoBehaviour, IMouseInteraction
 
     public void InteractionLeftButtonFuc(GameObject hitObject)
     {
-        if (character.IsTamingPet)
+        if (character.IsTamingPet || gameManager.round % 5 != 1)
             return;
 
         if (isCanInteraction && (gameManager.fishHighGradeCount + gameManager.fishLowGradeCount) > 0)

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class Fishing : Singleton<Fishing>
 {
     [SerializeField] Slider catchBar;
+    [SerializeField] RectTransform catchPoint;
     [SerializeField] Text roundText;
     [SerializeField] Text catchText;
     [SerializeField] Text maxFishingCount;
@@ -23,6 +24,10 @@ public class Fishing : Singleton<Fishing>
 
     float randSpeedRatio;
 
+    float catchBarWidth;
+    float catchPointStart;
+    float catchPointEnd;
+
     protected override void Awake()
     {
         base.Awake();
@@ -34,6 +39,9 @@ public class Fishing : Singleton<Fishing>
     private void Start()
     {
         gameObject.SetActive(false);
+        catchBarWidth = catchBar.GetComponent<RectTransform>().sizeDelta.x;
+        catchPointStart = catchPoint.offsetMin.x;
+        catchPointEnd = -catchPoint.offsetMax.x;
     }
 
     private void OnEnable()
@@ -77,44 +85,30 @@ public class Fishing : Singleton<Fishing>
 
         if (!isCatch && !isCatchingStart)
         {
-            if (catchBar.value >= 300)
+            if (Input.GetMouseButton(0))
+                catchBar.value += Time.deltaTime * 200 * randSpeedRatio;
+
+            else if (Input.GetMouseButtonUp(0))
             {
                 isCatch = true;
                 fishingAnim.isCatch = true;
 
-                catchText.text = "놓쳤다...";
-                catchText.color = Color.red;
-                fishingAnim.isSomeCatch = 0;
+                if (catchBar.value < catchPointStart || catchBar.value > catchBarWidth - catchPointEnd)
+                {
+                    fishingAnim.CatchSuccess = false;
+                    catchText.text = "놓쳤다...";
+                    catchText.color = Color.red;
+                }
+
+                else if (catchBar.value >= catchPointStart && catchBar.value <= catchBarWidth - catchPointEnd)
+                {
+                    fishingAnim.CatchSuccess = true;
+                    catchText.text = "낚아챘다!";
+                    catchText.color = Color.yellow;
+                    GetItem();
+                }
 
                 catchText.gameObject.SetActive(true);
-            }
-
-            else
-            {
-                if (Input.GetMouseButton(0))
-                    catchBar.value += Time.deltaTime * 200 * randSpeedRatio;
-
-                else if (Input.GetMouseButtonUp(0))
-                {
-                    isCatch = true;
-                    fishingAnim.isCatch = true;
-
-                    if (catchBar.value < 280)
-                    {
-                        catchText.text = "놓쳤다...";
-                        catchText.color = Color.red;
-                        fishingAnim.isSomeCatch = 0;
-                    }
-
-                    else if (catchBar.value >= 280 && catchBar.value < 300)
-                    {
-                        catchText.text = "낚아챘다!";
-                        catchText.color = Color.yellow;
-                        GetItem();
-                    }
-
-                    catchText.gameObject.SetActive(true);
-                }
             }
         }
     }

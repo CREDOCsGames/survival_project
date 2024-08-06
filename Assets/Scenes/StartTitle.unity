@@ -5240,8 +5240,6 @@ GameObject:
   - component: {fileID: 936130855}
   - component: {fileID: 936130856}
   - component: {fileID: 936130854}
-  - component: {fileID: 936130861}
-  - component: {fileID: 936130860}
   - component: {fileID: 936130862}
   m_Layer: 0
   m_Name: GameManager
@@ -5271,8 +5269,8 @@ MonoBehaviour:
   bulletStorage: {fileID: 1005871281}
   damageStorage: {fileID: 1692643827}
   initGameTime: 10000
-  gameDayTime: 1
-  gameNightTime: 30
+  gameDayTime: 3000
+  gameNightTime: 10
   money: 0
   round: 1
   woodCount: 30
@@ -5281,10 +5279,6 @@ MonoBehaviour:
   fishLowGradeCount: 100
   maxHp: 100
   percentDamage: 1
-  physicDamage: 10000
-  magicDamage: 0
-  shortDamage: 0
-  longDamage: 50
   recoverHp: 10
   absorbHp: 2
   defence: 3
@@ -5294,40 +5288,8 @@ MonoBehaviour:
   luck: 10
   critical: 0
   avoid: 1
-  passiveIntVariables: 
-  passiveFloatVariables: []
-  passiveBoolVariables: 
   dashCount: 1000
-  buffNum: 0
-  exDmg: 0
-  isedolCount: 0
-  salePercent: 0
-  increaseExp: 0
-  coinRange: 0
-  monsterSlow: 0
-  summonASpd: 0
-  summonPDmg: 0
-  monsterDef: 0
-  luckCoin: 0
-  luckDamage: 0
-  luckCritical: 0
-  doubleShot: 0
-  revive: 0
-  ggoGgoSummon: 0
-  ilsoonSummon: 0
-  wakgoodSummon: 0
-  ddilpa: 0
-  butterfly: 0
-  subscriptionFee: 0
-  spawnTree: 0
-  dotgu: 0
-  isReflect: 0
-  onePenetrate: 0
-  lowPenetrate: 0
-  penetrate: 0
-  vamAbsorb: 0
   currentScene: 
-  stats: []
   isPause: 0
   isClear: 0
   isBossDead: 0
@@ -5366,85 +5328,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 936130853}
   m_Enabled: 1
---- !u!114 &936130860
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 936130853}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d110b962e6b44cd47982cdaca64ad1ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coinPrefab: {fileID: 23589428460927000, guid: 12f6e59d9af8090449131818b277bd10, type: 3}
-  poolCount: 10
---- !u!114 &936130861
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 936130853}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53ef701d7eb7b3a44bd5d656e90dd55d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  statInfos:
-  - statName: "\uD558\uD22C"
-    statType: "\uCD5C\uB300 \uCCB4\uB825"
-    statSprite: Health
-    statValue: 3
-  - statName: "\uC790\uC591\uAC15\uC7A5\uC81C"
-    statType: "\uCCB4\uB825 \uD68C\uBCF5"
-    statSprite: ReHealth
-    statValue: 0.1
-  - statName: "\uC1A1\uACF3\uB2C8"
-    statType: "\uCCB4\uB825 \uD761\uC218"
-    statSprite: AbHealth
-    statValue: 0.1
-  - statName: "\uC274\uB4DC \uCE58\uAE30"
-    statType: "\uBC29\uC5B4\uB825"
-    statSprite: Defence
-    statValue: 0.2
-  - statName: "\uC644\uB825"
-    statType: "\uBB3C\uB9AC \uACF5\uACA9\uB825"
-    statSprite: WDamage
-    statValue: 0.3
-  - statName: "\uB9C8\uB825 \uD3EC\uC158"
-    statType: "\uB9C8\uBC95 \uACF5\uACA9\uB825"
-    statSprite: MDamage
-    statValue: 0.3
-  - statName: "\uC7AC\uB828"
-    statType: "\uADFC\uAC70\uB9AC \uACF5\uACA9\uB825"
-    statSprite: SDamage
-    statValue: 0.3
-  - statName: "\uB2A5\uC9C0"
-    statType: "\uC6D0\uAC70\uB9AC \uACF5\uACA9\uB825"
-    statSprite: LDamage
-    statValue: 0.3
-  - statName: "\uC289 \uC288\uC289"
-    statType: "\uACF5\uACA9 \uC18D\uB3C4"
-    statSprite: AtSpeed
-    statValue: 0.1
-  - statName: "\uC2E0\uBC1C"
-    statType: "\uC774\uB3D9 \uC18D\uB3C4"
-    statSprite: Speed
-    statValue: 0.2
-  - statName: "\uB124\uC78E\uD074\uB85C\uBC84"
-    statType: "\uD589\uC6B4"
-    statSprite: Luck
-    statValue: 2.5
-  - statName: "\uC0AC\uB95C\uC548"
-    statType: "\uC0AC\uAC70\uB9AC"
-    statSprite: Range
-    statValue: 0.3
-  - statName: "\uB300\uAC00\uB9AC"
-    statType: "\uD06C\uB9AC\uD2F0\uCEEC"
-    statSprite: Critical
-    statValue: 2
 --- !u!114 &936130862
 MonoBehaviour:
   m_ObjectHideFlags: 0

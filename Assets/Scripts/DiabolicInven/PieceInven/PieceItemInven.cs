@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,8 +7,9 @@ public class PieceItemInven : Singleton<PieceItemInven>
     [SerializeField] DiabolicItemInfo[] itemms;
     public GameObject DiscriptionPanel;
 
-    public DiabolicItemInfo[] items;
-    public int[] itemQuantity;
+    
+    [HideInInspector] public DiabolicItemInfo[] items;
+    [HideInInspector] public int[] itemQuantity;
 
     protected override void Awake()
     {
@@ -20,8 +20,7 @@ public class PieceItemInven : Singleton<PieceItemInven>
 
         for (int i = 0; i < itemms.Length; i++)
         {
-            items[i] = itemms[i];
-            itemQuantity[i]++;
+            AddItem(itemms[i]);
         }
     }
 

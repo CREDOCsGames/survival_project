@@ -34,6 +34,7 @@ public class DiabolicInvenSlot : MonoBehaviour
         if (dragUI.DragItem == null)
             return;
 
+        inven.ChagneCanSetImage(false);
         inven.OffSlotSetImage();
     }
 

@@ -78,16 +78,11 @@ public class GameSceneUI : Singleton<GameSceneUI>
     [SerializeField] GameObject clickText;
     [SerializeField] GameObject gameClearUI;
     [SerializeField] TypingText gameClearText;
-    [SerializeField] GameObject statCardParent;
-    [SerializeField] GameObject chestPassive;
 
     GameManager gameManager;
     Character character;
     SoundManager soundManager;
     GamesceneManager gamesceneManager;
-
-    [HideInInspector] public int chestCount;
-    [HideInInspector] public int treeShopCount;
 
     [SerializeField] GameObject fishingGame;
     [SerializeField] GameObject weaponUI;
@@ -105,10 +100,8 @@ public class GameSceneUI : Singleton<GameSceneUI>
         gameOverWoodUI.SetActive(false);
         gameOverIsedolUI.SetActive(false);
         gameClearUI.SetActive(false);
-        statCardParent.SetActive(false);
         dash.SetActive(false);
         statWindow.SetActive(false);
-        chestPassive.SetActive(false);
         clickText.gameObject.SetActive(false);
         clearImage.gameObject.SetActive(false);
         tutoPanel.SetActive(false);
@@ -119,8 +112,6 @@ public class GameSceneUI : Singleton<GameSceneUI>
         weaponUI.SetActive(false);
 
         gameManager = GameManager.Instance;
-
-        //monsterSpawn.SetActive(false);
 
         if (gameManager.round == 1)
         {
@@ -168,8 +159,6 @@ public class GameSceneUI : Singleton<GameSceneUI>
         if (gameManager.round == 1)
             gameManager.gameStartTime = Time.realtimeSinceStartup;
 
-        chestCount = 0;
-        treeShopCount = 1;
         character.GetComponent<NavMeshAgent>().enabled = true;
 
         initTimeColor = timeText.color;
@@ -240,40 +229,6 @@ public class GameSceneUI : Singleton<GameSceneUI>
                 if (roundClearText.GetComponent<TypingText>().isOver == true)
                 {
                     roundClearText.SetActive(false);
-
-                    if (character.levelUpCount <= 0 && chestCount <= 0)
-                    {
-                        if (gameManager.round % 5 == 0 && treeShopCount > 0)
-                        {
-                            statCardParent.gameObject.SetActive(false);
-                            chestPassive.gameObject.SetActive(false);
-                        }
-
-                        else 
-                        {
-                            statCardParent.gameObject.SetActive(false);
-                            chestPassive.gameObject.SetActive(false);
-
-                            /*if (gameManager.woodCount < 5 && !selectPanel.activeSelf)
-                                gameManager.ToNextScene("Shop");
-
-                            else if (gameManager.woodCount >= 5)
-                                selectPanel.SetActive(true);*/
-                        }
-                    }
-
-                    else if (character.levelUpCount > 0)
-                    {
-                        statCardParent.gameObject.SetActive(true);
-                        statWindow.SetActive(true);
-                    }
-
-                    else if (character.levelUpCount <= 0 && chestCount > 0)
-                    {
-                        statCardParent.gameObject.SetActive(false);
-                        chestPassive.gameObject.SetActive(true);
-                        statWindow.SetActive(true);
-                    }
                 }
             }
 
@@ -380,29 +335,6 @@ public class GameSceneUI : Singleton<GameSceneUI>
             if (!gameOverUI.activeSelf || !gameOverIsedolText)
                 gameManager.gameEndTime = Time.realtimeSinceStartup;
 
-            if (gameManager.isedolCount != 5)
-            {
-                gameOverUI.SetActive(true);
-
-                if (gameOverText.isOver == true)
-                    SceneManager.LoadScene("End");
-            }
-
-            else if (gameManager.isedolCount == 5)
-            {
-                gameManager.isClear = true;
-
-                if (!clickText.gameObject.activeSelf)
-                    gameOverIsedolUI.SetActive(true);
-
-                if (gameOverIsedolText.isOver == true)
-                {
-                    clearImage.sprite = clearIllusts[1];
-                    StartCoroutine(FadeIn());
-                    gameOverIsedolText.isOver = false;
-                }
-            }
-
             if (clickText.gameObject.activeSelf)
             {
                 if (Input.GetMouseButtonDown(0))
@@ -466,10 +398,6 @@ public class GameSceneUI : Singleton<GameSceneUI>
         def.text = gameManager.defence.ToString("0.#");
         avoid.text = gameManager.avoid.ToString("0.#");
         percentDamage.text = gameManager.percentDamage.ToString("0.0#");
-        wAtk.text = gameManager.physicDamage.ToString("0.#");
-        eAtk.text = gameManager.magicDamage.ToString("0.#");
-        sAtk.text = gameManager.shortDamage.ToString("0.#");
-        lAtk.text = gameManager.longDamage.ToString("0.#");
         aSpd.text = gameManager.attackSpeed.ToString("0.#");
         spd.text = gameManager.speed.ToString("0.##");
         ran.text = gameManager.range.ToString("0.#");

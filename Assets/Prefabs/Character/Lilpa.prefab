@@ -241,7 +241,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fca81d4bdf76aca498603fcbcf9759cb, type: 2}
   currentController:
   - {fileID: 9100000, guid: 835e9c6fe2a4a1b4dbe6507c5c7f4a71, type: 2}
-  - {fileID: 9100000, guid: 6d23459f301113241b2b65fa13ef4d1f, type: 2}
+  - {fileID: 9100000, guid: f7d74ad42290f264386975d3d6f346dc, type: 2}
   dashCoolTime: 2
   initDashCoolTime: 0
   dashCount: 2
@@ -287,6 +287,9 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 65536
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1024
   isDead: 0
   x: 0
   z: 0

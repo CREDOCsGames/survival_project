@@ -1,11 +1,10 @@
 using System.Collections;
 using UnityEngine;
-using static UnityEngine.ParticleSystem;
 
 enum MoveType
 {
-    DIRECT,
     RANDOM,
+    DIRECT,
     COUNT,
 }
 
@@ -31,8 +30,8 @@ public class TamingGamePetMove : MonoBehaviour
 
     MoveType moveType = MoveType.RANDOM;
 
-    public float noiseScale = 0.5f;  // 노이즈 스케일
-    private float offsetX, offsetY;  // 노이즈 오프셋
+    [SerializeField] float noiseScale = 0.5f;  // 노이즈 스케일
+    [SerializeField] float offsetX, offsetY;  // 노이즈 오프셋
 
     public float DefalutSpeed => defaultSpeed;
 
@@ -55,6 +54,9 @@ public class TamingGamePetMove : MonoBehaviour
         StartCoroutine(GetRandomSpeedRatio());
         StartCoroutine(SetMoveType());
         StartCoroutine(Dash());
+
+        /*moveType = MoveType.RANDOM;
+        offsetX = 1000; offsetY = 1000;*/
     }
 
     private void Update()
@@ -201,7 +203,9 @@ public class TamingGamePetMove : MonoBehaviour
     {
         isTurn = false;
 
-        offsetX = Random.Range(0f, 100f);
-        offsetY = Random.Range(0f, 100f);
+        offsetX = Random.Range(100f, 1000f);
+        offsetY = Random.Range(100f, 1000f);
+
+        noiseScale = Random.Range(0.5f, 2f);
     }
 }

@@ -7,6 +7,7 @@ public class FishingAnim : Singleton<FishingAnim>
     Animator anim;
 
     [HideInInspector] public bool isCatch;
+    [HideInInspector] public bool CatchSuccess;
     [HideInInspector] public int isSomeCatch;
 
     Fishing fishing;
@@ -22,6 +23,7 @@ public class FishingAnim : Singleton<FishingAnim>
     void Update()
     {
         anim.SetBool("isCatch", isCatch);
+        anim.SetBool("CatchSuccess", CatchSuccess);
         anim.SetInteger("Catch", isSomeCatch);
     }
 

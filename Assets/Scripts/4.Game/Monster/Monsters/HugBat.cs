@@ -62,7 +62,7 @@ public class HugBat : Monster
             {
                 isAttack = true;
                 rushTime -= Time.deltaTime;
-                speed = stat.monsterSpeed * (1 - gameManager.monsterSlow * 0.01f) * 1.5f;
+                speed = stat.monsterSpeed * 1.5f;
 
                 if (rushTime <= 0f)
                 {
@@ -73,7 +73,7 @@ public class HugBat : Monster
 
                 if (breakTime <= 0f)
                 {
-                    speed = stat.monsterSpeed * (1 - gameManager.monsterSlow * 0.01f);
+                    speed = stat.monsterSpeed;
 
                     attackCoolTime -= Time.deltaTime;
                 }

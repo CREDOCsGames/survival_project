@@ -59,6 +59,7 @@ public class Character : Singleton<Character>
     [HideInInspector] public int summonNum;
 
     [SerializeField] LayerMask obstacleLayer;
+    [SerializeField] LayerMask groundLayer;
 
     Collider ground;
 
@@ -74,8 +75,6 @@ public class Character : Singleton<Character>
     [HideInInspector] public float z;
 
     float recoverTime;
-
-    [HideInInspector] public int levelUpCount;
 
     [HideInInspector] public bool isBuff = false;
     [HideInInspector] public float charBuffDmg = 0;
@@ -121,13 +120,21 @@ public class Character : Singleton<Character>
 
         thunderMark.transform.localScale = new Vector3(Mathf.Clamp(4f + gameManager.range * 0.5f, 1, 12), Mathf.Clamp(4f + gameManager.range * 0.5f, 1, 12), 0);
 
-        maxHp = gameManager.maxHp;
+        /*maxHp = gameManager.maxHp;
         currentHp = maxHp;
         speed = gameManager.speed;
         avoid = gameManager.avoid;
         recoverHpRatio = gameManager.recoverHp;
         attackSpeed = gameManager.attackSpeed;
-        defence = gameManager.defence;
+        defence = gameManager.defence;*/
+
+        maxHp = gameManager.status[Status.MAXHP];
+        currentHp = maxHp;
+        speed = gameManager.status[Status.SPEED];
+        avoid = gameManager.status[Status.AVOID];
+        recoverHpRatio = gameManager.status[Status.RECOVER];
+        attackSpeed = gameManager.status[Status.ATTACK_SPEED];
+        defence = gameManager.status[Status.DEFENCE];
 
         recoverTime = 1;
         dashCoolTime = 4;
@@ -139,21 +146,6 @@ public class Character : Singleton<Character>
         tamedPet.SetActive(false);
     }
     
-    void StatChangeCheck(int num)
-    {
-        int beforeNum = characterNum;
-        characterNum = num;
-        currentCharacterInfo = characterInfos[characterNum];
-
-        if (beforeNum == characterNum)
-            return;
-
-        gameManager.stats[0] = Mathf.Round(gameManager.stats[0] / characterInfos[beforeNum].HpRate);
-        gameManager.stats[9] -= characterInfos[beforeNum].CharacterSpeed;
-        gameManager.stats[13] -= characterInfos[beforeNum].DamageRatio;
-        gameManager.stats[14] -= characterInfos[beforeNum].Avoid;
-    }
-
     void Update()
     {
         if (gameManager.currentScene == "Game" && !gameManager.isPause)
@@ -173,8 +165,6 @@ public class Character : Singleton<Character>
                 buffTime = 5;
             }
         }
-
-        SummonPet();
     }
 
     private void FixedUpdate()
@@ -226,40 +216,6 @@ public class Character : Singleton<Character>
         yield return new WaitForSeconds(1f);
 
         isCanControll = true;
-    }
-
-    void SummonPet()
-    {
-        if (gameManager.ggoGgoSummon)
-        {
-            GameObject summon = Instantiate(ggoGgoPrefab);
-            summon.transform.position = summonPos[summonNum].position;
-            summon.GetComponent<Chick>().summonPosNum = summonNum;
-            summon.transform.SetParent(gameManager.transform);
-            summonNum++;
-            gameManager.passiveBoolVariables[5] = false;
-        }
-
-        else if (gameManager.ilsoonSummon)
-        {
-            GameObject summon = Instantiate(ilsoonPrefab);
-            summon.transform.position = summonPos[summonNum].position;
-            summon.transform.SetParent(gameManager.transform);
-            summonNum++;
-            gameManager.passiveBoolVariables[6] = false;
-        }
-
-        else if (gameManager.wakgoodSummon)
-        {
-            GameObject summon = Instantiate(wakgoodPrefab);
-            summon.transform.position = summonPos[summonNum].position;
-            summon.transform.SetParent(gameManager.transform);
-            summonNum++;
-            gameManager.passiveBoolVariables[7] = false;
-        }
-
-        if (summonNum >= 3)
-            summonNum = 0;
     }
 
     public void TamingPet(int round)
@@ -319,11 +275,12 @@ public class Character : Singleton<Character>
                     else
                         afterPos = transform.position + new Vector3(x, 0, z) * 4;
 
-                    if (ground == null)
-                        ground = GamesceneManager.Instance.walkableArea;
+                    NavMeshHit hit;
 
-                    else
-                        afterPos = ground.bounds.ClosestPoint(afterPos);
+                    if (NavMesh.SamplePosition(afterPos, out hit, 1000, NavMesh.AllAreas))
+                    {
+                        afterPos = hit.position;
+                    }
 
                     afterPos = new Vector3(afterPos.x, transform.position.y, afterPos.z);
 
@@ -366,31 +323,9 @@ public class Character : Singleton<Character>
         particle.GetComponentInChildren<Renderer>().enabled = false;
     }
 
-    public void Equip()
-    {
-        int count = ItemManager.Instance.weaponCount;
-
-        for (int i = 0; i < weapons.Length; i++)
-        {
-            if (weapons[i].GetComponent<Weapon>().weaponInfo.WeaponName == ItemManager.Instance.storedWeapon[count].WeaponName)
-               Instantiate(weapons[i], weaponPoses[count]);
-        }
-    }
-
     public void ReleaseEquip(int num)
     {
         Destroy(weaponPoses[num].GetChild(0).gameObject);
-    }
-
-    public bool CheckEquipWeapon(int num)
-    {
-        for(int i = 0; i< weaponPoses.Length;i++)
-        {
-            if (weaponPoses[i].childCount != 0 && (int)ItemManager.Instance.storedWeapon[i].Type == num)
-                return true;
-        }
-
-        return false;
     }
 
     bool isDownUp = false;
@@ -457,8 +392,8 @@ public class Character : Singleton<Character>
         if (ground == null)
             ground = GamesceneManager.Instance.walkableArea;
 
-        else
-            transform.position = ground.bounds.ClosestPoint(transform.position);
+       /* else
+            transform.position =  NavMesh.poi ground.bounds.ClosestPoint(transform.position);*/
 
         if (dir != Vector3.zero)
             isRun = true;
@@ -519,32 +454,11 @@ public class Character : Singleton<Character>
 
     void OnDead()
     {
-        if (!gameManager.revive)
-        {
-            WeaponParent.SetActive(false);
-            currentHp = 0;
-            isDead = true;
-            isAttacked = true;
+        isAttacked = true;
+        isRun = false;
 
-            anim.SetBool("isDead", isDead);
-
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("PlayerDie"))
-            {
-                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-                    gameObject.SetActive(false);
-            }
-        }
-
-        else if (gameManager.revive)
-        {
-            isAttacked = true;
-            isRun = false;
-
-            if (currentCoroutine != null)
-                StopCoroutine(currentCoroutine);
-
-            currentCoroutine = StartCoroutine(OnRevive());
-        }
+        if (currentCoroutine != null)
+            StopCoroutine(currentCoroutine);
     }
 
     public IEnumerator OnInvincible()
@@ -617,25 +531,9 @@ public class Character : Singleton<Character>
         yield return new WaitForSeconds(characterInfos[characterNum].InvincibleTime - 0.3f);
     }
 
-    IEnumerator OnRevive()
-    {
-        rend.color = new Color(1, 1, 1, 0.5f);
-
-        yield return new WaitForSeconds(2.5f);
-        gameManager.passiveBoolVariables[4] = false;    // gameManager.revive = false
-        currentHp = Mathf.Ceil(maxHp * 0.5f);
-
-        yield return new WaitForSeconds(2f);
-        rend.color = Color.white;
-        isAttacked = false;
-    }
-
     public IEnumerator MoveToInteractableObject(Vector3 logPos, GameObject interactionObejct)
     {
         isCanControll = false;
-
-        anim.SetFloat("moveSpeed", 1 + (speed * 0.1f));
-        anim.SetBool("isRun", true);
 
         dir = (logPos - transform.position).normalized;
 
@@ -644,6 +542,9 @@ public class Character : Singleton<Character>
         while (transform.position != logPos)
         {
             transform.position = Vector3.MoveTowards(transform.position, logPos, Time.deltaTime * speed);
+
+            anim.SetFloat("moveSpeed", 1 + (speed * 0.1f));
+            anim.SetBool("isRun", true);
 
             if (transform.position == logPos)
             {
