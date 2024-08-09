@@ -17,9 +17,7 @@ public class PieceItemInvenSlot : MonoBehaviour
 
     Dictionary<Status,int> status = new Dictionary<Status,int>();
 
-    string[] statNames = { "최대 체력", "공격력", "회복 수치", "방어력", "공격 속도", "이동 속도", "크리티컬", "회피율" };
-
-    private void Start()
+    private void Awake()
     {
         pieceInven = PieceItemInven.Instance;
         dragUI = DragUI.Instance;
@@ -27,7 +25,10 @@ public class PieceItemInvenSlot : MonoBehaviour
         indexNum = transform.GetSiblingIndex();
         itemDiscriptionText = pieceInven.DiscriptionPanel.GetComponent<Text>();
         itemDiscriptionText.text = "";
+    }
 
+    private void OnEnable()
+    {
         UpdateSlotData();
     }
 
@@ -91,10 +92,10 @@ public class PieceItemInvenSlot : MonoBehaviour
             if (status[(Status)i] == 0)
                 continue;
 
-            itemDiscriptionText.text += statNames[i] + ": " + status[(Status)i] + "\n";
+            itemDiscriptionText.text += GameManager.statNames[i] + ": " + status[(Status)i] + "\n";
         }
 
-        itemDiscriptionText.text += "\n" + pieceInven.items[indexNum].Discription;
+        itemDiscriptionText.text += "\n" + pieceInven.items[indexNum].Description;
     }
 
     public void DragBeginItem()

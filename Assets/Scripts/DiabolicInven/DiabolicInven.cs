@@ -10,7 +10,7 @@ public class DiabolicInven : Singleton<DiabolicInven>
 
     DiabolicInvenSlot[] slots;
 
-    int currentIndex;
+    public int currentIndex;
 
     DragUI dragUI;
     GameManager gameManager;
@@ -18,6 +18,7 @@ public class DiabolicInven : Singleton<DiabolicInven>
     int width;
     int height;
     bool[] itemShape;
+    
 
     int column;
     int row;
@@ -48,7 +49,7 @@ public class DiabolicInven : Singleton<DiabolicInven>
             return;
         }
 
-        Instantiate(itemImage, itemImageParent).GetComponent<DiabolicSlotItem>().ItemSetOnInventory(slots[currentIndex].GetComponent<RectTransform>().localPosition, item);
+        Instantiate(itemImage, itemImageParent).GetComponent<DiabolicSlotItem>().ItemSetOnInventory(slots[currentIndex].GetComponent<RectTransform>().localPosition, item, TransferIndexesNum());
 
         AddStatus();
 
@@ -103,10 +104,8 @@ public class DiabolicInven : Singleton<DiabolicInven>
         }
     }
 
-    public void ChangeSlotsColor(int index)
+    public void ChangeSlotsColor()
     {
-        currentIndex = index;
-
         CheckCanSetImage();
 
         for (int i = row; i < Mathf.Clamp(row + height, row, 4); i++)
@@ -121,7 +120,7 @@ public class DiabolicInven : Singleton<DiabolicInven>
         }
     }
 
-    void SetSlotIsEmpty(bool slotEmpty)
+    public void SetSlotIsEmpty(bool slotEmpty)
     {
         for (int i = 0; i < height; i++)
         {
@@ -133,6 +132,24 @@ public class DiabolicInven : Singleton<DiabolicInven>
                 }
             }
         }
+    }
+
+    List<int> TransferIndexesNum()
+    {
+        List<int> indexes = new List<int>();
+
+        for (int i = 0; i < height; i++)
+        {
+            for (int j = 0; j < width; j++)
+            {
+                if (itemShape[i * width + j])
+                {
+                    indexes.Add((i + row) * 4 + j + column);
+                }
+            }
+        }
+
+        return indexes;
     }
 
     public void OffSlotSetImage()

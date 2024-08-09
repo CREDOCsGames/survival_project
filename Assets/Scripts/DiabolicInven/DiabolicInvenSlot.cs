@@ -23,10 +23,12 @@ public class DiabolicInvenSlot : MonoBehaviour
 
     public void PointerEnter()
     {
+        inven.currentIndex = transform.GetSiblingIndex();
+
         if (dragUI.DragItem == null)
             return;
 
-        inven.ChangeSlotsColor(transform.GetSiblingIndex());
+        inven.ChangeSlotsColor();
     }
 
     public void PointerExit()

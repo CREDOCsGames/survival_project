@@ -14,6 +14,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
     [SerializeField] public Collider walkableArea;
     [SerializeField] Collider treeBushSpawnArea;
     [SerializeField] GameObject nightFilter;
+    [SerializeField] public GameObject cardSelecter;
 
     [HideInInspector] public float currentGameTime;
 
@@ -31,27 +32,32 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
         character.GetComponent<NavMeshAgent>().enabled = true;
 
+        cardSelecter.SetActive(true);
+
         StartCoroutine(DayRoutine());
     }
 
     private void Update()
     {
-        if (character.currentHp > 0 && currentGameTime >= 0)
+        if (character.currentHp > 0 && currentGameTime >= 0 && !gameManager.isPause)
             currentGameTime -= Time.deltaTime;
     }
 
     IEnumerator DayRoutine()
     {
-        isNight = false;
-        gameSceneUI.DayNightAlarmUpdate(isNight);
-        nightFilter.SetActive(false);
-        
+        character.weaponParent.gameObject.SetActive(false);
+        currentGameTime = gameManager.gameDayTime;
+
         StartCoroutine(SpawnTree());
         StartCoroutine(SpawnBush());
 
-        character.weaponParent.gameObject.SetActive(false); 
+        gameManager.isPause = true;
+        yield return new WaitWhile(() => cardSelecter.activeSelf);
+        gameManager.isPause = false;
 
-        currentGameTime = gameManager.gameDayTime;
+        isNight = false;
+        gameSceneUI.DayNightAlarmUpdate(isNight);
+        nightFilter.SetActive(false);
 
         yield return new WaitForSeconds(gameManager.gameDayTime);
 

@@ -5295,12 +5295,9 @@ MonoBehaviour:
   isBossDead: 0
   gameStartTime: 0
   gameEndTime: 0
-  feeMoney: 0
-  subMoney: 0
   useCursorNormal: {fileID: 0}
   useCursorAttack: {fileID: 0}
   cursorSize: 0
-  maxAbs: 0
   isTuto: 0
   characterSpawnPos: {x: 0, y: 0, z: -40}
 --- !u!4 &936130855
@@ -5311,7 +5308,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 936130853}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

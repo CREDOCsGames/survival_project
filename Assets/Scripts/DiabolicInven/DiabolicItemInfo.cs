@@ -60,7 +60,7 @@ public class DiabolicItemInfo : ScriptableObject
 
     [SerializeField] int maxCount;
     [SerializeField] ItemShape itemShape;  // 아이템 모양
-    [SerializeField] string discription;
+    [SerializeField] string description;
 
     Dictionary<Status, int> itemStatus = new Dictionary<Status, int>();
 
@@ -69,7 +69,7 @@ public class DiabolicItemInfo : ScriptableObject
     public string ItemName => itemName;
     public int MaxCount => maxCount;
     public ItemShape ItemShape => itemShape;
-    public string Discription => discription;
+    public string Description => description;
 
     public Dictionary<Status, int> Stat()
     {

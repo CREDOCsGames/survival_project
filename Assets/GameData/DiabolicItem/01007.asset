@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fab9a0293a87af439ca27dbaa59a391, type: 3}
+  m_Name: 01007
+  m_EditorClassIdentifier: 
+  itemNum: 1007
+  itemSprite: {fileID: 2064621875, guid: 42d8dc065bd494547807c3092b4881aa, type: 3}
+  itemName: "\uC120\uAE00\uB77C\uC2A4"
+  maxHp: 0
+  damage: 0
+  recoverHp: 0
+  defence: 0
+  attackSpeed: 0
+  speed: 0
+  critical: 0
+  avoid: 0
+  maxCount: 1
+  itemShape:
+    _width: 3
+    _height: 1
+    _shape: 010101
+  description: "\uB514\uBC84\uD504 \uBA74\uC5ED"
