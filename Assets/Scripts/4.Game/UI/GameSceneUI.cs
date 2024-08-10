@@ -471,7 +471,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
 
     void RoundUI()
     {
-        roundText.text = gameManager.round == 0 ? gameManager.round.ToString() : "1";
+        roundText.text = gameManager.round != 0 ? gameManager.round.ToString() : "1";
     }
 
     void TimeUI()
@@ -481,7 +481,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
             if (timeText.color != initTimeColor)
                 timeText.color = initTimeColor;
 
-            timeText.text = ((int)gamesceneManager.currentGameTime).ToString();
+            timeText.text = gamesceneManager.currentGameTime > 0 ? ((int)gamesceneManager.currentGameTime).ToString() : "0.00";
         }
 
         else

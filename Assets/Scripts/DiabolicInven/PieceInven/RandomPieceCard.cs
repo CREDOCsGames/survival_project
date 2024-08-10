@@ -32,8 +32,6 @@ public class RandomPieceCard : MonoBehaviour
         {
             int num = Random.Range(0,itemList.Count);
 
-            Debug.Log(itemList.Count);
-
             transform.GetChild(i).GetComponent<PieceCard>().GetRandomItem(itemList[num]);
             transform.GetChild(i).gameObject.SetActive(true);
 

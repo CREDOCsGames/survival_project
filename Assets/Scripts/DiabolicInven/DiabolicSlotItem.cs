@@ -15,6 +15,7 @@ public class DiabolicSlotItem : MonoBehaviour
     Dictionary<Status, int> itemStatus;
 
     List<int> indexes;
+    int firstIndex;
 
     private void Start()
     {
@@ -29,12 +30,13 @@ public class DiabolicSlotItem : MonoBehaviour
             SubtractItem();
     }
 
-    public void ItemSetOnInventory(Vector3 instantPos, DiabolicItemInfo item, List<int> _indexes)
+    public void ItemSetOnInventory(Vector3 instantPos, DiabolicItemInfo item, List<int> _indexes, int _firstIndex)
     {
         itemData = item;
         SetImage(item);
         GetComponent<RectTransform>().anchoredPosition = instantPos;
         indexes = _indexes;
+        firstIndex = _firstIndex;
     }
 
     void SetImage(DiabolicItemInfo item)
@@ -74,7 +76,10 @@ public class DiabolicSlotItem : MonoBehaviour
                     gameManager.status[(Status)i] -= itemStatus[(Status)i];
                 }
 
-                inven.SetSlotIsEmpty(itemData.ItemShape.Height, itemData.ItemShape.Width, true);
+                int row = firstIndex / 4;
+                int column = firstIndex % 4;
+
+                inven.SetSlotIsEmpty(itemData.ItemShape.Height, itemData.ItemShape.Width, itemData.ItemShape.Shape, row, column, true);
 
                 Destroy(gameObject);
             }

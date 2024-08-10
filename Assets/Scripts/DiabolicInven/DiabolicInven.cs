@@ -49,11 +49,11 @@ public class DiabolicInven : Singleton<DiabolicInven>
             return;
         }
 
-        Instantiate(itemImage, itemImageParent).GetComponent<DiabolicSlotItem>().ItemSetOnInventory(slots[currentIndex].GetComponent<RectTransform>().localPosition, item, TransferIndexesNum());
+        Instantiate(itemImage, itemImageParent).GetComponent<DiabolicSlotItem>().ItemSetOnInventory(slots[currentIndex].GetComponent<RectTransform>().localPosition, item, TransferIndexesNum(), currentIndex);
 
         AddStatus();
 
-        SetSlotIsEmpty(height, width, false);
+        SetSlotIsEmpty(height, width, itemShape, row, column, false);
     }
 
     void AddStatus()
@@ -67,7 +67,7 @@ public class DiabolicInven : Singleton<DiabolicInven>
 
             gameManager.status[(Status)i] += itemStatus[(Status)i];
 
-            Debug.Log((Status)i + " " + gameManager.status[(Status)i]);
+            //Debug.Log((Status)i + " " + gameManager.status[(Status)i]);
         }
     }
 
@@ -120,15 +120,17 @@ public class DiabolicInven : Singleton<DiabolicInven>
         }
     }
 
-    public void SetSlotIsEmpty(int _height, int _width, bool slotEmpty)
+    public void SetSlotIsEmpty(int _height, int _width, bool[] _itemShape,int _row, int _column, bool slotEmpty)
     {
-        for (int i = 0; i < height; i++)
+        Debug.Log(_row + " " + _column);
+
+        for (int i = 0; i < _height; i++)
         {
-            for (int j = 0; j < width; j++)
+            for (int j = 0; j < _width; j++)
             {
-                if (itemShape[i * width + j])
+                if (_itemShape[i * _width + j])
                 {
-                    slots[(i + row) * 4 + j + column].GetComponent<DiabolicInvenSlot>().ChagneEmptyState(slotEmpty);
+                    slots[(i + _row) * 4 + j + _column].GetComponent<DiabolicInvenSlot>().ChagneEmptyState(slotEmpty);
                 }
             }
         }
