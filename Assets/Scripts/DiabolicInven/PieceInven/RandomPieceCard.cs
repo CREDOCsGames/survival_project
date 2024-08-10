@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class RandomPieceCard : MonoBehaviour
 {
-    [SerializeField] DiabolicItemInfo[] items;
-
     List<DiabolicItemInfo> itemList = new List<DiabolicItemInfo>();
 
     ItemManager itemManager;
@@ -22,25 +20,34 @@ public class RandomPieceCard : MonoBehaviour
     {
         itemManager = ItemManager.Instance;
 
-        for (int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < itemManager.allPieceItemsList.Length; i++)
         {
-            transform.GetChild(i).gameObject.SetActive(false);
-        }
-
-        for (int i = 0; i < items.Length; i++)
-        {
-            if (itemManager.itemQuantity[i] < items[i].MaxCount)
-                itemList.Add(items[i]);
+            if (itemManager.itemDict[itemManager.allPieceItemsList[i]] < itemManager.allPieceItemsList[i].MaxCount)
+            {
+                itemList.Add(itemManager.allPieceItemsList[i]);
+            }
         }
 
         for (int i = 0; i < transform.childCount; i++)
         {
             int num = Random.Range(0,itemList.Count);
 
+            Debug.Log(itemList.Count);
+
             transform.GetChild(i).GetComponent<PieceCard>().GetRandomItem(itemList[num]);
             transform.GetChild(i).gameObject.SetActive(true);
 
             itemList.RemoveAt(num);
         }
+    }
+
+    private void OnDisable()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(false);
+        }
+
+        itemList.Clear();
     }
 }

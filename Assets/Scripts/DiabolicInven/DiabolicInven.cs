@@ -53,7 +53,7 @@ public class DiabolicInven : Singleton<DiabolicInven>
 
         AddStatus();
 
-        SetSlotIsEmpty(false);
+        SetSlotIsEmpty(height, width, false);
     }
 
     void AddStatus()
@@ -120,7 +120,7 @@ public class DiabolicInven : Singleton<DiabolicInven>
         }
     }
 
-    public void SetSlotIsEmpty(bool slotEmpty)
+    public void SetSlotIsEmpty(int _height, int _width, bool slotEmpty)
     {
         for (int i = 0; i < height; i++)
         {

@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class GamesceneManager : Singleton<GamesceneManager>
 {
@@ -14,11 +15,14 @@ public class GamesceneManager : Singleton<GamesceneManager>
     [SerializeField] public Collider walkableArea;
     [SerializeField] Collider treeBushSpawnArea;
     [SerializeField] GameObject nightFilter;
-    [SerializeField] public GameObject cardSelecter;
+    [SerializeField] GameObject cardSelecter;
+    [SerializeField] GameObject multicellInvenPanel;
 
     [HideInInspector] public float currentGameTime;
 
     [HideInInspector] public bool isNight = false;
+
+    bool isCardSetting = true;
 
     GameManager gameManager;
     Character character;
@@ -32,33 +36,45 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
         character.GetComponent<NavMeshAgent>().enabled = true;
 
-        cardSelecter.SetActive(true);
-
+        currentGameTime = gameManager.gameDayTime;
         StartCoroutine(DayRoutine());
     }
 
     private void Update()
     {
-        if (character.currentHp > 0 && currentGameTime >= 0 && !gameManager.isPause)
+        if (character.currentHp > 0 && currentGameTime >= 0 && !gameManager.isPause && !isCardSetting)
             currentGameTime -= Time.deltaTime;
     }
 
     IEnumerator DayRoutine()
     {
+        isNight = false;
+        nightFilter.SetActive(false);
+
         character.weaponParent.gameObject.SetActive(false);
-        currentGameTime = gameManager.gameDayTime;
 
         StartCoroutine(SpawnTree());
         StartCoroutine(SpawnBush());
 
-        gameManager.isPause = true;
+        cardSelecter.SetActive(true);
+
+        isCardSetting = true;
+        character.isCanControll = false;
         yield return new WaitWhile(() => cardSelecter.activeSelf);
-        gameManager.isPause = false;
 
-        isNight = false;
+        gameManager.round++;
+        currentGameTime = gameManager.gameDayTime;
+
+        if (gameManager.round > 1)
+            multicellInvenPanel.SetActive(true);
+
+        yield return new WaitWhile(() => multicellInvenPanel.activeSelf);
+
+        isCardSetting = false;
+        character.isCanControll = true;
+
         gameSceneUI.DayNightAlarmUpdate(isNight);
-        nightFilter.SetActive(false);
-
+        
         yield return new WaitForSeconds(gameManager.gameDayTime);
 
         campFire.GetComponent<Campfire>().ToNightScene();
@@ -81,20 +97,18 @@ public class GamesceneManager : Singleton<GamesceneManager>
         /*gameManager.fishLowGradeCount = 0;
         gameManager.fishHighGradeCount = 0;*/
 
-        gameManager.round++;
-
         if (character.IsTamingPet)
             character.TamedPed.GetComponent<Pet>().RunAway();
 
         campFire.GetComponent<Campfire>().ToDayScene();
 
-        if (gameManager.round <= 30)
+        if (gameManager.round < 30)
             StartCoroutine(DayRoutine());
     }
 
     IEnumerator SpawnTree()
     {
-        if (gameManager.round % 5 == 1)
+        if (gameManager.round % 5 == 0)
         {
             foreach (Transform trees in treeParent)
             {

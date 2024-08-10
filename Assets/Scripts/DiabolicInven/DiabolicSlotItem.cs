@@ -57,7 +57,6 @@ public class DiabolicSlotItem : MonoBehaviour
             {
                 if(i == inven.currentIndex)
                 {
-                    Debug.Log(i + " " + inven.currentIndex);
                     canSub = true; 
                     break;
                 }
@@ -73,10 +72,9 @@ public class DiabolicSlotItem : MonoBehaviour
                         continue;
 
                     gameManager.status[(Status)i] -= itemStatus[(Status)i];
-                    Debug.Log((Status)i + " " + gameManager.status[(Status)i]);
                 }
 
-                inven.SetSlotIsEmpty(true);
+                inven.SetSlotIsEmpty(itemData.ItemShape.Height, itemData.ItemShape.Width, true);
 
                 Destroy(gameObject);
             }

@@ -103,12 +103,12 @@ public class GameManager : Singleton<GameManager>
 
     void InitSetting()
     {
-        initGameTime = 20;
-        gameDayTime = initGameTime;
+        //initGameTime = 20;
+        //gameDayTime = initGameTime;
         money = 0;
         woodCount = 0;
         woodMaxCount = 70;
-        round = 1;
+        round = 0;
         maxHp = 30;
         recoverHp = 1;
         absorbHp = 0;

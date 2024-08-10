@@ -103,6 +103,9 @@ public class PieceItemInvenSlot : MonoBehaviour
         if (pieceInven.items[indexNum] == null || isDragging)
             return;
 
+        if(dragUI == null)
+            dragUI = DragUI.Instance;
+
         dragUI.SettingDragUI(pieceInven.items[indexNum]);
         isDragging = true;
     }

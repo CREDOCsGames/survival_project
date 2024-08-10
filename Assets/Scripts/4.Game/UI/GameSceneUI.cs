@@ -471,7 +471,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
 
     void RoundUI()
     {
-        roundText.text = gameManager.round.ToString();
+        roundText.text = gameManager.round == 0 ? gameManager.round.ToString() : "1";
     }
 
     void TimeUI()

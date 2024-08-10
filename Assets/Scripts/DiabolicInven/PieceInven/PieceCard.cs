@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PieceCard : MonoBehaviour
@@ -9,19 +10,19 @@ public class PieceCard : MonoBehaviour
     [SerializeField] Text maxCount;
     [SerializeField] GameObject[] descriptPrefabs;
     
-
-    GameManager gameManager;
-
     DiabolicItemInfo item;
-
-    private void Awake()
-    {
-        gameManager = GameManager.Instance;
-    }
 
     private void OnEnable()
     {
         UpdateCardUI(item);
+    }
+
+    private void Update()
+    {
+        if (EventSystem.current.currentSelectedGameObject != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+        }
     }
 
     public void UpdateCardUI(DiabolicItemInfo item)
@@ -38,7 +39,7 @@ public class PieceCard : MonoBehaviour
         int count = 0;
         Dictionary<Status, int> itemStatus = item.Stat();
 
-        for (int i = 0; i < gameManager.status.Count; i++)
+        for (int i = 0; i < itemStatus.Count; i++)
         {
             if (itemStatus[(Status)i] > 0)
             {
@@ -50,8 +51,12 @@ public class PieceCard : MonoBehaviour
                     descriptPrefabs[count].transform.GetChild(2).GetComponent<Text>().color = Color.red;
                     descriptPrefabs[count].transform.GetChild(2).GetComponent<Text>().text = stats[i].ToString();
                 }*/
-
+                descriptPrefabs[count].gameObject.SetActive(true);
+                descriptPrefabs[count].transform.GetChild(0).gameObject.SetActive(true);
+                descriptPrefabs[count].transform.GetChild(1).gameObject.SetActive(true);
+                descriptPrefabs[count].transform.GetChild(2).gameObject.SetActive(true);
                 descriptPrefabs[count].transform.GetChild(3).gameObject.SetActive(false);
+
                 count++;
             }
         }
@@ -60,6 +65,7 @@ public class PieceCard : MonoBehaviour
         {
             if (i == count)
             {
+                descriptPrefabs[count].gameObject.SetActive(true);
                 descriptPrefabs[count].transform.GetChild(0).gameObject.SetActive(false);
                 descriptPrefabs[count].transform.GetChild(1).gameObject.SetActive(false);
                 descriptPrefabs[count].transform.GetChild(2).gameObject.SetActive(false);
@@ -79,7 +85,7 @@ public class PieceCard : MonoBehaviour
 
     public void OnSelect()
     {
-        GamesceneManager.Instance.cardSelecter.SetActive(false);
         ItemManager.Instance.AddItem(item);
+        transform.parent.gameObject.SetActive(false);
     }
 }

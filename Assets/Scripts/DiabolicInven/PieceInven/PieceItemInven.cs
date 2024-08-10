@@ -17,5 +17,11 @@ public class PieceItemInven : Singleton<PieceItemInven>
 
         items = itemManager.items;
         itemQuantity = itemManager.itemQuantity;
+
+        for(int i = 0; i < items.Length; i++) 
+        {
+            if (items[i] != null)
+                Debug.Log(i + ": " + items[i].ItemName);
+        }
     }
 }

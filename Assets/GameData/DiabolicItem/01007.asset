@@ -26,6 +26,6 @@ MonoBehaviour:
   maxCount: 1
   itemShape:
     _width: 3
-    _height: 1
-    _shape: 010101
+    _height: 2
+    _shape: 010101010101
   description: "\uB514\uBC84\uD504 \uBA74\uC5ED"
