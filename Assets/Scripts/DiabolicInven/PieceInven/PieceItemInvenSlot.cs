@@ -6,6 +6,7 @@ public class PieceItemInvenSlot : MonoBehaviour
 {
     [SerializeField] Image itemImage;
     [SerializeField] Image GradeColorImage;
+    [SerializeField] Image blockImage;
     
     Text itemDiscriptionText;
     PieceItemInven pieceInven;
@@ -25,6 +26,7 @@ public class PieceItemInvenSlot : MonoBehaviour
         indexNum = transform.GetSiblingIndex();
         itemDiscriptionText = pieceInven.DiscriptionPanel.GetComponent<Text>();
         itemDiscriptionText.text = "";
+        blockImage.gameObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -100,7 +102,7 @@ public class PieceItemInvenSlot : MonoBehaviour
 
     public void DragBeginItem()
     {
-        if (pieceInven.items[indexNum] == null || isDragging)
+        if (pieceInven.items[indexNum] == null || isDragging || blockImage.gameObject.activeSelf)
             return;
 
         if(dragUI == null)
@@ -123,7 +125,7 @@ public class PieceItemInvenSlot : MonoBehaviour
         if (!isDragging)
             return;
 
-        DiabolicInven.Instance.InstantItemImage(dragUI.DragItem);
+        DiabolicInven.Instance.InstantItemImage(dragUI.DragItem, blockImage.gameObject);
 
         dragUI.OffDragUI();
         isDragging = false;

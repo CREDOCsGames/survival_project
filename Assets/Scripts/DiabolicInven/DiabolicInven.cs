@@ -40,7 +40,7 @@ public class DiabolicInven : Singleton<DiabolicInven>
         }
     }
 
-    public void InstantItemImage(DiabolicItemInfo item)
+    public void InstantItemImage(DiabolicItemInfo item, GameObject blockImage)
     {
         OffSlotSetImage();
 
@@ -50,6 +50,7 @@ public class DiabolicInven : Singleton<DiabolicInven>
         }
 
         Instantiate(itemImage, itemImageParent).GetComponent<DiabolicSlotItem>().ItemSetOnInventory(slots[currentIndex].GetComponent<RectTransform>().localPosition, item, TransferIndexesNum(), currentIndex);
+        blockImage.SetActive(true);
 
         AddStatus();
 
@@ -122,8 +123,6 @@ public class DiabolicInven : Singleton<DiabolicInven>
 
     public void SetSlotIsEmpty(int _height, int _width, bool[] _itemShape,int _row, int _column, bool slotEmpty)
     {
-        Debug.Log(_row + " " + _column);
-
         for (int i = 0; i < _height; i++)
         {
             for (int j = 0; j < _width; j++)
