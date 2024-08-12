@@ -11,6 +11,8 @@ public class Fishing : Singleton<Fishing>
     [SerializeField] Text maxFishingCount;
     [SerializeField] Text currentFishingCount;
     [SerializeField] Text[] catchItemsText;
+    [SerializeField] Image catchFishImage;
+    [SerializeField] Sprite[] fishTypeImage;
 
     int[] catchItemsCount = { 0, 0, 0 };
     bool isCatch = false;
@@ -102,10 +104,10 @@ public class Fishing : Singleton<Fishing>
 
                 else if (catchBar.value >= catchPointStart && catchBar.value <= catchBarWidth - catchPointEnd)
                 {
+                    GetItem();
                     fishingAnim.CatchSuccess = true;
                     catchText.text = "낚아챘다!";
                     catchText.color = Color.yellow;
-                    GetItem();
                 }
 
                 catchText.gameObject.SetActive(true);
@@ -123,21 +125,21 @@ public class Fishing : Singleton<Fishing>
         {
             catchItemsCount[0]++;
             catchItemsText[0].text = catchItemsCount[0].ToString();
-            fishingAnim.isSomeCatch = 1;
+            catchFishImage.sprite = fishTypeImage[0];
         }
 
         else if (rand < 66)
         {
             catchItemsCount[1]++;
             catchItemsText[1].text = catchItemsCount[1].ToString();
-            fishingAnim.isSomeCatch = 1;
+            catchFishImage.sprite = fishTypeImage[1];
         }
 
         else
         {
             catchItemsCount[2]++;
             catchItemsText[2].text = catchItemsCount[2].ToString();
-            fishingAnim.isSomeCatch = 2;
+            catchFishImage.sprite = fishTypeImage[1];
         }
     }
 
