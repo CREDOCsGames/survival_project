@@ -96,6 +96,9 @@ public class Campfire : MonoBehaviour, IMouseInteraction
 
     void OnBuff()
     {
+        if (!isWoodRefill)
+            return;
+
         for (int i = 0; i < buffValues.Count; i++)
         {
             if (i != (int)beforeBuff)

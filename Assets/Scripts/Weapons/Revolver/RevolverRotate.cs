@@ -30,12 +30,12 @@ public class RevolverRotate : MonoBehaviour
 
         angle = Mathf.Atan2(dir.z, dir.x) * Mathf.Rad2Deg;
 
-        transform.rotation = Quaternion.Euler(90, -angle, 0);
+        transform.rotation = Quaternion.Euler(90, -angle + 180, 0);
 
         if (dir.x < 0)
-            transform.rotation *= Quaternion.Euler(180, 0, 0);
+            transform.rotation *= Quaternion.Euler(0, 0, 0);
 
         else
-            transform.rotation *= Quaternion.Euler(0, 0, 0);
+            transform.rotation *= Quaternion.Euler(180, 0, 0);
     }
 }

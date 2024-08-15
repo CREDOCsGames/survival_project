@@ -20,6 +20,7 @@ public class ShootArrow : FireProjectile
         Transform activeArrow = projectile.transform.GetChild(Convert.ToInt32(isCatch));
 
         projectile.GetComponent<ProjectileObjectPool>().isPenetrate = isCatch ? true : false;
+        projectile.GetComponent<ProjectileObjectPool>().canCri = isCatch ? true : false;
 
         float damage = activeArrow.GetComponent<ArrowStatus>().Damage;
         projectile.GetComponent<ProjectileObjectPool>().SetDamage(damage);

@@ -29,7 +29,6 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] public int money;
     [SerializeField] public int round;
     [SerializeField] public int woodCount;
-    [SerializeField] public int woodMaxCount;
     public int fishHighGradeCount = 0;
     public int fishLowGradeCount = 0;
 
@@ -42,7 +41,6 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] public float attackSpeed;
     [SerializeField] public float speed;
     [SerializeField] public float range;
-    [SerializeField] public float luck;
     [SerializeField] public float critical;
     [SerializeField] public int avoid;
     [SerializeField] public int dashCount;
@@ -65,7 +63,7 @@ public class GameManager : Singleton<GameManager>
 
     [HideInInspector] public bool isTuto = false;
 
-    public Vector3 characterSpawnPos = new Vector3(0, 0, -40);
+    [HideInInspector] public Vector3 characterSpawnPos = new Vector3(0, 0, -40);
 
     public Dictionary<Status, int> status = new Dictionary<Status, int>();
 
@@ -103,11 +101,14 @@ public class GameManager : Singleton<GameManager>
 
     void InitSetting()
     {
-        //initGameTime = 20;
-        //gameDayTime = initGameTime;
+
+#if UNITY_EDITOR
+
+#else
+        initGameTime = 20;
+        gameDayTime = initGameTime;
         money = 0;
         woodCount = 0;
-        woodMaxCount = 70;
         round = 0;
         maxHp = 30;
         recoverHp = 1;
@@ -119,6 +120,7 @@ public class GameManager : Singleton<GameManager>
         luck = 0;
         critical = 5;
         avoid = 1;
+#endif
 
         status.Add(Status.MAXHP, maxHp);
         status.Add(Status.DAMAGE, 1);
@@ -157,13 +159,6 @@ public class GameManager : Singleton<GameManager>
         character.transform.position = characterSpawnPos;
         
         currentScene = sceneName;
-        character.thunderMark.transform.localScale = new Vector3(Mathf.Clamp(4f + range * 0.5f, 1, 12), Mathf.Clamp(4f + range * 0.5f, 1, 12), 0);
-
-        if (maxHp < 1)
-            character.maxHp = 1;
-
-        else if (maxHp >= 1)
-            character.maxHp = maxHp;
 
         character.shield = 0f;
         //character.currentHp = character.maxHp;

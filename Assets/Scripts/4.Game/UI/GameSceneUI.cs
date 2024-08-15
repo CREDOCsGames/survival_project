@@ -1,10 +1,7 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Analytics;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameSceneUI : Singleton<GameSceneUI>
@@ -14,16 +11,12 @@ public class GameSceneUI : Singleton<GameSceneUI>
 
     [SerializeField] public GameObject monsterSpawn;
     [SerializeField] GameObject tutoPanel;
-    [SerializeField] GameObject selectPanel;
     public GameObject tamingGame;
 
     [Header("HP")]
     [SerializeField] Text hpText;
     [SerializeField] Slider hpBar;
     [SerializeField] Slider recoveryGaugeBar;
-
-    [Header("COIN")]
-    [SerializeField] Text coinText;
 
     [Header("Items")]
     [SerializeField] Text woodCount;
@@ -35,7 +28,6 @@ public class GameSceneUI : Singleton<GameSceneUI>
 
     [Header("Round")]
     [SerializeField] Text roundText;
-    [SerializeField] Text dayNightAlarmText;
 
     [Header("Dash")]
     [SerializeField] GameObject dash;
@@ -49,35 +41,22 @@ public class GameSceneUI : Singleton<GameSceneUI>
     [Header("Stat")]
     [SerializeField] GameObject statWindow;
     [SerializeField] Text maxHp;
-    [SerializeField] Text reHp;
-    [SerializeField] Text apHp;
     [SerializeField] Text def;
     [SerializeField] Text avoid;
     [SerializeField] Text percentDamage;
-    [SerializeField] Text wAtk;
-    [SerializeField] Text eAtk;
-    [SerializeField] Text sAtk;
-    [SerializeField] Text lAtk;
     [SerializeField] Text aSpd;
     [SerializeField] Text spd;
     [SerializeField] Text ran;
-    [SerializeField] Text luk;
     [SerializeField] Text cri;
 
+    [Header("Day Change")]
+    [SerializeField] GameObject dayChangeGO;
+    [SerializeField] Text dayChangeText;
+    [SerializeField] Image dayChangeImage;
+    [SerializeField] Sprite[] dayChangeSprites;
+
     [Header("Text")]
-    [SerializeField] GameObject roundClearText;
     [SerializeField] Text bossSceneText;
-    [SerializeField] GameObject gameOverUI;
-    [SerializeField] TypingText gameOverText;
-    [SerializeField] GameObject gameOverWoodUI;
-    [SerializeField] TypingText gameOverWoodText;
-    [SerializeField] GameObject gameOverIsedolUI;
-    [SerializeField] TypingText gameOverIsedolText;
-    [SerializeField] Image clearImage;
-    [SerializeField] Sprite[] clearIllusts;
-    [SerializeField] GameObject clickText;
-    [SerializeField] GameObject gameClearUI;
-    [SerializeField] TypingText gameClearText;
 
     GameManager gameManager;
     Character character;
@@ -87,29 +66,21 @@ public class GameSceneUI : Singleton<GameSceneUI>
     [SerializeField] GameObject fishingGame;
     [SerializeField] GameObject weaponUI;
 
-    bool bgmChange;
-
     Color initTimeColor;
+
+    Coroutine currentCoroutine;
 
     protected override void Awake()
     {
         base.Awake();
-        roundClearText.SetActive(false);
         bossSceneText.gameObject.SetActive(false);
-        gameOverUI.SetActive(false);
-        gameOverWoodUI.SetActive(false);
-        gameOverIsedolUI.SetActive(false);
-        gameClearUI.SetActive(false);
         dash.SetActive(false);
         statWindow.SetActive(false);
-        clickText.gameObject.SetActive(false);
-        clearImage.gameObject.SetActive(false);
         tutoPanel.SetActive(false);
-        selectPanel.SetActive(false);
         tamingGame.SetActive(false);
         fishingGame.SetActive(true);
-        dayNightAlarmText.gameObject.SetActive(false);
         weaponUI.SetActive(false);
+        dayChangeGO.SetActive(false);
 
         gameManager = GameManager.Instance;
 
@@ -142,8 +113,6 @@ public class GameSceneUI : Singleton<GameSceneUI>
         cursorAttack = gameManager.useCursorAttack;
         Vector2 cursorHotSpot = new Vector3(cursorAttack.width * 0.5f, cursorAttack.height * 0.5f);
         Cursor.SetCursor(cursorAttack, cursorHotSpot, CursorMode.ForceSoftware);
-
-        bgmChange = false;
 
         if (gameManager.round == 10 || gameManager.round == 20 || gameManager.round == 30)
         {
@@ -196,164 +165,31 @@ public class GameSceneUI : Singleton<GameSceneUI>
         bossSceneText.gameObject.SetActive(false);
     }
     
+    public void ChangeDayText(int index, string text)
+    {
+        dayChangeText.text = text;
+        dayChangeImage.sprite = dayChangeSprites[index];
+
+        dayChangeGO.SetActive(true);
+
+        if(currentCoroutine != null) 
+        {
+            StopCoroutine(currentCoroutine);
+        }
+
+        currentCoroutine = StartCoroutine(FadeOut(dayChangeImage, dayChangeText, dayChangeGO));
+    }
+
     private void Update()
     {
         HpUI();
         RecoveryGauegeUI();
-        CoinUI();
         ItemsCountUI();
         RoundUI();
         TimeUI();
         DashUI();
         WeaponUI();
         SettingStatText();
-
-        if (!character.isDead)
-        {
-            if (gameManager.round != 30)
-            {
-                if (gameManager.isClear && gameManager.isBossDead)
-                {
-                    if (!bgmChange)
-                    {
-                        Vector2 cursorHotSpot = new Vector3(cursorNormal.width * 0.5f, cursorNormal.height * 0.5f);
-                        Cursor.SetCursor(cursorNormal, cursorHotSpot, CursorMode.ForceSoftware);
-
-                        soundManager.PlayBGM(5, false);
-                        bgmChange = true;
-                    }
-
-                    roundClearText.SetActive(true);
-                }
-
-                if (roundClearText.GetComponent<TypingText>().isOver == true)
-                {
-                    roundClearText.SetActive(false);
-                }
-            }
-
-            else if (gameManager.round == 30)
-            {
-                if (gameManager.isBossDead)
-                {
-                    gameManager.isClear = true;
-
-                    if (!gameClearUI.activeSelf)
-                        gameManager.gameEndTime = Time.realtimeSinceStartup;
-
-                    if (gameManager.woodCount >= gameManager.woodMaxCount)
-                    {
-                        if (!bgmChange)
-                        {
-                            Vector2 cursorHotSpot = new Vector3(cursorNormal.width * 0.5f, cursorNormal.height * 0.5f);
-                            Cursor.SetCursor(cursorNormal, cursorHotSpot, CursorMode.ForceSoftware);
-
-                            soundManager.PlayBGM(6, false);
-                            bgmChange = true;
-                        }
-
-                        gameClearUI.SetActive(true);
-
-                        clearImage.sprite = clearIllusts[0];
-
-                        if (gameClearText.isOver)
-                        {
-                            StartCoroutine(FadeIn());
-                            gameClearText.isOver = false;
-                        }
-                    }
-
-                    else if (gameManager.woodCount < gameManager.woodMaxCount)
-                    {
-                        gameOverWoodUI.SetActive(true);
-
-                        if (gameOverWoodText.isOver)
-                            SceneManager.LoadScene("End");
-
-                        /*if (gameManager.isedolCount != 5)
-                        {
-                            gameOverWoodUI.SetActive(true);
-
-                            if (gameOverWoodText.isOver)
-                                SceneManager.LoadScene("End");
-                        }
-
-                        else
-                        {
-                            gameOverWoodUI.SetActive(true);
-
-                            gameManager.isClear = true;
-
-                            if (gameOverWoodText.isOver)
-                            {
-                                gameOverWoodUI.SetActive(false);
-                                gameOverIsedolUI.SetActive(true);
-                            }
-
-                            if (gameOverIsedolText.isOver == true)
-                            {
-                                clearImage.sprite = clearIllusts[1];
-                                StartCoroutine(FadeIn());
-                                gameOverIsedolText.isOver = false;
-                            }
-
-                            if (clickText.gameObject.activeSelf)
-                            {
-                                if (Input.GetMouseButtonDown(0))
-                                {
-                                    if (!bgmChange)
-                                    {
-                                        soundManager.PlayBGM(6, false);
-                                        bgmChange = true;
-                                    }
-
-                                    clearImage.gameObject.SetActive(false);
-                                    gameOverIsedolUI.SetActive(false);
-                                    gameClearUI.SetActive(true);
-                                }
-                            }
-
-                            if (gameClearText.isOver == true && !soundManager.isPlaying)
-                                SceneManager.LoadScene("End");
-                        }*/
-                    }
-                }
-
-                if (clickText.gameObject.activeSelf)
-                {
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        clearImage.gameObject.SetActive(false);
-                        SceneManager.LoadScene("End");
-                    }
-                }
-            }
-        }
-
-        else if (character.isDead)
-        {
-            if (!gameOverUI.activeSelf || !gameOverIsedolText)
-                gameManager.gameEndTime = Time.realtimeSinceStartup;
-
-            if (clickText.gameObject.activeSelf)
-            {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    if (!bgmChange)
-                    {
-                        soundManager.PlayBGM(6, false);
-                        bgmChange = true;
-                    }
-
-                    clearImage.gameObject.SetActive(false);
-                    gameOverIsedolUI.SetActive(false);
-                    gameClearUI.SetActive(true);
-                }
-            }
-
-            if (gameClearText.isOver == true && !soundManager.isPlaying)
-                SceneManager.LoadScene("End");
-        }
     }
 
     bool CursorChange(int playNum)
@@ -362,12 +198,11 @@ public class GameSceneUI : Singleton<GameSceneUI>
         Cursor.SetCursor(cursorNormal, cursorHotSpot, CursorMode.ForceSoftware);
 
         soundManager.PlayBGM(playNum, false);
-        bgmChange = true;
 
         return false;
     }
 
-    IEnumerator FadeIn()
+    /*IEnumerator FadeIn()
     {
         yield return new WaitForSeconds(1f);
 
@@ -388,20 +223,42 @@ public class GameSceneUI : Singleton<GameSceneUI>
         yield return new WaitForSeconds(3.5f);
 
         clickText.SetActive(true);
+    }*/
+
+    IEnumerator FadeOut(Image image, Text text, GameObject go)
+    {
+        float fadeTime = 2f;
+        Color imageColor = image.color;
+        Color textColor = text.color;
+
+        do
+        {
+            fadeTime = Mathf.Clamp(fadeTime - Time.deltaTime, 0f, 2f);
+
+            imageColor.a = fadeTime / 2f;
+            textColor.a = imageColor.a;
+
+            image.color = imageColor;
+            text.color = textColor;
+
+            yield return null;
+        }
+        while (fadeTime > 0);
+
+        yield return null;
+
+        go.SetActive(false);
     }
 
     void SettingStatText()
     {
-        maxHp.text = gameManager.maxHp.ToString();
-        reHp.text = gameManager.recoverHp.ToString("0.#");
-        apHp.text = gameManager.absorbHp.ToString("0.#");
-        def.text = gameManager.defence.ToString("0.#");
-        avoid.text = gameManager.avoid.ToString("0.#");
+        maxHp.text = character.maxHp.ToString();
+        def.text = character.defence.ToString("0.#");
+        avoid.text = character.avoid.ToString("0.#");
         percentDamage.text = gameManager.percentDamage.ToString("0.0#");
-        aSpd.text = gameManager.attackSpeed.ToString("0.#");
-        spd.text = gameManager.speed.ToString("0.##");
+        aSpd.text = character.attackSpeed.ToString("0.#");
+        spd.text = character.speed.ToString("0.##");
         ran.text = gameManager.range.ToString("0.#");
-        luk.text = gameManager.luck.ToString("0.#");
         cri.text = gameManager.critical.ToString("0.#");
     }
 
@@ -455,11 +312,6 @@ public class GameSceneUI : Singleton<GameSceneUI>
     public void RecoveryGauegeUI()
     {
         recoveryGaugeBar.value = Mathf.Clamp(character.currentRecoveryGauge / character.maxRecoveryGauge, 0f, 1f);
-    }
-
-    void CoinUI()
-    {
-        coinText.text = gameManager.money.ToString();
     }
 
     void ItemsCountUI()
@@ -526,35 +378,5 @@ public class GameSceneUI : Singleton<GameSceneUI>
             nextScene = "Logging";
 
         SelectScene(nextScene);
-    }
-
-    public void DayNightAlarmUpdate(bool isNight)
-    {
-        dayNightAlarmText.gameObject.SetActive(true);
-        
-        dayNightAlarmText.text = isNight ? "밤이 되었습니다." : "아침이 밝았습니다.";
-
-        StartCoroutine(FadeAwayAlarmText(1.5f));
-    }
-
-    IEnumerator FadeAwayAlarmText(float time)
-    {
-        Color textColor = dayNightAlarmText.color;
-        float initTime = time;
-
-        while(dayNightAlarmText.color.a > 0)
-        {
-            time -= Time.deltaTime;
-            textColor.a = time / initTime;
-            dayNightAlarmText.color = textColor;
-
-            yield return null;
-        }
-
-        yield return null;
-
-        textColor.a = 1;
-        dayNightAlarmText.color = textColor;
-        dayNightAlarmText.gameObject.SetActive(false);
     }
 }

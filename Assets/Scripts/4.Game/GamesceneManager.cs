@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.EventSystems;
 
 public class GamesceneManager : Singleton<GamesceneManager>
 {
@@ -50,7 +49,9 @@ public class GamesceneManager : Singleton<GamesceneManager>
     {
         isNight = false;
         nightFilter.SetActive(false);
+        character.ChangeAnimationController(0);
 
+        character.UpdateStat();
         character.weaponParent.gameObject.SetActive(false);
 
         StartCoroutine(SpawnTree());
@@ -70,11 +71,11 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
         yield return new WaitWhile(() => multicellInvenPanel.activeSelf);
 
+        gameSceneUI.ChangeDayText(0, "아침이 밝았습니다.");
+
         isCardSetting = false;
         character.isCanControll = true;
 
-        gameSceneUI.DayNightAlarmUpdate(isNight);
-        
         yield return new WaitForSeconds(gameManager.gameDayTime);
 
         campFire.GetComponent<Campfire>().ToNightScene();
@@ -84,18 +85,19 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
     IEnumerator NightRoutine()
     {
+        gameSceneUI.ChangeDayText(1, "밤이 되었습니다.");
         isNight = true;
-        gameSceneUI.DayNightAlarmUpdate(isNight);
         nightFilter.SetActive(true);
 
+        character.UpdateStat();
         character.weaponParent.gameObject.SetActive(true);
 
         currentGameTime = gameManager.gameNightTime;
 
         yield return new WaitForSeconds(gameManager.gameNightTime);
 
-        /*gameManager.fishLowGradeCount = 0;
-        gameManager.fishHighGradeCount = 0;*/
+        gameManager.fishLowGradeCount = 0;
+        gameManager.fishHighGradeCount = 0;
 
         if (character.IsTamingPet)
             character.TamedPed.GetComponent<Pet>().RunAway();

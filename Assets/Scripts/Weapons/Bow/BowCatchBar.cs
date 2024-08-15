@@ -5,6 +5,9 @@ public class BowCatchBar : MonoBehaviour
 {
     [SerializeField] Slider catchBar;
 
+    float barSpeed;
+    float maxBarSpeed = 600;
+
     bool isMin = true;
 
     bool isCatch = false;
@@ -42,11 +45,9 @@ public class BowCatchBar : MonoBehaviour
         else if (catchBar.value == catchBar.maxValue)
             isMin = false;
 
-        if (isMin)
-            catchBar.value += Time.deltaTime * 400;
+        barSpeed = Mathf.Clamp(catchBar.value <= catchBar.maxValue * 0.5f ? (catchBar.value / (catchBar.maxValue * 0.5f)) * maxBarSpeed : ((catchBar.maxValue - catchBar.value) / (catchBar.maxValue * 0.5f)) * maxBarSpeed, 100, maxBarSpeed);
 
-        else
-            catchBar.value -= Time.deltaTime * 400;
+        catchBar.value += isMin ? Time.deltaTime * barSpeed : -Time.deltaTime * barSpeed;
     }
 
     void Catch()

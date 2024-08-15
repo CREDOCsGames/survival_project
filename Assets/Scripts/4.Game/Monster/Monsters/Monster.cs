@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,9 +9,9 @@ public class Monster : MonoBehaviour
 {
     [SerializeField] protected GameObject freezeEffect;
     [SerializeField] protected Rigidbody rigid;
-    [HideInInspector] protected SpriteRenderer rend;
-    [HideInInspector] protected Animator anim;
-    [HideInInspector] protected Collider coll;
+    [SerializeField] protected SpriteRenderer rend;
+    [SerializeField] protected Animator anim;
+    [SerializeField] protected Collider coll;
 
     [HideInInspector] public bool isWalk, isDead, isAttacked, isAttack = false;
 
@@ -56,9 +57,6 @@ public class Monster : MonoBehaviour
         gameManager = GameManager.Instance;
         gamesceneManager = GamesceneManager.Instance;
         character = Character.Instance;
-        rend = transform.GetChild(1).GetComponent<SpriteRenderer>();
-        anim = transform.GetChild(1).GetComponent<Animator>();
-        coll = transform.GetChild(1).GetComponent<Collider>();
 
         hp = stat.monsterMaxHp * (2 + Mathf.Floor(gameManager.round / 5) * Mathf.Floor(gameManager.round / 5) * (1 + Mathf.Floor(gameManager.round / 20))) * 0.5f;
         damage = stat.monsterDamage * (1 + Mathf.Floor(gameManager.round / 30)) + Mathf.Floor(gameManager.round / 5) * 2f;
@@ -261,6 +259,11 @@ public class Monster : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void ChangeOutline(Color color)
+    {
+        rend.material.SetColor("_SolidOutline", color);
     }
 
     public void SetManagedPool(IObjectPool<Monster> pool)

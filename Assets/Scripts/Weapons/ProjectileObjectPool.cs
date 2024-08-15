@@ -3,16 +3,21 @@ using UnityEngine.Pool;
 
 public class ProjectileObjectPool : MonoBehaviour
 {
-    [SerializeField] protected DamageUI damageUI;
+    [SerializeField] DamageUI damageUI;
     [SerializeField] float projectileDamage;
+    [SerializeField] int penetrateCount;
+    [SerializeField] float fireRange;
+    public bool canCri;
+    bool isCri = false;
 
-    protected IObjectPool<ProjectileObjectPool> pool;
-    protected IObjectPool<DamageUI> damagePool;
+    IObjectPool<ProjectileObjectPool> pool;
+    IObjectPool<DamageUI> damagePool;
 
+    int currentPenetrateCount;
 
     GameManager gameManager;
 
-    [HideInInspector] public bool isPenetrate = false;
+    public bool isPenetrate = false;
 
     private void Awake()
     {
@@ -22,6 +27,7 @@ public class ProjectileObjectPool : MonoBehaviour
     private void Start()
     {
         gameManager = GameManager.Instance;
+        currentPenetrateCount = penetrateCount;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -33,18 +39,33 @@ public class ProjectileObjectPool : MonoBehaviour
             DamageUI damage = damagePool.Get();
 
             float mDef = monster.defence;
-            damage.realDamage = Mathf.Clamp(projectileDamage * (1 - (mDef / (20 + mDef))), 0, projectileDamage);
-            damage.UISetting();
-            damage.transform.position = transform.position;
-            damage.gameObject.transform.SetParent(gameManager.damageStorage);
 
-            monster.OnDamaged(damage.realDamage * gameManager.percentDamage);
+            damage.realDamage = Mathf.Clamp(projectileDamage * (1 - (mDef / (20 + mDef))), 0, projectileDamage) * gameManager.percentDamage;
+
+            if (canCri)
+            {
+                isCri = gameManager.critical >= Random.Range(0f, 100f);
+                damage.realDamage *= isCri ? 2 : 1;
+            }
+
+            damage.UISetting(canCri, isCri);
+            damage.transform.position = monster.transform.position;
+
+            monster.OnDamaged(damage.realDamage);
 
             if (!isPenetrate)
+            {
+                currentPenetrateCount = 1;
+            }
+
+            currentPenetrateCount--;
+
+            if (currentPenetrateCount <= 0)
                 DestroyProjectile();
+
         }
 
-        else if(other.CompareTag("Obstacle"))
+        else if (other.CompareTag("Obstacle"))
         {
             DestroyProjectile();
         }
@@ -59,6 +80,7 @@ public class ProjectileObjectPool : MonoBehaviour
     {
         if (gameObject.activeSelf)
         {
+            currentPenetrateCount = penetrateCount;
             pool.Release(this);
         }
     }
@@ -72,7 +94,7 @@ public class ProjectileObjectPool : MonoBehaviour
     {
         DamageUI damageUIPool = Instantiate(damageUI, transform.position, Quaternion.Euler(90, 0, 0)).GetComponent<DamageUI>();
         damageUIPool.SetManagedPool(damagePool);
-        damageUIPool.transform.SetParent(gameManager.bulletStorage);
+        damageUIPool.transform.SetParent(gameManager.damageStorage);
         return damageUIPool;
     }
 

@@ -8,25 +8,24 @@ using UnityEngine.TextCore.Text;
 public class SwingCutlass : MonoBehaviour
 {
     [SerializeField] BoxCollider collder;
+    [SerializeField] float initCoolTime;
+
     Animator anim;
     Character character;
-    GameManager gameManager;
 
     bool canAttack;
 
-    float coolTime = 1;
-    float initCoolTime;
+    float coolTime;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
         character = Character.Instance;
-        gameManager = GameManager.Instance;
     }
 
     private void OnEnable()
     {
-        initCoolTime = coolTime;
+        coolTime = initCoolTime;
 
         collder.enabled = false;
 
@@ -46,8 +45,18 @@ public class SwingCutlass : MonoBehaviour
         if (Input.GetMouseButton(0) && character.isCanControll)
         {
             character.canWeaponChange = false;
+            character.canFlip = false;
+            character.anim.SetTrigger("isAttack");
             collder.enabled = true;
-            anim.SetTrigger("RightAttack");
+
+            anim.SetBool("canAttack", canAttack);
+
+            if (!character.IsFlip)
+                anim.SetBool("RightAttack", true);
+
+            else
+                anim.SetBool("RightAttack", false);
+
             canAttack = false;
         }
     }
@@ -55,6 +64,8 @@ public class SwingCutlass : MonoBehaviour
     void EndAttack()
     {
         collder.enabled = false;
+        character.canFlip = true;
+        anim.SetBool("canAttack", canAttack);
         StartCoroutine(AttackDelay());
     }
 

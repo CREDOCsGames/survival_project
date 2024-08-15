@@ -15,31 +15,21 @@ public class DamageUI : MonoBehaviour
 
     protected IObjectPool<DamageUI> managedPool;
 
-    private void Start()
-    {
-        UISetting();
-    }
-
-    public void UISetting()
+    public void UISetting(bool canCri, bool isCri)
     {
         printTime = 1f;
         initPrintTime = printTime;
 
-        if (!isMiss)
-            damageText.text = realDamage.ToString("0.##");
+        damageText.color = canCri & isCri ? Color.red : Color.green;
 
-        else if (isMiss)
-        {
-            damageText.color = Color.white;
-            damageText.text = "Miss";
-        }
+        damageText.text = realDamage.ToString("0.##");
     }
 
     private void ChangeAlpha(float alpha)
     {
-        Color textXColor = damageText.color;        // ÅØ½ºÆ®ÀÇ »ö»ó°ª
-        textXColor.a = alpha;                       // »ö»ó°ªÀÇ ¾ËÆÄ°ª º¯°æ(Á÷Á¢ º¯°æ ºÒ°¡ÇØ¼­ »©¿È)
-        damageText.color = textXColor;              // º¯°æÇÑ »ö»óÀ» ´ëÀÔ
+        Color textXColor = damageText.color;        // í…ìŠ¤íŠ¸ì˜ ìƒ‰ìƒê°’
+        textXColor.a = alpha;                       // ìƒ‰ìƒê°’ì˜ ì•ŒíŒŒê°’ ë³€ê²½(ì§ì ‘ ë³€ê²½ ë¶ˆê°€í•´ì„œ ë¹¼ì˜´)
+        damageText.color = textXColor;              // ë³€ê²½í•œ ìƒ‰ìƒì„ ëŒ€ì…
     }
 
     private void Update()

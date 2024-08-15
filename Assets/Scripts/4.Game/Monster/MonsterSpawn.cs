@@ -25,7 +25,6 @@ public class MonsterSpawn : MonoBehaviour
 
     GameManager gameManager;
     GamesceneManager gamesceneManager;
-    Character character;
 
     Coroutine currentCoroutine;
 
@@ -37,7 +36,6 @@ public class MonsterSpawn : MonoBehaviour
     private void Start()
     {
         gameManager = GameManager.Instance;
-        character = Character.Instance;
         gamesceneManager = GamesceneManager.Instance;
 
         weightValue = new float[] { 100, 0, 0, 0 };
@@ -75,11 +73,10 @@ public class MonsterSpawn : MonoBehaviour
     {
         while (gamesceneManager.isNight)
         {
-            //Vector3 pos = ground.bounds.ClosestPoint(SpawnPosition());
             Vector3 pos = SpawnPosition();
             GameObject spawnMark = Instantiate(spawnImage, pos, spawnImage.transform.rotation, storageParent);
             Destroy(spawnMark, 1f);
-            StartCoroutine(SpawnMonster(pos));
+            StartCoroutine(SpawnMonster(pos, Color.red));
 
             SpawnSubordinateMonster(pos, Random.Range(4, 7));
 
@@ -103,11 +100,12 @@ public class MonsterSpawn : MonoBehaviour
         return spawnPos;
     }
 
-    IEnumerator SpawnMonster(Vector3 pos)
+    IEnumerator SpawnMonster(Vector3 pos, Color color)
     {
         yield return new WaitForSeconds(1);
 
         Monster monster = pool.Get();
+        monster.ChangeOutline(color);
 
         NavMeshHit hit;
 
@@ -140,7 +138,7 @@ public class MonsterSpawn : MonoBehaviour
 
             GameObject spawnMark = Instantiate(spawnImage, spawnPos, spawnImage.transform.rotation, storageParent);
             Destroy(spawnMark, 1f);
-            StartCoroutine(SpawnMonster(spawnPos));
+            StartCoroutine(SpawnMonster(spawnPos, Color.white));
         }
     }
 

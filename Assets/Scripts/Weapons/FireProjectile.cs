@@ -40,7 +40,7 @@ public class FireProjectile : MonoBehaviour
             character.canWeaponChange = false;
         }
 
-        if (Input.GetMouseButtonUp(0) && !(gameManager.isClear || gameManager.isPause))
+        if (Input.GetMouseButtonUp(0) && !gameManager.isPause && canFire)
         {
             SetFire();
         }

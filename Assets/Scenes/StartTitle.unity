@@ -5269,12 +5269,11 @@ MonoBehaviour:
   bulletStorage: {fileID: 1005871281}
   damageStorage: {fileID: 1692643827}
   initGameTime: 10000
-  gameDayTime: 100
-  gameNightTime: 1
+  gameDayTime: 1
+  gameNightTime: 100000
   money: 0
-  round: 1
+  round: 0
   woodCount: 30
-  woodMaxCount: 70
   fishHighGradeCount: 2
   fishLowGradeCount: 100
   maxHp: 100
@@ -5286,7 +5285,7 @@ MonoBehaviour:
   speed: 3
   range: 5
   luck: 10
-  critical: 0
+  critical: 50
   avoid: 1
   dashCount: 1000
   currentScene: 

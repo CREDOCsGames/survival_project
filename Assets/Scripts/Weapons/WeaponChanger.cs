@@ -31,6 +31,14 @@ public class WeaponChanger : MonoBehaviour
         character.weaponParent.GetChild(0).gameObject.SetActive(true);
     }
 
+    private void OnEnable()
+    {
+        if (character == null)
+            character = Character.Instance;
+
+        character.ChangeAnimationController(currentIndex + 2);
+    }
+
     void Update()
     {
         if (!canScroll || !character.isCanControll || !character.canWeaponChange)
@@ -43,6 +51,8 @@ public class WeaponChanger : MonoBehaviour
             beforeIndex = currentIndex;
             currentIndex = currentIndex + 1 >= weaponImages.Length ? 0 : currentIndex + 1;
             nextIndex = currentIndex + 1 >= weaponImages.Length ? 0 : currentIndex + 1;
+
+            character.ChangeAnimationController(currentIndex + 2);
 
             currentItemImage.sprite = weaponImages[currentIndex];
             nextItemImage.sprite = weaponImages[nextIndex];

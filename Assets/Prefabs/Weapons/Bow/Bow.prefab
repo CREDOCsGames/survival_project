@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 7451276543573718348}
   - component: {fileID: 2988402651215989648}
   m_Layer: 0
-  m_Name: BowMark
+  m_Name: BowArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -117,7 +117,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1116613799833546213}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.088, y: 0, z: 0}
+  m_LocalPosition: {x: -0.204, y: -0.305, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -164,8 +164,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: 33ba44ba7dcb62448986472500fc4888, type: 3}
+  m_SortingOrder: 2
+  m_Sprite: {fileID: 21300000, guid: d6e425b11c62d994a9e6af2971b70c16, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -202,15 +202,15 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2314199126490667219}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.001, y: 0.001, z: 0.010000001}
-  m_ConstrainProportionsScale: 0
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 1.41}
+  m_LocalScale: {x: 0.005, y: 0.005, z: 0.049999997}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8393014242330467173}
   m_Father: {fileID: 2610753198198880902}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -294,7 +294,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2610753198198880902
 Transform:
   m_ObjectHideFlags: 0
@@ -327,7 +327,8 @@ MonoBehaviour:
   projectilePrefab: {fileID: 7236512193234804584, guid: 0e764926f6d20b8439c7072ac2fac63a, type: 3}
   normalFirePos: {fileID: 9127276467427897190}
   poolCount: 10
-  enhancedProjectile: {fileID: 0}
+  initCoolTime: 1
+  catchBar: {fileID: 0}
 --- !u!114 &5844579215938408588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -517,9 +518,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1596945870894198920}
-  - component: {fileID: 8592440519923321373}
+  - component: {fileID: 866218567331742733}
   m_Layer: 0
-  m_Name: BowMarkPivot
+  m_Name: BowArmPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -532,8 +533,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6692375835190006833}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0.231}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -541,8 +542,8 @@ Transform:
   - {fileID: 9127276467427897190}
   m_Father: {fileID: 2610753198198880902}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8592440519923321373
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &866218567331742733
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -551,7 +552,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6692375835190006833}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb2ec0ecb0e9ccf49a75d70ca283667c, type: 3}
+  m_Script: {fileID: 11500000, guid: dd11875f707d56847b400fdabe86a3ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6808093183676789846
@@ -654,7 +655,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7962976298919162307}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.156, y: 0, z: 0}
+  m_LocalPosition: {x: -0.787, y: -0.298, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -698,7 +699,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 232.07}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5828552150350768270
@@ -786,8 +787,8 @@ RectTransform:
   m_Father: {fileID: 6804021162946800647}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.6, y: 0}
+  m_AnchorMax: {x: 0.6, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 5, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}

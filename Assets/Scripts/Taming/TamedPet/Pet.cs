@@ -114,7 +114,7 @@ public class Pet : MonoBehaviour
             DamageUI damageUI = pool.Get();
             damageUI.realDamage = damage;
 
-            damageUI.UISetting();
+            damageUI.UISetting(false, false);
             damageUI.transform.position = monster.transform.position;
             damageUI.gameObject.transform.SetParent(gameManager.damageStorage);
 

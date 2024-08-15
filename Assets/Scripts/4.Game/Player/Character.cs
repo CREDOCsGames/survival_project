@@ -1,8 +1,7 @@
 using System.Collections;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
+using System.Data;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public enum CHARACTER_NUM
@@ -14,16 +13,15 @@ public enum CHARACTER_NUM
 
 public class Character : Singleton<Character>
 {
-    [SerializeField] public SpriteRenderer rend;
-    [SerializeField] Animator anim;
+    [SerializeField] SpriteRenderer rendUpper;
+    [SerializeField] SpriteRenderer rendLower;
+    [SerializeField] public Animator anim;
     [SerializeField] ParticleSystem particle;
     [SerializeField] float particleScale;
 
     [SerializeField] Slider playerHpBar;
 
     [Header("Stat")]
-    [SerializeField] public int characterNum;
-    [SerializeField] public CharacterInfo[] characterInfos;
     [SerializeField] RuntimeAnimatorController[] currentController;
 
     [HideInInspector] public float dashCoolTime;
@@ -34,7 +32,6 @@ public class Character : Singleton<Character>
     [SerializeField] GameObject WeaponParent;
     [SerializeField] public GameObject[] weapons;
     [SerializeField] public Transform[] weaponPoses;
-    [SerializeField] public GameObject thunderMark;
 
     [HideInInspector] public float exp;
     [HideInInspector] public float maxHp;
@@ -44,6 +41,7 @@ public class Character : Singleton<Character>
     [HideInInspector] public int avoid;
     [HideInInspector] public float attackSpeed;
     [HideInInspector] public int defence;
+    [SerializeField] float invincibleTime;
 
     public float maxRecoveryGauge;
     [HideInInspector] public float currentRecoveryGauge;
@@ -52,14 +50,6 @@ public class Character : Singleton<Character>
 
     [Header("Summon")]
     [SerializeField] GameObject tamedPet;
-    [SerializeField] GameObject ggoGgoPrefab;
-    [SerializeField] GameObject ilsoonPrefab;
-    [SerializeField] GameObject wakgoodPrefab;
-    [SerializeField]  public Transform[] summonPos;
-    [HideInInspector] public int summonNum;
-
-    [SerializeField] LayerMask obstacleLayer;
-    [SerializeField] LayerMask groundLayer;
 
     Collider ground;
 
@@ -80,8 +70,6 @@ public class Character : Singleton<Character>
     [HideInInspector] public float charBuffDmg = 0;
     [HideInInspector] public float buffTime = 5;
 
-    [HideInInspector] public int thunderCount;
-
     Coroutine currentCoroutine;
 
     [HideInInspector] public float shield = 0;
@@ -94,6 +82,7 @@ public class Character : Singleton<Character>
     NavMeshAgent agent;
 
     public bool isCanControll = true;
+    public bool canFlip = true;
 
     bool isTamingPet = false;
     int getPetRound = 0;
@@ -102,6 +91,10 @@ public class Character : Singleton<Character>
     public int GetPetRound => getPetRound;
 
     public GameObject TamedPed => tamedPet;
+
+    GamesceneManager gamesceneManager;
+
+    public bool IsFlip => rendUpper.flipX;
 
     protected override void Awake()
     {
@@ -116,25 +109,10 @@ public class Character : Singleton<Character>
         agent.enabled = false;
 
         gameManager = GameManager.Instance;
+        gamesceneManager = GamesceneManager.Instance;
         transform.position = new Vector3(0f, 0f, -40f);
 
-        thunderMark.transform.localScale = new Vector3(Mathf.Clamp(4f + gameManager.range * 0.5f, 1, 12), Mathf.Clamp(4f + gameManager.range * 0.5f, 1, 12), 0);
-
-        /*maxHp = gameManager.maxHp;
-        currentHp = maxHp;
-        speed = gameManager.speed;
-        avoid = gameManager.avoid;
-        recoverHpRatio = gameManager.recoverHp;
-        attackSpeed = gameManager.attackSpeed;
-        defence = gameManager.defence;*/
-
-        maxHp = gameManager.status[Status.MAXHP];
-        currentHp = maxHp;
-        speed = gameManager.status[Status.SPEED];
-        avoid = gameManager.status[Status.AVOID];
-        recoverHpRatio = gameManager.status[Status.RECOVER];
-        attackSpeed = gameManager.status[Status.ATTACK_SPEED];
-        defence = gameManager.status[Status.DEFENCE];
+        UpdateStat();
 
         recoverTime = 1;
         dashCoolTime = 4;
@@ -144,6 +122,10 @@ public class Character : Singleton<Character>
         fruitUI.gameObject.SetActive(false);
 
         tamedPet.SetActive(false);
+
+        ChangeAnimationController(0);
+
+        rendLower.gameObject.SetActive(false);
     }
     
     void Update()
@@ -173,6 +155,7 @@ public class Character : Singleton<Character>
         {
             if (!isCanControll)
             {
+                Flip();
                 isRun = false;
                 anim.SetBool("isRun", isRun);
                 return;
@@ -186,6 +169,17 @@ public class Character : Singleton<Character>
             anim.SetFloat("moveSpeed", 1 + (speed * 0.1f));
             anim.SetBool("isRun", isRun);
         }
+    }
+
+    public void UpdateStat()
+    {
+        maxHp = gameManager.status[Status.MAXHP];
+        currentHp = maxHp;
+        speed = gameManager.status[Status.SPEED];
+        avoid = gameManager.status[Status.AVOID];
+        recoverHpRatio = gameManager.status[Status.RECOVER];
+        attackSpeed = gameManager.status[Status.ATTACK_SPEED];
+        defence = gameManager.status[Status.DEFENCE];
     }
 
     void HpSetting()
@@ -213,7 +207,7 @@ public class Character : Singleton<Character>
         currentHp += recoveryValue * recoverHpRatio;
         currentRecoveryGauge -= recoveryValue;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
         isCanControll = true;
     }
@@ -257,10 +251,10 @@ public class Character : Singleton<Character>
 
             if (dashCount > 0)
             {
-                if (rend.flipX == true)
+                if (rendUpper.flipX == true)
                     particle.transform.localScale = new Vector3(-1, 1, 1) * particleScale;
 
-                else if (rend.flipX == false)
+                else if (rendUpper.flipX == false)
                     particle.transform.localScale = new Vector3(1, 1, 1) * particleScale;
 
                 if (Input.GetKeyDown((KeyCode)PlayerPrefs.GetInt("Key_Dash")))
@@ -392,9 +386,6 @@ public class Character : Singleton<Character>
         if (ground == null)
             ground = GamesceneManager.Instance.walkableArea;
 
-       /* else
-            transform.position =  NavMesh.poi ground.bounds.ClosestPoint(transform.position);*/
-
         if (dir != Vector3.zero)
             isRun = true;
 
@@ -406,10 +397,36 @@ public class Character : Singleton<Character>
 
     void Flip()
     {
-        if (dir.x == 0)
+        if (!canFlip)
             return;
 
-        rend.flipX = dir.x > 0;
+        if (gamesceneManager == null)
+            gamesceneManager = GamesceneManager.Instance;
+
+        if (!gamesceneManager.isNight)
+        {
+            rendLower.gameObject.SetActive(false);
+
+            if (dir.x == 0)
+                return;
+
+            rendUpper.flipX = dir.x < 0;
+        }
+
+        else
+        {
+            rendLower.gameObject.SetActive(true);
+
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            float dirX = transform.position.x - mousePos.x;
+
+            if (dirX == 0)
+                return;
+
+            rendUpper.flipX = dirX > 0;
+            rendLower.flipX = dirX > 0;
+        }
     }
 
     int avoidRand;
@@ -418,7 +435,7 @@ public class Character : Singleton<Character>
     {
         if (!isAttacked)
         {
-            avoidRand = Random.Range(1, 100);
+            avoidRand = UnityEngine.Random.Range(1, 100);
 
             if (avoidRand <= gameManager.avoid)
                 isAvoid = true;
@@ -467,8 +484,6 @@ public class Character : Singleton<Character>
 
         if (currentHp > 0 && !isAvoid)
         {
-            anim.SetTrigger("isAttacked");
-
             if (currentCoroutine != null)
                 StopCoroutine(currentCoroutine);
 
@@ -484,8 +499,9 @@ public class Character : Singleton<Character>
             currentCoroutine = StartCoroutine(PlayerColorInvincible());
         }
 
-        yield return new WaitForSeconds(characterInfos[characterNum].InvincibleTime);
-        rend.color = Color.white;
+        yield return new WaitForSeconds(invincibleTime);
+        rendUpper.color = Color.white;
+        rendLower.color = Color.white;
         isAttacked = false;
     }
 
@@ -495,12 +511,15 @@ public class Character : Singleton<Character>
 
         isAttacked = true;
         color.a = 0.5f;
-        rend.color = color;
+        rendUpper.color = color;
+        rendLower.color = color;
 
-        yield return new WaitForSeconds(characterInfos[characterNum].InvincibleTime);
+        yield return new WaitForSeconds(invincibleTime);
         color.a = 1f;
-        rend.color = color;
-        rend.color = Color.white;
+        rendUpper.color = color;
+        rendLower.color = color;
+        rendUpper.color = Color.white;
+        rendLower.color = Color.white;
         isAttacked = false;
     }
 
@@ -508,9 +527,10 @@ public class Character : Singleton<Character>
     {
         Color white = new Color(1, 1, 1, 0.5f);
 
-        rend.color = white;
+        rendUpper.color = white;
+        rendLower.color = white;
 
-        yield return new WaitForSeconds(characterInfos[characterNum].InvincibleTime - 0.3f);
+        yield return new WaitForSeconds(invincibleTime - 0.3f);
     }
 
     private IEnumerator PlayerColorBlink()
@@ -518,17 +538,21 @@ public class Character : Singleton<Character>
         Color red = new Color(1, 0, 0, 0.5f);
         Color white = new Color(1, 1, 1, 0.5f);
 
-        rend.color = red;
+        rendUpper.color = red;
+        rendLower.color = red;
         yield return new WaitForSeconds(0.1f);
 
-        rend.color = white;
+        rendUpper.color = white;
+        rendLower.color = white;
         yield return new WaitForSeconds(0.1f);
 
-        rend.color = red;
+        rendUpper.color = red;
+        rendLower.color = red;
         yield return new WaitForSeconds(0.1f);
 
-        rend.color = white;
-        yield return new WaitForSeconds(characterInfos[characterNum].InvincibleTime - 0.3f);
+        rendUpper.color = white;
+        rendLower.color = white;
+        yield return new WaitForSeconds(invincibleTime - 0.3f);
     }
 
     public IEnumerator MoveToInteractableObject(Vector3 logPos, GameObject interactionObejct)

@@ -30,11 +30,15 @@ public class AttackCutlass : MonoBehaviour
             DamageUI damageUI = damagePool.Get();
 
             float mDef = monster.defence;
-            damageUI.realDamage = Mathf.Clamp(damage * (1 - (mDef / (20 + mDef))), 0, damage);
 
-            damageUI.UISetting();
+            bool isCri = gameManager.critical >= Random.Range(0f, 100f);
+
+            damageUI.realDamage = Mathf.Clamp(damage * (1 - (mDef / (20 + mDef))), 0, damage) * gameManager.percentDamage;
+
+            damageUI.realDamage *= isCri ? 2 : 1;
+
+            damageUI.UISetting(true, isCri);
             damageUI.transform.position = other.transform.position;
-            damageUI.gameObject.transform.SetParent(gameManager.damageStorage);
 
             monster.OnDamaged(damageUI.realDamage);
         }
@@ -44,7 +48,7 @@ public class AttackCutlass : MonoBehaviour
     {
         DamageUI damageUIPool = Instantiate(damageUI, transform.position, Quaternion.Euler(90, 0, 0)).GetComponent<DamageUI>();
         damageUIPool.SetManagedPool(damagePool);
-        damageUIPool.transform.SetParent(gameManager.bulletStorage);
+        damageUIPool.transform.SetParent(gameManager.damageStorage);
         return damageUIPool;
     }
 
