@@ -62,7 +62,7 @@ public class FireBullet : FireProjectile
     {
         base.SettingProjectile();
 
-        projectile.GetComponent<ArrowMovement>().Shoot(dir.normalized, normalFirePos.position);
+        projectile.GetComponent<ProjectileMovement>().Shoot(dir.normalized, normalFirePos.position);
     }
 
     IEnumerator FreezeCharacter()

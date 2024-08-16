@@ -26,7 +26,7 @@ public class ShootArrow : FireProjectile
         projectile.GetComponent<ProjectileObjectPool>().SetDamage(damage);
 
         float speed = activeArrow.GetComponent<ArrowStatus>().Speed;
-        projectile.GetComponent<ArrowMovement>().Shoot(dir.normalized, normalFirePos.position, speed);
+        projectile.GetComponent<ProjectileMovement>().Shoot(dir.normalized, normalFirePos.position, speed);
     }
 
     public bool checkCanFire()

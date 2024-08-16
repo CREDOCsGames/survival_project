@@ -251,11 +251,7 @@ public class Character : Singleton<Character>
 
             if (dashCount > 0)
             {
-                if (rendUpper.flipX == true)
-                    particle.transform.localScale = new Vector3(-1, 1, 1) * particleScale;
-
-                else if (rendUpper.flipX == false)
-                    particle.transform.localScale = new Vector3(1, 1, 1) * particleScale;
+                particle.transform.localScale = rendUpper.flipX ? new Vector3(1, 1, 1) * particleScale : new Vector3(-1, 1, 1) * particleScale;
 
                 if (Input.GetKeyDown((KeyCode)PlayerPrefs.GetInt("Key_Dash")))
                 {
@@ -280,7 +276,8 @@ public class Character : Singleton<Character>
 
                     agent.enabled = false;
 
-                    transform.position = Vector3.Lerp(beforePos, afterPos, 1);
+                    //transform.position = Vector3.Lerp(beforePos, afterPos, 1);
+                    transform.position = afterPos;
 
                     agent.enabled = true;
 

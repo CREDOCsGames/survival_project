@@ -59,11 +59,13 @@ public class MonsterSpawn : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitUntil(() => gamesceneManager.isNight);
+            //yield return new WaitUntil(() => gamesceneManager.isNight);
+            yield return CoroutineCaching.WaitWhile(() => gamesceneManager.isNight);
 
             currentCoroutine = StartCoroutine(RendSpawnImage(5));
 
-            yield return new WaitUntil(() => !gamesceneManager.isNight);
+            //yield return new WaitUntil(() => !gamesceneManager.isNight);
+            yield return CoroutineCaching.WaitWhile(() => !gamesceneManager.isNight);
 
             StopCoroutine(currentCoroutine);
         }
@@ -80,7 +82,8 @@ public class MonsterSpawn : MonoBehaviour
 
             SpawnSubordinateMonster(pos, Random.Range(4, 7));
 
-            yield return new WaitForSeconds(time);
+            //yield return new WaitForSeconds(time);
+            yield return CoroutineCaching.WaitForSeconds(time);
         }
     }
 

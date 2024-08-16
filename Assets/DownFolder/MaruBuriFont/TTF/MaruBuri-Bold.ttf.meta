@@ -10,11 +10,7 @@ TrueTypeFontImporter:
   includeFontData: 1
   fontNames:
   - MaruBuri
-  fallbackFontReferences:
-  - {fileID: 12800000, guid: 3c22a6bf1182a6040a56368d87c13a02, type: 3}
-  - {fileID: 12800000, guid: a648728c5d77b5649bd68e8904044e4d, type: 3}
-  - {fileID: 12800000, guid: e0cacc243436a22418cbf1c8913460ab, type: 3}
-  - {fileID: 12800000, guid: 11ed5734bcf02d14782d1a0b6519df3f, type: 3}
+  fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1

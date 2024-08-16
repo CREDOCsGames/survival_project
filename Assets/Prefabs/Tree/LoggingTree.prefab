@@ -164,7 +164,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4114141040281612126, guid: 608f538125187cd4c8e069a1b6ddb64c, type: 2}
+  - {fileID: -9180393923794924289, guid: 7f233ebe70527494bbe4e4e1f622bba1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -208,8 +208,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: keykeyeky
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 608f538125187cd4c8e069a1b6ddb64c, type: 2}
-  m_sharedMaterial: {fileID: 4114141040281612126, guid: 608f538125187cd4c8e069a1b6ddb64c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7f233ebe70527494bbe4e4e1f622bba1, type: 2}
+  m_sharedMaterial: {fileID: -9180393923794924289, guid: 7f233ebe70527494bbe4e4e1f622bba1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -233,7 +233,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 58.95
   m_fontSizeBase: 72
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -394,7 +394,6 @@ MonoBehaviour:
   buttonUI: {fileID: 386649826767636824}
   keyText: {fileID: 1677217060682122515}
   treeNum: 0
-  brokenAnim: {fileID: 7400000, guid: 640d3cdb60ae74e4fb3a69be8ed1794d, type: 2}
 --- !u!95 &5103846679609278052
 Animator:
   serializedVersion: 4

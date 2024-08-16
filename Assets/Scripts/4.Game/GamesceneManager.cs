@@ -42,7 +42,9 @@ public class GamesceneManager : Singleton<GamesceneManager>
     private void Update()
     {
         if (character.currentHp > 0 && currentGameTime >= 0 && !gameManager.isPause && !isCardSetting)
+        {
             currentGameTime -= Time.deltaTime;
+        }
     }
 
     IEnumerator DayRoutine()
@@ -54,14 +56,19 @@ public class GamesceneManager : Singleton<GamesceneManager>
         character.UpdateStat();
         character.weaponParent.gameObject.SetActive(false);
 
-        StartCoroutine(SpawnTree());
+        if (gameManager.round % 5 == 0)
+        {
+            StartCoroutine(SpawnTree());
+        }
+
         StartCoroutine(SpawnBush());
 
         cardSelecter.SetActive(true);
 
         isCardSetting = true;
         character.isCanControll = false;
-        yield return new WaitWhile(() => cardSelecter.activeSelf);
+        //yield return new WaitWhile(() => cardSelecter.activeSelf);
+        yield return CoroutineCaching.WaitWhile(() => cardSelecter.activeSelf);
 
         gameManager.round++;
         currentGameTime = gameManager.gameDayTime;
@@ -69,14 +76,16 @@ public class GamesceneManager : Singleton<GamesceneManager>
         if (gameManager.round > 1)
             multicellInvenPanel.SetActive(true);
 
-        yield return new WaitWhile(() => multicellInvenPanel.activeSelf);
+        //yield return new WaitWhile(() => multicellInvenPanel.activeSelf);
+        yield return CoroutineCaching.WaitWhile(() => multicellInvenPanel.activeSelf);
 
         gameSceneUI.ChangeDayText(0, "아침이 밝았습니다.");
 
         isCardSetting = false;
         character.isCanControll = true;
 
-        yield return new WaitForSeconds(gameManager.gameDayTime);
+        //yield return new WaitForSeconds(gameManager.gameDayTime);
+        yield return CoroutineCaching.WaitForSeconds(gameManager.gameDayTime);
 
         campFire.GetComponent<Campfire>().ToNightScene();
 
@@ -94,7 +103,8 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
         currentGameTime = gameManager.gameNightTime;
 
-        yield return new WaitForSeconds(gameManager.gameNightTime);
+        //yield return new WaitForSeconds(gameManager.gameNightTime);
+        yield return CoroutineCaching.WaitForSeconds(gameManager.gameNightTime);
 
         gameManager.fishLowGradeCount = 0;
         gameManager.fishHighGradeCount = 0;
@@ -110,18 +120,15 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
     IEnumerator SpawnTree()
     {
-        if (gameManager.round % 5 == 0)
+        foreach (Transform trees in treeParent)
         {
-            foreach (Transform trees in treeParent)
-            {
-                Destroy(trees.gameObject);
-            }
+            Destroy(trees.gameObject);
+        }
 
-            for (int i = 0; i < 25; i++)
-            {
-                SpawnOneBushOrTree(treePrefab, treeParent);
-                yield return null;      // 약 0.002초
-            }
+        for (int i = 0; i < 25; i++)
+        {
+            SpawnOneBushOrTree(treePrefab, treeParent);
+            yield return null;      // 약 0.002초
         }
     }
 

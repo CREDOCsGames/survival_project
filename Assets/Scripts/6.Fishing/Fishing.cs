@@ -6,7 +6,6 @@ public class Fishing : Singleton<Fishing>
 {
     [SerializeField] Slider catchBar;
     [SerializeField] RectTransform catchPoint;
-    [SerializeField] Text roundText;
     [SerializeField] Text catchText;
     [SerializeField] Text maxFishingCount;
     [SerializeField] Text currentFishingCount;
@@ -51,12 +50,10 @@ public class Fishing : Singleton<Fishing>
         maxFishCount = 5;
         currentFishCount = maxFishCount;
 
-        roundText.text = $"{gameManager.round} 일차";
-
         maxFishingCount.text = maxFishCount.ToString();
         currentFishingCount.text = currentFishCount.ToString();
 
-        for(int i=0;i<catchItemsText.Length; i++)
+        for (int i = 0; i < catchItemsText.Length; i++)
         {
             catchItemsText[i].text = catchItemsCount[i].ToString();
         }
@@ -68,13 +65,10 @@ public class Fishing : Singleton<Fishing>
     {
         if (!isCatch && isCatchingStart)
         {
-            /*if (Input.GetMouseButtonUp(0))
-            {*/
             catchBar.gameObject.SetActive(true);
             isCatchingStart = false;
 
             randSpeedRatio = Random.Range(1, 5);
-            //}
         }
 
         MoveBar();
@@ -88,7 +82,23 @@ public class Fishing : Singleton<Fishing>
         if (!isCatch && !isCatchingStart)
         {
             if (Input.GetMouseButton(0))
+            {
                 catchBar.value += Time.deltaTime * 200 * randSpeedRatio;
+
+                if (catchBar.value >= catchBar.maxValue)
+                {
+                    isCatch = true;
+                    fishingAnim.isCatch = true;
+
+                    fishingAnim.CatchSuccess = false;
+                    catchText.text = "놓쳤다...";
+                    catchText.color = Color.red;
+
+                    catchText.gameObject.SetActive(true);
+
+                    return;
+                }
+            }
 
             else if (Input.GetMouseButtonUp(0))
             {
