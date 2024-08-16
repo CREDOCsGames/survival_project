@@ -31,9 +31,9 @@ public class AttackCutlass : MonoBehaviour
 
             float mDef = monster.defence;
 
-            bool isCri = gameManager.critical >= Random.Range(0f, 100f);
+            bool isCri = gameManager.status[Status.CRITICAL] >= Random.Range(0f, 100f);
 
-            damageUI.realDamage = Mathf.Clamp(damage * (1 - (mDef / (20 + mDef))), 0, damage) * gameManager.percentDamage;
+            damageUI.realDamage = Mathf.Clamp((damage + gameManager.status[Status.DAMAGE]) * (1 - (mDef / (20 + mDef))), 0, damage) * gameManager.percentDamage;
 
             damageUI.realDamage *= isCri ? 2 : 1;
 

@@ -125,9 +125,14 @@ public class PieceItemInvenSlot : MonoBehaviour
         if (!isDragging)
             return;
 
-        DiabolicInven.Instance.InstantItemImage(dragUI.DragItem, blockImage.gameObject);
+        DiabolicInven.Instance.InstantItemImage(dragUI.DragItem, blockImage.gameObject, indexNum);
 
         dragUI.OffDragUI();
         isDragging = false;
+    }
+
+    public void OffBlockImage()
+    {
+        blockImage.gameObject.SetActive(false);
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class DiabolicSlotItem : MonoBehaviour
@@ -17,6 +18,8 @@ public class DiabolicSlotItem : MonoBehaviour
     List<int> indexes;
     int firstIndex;
 
+    int pieceSlotIndex;
+
     private void Start()
     {
         dragUI = DragUI.Instance;
@@ -30,13 +33,14 @@ public class DiabolicSlotItem : MonoBehaviour
             SubtractItem();
     }
 
-    public void ItemSetOnInventory(Vector3 instantPos, DiabolicItemInfo item, List<int> _indexes, int _firstIndex)
+    public void ItemSetOnInventory(Vector3 instantPos, DiabolicItemInfo item, List<int> _indexes, int _firstIndex, int _pieceSlotIndex)
     {
         itemData = item;
         SetImage(item);
         GetComponent<RectTransform>().anchoredPosition = instantPos;
         indexes = _indexes;
         firstIndex = _firstIndex;
+        pieceSlotIndex = _pieceSlotIndex;
     }
 
     void SetImage(DiabolicItemInfo item)
@@ -83,6 +87,9 @@ public class DiabolicSlotItem : MonoBehaviour
 
                 Destroy(gameObject);
             }
+
+            Character.Instance.UpdateStat();
+            PieceItemInven.Instance.SlotBlockImage(pieceSlotIndex);
         }
     }
 }

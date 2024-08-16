@@ -14,11 +14,11 @@ public class DiabolicInven : Singleton<DiabolicInven>
 
     DragUI dragUI;
     GameManager gameManager;
+    Character character;
 
     int width;
     int height;
     bool[] itemShape;
-    
 
     int column;
     int row;
@@ -31,6 +31,7 @@ public class DiabolicInven : Singleton<DiabolicInven>
     {
         gameManager = GameManager.Instance;
         dragUI = DragUI.Instance;
+        character = Character.Instance;
 
         slots = new DiabolicInvenSlot[slotParent.childCount];
 
@@ -40,7 +41,7 @@ public class DiabolicInven : Singleton<DiabolicInven>
         }
     }
 
-    public void InstantItemImage(DiabolicItemInfo item, GameObject blockImage)
+    public void InstantItemImage(DiabolicItemInfo item, GameObject blockImage, int pieceSlotIndex)
     {
         OffSlotSetImage();
 
@@ -49,7 +50,7 @@ public class DiabolicInven : Singleton<DiabolicInven>
             return;
         }
 
-        Instantiate(itemImage, itemImageParent).GetComponent<DiabolicSlotItem>().ItemSetOnInventory(slots[currentIndex].GetComponent<RectTransform>().localPosition, item, TransferIndexesNum(), currentIndex);
+        Instantiate(itemImage, itemImageParent).GetComponent<DiabolicSlotItem>().ItemSetOnInventory(slots[currentIndex].GetComponent<RectTransform>().localPosition, item, TransferIndexesNum(), currentIndex, pieceSlotIndex);
         blockImage.SetActive(true);
 
         AddStatus();
@@ -70,6 +71,8 @@ public class DiabolicInven : Singleton<DiabolicInven>
 
             //Debug.Log((Status)i + " " + gameManager.status[(Status)i]);
         }
+
+        character.UpdateStat();
     }
 
     public void ChagneCanSetImage(bool _canSetImage)

@@ -18,4 +18,9 @@ public class PieceItemInven : Singleton<PieceItemInven>
         items = itemManager.items;
         itemQuantity = itemManager.itemQuantity;
     }
+
+    public void SlotBlockImage(int index)
+    {
+        slotParent.GetChild(index).GetComponent<PieceItemInvenSlot>().OffBlockImage();
+    }
 }

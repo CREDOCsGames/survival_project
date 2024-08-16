@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Data;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -33,20 +32,19 @@ public class Character : Singleton<Character>
     [SerializeField] public GameObject[] weapons;
     [SerializeField] public Transform[] weaponPoses;
 
-    [HideInInspector] public float exp;
-    [HideInInspector] public float maxHp;
-    [HideInInspector] public float currentHp;
+    [HideInInspector] public int maxHp;
+    [HideInInspector] public int currentHp;
     [HideInInspector] public float recoverHpRatio;
-    [HideInInspector] public float speed;
+    [HideInInspector] public int speed;
     [HideInInspector] public int avoid;
-    [HideInInspector] public float attackSpeed;
+    [HideInInspector] public int attackSpeed;
     [HideInInspector] public int defence;
     [SerializeField] float invincibleTime;
 
     public float maxRecoveryGauge;
     [HideInInspector] public float currentRecoveryGauge;
     public GameObject fruitUI;
-    float recoveryValue = 10f;
+    int recoveryValue = 10;
 
     [Header("Summon")]
     [SerializeField] GameObject tamedPet;
@@ -64,15 +62,11 @@ public class Character : Singleton<Character>
     [HideInInspector] public float x;
     [HideInInspector] public float z;
 
-    float recoverTime;
-
     [HideInInspector] public bool isBuff = false;
     [HideInInspector] public float charBuffDmg = 0;
     [HideInInspector] public float buffTime = 5;
 
     Coroutine currentCoroutine;
-
-    [HideInInspector] public float shield = 0;
 
     [HideInInspector] public CharacterInfo currentCharacterInfo;
 
@@ -114,7 +108,6 @@ public class Character : Singleton<Character>
 
         UpdateStat();
 
-        recoverTime = 1;
         dashCoolTime = 4;
         dashCount = gameManager.dashCount;
         initDashCoolTime = dashCoolTime;
@@ -177,7 +170,7 @@ public class Character : Singleton<Character>
         currentHp = maxHp;
         speed = gameManager.status[Status.SPEED];
         avoid = gameManager.status[Status.AVOID];
-        recoverHpRatio = gameManager.status[Status.RECOVER];
+        recoveryValue = gameManager.status[Status.RECOVER];
         attackSpeed = gameManager.status[Status.ATTACK_SPEED];
         defence = gameManager.status[Status.DEFENCE];
     }
@@ -204,7 +197,7 @@ public class Character : Singleton<Character>
     IEnumerator ConvertRecoveryGauge()
     {
         isCanControll = false;
-        currentHp += recoveryValue * recoverHpRatio;
+        currentHp += Mathf.CeilToInt(recoveryValue * recoverHpRatio);
         currentRecoveryGauge -= recoveryValue;
 
         yield return new WaitForSeconds(0.5f);
@@ -228,7 +221,7 @@ public class Character : Singleton<Character>
 
     void AutoRecoverHp()
     {
-        if (gameManager.recoverHp > 0 && currentHp < maxHp)
+        /*if (gameManager.recoverHp > 0 && currentHp < maxHp)
         {
             recoverTime -= Time.deltaTime;
             if (recoverTime <= 0)
@@ -236,7 +229,7 @@ public class Character : Singleton<Character>
                 recoverTime = 1;
                 currentHp += gameManager.recoverHp;
             }
-        }
+        }*/
     }
 
     void Dash()
@@ -432,9 +425,9 @@ public class Character : Singleton<Character>
     {
         if (!isAttacked)
         {
-            avoidRand = UnityEngine.Random.Range(1, 100);
+            avoidRand = Random.Range(1, 100);
 
-            if (avoidRand <= gameManager.avoid)
+            if (avoidRand <= gameManager.status[Status.AVOID])
                 isAvoid = true;
 
             else
@@ -445,14 +438,8 @@ public class Character : Singleton<Character>
                 if (!isAvoid)
                 {
                     SoundManager.Instance.PlayES("Hit");
-                    if (shield > 0)
-                    {
-                        currentHp -= (Mathf.Round(((damage - shield) * ((100 - gameManager.defence) / 100)) * 10) * 0.1f);
-                        shield = Mathf.Clamp(shield - damage, 0f, 10f);
-                    }
 
-                    else if (shield <= 0)
-                        currentHp -= Mathf.Round((damage * ((100 - gameManager.defence) / 100)) * 10) * 0.1f;
+                    currentHp -= Mathf.RoundToInt(damage * (100 - gameManager.status[Status.DEFENCE]) / 100);
                 }
 
                 if (currentCoroutine != null)

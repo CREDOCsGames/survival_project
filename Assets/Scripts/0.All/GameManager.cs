@@ -33,16 +33,17 @@ public class GameManager : Singleton<GameManager>
     public int fishLowGradeCount = 0;
 
     [Header("StatData")]
-    [SerializeField] public int maxHp;
-    /*[HideInInspector]*/ public float percentDamage;
-    [SerializeField] public float recoverHp;
-    [SerializeField] public float absorbHp;
-    [SerializeField] public int defence;
-    [SerializeField] public float attackSpeed;
-    [SerializeField] public float speed;
-    [SerializeField] public float range;
-    [SerializeField] public float critical;
-    [SerializeField] public int avoid;
+    [SerializeField] int maxHp;
+    [SerializeField] public float percentDamage;
+    [SerializeField] int damage;
+    [SerializeField] int recoverHp;
+    [SerializeField] int absorbHp;
+    [SerializeField] int defence;
+    [SerializeField] int attackSpeed;
+    [SerializeField] int speed;
+    [SerializeField] int range;
+    [SerializeField] int critical;
+    [SerializeField] int avoid;
     [SerializeField] public int dashCount;
 
     [HideInInspector] public string currentScene;
@@ -123,13 +124,13 @@ public class GameManager : Singleton<GameManager>
 #endif
 
         status.Add(Status.MAXHP, maxHp);
-        status.Add(Status.DAMAGE, 1);
-        status.Add(Status.RECOVER, 10);
-        status.Add(Status.DEFENCE, 1);
-        status.Add(Status.ATTACK_SPEED, 1);
-        status.Add(Status.SPEED, 3);
-        status.Add(Status.CRITICAL, 5);
-        status.Add(Status.AVOID, 1);
+        status.Add(Status.DAMAGE, damage);
+        status.Add(Status.RECOVER, recoverHp);
+        status.Add(Status.DEFENCE, defence);
+        status.Add(Status.ATTACK_SPEED, attackSpeed);
+        status.Add(Status.SPEED, speed);
+        status.Add(Status.CRITICAL, critical);
+        status.Add(Status.AVOID, avoid);
     }
 
     private void Update()
@@ -160,7 +161,6 @@ public class GameManager : Singleton<GameManager>
         
         currentScene = sceneName;
 
-        character.shield = 0f;
         //character.currentHp = character.maxHp;
         character.dashCount = dashCount;
         character.dashCoolTime = character.initDashCoolTime;

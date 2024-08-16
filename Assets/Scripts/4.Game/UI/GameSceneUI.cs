@@ -43,10 +43,9 @@ public class GameSceneUI : Singleton<GameSceneUI>
     [SerializeField] Text maxHp;
     [SerializeField] Text def;
     [SerializeField] Text avoid;
-    [SerializeField] Text percentDamage;
+    [SerializeField] Text damage;
     [SerializeField] Text aSpd;
     [SerializeField] Text spd;
-    [SerializeField] Text ran;
     [SerializeField] Text cri;
 
     [Header("Day Change")]
@@ -255,11 +254,10 @@ public class GameSceneUI : Singleton<GameSceneUI>
         maxHp.text = character.maxHp.ToString();
         def.text = character.defence.ToString("0.#");
         avoid.text = character.avoid.ToString("0.#");
-        percentDamage.text = gameManager.percentDamage.ToString("0.0#");
+        damage.text = gameManager.status[Status.DAMAGE].ToString("0.0#");
         aSpd.text = character.attackSpeed.ToString("0.#");
         spd.text = character.speed.ToString("0.##");
-        ran.text = gameManager.range.ToString("0.#");
-        cri.text = gameManager.critical.ToString("0.#");
+        cri.text = gameManager.status[Status.CRITICAL].ToString("0.#");
     }
 
     void DashUI()

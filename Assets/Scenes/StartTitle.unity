@@ -5269,8 +5269,8 @@ MonoBehaviour:
   bulletStorage: {fileID: 1005871281}
   damageStorage: {fileID: 1692643827}
   initGameTime: 10000
-  gameDayTime: 10
-  gameNightTime: 100000
+  gameDayTime: 1
+  gameNightTime: 1
   money: 0
   round: 0
   woodCount: 30

@@ -67,7 +67,8 @@ public class MonsterSpawn : MonoBehaviour
             //yield return new WaitUntil(() => !gamesceneManager.isNight);
             yield return CoroutineCaching.WaitWhile(() => !gamesceneManager.isNight);
 
-            StopCoroutine(currentCoroutine);
+            if (currentCoroutine != null)
+                StopCoroutine(currentCoroutine);
         }
     }
 
