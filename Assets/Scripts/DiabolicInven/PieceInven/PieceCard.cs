@@ -63,7 +63,17 @@ public class PieceCard : MonoBehaviour
 
         for (int i = max - 1; i >= count; i--)
         {
-            if (i == count)
+            if (i == count - 1)
+            {
+                descriptPrefabs[count].gameObject.SetActive(true);
+                descriptPrefabs[count].transform.GetChild(0).gameObject.SetActive(false);
+                descriptPrefabs[count].transform.GetChild(1).gameObject.SetActive(false);
+                descriptPrefabs[count].transform.GetChild(2).gameObject.SetActive(false);
+                descriptPrefabs[count].transform.GetChild(3).gameObject.SetActive(true);
+                descriptPrefabs[count].transform.GetChild(3).GetComponent<Text>().text = item.SpecialStatInfo;
+            }
+
+            else if (i == count)
             {
                 descriptPrefabs[count].gameObject.SetActive(true);
                 descriptPrefabs[count].transform.GetChild(0).gameObject.SetActive(false);

@@ -4,6 +4,12 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
+public enum CursorType
+{
+    Normal,
+    Attack,
+}
+
 public class GameSceneUI : Singleton<GameSceneUI>
 {
     Texture2D cursorAttack;
@@ -108,11 +114,6 @@ public class GameSceneUI : Singleton<GameSceneUI>
         soundManager = SoundManager.Instance;
         gamesceneManager = GamesceneManager.Instance;
 
-        cursorNormal = gameManager.useCursorNormal;
-        cursorAttack = gameManager.useCursorAttack;
-        Vector2 cursorHotSpot = new Vector3(cursorAttack.width * 0.5f, cursorAttack.height * 0.5f);
-        Cursor.SetCursor(cursorAttack, cursorHotSpot, CursorMode.ForceSoftware);
-
         if (gameManager.round == 10 || gameManager.round == 20 || gameManager.round == 30)
         {
             soundManager.PlayBGM(2, true);
@@ -191,14 +192,30 @@ public class GameSceneUI : Singleton<GameSceneUI>
         SettingStatText();
     }
 
-    bool CursorChange(int playNum)
+    public void CursorChange(CursorType cursorType)
     {
-        Vector2 cursorHotSpot = new Vector3(cursorNormal.width * 0.5f, cursorNormal.height * 0.5f);
-        Cursor.SetCursor(cursorNormal, cursorHotSpot, CursorMode.ForceSoftware);
+        cursorNormal = gameManager.useCursorNormal;
+        cursorAttack = gameManager.useCursorAttack;
 
-        soundManager.PlayBGM(playNum, false);
+        Texture2D currentCursor;
 
-        return false;
+        switch (cursorType)
+        {
+            case CursorType.Normal:
+                currentCursor = cursorNormal;
+                break;
+
+            case CursorType.Attack:
+                currentCursor = cursorAttack;
+                break;
+
+            default:
+                currentCursor = cursorNormal;
+                break;
+        }
+
+        Vector2 cursorHotSpot = new Vector3(currentCursor.width * 0.5f, currentCursor.height * 0.5f);
+        Cursor.SetCursor(currentCursor, cursorHotSpot, CursorMode.ForceSoftware);
     }
 
     /*IEnumerator FadeIn()
@@ -254,10 +271,10 @@ public class GameSceneUI : Singleton<GameSceneUI>
         maxHp.text = character.maxHp.ToString();
         def.text = character.defence.ToString("0.#");
         avoid.text = character.avoid.ToString("0.#");
-        damage.text = gameManager.status[Status.DAMAGE].ToString("0.0#");
+        damage.text = gameManager.status[Status.Damage].ToString("0.0#");
         aSpd.text = character.attackSpeed.ToString("0.#");
         spd.text = character.speed.ToString("0.##");
-        cri.text = gameManager.status[Status.CRITICAL].ToString("0.#");
+        cri.text = gameManager.status[Status.Critical].ToString("0.#");
     }
 
     void DashUI()

@@ -21,6 +21,7 @@ public class Fishing : Singleton<Fishing>
     int currentFishCount;
 
     GameManager gameManager;
+    GamesceneManager gamesceneManager;
     FishingAnim fishingAnim;
 
     float randSpeedRatio;
@@ -29,19 +30,23 @@ public class Fishing : Singleton<Fishing>
     float catchPointStart;
     float catchPointEnd;
 
+    float initCatchPointStart;
+    float initCatchPointEnd;
+
     protected override void Awake()
     {
         base.Awake();
 
         gameManager = GameManager.Instance;
+        gamesceneManager = GamesceneManager.Instance;
         fishingAnim = FishingAnim.Instance;
-    }
 
-    private void Start()
-    {
         gameObject.SetActive(false);
         catchBarWidth = catchBar.GetComponent<RectTransform>().sizeDelta.x;
-        catchPointStart = catchPoint.offsetMin.x;
+
+        initCatchPointStart = catchPoint.offsetMin.x;
+        initCatchPointEnd = -catchPoint.offsetMax.x;
+
         catchPointEnd = -catchPoint.offsetMax.x;
     }
 
@@ -58,11 +63,23 @@ public class Fishing : Singleton<Fishing>
             catchItemsText[i].text = catchItemsCount[i].ToString();
         }
 
+        catchPointStart = gameManager.specialStatus[SpecialStatus.RustyHarpoon] ? initCatchPointStart - (catchBarWidth - initCatchPointEnd - initCatchPointStart) : initCatchPointStart;
+
+        catchPoint.offsetMin = new Vector2(catchPointStart, catchPoint.offsetMin.y);
+
         Initialize();
     }
 
     void Update()
     {
+        if (gamesceneManager.isNight)
+        {
+            Character.Instance.isCanControll = true;
+            gameObject.SetActive(false);
+
+            Initialize();
+        }
+
         if (!isCatch && isCatchingStart)
         {
             catchBar.gameObject.SetActive(true);
@@ -131,6 +148,8 @@ public class Fishing : Singleton<Fishing>
 
         rand += (int)((randSpeedRatio - 1) * 5);
 
+        int high = gameManager.specialStatus[SpecialStatus.BaitWarm] ? 46 : 66;
+
         if (rand < 33)
         {
             catchItemsCount[0]++;
@@ -138,7 +157,7 @@ public class Fishing : Singleton<Fishing>
             catchFishImage.sprite = fishTypeImage[0];
         }
 
-        else if (rand < 66)
+        else if (rand < high)
         {
             catchItemsCount[1]++;
             catchItemsText[1].text = catchItemsCount[1].ToString();

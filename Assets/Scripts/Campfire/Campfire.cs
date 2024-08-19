@@ -75,18 +75,18 @@ public class Campfire : MonoBehaviour, IMouseInteraction
 
     public void OnDebuff()
     {
-        if (isWoodRefill)
+        if (isWoodRefill || gameManager.specialStatus[SpecialStatus.Rum])
             return;
 
         Debuff debuffType = (Debuff)Random.Range(0, (int)Debuff.COUNT);
 
         debuffValues[debuffType] = 1;
 
-        character.recoverHpRatio = gameManager.status[Status.RECOVER] * (10 - debuffValues[Debuff.RECOVERY_HEALTH]) * 0.1f;
+        character.recoverHpRatio = gameManager.status[Status.Recover] * (10 - debuffValues[Debuff.RECOVERY_HEALTH]) * 0.1f;
 
-        character.attackSpeed = (int)(gameManager.status[Status.ATTACK_SPEED] * (10 + debuffValues[Debuff.ATTACK_SPEED]) * 0.1f);
+        character.attackSpeed = (int)(gameManager.status[Status.AttackSpeed] * (10 + debuffValues[Debuff.ATTACK_SPEED]) * 0.1f);
 
-        character.speed = (int)(gameManager.status[Status.SPEED] * (10 - debuffValues[Debuff.SPEED] * 2) * 0.1f);
+        character.speed = (int)(gameManager.status[Status.MoveSpeed] * (10 - debuffValues[Debuff.SPEED] * 2) * 0.1f);
 
         gameManager.percentDamage = (100 - (debuffValues[Debuff.POWER]) * 20) * 0.01f;
 
@@ -112,18 +112,20 @@ public class Campfire : MonoBehaviour, IMouseInteraction
 
     void SettingBuff(int num)
     {
-        character.maxHp = (int)(gameManager.status[Status.MAXHP] * (100 + mxHps[buffValues[Buff.MAXHEALTH]- num]) * 0.01f);
+        character.maxHp = (int)(gameManager.status[Status.Maxhp] * (100 + mxHps[buffValues[Buff.MAXHEALTH]- num]) * 0.01f);
         character.currentHp = character.maxHp;
 
-        character.recoverHpRatio = gameManager.status[Status.RECOVER] * (100 + reHps[buffValues[Buff.RECOVERY_HEALTH] - num]) * 0.01f;
+        character.recoverHpRatio = gameManager.status[Status.Recover] * (100 + reHps[buffValues[Buff.RECOVERY_HEALTH] - num]) * 0.01f;
 
-        character.speed = (int)(gameManager.status[Status.SPEED] * (100 + speeds[buffValues[Buff.SPEED] - num]) * 0.01f);
-        character.avoid = gameManager.status[Status.AVOID] + avoids[buffValues[Buff.SPEED] - num];
+        character.speed = (int)(gameManager.status[Status.MoveSpeed] * (100 + speeds[buffValues[Buff.SPEED] - num]) * 0.01f);
+        character.avoid = gameManager.status[Status.Avoid] + avoids[buffValues[Buff.SPEED] - num];
         gameManager.dashCount = buffValues[Buff.SPEED] - num == 3 ? 1 : 0;
         character.dashCount = gameManager.dashCount;
 
+        Debug.Log(gameManager.dashCount);
+
         gameManager.percentDamage = (100 + dmgs[buffValues[Buff.POWER] - num]) * 0.01f;
-        character.defence = gameManager.status[Status.DEFENCE] + dfs[buffValues[Buff.POWER] - num];
+        character.defence = gameManager.status[Status.Defence] + dfs[buffValues[Buff.POWER] - num];
     }
 
     public void ToNightScene()
@@ -166,7 +168,7 @@ public class Campfire : MonoBehaviour, IMouseInteraction
 
         OnFire();
 
-        OnFish();
+        EatFish();
     }
 
     public void InteractionRightButtonFuc(GameObject hitObject)
@@ -186,7 +188,7 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         StartCoroutine(BuffCoolTime(1.5f));
     }
 
-    void OnFish()
+    void EatFish()
     {
         if (!canCookFish || !isWoodRefill || gameManager.fishLowGradeCount <= 0 && gameManager.fishHighGradeCount <= 0)
             return;

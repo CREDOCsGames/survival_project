@@ -58,45 +58,94 @@ public class DiabolicItemInfo : ScriptableObject
     [SerializeField] int critical;
     [SerializeField] int avoid;
 
+    [Header("Special Stat")]
+    [SerializeField] bool isDoubleAxe;
+    [SerializeField] bool isRum;
+    [SerializeField] bool isAmmoPouch;
+    [SerializeField] bool isHandMirror;
+    [SerializeField] bool isRustyHarpoon;
+    [SerializeField] bool isBaitWarm;
+    [SerializeField] bool isEye;
+    [SerializeField] bool isRaisin;
+    [SerializeField] bool isSoulmate;
+    [SerializeField] bool isRoar;
+
     [SerializeField] int maxCount;
     [SerializeField] ItemShape itemShape;  // 아이템 모양
+    [SerializeField] string specialStatInfo;
+    [TextArea]
     [SerializeField] string description;
 
     Dictionary<Status, int> itemStatus = new Dictionary<Status, int>();
+    Dictionary<SpecialStatus, bool> itemSpecialStatus = new Dictionary<SpecialStatus, bool>();
 
     public int ItemNum => itemNum;
     public Sprite ItemSprite => itemSprite;
     public string ItemName => itemName;
     public int MaxCount => maxCount;
     public ItemShape ItemShape => itemShape;
+    public string SpecialStatInfo => specialStatInfo;
     public string Description => description;
 
     public Dictionary<Status, int> Stat()
     {
         if (itemStatus == null)
         {
-            itemStatus.Add(Status.MAXHP, maxHp);
-            itemStatus.Add(Status.DAMAGE, damage);
-            itemStatus.Add(Status.RECOVER, recoverHp);
-            itemStatus.Add(Status.DEFENCE, defence);
-            itemStatus.Add(Status.ATTACK_SPEED, attackSpeed);
-            itemStatus.Add(Status.SPEED, speed);
-            itemStatus.Add(Status.CRITICAL, critical);
-            itemStatus.Add(Status.AVOID, avoid);
+            itemStatus.Add(Status.Maxhp, maxHp);
+            itemStatus.Add(Status.Damage, damage);
+            itemStatus.Add(Status.Recover, recoverHp);
+            itemStatus.Add(Status.Defence, defence);
+            itemStatus.Add(Status.AttackSpeed, attackSpeed);
+            itemStatus.Add(Status.MoveSpeed, speed);
+            itemStatus.Add(Status.Critical, critical);
+            itemStatus.Add(Status.Avoid, avoid);
         }
 
         else
         {
-            itemStatus[Status.MAXHP] = maxHp;
-            itemStatus[Status.DAMAGE] = damage;
-            itemStatus[Status.RECOVER] = recoverHp;
-            itemStatus[Status.DEFENCE] = defence;
-            itemStatus[Status.ATTACK_SPEED] = attackSpeed;
-            itemStatus[Status.SPEED] = speed;
-            itemStatus[Status.CRITICAL] = critical;
-            itemStatus[Status.AVOID] = avoid;
+            itemStatus[Status.Maxhp] = maxHp;
+            itemStatus[Status.Damage] = damage;
+            itemStatus[Status.Recover] = recoverHp;
+            itemStatus[Status.Defence] = defence;
+            itemStatus[Status.AttackSpeed] = attackSpeed;
+            itemStatus[Status.MoveSpeed] = speed;
+            itemStatus[Status.Critical] = critical;
+            itemStatus[Status.Avoid] = avoid;
         }
 
         return itemStatus;
+    }
+
+    public Dictionary<SpecialStatus, bool> SpecialStat()
+    {
+        if (itemSpecialStatus == null)
+        {
+            itemSpecialStatus.Add(SpecialStatus.DoubleAxe, isDoubleAxe);
+            itemSpecialStatus.Add(SpecialStatus.Rum, isRum);
+            itemSpecialStatus.Add(SpecialStatus.AmmoPouch, isAmmoPouch);
+            itemSpecialStatus.Add(SpecialStatus.HandMirror, isHandMirror);
+            itemSpecialStatus.Add(SpecialStatus.RustyHarpoon, isRustyHarpoon);
+            itemSpecialStatus.Add(SpecialStatus.BaitWarm, isBaitWarm);
+            itemSpecialStatus.Add(SpecialStatus.Eye, isEye);
+            itemSpecialStatus.Add(SpecialStatus.Raisin, isRaisin);
+            itemSpecialStatus.Add(SpecialStatus.Soulmate, isSoulmate);
+            itemSpecialStatus.Add(SpecialStatus.Roar, isRoar);
+        }
+
+        else
+        {
+            itemSpecialStatus[SpecialStatus.DoubleAxe] = isDoubleAxe;
+            itemSpecialStatus[SpecialStatus.Rum] = isRum;
+            itemSpecialStatus[SpecialStatus.AmmoPouch] = isAmmoPouch;
+            itemSpecialStatus[SpecialStatus.HandMirror] = isHandMirror;
+            itemSpecialStatus[SpecialStatus.RustyHarpoon] = isRustyHarpoon;
+            itemSpecialStatus[SpecialStatus.BaitWarm] = isBaitWarm;
+            itemSpecialStatus[SpecialStatus.Eye] = isEye;
+            itemSpecialStatus[SpecialStatus.Raisin] = isRaisin;
+            itemSpecialStatus[SpecialStatus.Soulmate] = isSoulmate;
+            itemSpecialStatus[SpecialStatus.Roar] = isRoar;
+        }
+
+        return itemSpecialStatus;
     }
 }

@@ -24,10 +24,7 @@ public class FireProjectile : MonoBehaviour
     protected virtual void Awake()
     {
         projectilePool = new ObjectPool<ProjectileObjectPool>(CreatePool, OnGetPool, OnReleasePool, OnDestroyPool, maxSize: poolCount);
-    }
 
-    protected virtual void Start()
-    {
         gameManager = GameManager.Instance;
         character = Character.Instance;
         coolTime = initCoolTime;

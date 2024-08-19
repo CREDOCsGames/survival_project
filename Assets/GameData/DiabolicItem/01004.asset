@@ -14,18 +14,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemNum: 1004
   itemSprite: {fileID: -598080426, guid: cce6f7cea6074dc4681be9360bba1cb9, type: 3}
-  itemName: "\uBD95\uC5B4\uBE75"
-  maxHp: 1
-  damage: 1
-  recoverHp: 2
+  itemName: "\uCC22\uC5B4\uC9C4 \uBB38\uD5CC"
+  maxHp: 0
+  damage: 0
+  recoverHp: 0
   defence: 0
   attackSpeed: 0
   speed: 0
   critical: 0
-  avoid: 0
+  avoid: 4
+  isDoubleAxe: 0
+  isRum: 0
+  isAmmoPouch: 0
+  isHandMirror: 0
+  isRustyHarpoon: 0
+  isBaitWarm: 0
+  isEye: 0
+  isRaisin: 0
+  isSoulmate: 0
+  isRoar: 0
   maxCount: 3
   itemShape:
-    _width: 2
+    _width: 1
     _height: 2
-    _shape: 01010101
-  description: "\uB530\uB048\uB530\uB048 \uBD95\uC5B4\uBE75"
+    _shape: 0101
+  specialStatInfo: 
+  description: "\uD574\uC801\uC740 \uC7A5\uB840\uC5D0 \uB300\uBE44\uD574 \uC131\uACBD
+    \uD55C\uD398\uC774\uC9C0\uB97C \uAC00\uC9C0\uACE0 \uB2E4\uB2CC\uB2E4.\r\n\u201D\uADF8\uB9AC\uACE0
+    \uC2DC\uC2E0\uC740 \uBC14\uB2E4\uC5D0 \uB358\uC838\uC9C0\uB9AC\uB77C.\u201D \uC720\uB3C5
+    \uD55C \uBB38\uC7A5\uC774 \uB208\uAE38\uC744 \uB048\uB2E4."

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class DiabolicSlotItem : MonoBehaviour
@@ -11,9 +10,11 @@ public class DiabolicSlotItem : MonoBehaviour
     DragUI dragUI;
     GameManager gameManager;
     DiabolicInven inven;
+    ItemManager itemManager;
 
     DiabolicItemInfo itemData;
     Dictionary<Status, int> itemStatus;
+    Dictionary<SpecialStatus, bool> itemSpecialStatus;
 
     List<int> indexes;
     int firstIndex;
@@ -25,6 +26,7 @@ public class DiabolicSlotItem : MonoBehaviour
         dragUI = DragUI.Instance;
         gameManager = GameManager.Instance;
         inven = DiabolicInven.Instance;
+        itemManager = ItemManager.Instance;
     }
 
     private void Update()
@@ -71,13 +73,20 @@ public class DiabolicSlotItem : MonoBehaviour
             if (canSub)
             {
                 itemStatus = itemData.Stat();
+                itemSpecialStatus = itemData.SpecialStat();
 
                 for (int i = 0; i < gameManager.status.Count; i++)
                 {
                     if (itemStatus[(Status)i] == 0)
                         continue;
 
-                    gameManager.status[(Status)i] -= itemStatus[(Status)i];
+                    gameManager.status[(Status)i] -= itemStatus[(Status)i] * itemManager.itemQuantity[pieceSlotIndex];
+                }
+
+                for (int i = 0; i < gameManager.specialStatus.Count; ++i)
+                {
+                    if (itemSpecialStatus[(SpecialStatus)i])
+                        gameManager.specialStatus[(SpecialStatus)i] = false;
                 }
 
                 int row = firstIndex / 4;

@@ -32,19 +32,17 @@ public class ProjectileObjectPool : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Monster") && other.transform.parent.GetComponent<Monster>() != null)
+        if (other.CompareTag("MonsterAttacked") && other.transform.parent.GetComponent<Monster>() != null)
         {
             Monster monster = other.transform.parent.GetComponent<Monster>();
 
             DamageUI damage = damagePool.Get();
 
-            float mDef = monster.defence;
-
-            damage.realDamage = Mathf.Clamp((projectileDamage + gameManager.status[Status.DAMAGE]) * (1 - (mDef / (20 + mDef))), 0, projectileDamage) * gameManager.percentDamage;
+            damage.realDamage = Mathf.Clamp((projectileDamage + gameManager.status[Status.Damage]), 0, projectileDamage) * gameManager.percentDamage;
 
             if (canCri)
             {
-                isCri = gameManager.status[Status.CRITICAL] >= Random.Range(0f, 100f);
+                isCri = gameManager.status[Status.Critical] >= Random.Range(0f, 100f);
                 damage.realDamage *= isCri ? 2 : 1;
             }
 

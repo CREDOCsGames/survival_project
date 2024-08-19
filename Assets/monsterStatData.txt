@@ -1,58 +1,58 @@
 {
     "stats": [
         {
-            "monsterName": "애기 박쥐",
-            "monsterMaxHp": 6.0,
-            "monsterDamage": 2.0,
-            "monsterSpeed": 1.0,
-            "monsterDefence": 0.0,
-            "monsterExp": 1.0,
-            "monsterCoin": 3.0
-        },
-        {
-            "monsterName": "파아아악쥐",
-            "monsterMaxHp": 15.0,
-            "monsterDamage": 3.0,
-            "monsterSpeed": 2.0,
-            "monsterDefence": 1.0,
-            "monsterExp": 2.0,
-            "monsterCoin": 4.0
-        },
-        {
-            "monsterName": "하트 박쥐",
-            "monsterMaxHp": 10.0,
-            "monsterDamage": 1.0,
-            "monsterSpeed": 0.0,
-            "monsterDefence": 0.0,
-            "monsterExp": 3.0,
-            "monsterCoin": 5.0
-        },
-        {
-            "monsterName": "안아줘요 박쥐",
-            "monsterMaxHp": 20.0,
-            "monsterDamage": 4.0,
-            "monsterSpeed": 2.2,
-            "monsterDefence": 2.0,
-            "monsterExp": 5.0,
-            "monsterCoin": 6.0
-        },
-        {
-            "monsterName": "황금 박쥐",
-            "monsterMaxHp": 300.0,
-            "monsterDamage": 10.0,
-            "monsterSpeed": 2,
-            "monsterDefence": 2.5,
-            "monsterExp": 0.0,
-            "monsterCoin": 0.0
-        },
-        {
-            "monsterName": "해골 박쥐",
-            "monsterMaxHp": 500.0,
+            "monsterNum": 101,
+            "monsterName": "암살 해적",
+            "monsterMaxHp": 50.0,
             "monsterDamage": 6.0,
-            "monsterSpeed": 3,
-            "monsterDefence": 5.0,
-            "monsterExp": 0.0,
-            "monsterCoin": 0.0
+            "monsterSpeed": 6.0,
+            "attackDelay": 0.5,
+            "moveDelay": 1.0
+        },
+        {
+            "monsterNum": 102,
+            "monsterName": "대포 해적",
+            "monsterMaxHp": 100.0,
+            "monsterDamage": 15.0,
+            "monsterSpeed": 1.0,
+            "attackDelay": 1.6,
+            "moveDelay": 0.5
+        },
+        {
+            "monsterNum": 103,
+            "monsterName": "리볼버 해적",
+            "monsterMaxHp": 70.0,
+            "monsterDamage": 10.0,
+            "monsterSpeed": 2.4,
+            "attackDelay": 1.0,
+            "moveDelay": 0.3
+        },
+        {
+            "monsterNum": 201,
+            "monsterName": "암살 해적",
+            "monsterMaxHp": 80.0,
+            "monsterDamage": 9.0,
+            "monsterSpeed": 10.0,
+            "attackDelay": 0.3,
+            "moveDelay": 0.7
+        },
+        {
+            "monsterNum": 202,
+            "monsterName": "대포 해적",
+            "monsterMaxHp": 250.0,
+            "monsterDamage": 40.0,
+            "monsterSpeed": 1.0,
+            "attackDelay": 2.0,
+            "moveDelay": 0.5
+        },
+        {
+            "monsterNum": 203,
+            "monsterName": "리볼버 해적",
+            "monsterMaxHp": 100.0,
+            "monsterDamage": 14.0,
+            "monsterSpeed": 2.7,
+            "attackDelay": 1.0,
+            "moveDelay": 0.9
         }
     ]
 }

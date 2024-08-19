@@ -23,17 +23,15 @@ public class AttackCutlass : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Monster") && other.transform.parent.GetComponent<Monster>() != null)
+        if (other.CompareTag("MonsterAttacked") && other.transform.parent.GetComponent<Monster>() != null)
         {
             Monster monster = other.transform.parent.GetComponent<Monster>();
 
             DamageUI damageUI = damagePool.Get();
 
-            float mDef = monster.defence;
+            bool isCri = gameManager.status[Status.Critical] >= Random.Range(0f, 100f);
 
-            bool isCri = gameManager.status[Status.CRITICAL] >= Random.Range(0f, 100f);
-
-            damageUI.realDamage = Mathf.Clamp((damage + gameManager.status[Status.DAMAGE]) * (1 - (mDef / (20 + mDef))), 0, damage) * gameManager.percentDamage;
+            damageUI.realDamage = Mathf.Clamp(damage + gameManager.status[Status.Damage], 0, damage) * gameManager.percentDamage;
 
             damageUI.realDamage *= isCri ? 2 : 1;
 

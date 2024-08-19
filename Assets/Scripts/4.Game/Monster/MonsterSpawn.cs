@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Pool;
@@ -38,7 +37,8 @@ public class MonsterSpawn : MonoBehaviour
         gameManager = GameManager.Instance;
         gamesceneManager = GamesceneManager.Instance;
 
-        weightValue = new float[] { 100, 0, 0, 0 };
+        //weightValue = new float[] { 100, 0, 0};
+        weightValue = new float[] { 40, 30, 30};
         //ground = GamesceneManager.Instance.walkableArea;
 
         for (int i = 0; i < weightValue.Length; i++)
@@ -60,12 +60,12 @@ public class MonsterSpawn : MonoBehaviour
         while (true)
         {
             //yield return new WaitUntil(() => gamesceneManager.isNight);
-            yield return CoroutineCaching.WaitWhile(() => gamesceneManager.isNight);
+            yield return CoroutineCaching.WaitWhile(() => !gamesceneManager.isNight);
 
-            currentCoroutine = StartCoroutine(RendSpawnImage(5));
+            currentCoroutine = StartCoroutine(RendSpawnImage(6));
 
             //yield return new WaitUntil(() => !gamesceneManager.isNight);
-            yield return CoroutineCaching.WaitWhile(() => !gamesceneManager.isNight);
+            yield return CoroutineCaching.WaitWhile(() => gamesceneManager.isNight);
 
             if (currentCoroutine != null)
                 StopCoroutine(currentCoroutine);
@@ -79,10 +79,10 @@ public class MonsterSpawn : MonoBehaviour
             Vector3 pos = SpawnPosition();
             GameObject spawnMark = Instantiate(spawnImage, pos, spawnImage.transform.rotation, storageParent);
             Destroy(spawnMark, 1f);
-            StartCoroutine(SpawnMonster(pos, Color.red));
+            StartCoroutine(SpawnMonster(true, pos, Color.red));
 
             SpawnSubordinateMonster(pos, Random.Range(4, 7));
-
+            
             //yield return new WaitForSeconds(time);
             yield return CoroutineCaching.WaitForSeconds(time);
         }
@@ -101,15 +101,24 @@ public class MonsterSpawn : MonoBehaviour
 
         Vector3 spawnPos = spawnTransform.transform.position + new Vector3(randX, 0, randZ);
 
+        NavMeshHit hit;
+
+        if (NavMesh.SamplePosition(spawnPos, out hit, 500, NavMesh.AllAreas))
+        {
+            spawnPos = hit.position;
+        }
+
         return spawnPos;
     }
 
-    IEnumerator SpawnMonster(Vector3 pos, Color color)
+    IEnumerator SpawnMonster(bool isLeader, Vector3 pos, Color color)
     {
         yield return new WaitForSeconds(1);
 
         Monster monster = pool.Get();
+        monster.stat = isLeader ? MonsterInfo.Instance.monsterInfos[monster.monsterNum + (normalMonsterPrefab.Length)] : MonsterInfo.Instance.monsterInfos[monster.monsterNum];
         monster.ChangeOutline(color);
+        monster.InitMonsterSetting(isLeader);
 
         NavMeshHit hit;
 
@@ -128,6 +137,9 @@ public class MonsterSpawn : MonoBehaviour
                 Debug.Break();
             }
         }
+
+        /*if (currentCoroutine != null)
+            StopCoroutine(currentCoroutine);*/
     }
 
 
@@ -142,7 +154,7 @@ public class MonsterSpawn : MonoBehaviour
 
             GameObject spawnMark = Instantiate(spawnImage, spawnPos, spawnImage.transform.rotation, storageParent);
             Destroy(spawnMark, 1f);
-            StartCoroutine(SpawnMonster(spawnPos, Color.white));
+            StartCoroutine(SpawnMonster(false, spawnPos, Color.white));
         }
     }
 
@@ -167,10 +179,10 @@ public class MonsterSpawn : MonoBehaviour
 
     private Monster CreateMonster()
     {
-        //int num = RandomMonster();
-        int num = 0;
+        int num = RandomMonster();
+        //int num = 2;
         Monster monster = Instantiate(normalMonsterPrefab[num]).GetComponent<Monster>();
-        monster.stat = MonsterInfo.Instance.monsterInfos[num];
+        monster.monsterNum = num;
         monster.SetManagedPool(pool);
         monster.transform.SetParent(storageParent);
 
@@ -208,10 +220,9 @@ public class MonsterSpawn : MonoBehaviour
 
     int RandomMonster()
     {
-        weightValue[0] = Mathf.Clamp(100 - (gameManager.round * 4f), 10, 100);
+        /*weightValue[0] = Mathf.Clamp(100 - (gameManager.round * 4f), 10, 100);
         weightValue[1] = ((gameManager.round - 6) * 5f) * 0.3f;
-        weightValue[2] = ((gameManager.round - 13) * 5f) * 0.3f;
-        weightValue[3] = ((gameManager.round - 20) * 10f) * 0.5f;
+        weightValue[2] = ((gameManager.round - 13) * 5f) * 0.3f;*/
 
         float rand = Random.Range(0, totalWeight);
         int spawnNum = 0;

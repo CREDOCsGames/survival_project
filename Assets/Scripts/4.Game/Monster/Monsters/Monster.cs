@@ -1,19 +1,21 @@
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Pool;
 
 public class Monster : MonoBehaviour
 {
-    [SerializeField] protected GameObject freezeEffect;
     [SerializeField] protected Rigidbody rigid;
     [SerializeField] protected SpriteRenderer rend;
     [SerializeField] protected Animator anim;
-    [SerializeField] protected Collider coll;
+    [SerializeField] protected Collider attackColl;
+    [SerializeField] protected Vector2 attackRange;
+    [SerializeField] float attackDelay;
+    [SerializeField] float moveDelay;
+    protected float moveSpeed;
+    protected float damage;
 
-    [HideInInspector] public bool isWalk, isDead, isAttacked, isAttack = false;
+
+    [HideInInspector] protected bool isDead = false, isAttack = false;
 
     public float hp;
     public float maxHp;
@@ -23,121 +25,76 @@ public class Monster : MonoBehaviour
 
     private IObjectPool<Monster> managedPool;
 
-    protected float speed;
-
-    [HideInInspector] public Vector3 dir;
-
-    protected bool isFreeze = false;
-
-    protected float initSpeed = 0;
-
     protected GameManager gameManager;
     protected Character character;
     protected GamesceneManager gamesceneManager;
 
     protected IEnumerator runningCoroutine;
 
-    public float defence;
-
-    protected float damage;
-
-    bool beforeFreeze;
-
     protected Color initcolor;
 
-    public float Speed => speed;
+    public float Speed => moveSpeed;
 
-    void Start()
-    {
-        StartSetting();
-    }
+    protected float initSpeed = 0;
+    float xDistance;
+    float zDistance;
 
-    protected void StartSetting()
+    float initAttackDelay;
+    float initMoveDelay;
+
+    bool canAttack = true;
+    bool canMove = true;
+
+    int initOrder;
+
+    public bool CanMove => canMove;
+
+    public int monsterNum;
+
+    private void Awake()
     {
         gameManager = GameManager.Instance;
         gamesceneManager = GamesceneManager.Instance;
         character = Character.Instance;
 
-        hp = stat.monsterMaxHp * (2 + Mathf.Floor(gameManager.round / 5) * Mathf.Floor(gameManager.round / 5) * (1 + Mathf.Floor(gameManager.round / 20))) * 0.5f;
-        damage = stat.monsterDamage * (1 + Mathf.Floor(gameManager.round / 30)) + Mathf.Floor(gameManager.round / 5) * 2f;
-        maxHp = hp;
-        initScale = transform.GetChild(1).localScale;
-        speed = stat.monsterSpeed;
-        initSpeed = speed;
-        defence = stat.monsterDefence * (1 + Mathf.Floor(gameManager.round / 5) * 0.5f);
-        isWalk = true;
-        isDead = false;
-        isAttacked = false;
-        isAttack = false;
-        coll.enabled = true;
-        beforeFreeze = false;
+        StartSetting();
+    }
+
+    protected void StartSetting()
+    {
+        initScale = transform.localScale;
         initcolor = rend.color;
+        initOrder = rend.sortingOrder;
     }
 
     void Update()
     {
-        freezeEffect.SetActive(isFreeze);
-
-        /*rigid.velocity = Vector3.zero;
-
-        if (isDead == false)
-        {
-            Move();
-            anim.SetBool("isWalk", isWalk);
-        }
-
-        if (isFreeze)
-        {
-            anim.speed = 0f;
-        }*/
-
+        Attack();
+        AttackDelay();
+        MoveDelay();
         OnDead();
     }
 
-    protected virtual void InitMonsterSetting()
+    public void InitMonsterSetting(bool isLeader)
     {
         hp = stat.monsterMaxHp * (2 + Mathf.Floor(gameManager.round / 5) * Mathf.Floor(gameManager.round / 5) * (1 + Mathf.Floor(gameManager.round / 20) * 0.5f)) * 0.5f;
         damage = stat.monsterDamage * (1 + Mathf.Floor(gameManager.round / 30)) + Mathf.Floor(gameManager.round / 5) * 2f;
         maxHp = hp;
-        speed = stat.monsterSpeed;
-        defence = stat.monsterDefence * (1 + Mathf.Floor(gameManager.round / 5) * 0.5f);
-        initSpeed = speed;
-        isWalk = true;
+        moveSpeed = stat.monsterSpeed;
+        initSpeed = moveSpeed;
+        attackDelay = stat.attackDelay;
+        moveDelay = stat.moveDelay;
+        initAttackDelay = attackDelay;
+        initMoveDelay = moveDelay;
         isDead = false;
-        isAttacked = false;
         isAttack = false;
-        coll.enabled = true;
-        beforeFreeze = false;
+        canAttack = false;
         anim.speed = 1f;
-        transform.position = Vector3.zero;
-        transform.GetChild(1).localScale = initScale;
-        rend.color = Color.white;
-        initcolor = rend.color;
-        rend.sortingOrder = 2;
-    }
+        transform.localScale = initScale;
+        rend.color = initcolor;
+        rend.sortingOrder = initOrder;
 
-    public void Move()
-    {
-        if (!isFreeze)
-        {
-            anim.speed = 1f;
-
-            Vector3 characterPos = character.transform.position;
-            dir = characterPos - transform.position;
-
-            transform.position = Vector3.MoveTowards(new Vector3(transform.position.x, 0, transform.position.z), characterPos, speed * Time.deltaTime);
-
-            isWalk = true;
-
-            if (dir == Vector3.zero || speed == 0)
-                isWalk = false;
-
-            if (dir.x < 0)
-                rend.flipX = true;
-
-            else if (dir.x >= 0)
-                rend.flipX = false;
-        }
+        GetComponent<MonsterMove>().InitSetting(moveSpeed);
     }
 
     protected IEnumerator MonsterColorBlink()
@@ -161,76 +118,78 @@ public class Monster : MonoBehaviour
     {
         if (other.CompareTag("Character") && !isDead)
         {
-            character.OnDamaged(damage);
+           character.OnDamaged(damage);
         }
     }
 
-    // 방어력 없이 바로 깎이는 대미지
-    public void PureOnDamaged(float damage)
+    void Attack()
     {
-        hp -= damage;
+        if (isDead || !canAttack)
+            return;
 
-        if (!isFreeze)
+        xDistance = Mathf.Abs(character.transform.position.x - transform.position.x);
+        zDistance = Mathf.Abs(character.transform.position.z - transform.position.z);
+
+        if (!isAttack)
         {
-            if (runningCoroutine != null)
-                StopCoroutine(runningCoroutine);
+            if (xDistance <= attackRange.x && zDistance <= attackRange.y)
+            {
+                isAttack = true;
+                GetComponent<MonsterMove>().agent.enabled = false;
+                canMove = false;
+            }
+        }
 
-            runningCoroutine = MonsterColorBlink();
-            StartCoroutine(runningCoroutine);
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+        {
+            if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f)
+            {
+                isAttack = false;
+                canAttack = false;
+            }
+        }
+
+        anim.SetBool("isAttack", isAttack);
+    }
+
+    void AttackDelay()
+    {
+        if (canAttack)
+            return;
+
+        attackDelay -= Time.deltaTime;
+
+        if(attackDelay <= 0)
+        {
+            canAttack = true;
+            attackDelay = initAttackDelay;
         }
     }
 
+    void MoveDelay()
+    {
+        if (canMove)
+            return;
+
+        moveDelay -= Time.deltaTime;
+
+        if(moveDelay <= 0)
+        {
+            GetComponent<MonsterMove>().InitailizeCoolTime();
+            GetComponent<MonsterMove>().agent.enabled = true;
+            canMove = true;
+            moveDelay = initMoveDelay;
+        }
+    }
     public void OnDamaged(float damage)
     {
         hp -= damage;
 
-        if (!isFreeze)
-        {
-            if (runningCoroutine != null)
-                StopCoroutine(runningCoroutine);
+        if (runningCoroutine != null)
+            StopCoroutine(runningCoroutine);
 
-            runningCoroutine = MonsterColorBlink();
-            StartCoroutine(runningCoroutine);
-        }
-    }
-
-    public void OnDamaged(float damage, bool freeze)
-    {
-        hp -= damage;
-
-        if (freeze && !beforeFreeze)
-        {
-            beforeFreeze = freeze;
-            isFreeze = freeze;
-            anim.speed = 0f;
-
-            if (runningCoroutine != null)
-                StopCoroutine(runningCoroutine);
-
-            runningCoroutine = MonsterFreeze();
-            StartCoroutine(runningCoroutine);
-        }
-
-        if (!isFreeze)
-        {
-            if (runningCoroutine != null)
-                StopCoroutine(runningCoroutine);
-
-            runningCoroutine = MonsterColorBlink();
-            StartCoroutine(runningCoroutine);
-        }
-    }
-
-    protected IEnumerator MonsterFreeze()
-    {
-        rend.color = Color.cyan;
-        yield return new WaitForSeconds(1.5f);
-
-        anim.speed = 1f;
-        isFreeze = false;
-        beforeFreeze = isFreeze;
-        speed = initSpeed;
-        rend.color = initcolor;
+        runningCoroutine = MonsterColorBlink();
+        StartCoroutine(runningCoroutine);
     }
 
     public void OnDead()
@@ -242,14 +201,14 @@ public class Monster : MonoBehaviour
             anim.speed = 1f;
             isDead = true;
             rend.color = Color.white;
-            isFreeze = false;
+
             if (runningCoroutine != null)
                 StopCoroutine(runningCoroutine);
-            coll.enabled = false;
 
-            isAttacked = true;
+            if (attackColl != null)
+                attackColl.enabled = false;
 
-            anim.SetBool("isAttacked", isAttacked);
+            anim.SetTrigger("Die");
 
             if (anim.GetCurrentAnimatorStateInfo(0).IsName("Die"))
             {
@@ -274,6 +233,6 @@ public class Monster : MonoBehaviour
     public void DestroyMonster()
     {
         managedPool.Release(this);
-        InitMonsterSetting();
+        transform.position = Vector3.zero;
     }
 }

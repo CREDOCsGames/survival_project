@@ -16,6 +16,7 @@ TagManager:
   - Obstacle
   - MouseInteraction
   - MouseInteration
+  - MonsterAttacked
   layers:
   - Default
   - TransparentFX
@@ -37,7 +38,7 @@ TagManager:
   - Bush
   - MouseInteraction
   - CharacterChecker
-  - 
+  - MonsterAttaked
   - 
   - 
   - 

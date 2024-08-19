@@ -15,6 +15,7 @@ public class DiabolicInven : Singleton<DiabolicInven>
     DragUI dragUI;
     GameManager gameManager;
     Character character;
+    ItemManager itemManager;
 
     int width;
     int height;
@@ -25,13 +26,15 @@ public class DiabolicInven : Singleton<DiabolicInven>
 
     bool canSetImage;
 
-    Dictionary<Status,int> itemStatus = new Dictionary<Status,int>();
+    Dictionary<Status,int> itemStatus;
+    Dictionary<SpecialStatus, bool> itemSpecialStatus;
 
     private void Start()
     {
         gameManager = GameManager.Instance;
         dragUI = DragUI.Instance;
         character = Character.Instance;
+        itemManager = ItemManager.Instance;
 
         slots = new DiabolicInvenSlot[slotParent.childCount];
 
@@ -53,23 +56,28 @@ public class DiabolicInven : Singleton<DiabolicInven>
         Instantiate(itemImage, itemImageParent).GetComponent<DiabolicSlotItem>().ItemSetOnInventory(slots[currentIndex].GetComponent<RectTransform>().localPosition, item, TransferIndexesNum(), currentIndex, pieceSlotIndex);
         blockImage.SetActive(true);
 
-        AddStatus();
+        AddStatus(pieceSlotIndex);
 
         SetSlotIsEmpty(height, width, itemShape, row, column, false);
     }
 
-    void AddStatus()
+    void AddStatus(int pieceSlotIndex)
     {
         itemStatus = dragUI.DragItem.Stat();
+        itemSpecialStatus = dragUI.DragItem.SpecialStat();
 
         for (int i = 0; i < gameManager.status.Count; i++)
         {
             if (itemStatus[(Status)i] == 0)
                 continue;
 
-            gameManager.status[(Status)i] += itemStatus[(Status)i];
+            gameManager.status[(Status)i] += itemStatus[(Status)i] * itemManager.itemQuantity[pieceSlotIndex];
+        }
 
-            //Debug.Log((Status)i + " " + gameManager.status[(Status)i]);
+        for (int i = 0; i < gameManager.specialStatus.Count; ++i)
+        {
+            if (itemSpecialStatus[(SpecialStatus)i])
+                gameManager.specialStatus[(SpecialStatus)i] = true;
         }
 
         character.UpdateStat();

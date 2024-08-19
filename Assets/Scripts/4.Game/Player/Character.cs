@@ -33,7 +33,7 @@ public class Character : Singleton<Character>
     [SerializeField] public Transform[] weaponPoses;
 
     [HideInInspector] public int maxHp;
-    [HideInInspector] public int currentHp;
+    [HideInInspector] public float currentHp;
     [HideInInspector] public float recoverHpRatio;
     [HideInInspector] public int speed;
     [HideInInspector] public int avoid;
@@ -166,13 +166,13 @@ public class Character : Singleton<Character>
 
     public void UpdateStat()
     {
-        maxHp = gameManager.status[Status.MAXHP];
+        maxHp = gameManager.status[Status.Maxhp];
         currentHp = maxHp;
-        speed = gameManager.status[Status.SPEED];
-        avoid = gameManager.status[Status.AVOID];
-        recoveryValue = gameManager.status[Status.RECOVER];
-        attackSpeed = gameManager.status[Status.ATTACK_SPEED];
-        defence = gameManager.status[Status.DEFENCE];
+        speed = gameManager.status[Status.MoveSpeed];
+        avoid = gameManager.status[Status.Avoid];
+        recoveryValue = gameManager.status[Status.Recover];
+        attackSpeed = gameManager.status[Status.AttackSpeed];
+        defence = gameManager.status[Status.Defence];
     }
 
     void HpSetting()
@@ -427,11 +427,7 @@ public class Character : Singleton<Character>
         {
             avoidRand = Random.Range(1, 100);
 
-            if (avoidRand <= gameManager.status[Status.AVOID])
-                isAvoid = true;
-
-            else
-                isAvoid = false;
+            isAvoid = avoidRand <= gameManager.status[Status.Avoid];
 
             if (currentHp > 0)
             {
@@ -439,7 +435,12 @@ public class Character : Singleton<Character>
                 {
                     SoundManager.Instance.PlayES("Hit");
 
-                    currentHp -= Mathf.RoundToInt(damage * (100 - gameManager.status[Status.DEFENCE]) / 100);
+                    int trueDamage = Mathf.RoundToInt(damage * (100 - gameManager.status[Status.Defence]) / 100);
+
+                    if (gameManager.specialStatus[SpecialStatus.Rum])
+                        trueDamage *= 2;
+
+                    currentHp -= trueDamage;
                 }
 
                 if (currentCoroutine != null)

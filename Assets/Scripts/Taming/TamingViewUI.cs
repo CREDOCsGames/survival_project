@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class TamingViewUI : MonoBehaviour
@@ -13,6 +14,15 @@ public class TamingViewUI : MonoBehaviour
 
     [HideInInspector] public GameObject catchPet;
 
+    GamesceneManager gamesceneManager;
+    Character character;
+
+    private void Awake()
+    {
+        gamesceneManager = GamesceneManager.Instance;
+        character = Character.Instance;
+    }
+
     private void OnEnable()
     {
         tamingGauge.value = 0.5f;
@@ -26,6 +36,13 @@ public class TamingViewUI : MonoBehaviour
 
     private void Update()
     {
+        if(gamesceneManager.isNight)
+        {
+            Cursor.visible = true;
+            gameObject.SetActive(false);
+            character.isCanControll = true;
+        }
+
         if (tamingGauge.value < 1)
         {
             if (tamingPet.activeSelf)

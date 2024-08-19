@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4143293133346660603}
   - component: {fileID: -6823864221841902023}
   - component: {fileID: -8170457161842308685}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RevolverBullet
   m_TagString: myBullet
   m_Icon: {fileID: 0}
@@ -77,12 +77,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 12
-  m_Sprite: {fileID: 21300000, guid: cf0ce21e53fb3b04a94581a0bfe7abe1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c851e6cecaee2ae4bb2bec3beaa503dc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.48, y: 0.32}
+  m_Size: {x: 0.26666668, y: 0.108333334}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -99,7 +99,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.2186901, y: 0.051502302, z: 0}
+  m_Size: {x: 0.2186901, y: 0.051502302, z: 0.1}
   m_Center: {x: 0.03892967, y: 0.012523481, z: 1.17192124e-14}
 --- !u!54 &4143293133346660603
 Rigidbody:

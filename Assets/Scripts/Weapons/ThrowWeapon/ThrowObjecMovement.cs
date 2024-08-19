@@ -3,18 +3,22 @@ using UnityEngine;
 public class ThrowObjecMovement : ParabolaLineRenderer
 {
     [SerializeField] float totalThrowLength;
+    [SerializeField] bool flyingHit;
+    [SerializeField] bool scaleChange;
+    [SerializeField] bool isRemain;
 
     float currentThrowLength = 0;
 
     Vector3 initScale;
 
-    bool isArrive = false;
+    bool isArrive;
 
     private void Start()
     {
         character = Character.Instance;
         initScale = transform.localScale;
-        GetComponent<SphereCollider>().enabled = false;
+        GetComponent<SphereCollider>().enabled = flyingHit;
+        isArrive = false;
     }
 
     private void Update()
@@ -45,13 +49,29 @@ public class ThrowObjecMovement : ParabolaLineRenderer
         if (currentThrowLength >= totalThrowLength)
         {
             isArrive = true;
+            transform.position = endPos;
+
+            if (!isRemain)
+                return;
+
             GetComponent<ThrowObject>().Grounded(isArrive);
             GetComponent<SphereCollider>().enabled = true;
         }
     }
 
+    public void SetStartEndPoint(Vector3 _startPos, Vector3 _endPos)
+    {
+        startPos = _startPos;
+        endPos = _endPos;
+        currentThrowLength = 0;
+        isArrive = false;
+    }
+
     void ScaleChange()
     {
+        if (!scaleChange)
+            return;
+
         float change = Mathf.Sin(currentThrowLength / totalThrowLength * Mathf.PI);
         transform.localScale = initScale + new Vector3(change, change, 0);
     }

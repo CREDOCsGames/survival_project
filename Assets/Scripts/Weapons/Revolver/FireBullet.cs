@@ -9,13 +9,18 @@ public class FireBullet : FireProjectile
 
     Coroutine currentCoroutine;
 
-    protected override void Start()
+    private void OnEnable()
     {
-        base.Start();
+        bulletCount = gameManager.specialStatus[SpecialStatus.AmmoPouch] ? 5 : 4;
 
-        foreach (Transform bullet in bulletParent)
+        for (int i = 0; i < bulletCount; ++i)
         {
-            bullet.gameObject.SetActive(true);
+            bulletParent.GetChild(i).gameObject.SetActive(true);
+        }
+
+        for(int i = bulletCount; i<bulletParent.childCount; ++i) 
+        {
+            bulletParent.GetChild(i).gameObject.SetActive(false);
         }
     }
 

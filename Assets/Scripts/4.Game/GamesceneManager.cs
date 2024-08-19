@@ -49,6 +49,13 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
     IEnumerator DayRoutine()
     {
+#if UNITY_EDITOR
+
+#else
+        gameManager.dashCount = 0;
+#endif
+
+        gameSceneUI.CursorChange(CursorType.Normal);
         isNight = false;
         nightFilter.SetActive(false);
         character.ChangeAnimationController(0);
@@ -95,11 +102,13 @@ public class GamesceneManager : Singleton<GamesceneManager>
     IEnumerator NightRoutine()
     {
         gameSceneUI.ChangeDayText(1, "밤이 되었습니다.");
+        gameSceneUI.CursorChange(CursorType.Attack);
         isNight = true;
         nightFilter.SetActive(true);
 
         character.UpdateStat();
         character.weaponParent.gameObject.SetActive(true);
+        character.transform.position = new Vector3(0f, 0f, -40f);
 
         currentGameTime = gameManager.gameNightTime;
 

@@ -11,6 +11,7 @@ public class PieceItemInvenSlot : MonoBehaviour
     Text itemDiscriptionText;
     PieceItemInven pieceInven;
     DragUI dragUI;
+    ItemManager itemManager;
 
     int indexNum;
 
@@ -22,6 +23,7 @@ public class PieceItemInvenSlot : MonoBehaviour
     {
         pieceInven = PieceItemInven.Instance;
         dragUI = DragUI.Instance;
+        itemManager = ItemManager.Instance;
 
         indexNum = transform.GetSiblingIndex();
         itemDiscriptionText = pieceInven.DiscriptionPanel.GetComponent<Text>();
@@ -94,9 +96,10 @@ public class PieceItemInvenSlot : MonoBehaviour
             if (status[(Status)i] == 0)
                 continue;
 
-            itemDiscriptionText.text += GameManager.statNames[i] + ": " + status[(Status)i] + "\n";
+            itemDiscriptionText.text += GameManager.statNames[i] + ": " + status[(Status)i] * itemManager.itemQuantity[indexNum] + "\n";
         }
 
+        itemDiscriptionText.text += "\n" + pieceInven.items[indexNum].SpecialStatInfo;
         itemDiscriptionText.text += "\n" + pieceInven.items[indexNum].Description;
     }
 

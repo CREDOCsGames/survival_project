@@ -7,8 +7,11 @@ public class DragUI : Singleton<DragUI>
     [SerializeField] Image dragItemImage;
 
     DiabolicItemInfo dragItem;
+    int haveCount;
 
     public DiabolicItemInfo DragItem => dragItem;
+    public int Count => haveCount;
+
 
     private void Start()
     {

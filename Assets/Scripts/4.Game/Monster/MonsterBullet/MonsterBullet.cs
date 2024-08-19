@@ -3,48 +3,29 @@ using UnityEngine.Pool;
 
 public class MonsterBullet : MonoBehaviour
 {
-    [SerializeField] protected float speed;
-    [SerializeField] protected float bulletDamage;
+    public float bulletDamage;
 
     protected IObjectPool<MonsterBullet> managedPool;
-
-    protected Vector3 dir;
-
-    [HideInInspector] public int randNum;
-    [HideInInspector] public Vector3 monsPos;
 
     protected GameManager gameManager;
     protected GamesceneManager gameSceneManager;
 
     protected float realDamage;
 
+    [HideInInspector] public Vector3 destroyPos;
+
     private void Start()
     {
         gameManager = GameManager.Instance;
         gameSceneManager = GamesceneManager.Instance;
-        realDamage = bulletDamage * (1 + Mathf.Floor(gameManager.round / 30)) + Mathf.Floor(gameManager.round / 5) * 2f;  // 트리거에도 있음
     }
 
     void Update()
     {
-        if (gameManager.isClear && gameManager.isBossDead)
+        if (!gameSceneManager.isNight || transform.position == destroyPos)
         {
-            CancelInvoke("DestroyBullet");
             DestroyBullet();
         }
-
-        transform.position += dir * speed * Time.deltaTime;
-    }
-
-    public virtual void ShootDir()
-    {
-        dir = (Character.Instance.transform.position - transform.position).normalized;
-        dir = new Vector3(dir.x, 0f, dir.z);
-    }
-
-    public virtual void AutoDestroyBullet()
-    {
-        Invoke("DestroyBullet", 2f);
     }
 
     protected virtual void OnTriggerEnter(Collider other)
@@ -52,9 +33,8 @@ public class MonsterBullet : MonoBehaviour
         if (other.tag == "Character")
         {
             realDamage = bulletDamage * (1 + Mathf.Floor(gameManager.round / 30)) + Mathf.Floor(gameManager.round / 5) * 2f;
-            other.GetComponent<Character>().OnDamaged(realDamage);
+            other.transform.parent.GetComponent<Character>().OnDamaged(realDamage);
             DestroyBullet();
-            CancelInvoke("DestroyBullet");
         }
     }
 
@@ -69,10 +49,5 @@ public class MonsterBullet : MonoBehaviour
         {
             managedPool.Release(this);
         }
-    }
-
-    private void OnDestroy()
-    {
-        CancelInvoke("DestroyBullet");
     }
 }

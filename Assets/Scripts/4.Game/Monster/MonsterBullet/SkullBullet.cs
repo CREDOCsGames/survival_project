@@ -12,7 +12,7 @@ public class SkullBullet : MonsterBullet
     // Update is called once per frame
     void Update()
     {
-        if (gameManager.isClear && gameManager.isBossDead)
+        /*if (gameManager.isClear && gameManager.isBossDead)
         {
             CancelInvoke("DestroyBullet");
             DestroyBullet();
@@ -26,7 +26,7 @@ public class SkullBullet : MonsterBullet
             transform.RotateAround(monsPos, Vector3.up, speed * 60f * Time.deltaTime);
             transform.position += dir * speed * Time.deltaTime;
             dir = (transform.position - monsPos).normalized;
-        }
+        }*/
     }
 
     protected override void OnTriggerEnter(Collider other)
@@ -45,7 +45,7 @@ public class SkullBullet : MonsterBullet
         }
     }
 
-    public override void ShootDir()
+    /*public override void ShootDir()
     {
         speed = (randNum == 0) ? 6f : 2f;
 
@@ -74,5 +74,5 @@ public class SkullBullet : MonsterBullet
     public override void AutoDestroyBullet()
     {
         Invoke("DestroyBullet", 3f);
-    }
+    }*/
 }

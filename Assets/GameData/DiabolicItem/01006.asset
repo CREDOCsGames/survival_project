@@ -14,18 +14,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemNum: 1006
   itemSprite: {fileID: 21300000, guid: b41cef68b9dd0884e9f6fc6c70dbacc5, type: 3}
-  itemName: "\uBA38\uC2AC"
+  itemName: "\uBBF8\uB07C\uC6A9 \uBC8C\uB808"
   maxHp: 0
-  damage: 5
+  damage: 0
   recoverHp: 0
   defence: 0
   attackSpeed: 0
   speed: 0
-  critical: 20
+  critical: 0
   avoid: 0
-  maxCount: 3
+  isDoubleAxe: 0
+  isRum: 0
+  isAmmoPouch: 0
+  isHandMirror: 0
+  isRustyHarpoon: 0
+  isBaitWarm: 0
+  isEye: 0
+  isRaisin: 0
+  isSoulmate: 0
+  isRoar: 0
+  maxCount: 1
   itemShape:
     _width: 2
-    _height: 2
-    _shape: 00010101
-  description: "\uADF8\uB275"
+    _height: 1
+    _shape: 0101
+  specialStatInfo: "\uACE0\uAE09 \uC0DD\uC120 \uB09A\uC77C \uD655\uB960 20% \uC99D\uAC00"
+  description: "\uBB3C\uACE0\uAE30\uB97C \uC720\uC778\uD558\uB294 \uBBF8\uB07C\uC6A9
+    \uBC8C\uB808."

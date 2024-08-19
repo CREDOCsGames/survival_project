@@ -4,23 +4,23 @@ using UnityEngine;
 [System.Serializable]
 public class MonsterStat
 {
+    public int monsterNum;
     public string monsterName;
     public float monsterMaxHp;
     public float monsterDamage;
     public float monsterSpeed;
-    public float monsterDefence;
-    public float monsterExp;
-    public int monsterCoin;
+    public float attackDelay;
+    public float moveDelay;
 
-    public MonsterStat(string statName, float monsterMaxHp, float monsterDamage, float monsterSpeed, float monsterDefence, float monsterExp, int monsterCoin)
+    public MonsterStat(int monsterNum, string monsterName, float monsterMaxHp, float monsterDamage, float monsterSpeed, float attackDelay, float moveDelay)
     {
-        this.monsterName = statName;
+        this.monsterNum = monsterNum;
+        this.monsterName = monsterName;
         this.monsterMaxHp = monsterMaxHp;
         this.monsterDamage = monsterDamage;
         this.monsterSpeed = monsterSpeed;
-        this.monsterDefence = monsterDefence;
-        this.monsterExp = monsterExp;
-        this.monsterCoin = monsterCoin;
+        this.attackDelay = attackDelay;
+        this.moveDelay = moveDelay;
     }
 }
 
@@ -43,7 +43,7 @@ public class MonsterInfo : Singleton<MonsterInfo>
     [ContextMenu("MakeJsonFile")]
     public void MakeJsonFile()
     {
-        count = 5;
+        count = 6;
         MonsterStatJson statJson = new MonsterStatJson(GetStatArray());      // 그래서 item배열을 가지는 클래스를 하나 만들어서 여러 객체를 저장할 수 있게 만듦
 
         // ToJson(obj, bool): bool값이 true인 경우 가독성이 좋게, false인 경우 최소값으로 obj값을 출력
@@ -57,7 +57,7 @@ public class MonsterInfo : Singleton<MonsterInfo>
 
         for (int i = 0; i < stats.Length; i++)
         {
-            MonsterStat newStat = new MonsterStat("몬스터", 0, 0, 0, 0, 0, 0);
+            MonsterStat newStat = new MonsterStat(0000, "몬스터", 0, 0, 0, 0, 0);
             stats[i] = newStat;
         }
 
@@ -102,7 +102,7 @@ public class MonsterInfo : Singleton<MonsterInfo>
 
         for (int j = beforeStats.Length; j < stats.Length; j++)
         {
-            MonsterStat newStat = new MonsterStat("몬스터", 0, 0, 0, 0, 0, 0);
+            MonsterStat newStat = new MonsterStat(0000, "몬스터", 0, 0, 0, 0, 0);
             stats[j] = newStat;
         }
 

@@ -5,14 +5,29 @@ using UnityEngine.SceneManagement;
 
 public enum Status
 {
-    MAXHP,
-    DAMAGE,
-    RECOVER,
-    DEFENCE,
-    ATTACK_SPEED,
-    SPEED,
-    CRITICAL,
-    AVOID,
+    Maxhp,
+    Damage,
+    Recover,
+    Defence,
+    AttackSpeed,
+    MoveSpeed,
+    Critical,
+    Avoid,
+}
+
+public enum SpecialStatus
+{
+    DoubleAxe,
+    Rum,
+    AmmoPouch,
+    HandMirror,
+    RustyHarpoon,
+    BaitWarm,
+    Eye,
+    Raisin,
+    Soulmate,
+    Roar,
+    Count,
 }
 
 public class GameManager : Singleton<GameManager>       
@@ -67,6 +82,7 @@ public class GameManager : Singleton<GameManager>
     [HideInInspector] public Vector3 characterSpawnPos = new Vector3(0, 0, -40);
 
     public Dictionary<Status, int> status = new Dictionary<Status, int>();
+    public Dictionary<SpecialStatus, bool> specialStatus = new Dictionary<SpecialStatus, bool>();
 
     public static string[] statNames = { "최대 체력", "공격력", "회복 수치", "방어력", "공격 속도", "이동 속도", "크리티컬", "회피율" };
 
@@ -123,14 +139,21 @@ public class GameManager : Singleton<GameManager>
         avoid = 1;
 #endif
 
-        status.Add(Status.MAXHP, maxHp);
-        status.Add(Status.DAMAGE, damage);
-        status.Add(Status.RECOVER, recoverHp);
-        status.Add(Status.DEFENCE, defence);
-        status.Add(Status.ATTACK_SPEED, attackSpeed);
-        status.Add(Status.SPEED, speed);
-        status.Add(Status.CRITICAL, critical);
-        status.Add(Status.AVOID, avoid);
+        status.Add(Status.Maxhp, maxHp);
+        status.Add(Status.Damage, damage);
+        status.Add(Status.Recover, recoverHp);
+        status.Add(Status.Defence, defence);
+        status.Add(Status.AttackSpeed, attackSpeed);
+        status.Add(Status.MoveSpeed, speed);
+        status.Add(Status.Critical, critical);
+        status.Add(Status.Avoid, avoid);
+
+        for (int i = 0; i < (int)SpecialStatus.Count; ++i)
+        {
+            specialStatus.Add((SpecialStatus)i, false);
+        }
+
+        //specialStatus[SpecialStatus.RustyHarpoon] = true;
     }
 
     private void Update()

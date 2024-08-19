@@ -1,41 +1,100 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class MonsterMove : MonoBehaviour
 {
-    [SerializeField] float speed;
-    [SerializeField] float detectSize;
+    float moveTime;
+    float waitTime;
     [SerializeField] LayerMask groundLayer;
+    [SerializeField] BoxCollider boxCollider;
+    [SerializeField] BoxCollider weaponBoxCollider;
+    [SerializeField] Animator anim;
+    [SerializeField] GameObject weapon;
 
     Character character;
-    SpriteRenderer rend;
 
     Vector3 dir;
 
     [HideInInspector] public NavMeshAgent agent;
 
-    private void Start()
+    float initScaleX;
+    float initColliderX;
+    float initWeaponColliderX;
+
+    [SerializeField] float initMoveTime;
+    [SerializeField] float initWaitTime;
+
+    [SerializeField] float initSpeed;
+
+    private void Awake()
     {
         character = Character.Instance;
-        rend = transform.GetChild(1).GetComponent<SpriteRenderer>();
         agent = GetComponent<NavMeshAgent>();
 
         agent.updateRotation = false;
 
-        agent.speed = GetComponent<Monster>().Speed;
+        initScaleX = transform.localScale.x;
+        initColliderX = boxCollider.size.x;
+
+        if (weaponBoxCollider != null)
+            initWeaponColliderX = weaponBoxCollider.size.x;
+
+        initMoveTime = moveTime;
+        initWaitTime = waitTime;
+
     }
 
     private void Update()
     {
-        Flip();
-    }
+        anim.SetBool("isWalk", agent.enabled);
 
-    private void FixedUpdate()
-    {
+        if (!GetComponent<Monster>().CanMove)
+            return;
+
+        Flip();
+
         if (agent.enabled)
         {
             agent.SetDestination(character.transform.position);
+
+            if (initMoveTime != 0)
+            {
+                moveTime -= Time.deltaTime;
+
+                if (moveTime <= 0)
+                {
+                    agent.enabled = false;
+                    moveTime = initMoveTime;
+                }
+            }
         }
+
+        else
+        {
+            if (initWaitTime != 0)
+            {
+                waitTime -= Time.deltaTime;
+
+                if (waitTime <= 0)
+                {
+                    agent.enabled = true;
+                    waitTime = initWaitTime;
+                }
+            }
+        }
+    }
+
+    public void InitSetting(float speed)
+    {
+        initSpeed = speed;
+        agent.speed = initSpeed;
+    }
+
+    public void InitailizeCoolTime()
+    {
+        waitTime = initWaitTime;
+        moveTime = initMoveTime;
     }
 
     Vector3[] corners;
@@ -65,6 +124,34 @@ public class MonsterMove : MonoBehaviour
                 count++;
         }
 
-        rend.flipX = dir.x < 0;
+        float scaleX = dir.x > 0 ? -initScaleX : initScaleX;
+        transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
+
+        float colliderX = dir.x > 0 ? -initColliderX : initColliderX;
+        boxCollider.size = new Vector3(colliderX, boxCollider.size.y, boxCollider.size.z);
+
+        if (weaponBoxCollider != null)
+        {
+            float weaponColliderX = dir.x > 0 ? -initWeaponColliderX : initWeaponColliderX;
+            weaponBoxCollider.size = new Vector3(weaponColliderX, weaponBoxCollider.size.y, weaponBoxCollider.size.z);
+        }
+
+        //rend.flipX = dir.x > 0;
+    }
+
+    public void RotateWeapon()
+    {
+        float scaleX = transform.localScale.x > 0 ? 1 : -1;
+        weapon.transform.localScale =  new Vector3(scaleX, weapon.transform.localScale.y, transform.localScale.z);
+
+        float angle = Mathf.Atan2(dir.z, dir.x) * Mathf.Rad2Deg;
+
+        weapon.transform.rotation = Quaternion.Euler(90, -angle + 180, 0);
+
+        if (dir.x < 0)
+            weapon.transform.rotation *= Quaternion.Euler(0, 0, 0);
+
+        else
+            weapon.transform.rotation *= Quaternion.Euler(180, 0, 0);
     }
 }
