@@ -19,7 +19,7 @@ public class PaaLazor : MonsterBullet
         character = Character.Instance;
         anim = GetComponent<Animator>();
 
-        realDamage = bulletDamage * (1 + Mathf.Floor(gameManager.round / 30)) + Mathf.Floor(gameManager.round / 5) * 2f;  // Æ®¸®°Å¿¡µµ ÀÖÀ½
+        realDamage = bulletDamage * (1 + Mathf.Floor(gameManager.round / 30)) + Mathf.Floor(gameManager.round / 5) * 2f;  // íŠ¸ë¦¬ê±°ì—ë„ ìˆìŒ
     }
 
     private void Update()
@@ -51,7 +51,7 @@ public class PaaLazor : MonsterBullet
     {
         if (other.CompareTag("Character") && !isAttack)
         {
-            realDamage = bulletDamage * (1 + Mathf.Floor(gameManager.round / 30)) + Mathf.Floor(gameManager.round / 5) * 2f;  // Æ®¸®°Å¿¡µµ ÀÖÀ½
+            realDamage = bulletDamage * (1 + Mathf.Floor(gameManager.round / 30)) + Mathf.Floor(gameManager.round / 5) * 2f;  // íŠ¸ë¦¬ê±°ì—ë„ ìˆìŒ
             character.OnDamaged(realDamage);
             isAttack = true;
             StartCoroutine(IEInvincible());
@@ -60,7 +60,7 @@ public class PaaLazor : MonsterBullet
 
     IEnumerator IEInvincible()
     {
-        yield return new WaitForSeconds(0.6f);
+        yield return CoroutineCaching.WaitForSeconds(0.6f);
         isAttack = false;
     }
 

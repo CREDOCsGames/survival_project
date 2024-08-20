@@ -46,7 +46,7 @@ public class MonsterSpawn : MonoBehaviour
             totalWeight += weightValue[i];
         }
 
-        //StartCoroutine(UpdateSpawn());
+        StartCoroutine(UpdateSpawn());
     }
 
     private void Update()
@@ -180,7 +180,6 @@ public class MonsterSpawn : MonoBehaviour
     private Monster CreateMonster()
     {
         int num = RandomMonster();
-        //int num = 2;
         Monster monster = Instantiate(normalMonsterPrefab[num]).GetComponent<Monster>();
         monster.monsterNum = num;
         monster.SetManagedPool(pool);

@@ -273,7 +273,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
     void SettingStatText()
     {
         maxHp.text = character.maxHp.ToString();
-        recoverHp.text = Mathf.CeilToInt(character.RecoveryValue * character.recoverHpRatio).ToString();
+        recoverHp.text = Mathf.CeilToInt(character.RecoveryValue * (100 + character.recoverHpRatio) * 0.01f).ToString();
         def.text = character.defence.ToString("0.#");
         avoid.text = character.avoid.ToString("0.#");
         damage.text = gameManager.status[Status.Damage].ToString("0.0#");
@@ -328,14 +328,14 @@ public class GameSceneUI : Singleton<GameSceneUI>
     {
         hpText.text = $"{character.currentHp} / {character.maxHp}";
 
-        hpBar.value = (character.currentHp / character.maxHp);
+        hpBar.value = ((float)character.currentHp / character.maxHp);
     }
 
     void RecoveryGauegeUI()
     {
         recText.text = $"{character.currentRecoveryGauge} / {character.maxRecoveryGauge}";
 
-        recoveryGaugeBar.value = Mathf.Clamp(character.currentRecoveryGauge / character.maxRecoveryGauge, 0f, 1f);
+        recoveryGaugeBar.value = Mathf.Clamp((float)character.currentRecoveryGauge / character.maxRecoveryGauge, 0f, 1f);
     }
 
     void ItemsCountUI()

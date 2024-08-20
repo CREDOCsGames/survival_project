@@ -89,7 +89,7 @@ public class LogTree : MonoBehaviour, IMouseInteraction
         if (gameManager.specialStatus[SpecialStatus.DoubleAxe])
             waitTime *= 0.5f;
 
-        yield return new WaitForSeconds(waitTime);
+        yield return CoroutineCaching.WaitForSeconds(waitTime);
 
         SpawnObstacle();
 

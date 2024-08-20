@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 01014
   m_EditorClassIdentifier: 
   itemNum: 1014
+  weightValue: 0
   itemSprite: {fileID: 21300000, guid: 421057b64e041cc47b6e7443f2d9d9d9, type: 3}
   itemName: "\uD3EC\uB3C4"
   maxHp: 0
@@ -34,15 +35,20 @@ MonoBehaviour:
   isEye: 0
   isRaisin: 0
   isSoulmate: 0
-  isRoar: 0
   isGrape: 1
   isTabatiere: 0
   isSoulMate: 0
+  isInvincible: 0
+  isSilverBullet: 0
+  isBloodMadness: 0
+  isRottenCheese: 0
+  isTurtle: 0
   maxCount: 1
   itemShape:
     _width: 1
     _height: 1
     _shape: 01
-  specialStatInfo: 
+  specialStatInfo: "\uD68C\uBCF5 \uAC8C\uC774\uC9C0 \uCD5C\uB300 \uC218\uCE58 10
+    \uC99D\uAC00"
   description: "\uC2E0\uC120\uD55C \uACFC\uC721\uC744 \uAC00\uC9C4 \uD3EC\uB3C4.
     \uBC14\uB2E4\uC5D0\uC11C \uBCF4\uAE30 \uD798\uB4E0 \uAC83\uC774\uB2E4."

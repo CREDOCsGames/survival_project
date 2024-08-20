@@ -5,7 +5,9 @@ using UnityEngine;
 public class ItemManager : Singleton<ItemManager>
 {
     [SerializeField] Transform slotParent;
-    public DiabolicItemInfo[] allPieceItemsList;
+    public DiabolicItemInfo[] startPieceList;
+    public DiabolicItemInfo[] nightPieceList;
+    public DiabolicItemInfo[] pieceItemsList = null;
 
     [HideInInspector] public DiabolicItemInfo[] items;
     [HideInInspector] public int[] itemQuantity;

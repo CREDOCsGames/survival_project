@@ -45,6 +45,7 @@ public class ItemShape
 public class DiabolicItemInfo : ScriptableObject
 {
     [SerializeField] int itemNum;
+    [SerializeField] int weightValue;
     [SerializeField] Sprite itemSprite;
     [SerializeField] string itemName;
 
@@ -89,6 +90,7 @@ public class DiabolicItemInfo : ScriptableObject
     Dictionary<SpecialStatus, bool> itemSpecialStatus = new Dictionary<SpecialStatus, bool>();
 
     public int ItemNum => itemNum;
+    public int WeightValue => weightValue;
     public Sprite ItemSprite => itemSprite;
     public string ItemName => itemName;
     public int MaxCount => maxCount;

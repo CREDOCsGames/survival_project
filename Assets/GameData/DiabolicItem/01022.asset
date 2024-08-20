@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 01022
   m_EditorClassIdentifier: 
   itemNum: 1022
+  weightValue: 0
   itemSprite: {fileID: 21300000, guid: 421057b64e041cc47b6e7443f2d9d9d9, type: 3}
   itemName: "\uCE58\uC988 \uC870\uAC01"
   maxHp: 20
@@ -46,7 +47,7 @@ MonoBehaviour:
   itemShape:
     _width: 1
     _height: 1
-    _shape: 00
+    _shape: 01
   specialStatInfo: 
   description: "\uB2F4\uBC43\uAC11\uC5D0 \uBCF4\uAD00\uD588\uB358 \uC791\uC740 \uCE58\uC988
     \uD55C\uC870\uAC01."

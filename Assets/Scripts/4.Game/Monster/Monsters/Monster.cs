@@ -105,10 +105,10 @@ public class Monster : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             rend.color = initcolor;
-            yield return new WaitForSeconds(0.1f);
+            yield return CoroutineCaching.WaitForSeconds(0.1f);
 
             rend.color = semiWhite;
-            yield return new WaitForSeconds(0.1f);
+            yield return CoroutineCaching.WaitForSeconds(0.1f);
         }
 
         rend.color = initcolor;

@@ -26,14 +26,18 @@ public class GamesceneManager : Singleton<GamesceneManager>
     GameManager gameManager;
     Character character;
     GameSceneUI gameSceneUI;
+    ItemManager itemManager;
 
     private void Start()
     {
         gameManager = GameManager.Instance;
         character = Character.Instance;
         gameSceneUI = GameSceneUI.Instance;
+        itemManager = ItemManager.Instance;
 
         character.GetComponent<NavMeshAgent>().enabled = true;
+
+        itemManager.pieceItemsList = itemManager.startPieceList;
 
         currentGameTime = gameManager.gameDayTime;
         StartCoroutine(DayRoutine());
@@ -41,7 +45,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
     private void Update()
     {
-        if (character.currentHp > 0 && currentGameTime >= 0 && !gameManager.isPause && !isCardSetting)
+        if (character.currentHp > 0 && currentGameTime > 0 && !gameManager.isPause && !isCardSetting)
         {
             currentGameTime -= Time.deltaTime;
         }
@@ -122,6 +126,8 @@ public class GamesceneManager : Singleton<GamesceneManager>
             character.TamedPed.GetComponent<Pet>().RunAway();
 
         campFire.GetComponent<Campfire>().ToDayScene();
+
+        itemManager.pieceItemsList = itemManager.nightPieceList;
 
         if (gameManager.round < 30)
             StartCoroutine(DayRoutine());

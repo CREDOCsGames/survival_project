@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b60430269fa451146be493834366ea32
+guid: 92840ab9df4c5f3438a01ec8448ee69f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -104,127 +104,127 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SpawnMarkAni_0
+      name: SpawnMarkAni 1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 800
-        height: 1134
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+        width: 682.6667
+        height: 968
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ed9bac7ae32b074f82924b8789f03ac
-      internalID: -1799176522
+      spriteID: 12b3b570e495cff48afe8c11daba6d91
+      internalID: -1427429298
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpawnMarkAni_1
+      name: SpawnMarkAni 1_1
       rect:
         serializedVersion: 2
-        x: 800
+        x: 682
         y: 0
-        width: 800
-        height: 1134
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+        width: 682.6667
+        height: 968
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 20ff3dc884392c449a2bc41caafc978b
-      internalID: -1870234995
+      spriteID: c22cdf41f2b26c64e9a29833b036389d
+      internalID: 1861754462
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpawnMarkAni_2
+      name: SpawnMarkAni 1_2
       rect:
         serializedVersion: 2
-        x: 1600
+        x: 1364
         y: 0
-        width: 800
-        height: 1134
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+        width: 682.6667
+        height: 968
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c41f795a263b90248a92980624248dd0
-      internalID: 1677207028
+      spriteID: ca5e552515cdb424fa77955d3b4d6aae
+      internalID: 182564701
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpawnMarkAni_3
+      name: SpawnMarkAni 1_3
       rect:
         serializedVersion: 2
-        x: 2400
+        x: 2046
         y: 0
-        width: 800
-        height: 1134
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+        width: 682.6667
+        height: 968
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e8c30ee226ecdb40bf50887f0c190b3
-      internalID: 1723517497
+      spriteID: d417ac7921dd28040bc795b56af2515b
+      internalID: 36476389
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpawnMarkAni_4
+      name: SpawnMarkAni 1_4
       rect:
         serializedVersion: 2
-        x: 3200
+        x: 2728
         y: 0
-        width: 800
-        height: 1134
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+        width: 682.6667
+        height: 968
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a68737a2a8e57b84183ba8b297c3a181
-      internalID: 1719707468
+      spriteID: a3e4cde31fc95e949829be0d829c9c1b
+      internalID: 2135659902
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpawnMarkAni_5
+      name: SpawnMarkAni 1_5
       rect:
         serializedVersion: 2
-        x: 4000
+        x: 3410
         y: 0
-        width: 800
-        height: 1134
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+        width: 682.6667
+        height: 968
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 92c74e62c2b20074db649279b216dafa
-      internalID: -1424768685
+      spriteID: 901d0a428fd97ad41b6b33a3907acccb
+      internalID: -1729337423
       vertices: []
       indices: 
       edges: []
@@ -240,12 +240,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      SpawnMarkAni_4: 1719707468
-      SpawnMarkAni_3: 1723517497
-      SpawnMarkAni_0: -1799176522
-      SpawnMarkAni_5: -1424768685
-      SpawnMarkAni_1: -1870234995
-      SpawnMarkAni_2: 1677207028
+      SpawnMarkAni 1_0: -1427429298
+      SpawnMarkAni 1_1: 1861754462
+      SpawnMarkAni 1_3: 36476389
+      SpawnMarkAni 1_5: -1729337423
+      SpawnMarkAni 1_2: 182564701
+      SpawnMarkAni 1_4: 2135659902
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

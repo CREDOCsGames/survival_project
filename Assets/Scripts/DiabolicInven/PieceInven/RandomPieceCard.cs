@@ -20,24 +20,29 @@ public class RandomPieceCard : MonoBehaviour
     {
         itemManager = ItemManager.Instance;
 
-        for (int i = 0; i < itemManager.allPieceItemsList.Length; i++)
+        for (int i = 0; i < itemManager.pieceItemsList.Length; i++)
         {
-            if(!itemManager.getItems.ContainsKey(itemManager.allPieceItemsList[i]))
+            if(!itemManager.getItems.ContainsKey(itemManager.pieceItemsList[i]))
             {
-                itemList.Add(itemManager.allPieceItemsList[i]);
+                itemList.Add(itemManager.pieceItemsList[i]);
             }    
 
             else
             {
-                if (itemManager.getItems[itemManager.allPieceItemsList[i]] < itemManager.allPieceItemsList[i].MaxCount)
-                    itemList.Add(itemManager.allPieceItemsList[i]);
+                if (itemManager.getItems[itemManager.pieceItemsList[i]] < itemManager.pieceItemsList[i].MaxCount)
+                    itemList.Add(itemManager.pieceItemsList[i]);
             }
+        }
+
+        if (itemList.Count <= 0)
+        {
+            gameObject.SetActive(false);
+            return;
         }
 
         for (int i = 0; i < transform.childCount; i++)
         {
             int num = Random.Range(0,itemList.Count);
-
             transform.GetChild(i).GetComponent<PieceCard>().GetRandomItem(itemList[num]);
             transform.GetChild(i).gameObject.SetActive(true);
 

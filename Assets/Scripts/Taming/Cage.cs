@@ -36,7 +36,7 @@ public class Cage : MonoBehaviour, IMouseInteraction
 
     public IEnumerator EndInteraction(Animator anim, float waitTime)
     {
-        yield return new WaitForSeconds(waitTime);
+        yield return CoroutineCaching.WaitForSeconds(waitTime);
 
         Cursor.visible = true;
         gameSceneUI.tamingGame.SetActive(false);
@@ -76,12 +76,12 @@ public class Cage : MonoBehaviour, IMouseInteraction
 
     IEnumerator StartTamingGame(GameObject hitObject)
     {
-        yield return new WaitWhile(() => tamingPet.transform.position != transform.position);
+        yield return CoroutineCaching.WaitWhile(() => tamingPet.transform.position != transform.position);
 
         gameSceneUI.tamingGame.GetComponent<TamingViewUI>().catchPet = hitObject;
         tamingPet.SetActive(false);
 
-        yield return new WaitForSeconds(0.5f);
+        yield return CoroutineCaching.WaitForSeconds(0.5f);
 
         gameSceneUI.tamingGame.SetActive(true);
     }

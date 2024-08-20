@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public enum CHARACTER_NUM
@@ -33,11 +34,11 @@ public class Character : Singleton<Character>
     [SerializeField] public Transform[] weaponPoses;
 
     [HideInInspector] public int maxHp;
-    [HideInInspector] public float currentHp;
-    [HideInInspector] public float recoverHpRatio;
+    [HideInInspector] public int currentHp;
+    [HideInInspector] public int recoverHpRatio;
     [HideInInspector] public float speed;
     [HideInInspector] public int avoid;
-    [HideInInspector] public int attackSpeed;
+    [HideInInspector] public float attackSpeed;
     /*[HideInInspector]*/ public int defence;
     [SerializeField] float invincibleTime;
     public int percentDamage;
@@ -110,9 +111,7 @@ public class Character : Singleton<Character>
         transform.position = new Vector3(0f, 0f, -40f);
 
         initMaxRecGauge = maxRecoveryGauge;
-        currentRecoveryGauge = 50;
-
-        //UpdateStat();
+        currentRecoveryGauge = 0;
 
         dashCoolTime = 4;
         dashCount = gameManager.dashCount;
@@ -176,7 +175,7 @@ public class Character : Singleton<Character>
             gamesceneManager = GamesceneManager.Instance;
 
         maxHp = gameManager.status[Status.Maxhp];
-        currentHp = maxHp/2;
+        currentHp = maxHp;
         speed = gameManager.status[Status.MoveSpeed];
         avoid = gameManager.status[Status.Avoid];
         recoverHpRatio = gameManager.status[Status.Recover];
@@ -218,11 +217,10 @@ public class Character : Singleton<Character>
     IEnumerator ConvertRecoveryGauge()
     {
         isCanControll = false;
-        currentHp += Mathf.CeilToInt(recoveryValue * recoverHpRatio);
-        Debug.Log(recoverHpRatio);
+        currentHp += Mathf.CeilToInt(recoveryValue * (100 + recoverHpRatio) * 0.01f);
         currentRecoveryGauge -= recoveryValue;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return CoroutineCaching.WaitForSeconds(0.5f);
 
         isCanControll = true;
     }
@@ -483,6 +481,7 @@ public class Character : Singleton<Character>
     {
         isAttacked = true;
         isRun = false;
+        isDead = true;
 
         if (currentCoroutine != null)
             StopCoroutine(currentCoroutine);
@@ -509,7 +508,7 @@ public class Character : Singleton<Character>
             currentCoroutine = StartCoroutine(PlayerColorInvincible());
         }
 
-        yield return new WaitForSeconds(invincibleTime);
+        yield return CoroutineCaching.WaitForSeconds(invincibleTime);
         rendUpper.color = Color.white;
         rendLower.color = Color.white;
         isAttacked = false;
@@ -524,7 +523,7 @@ public class Character : Singleton<Character>
         rendUpper.color = color;
         rendLower.color = color;
 
-        yield return new WaitForSeconds(invincibleTime);
+        yield return CoroutineCaching.WaitForSeconds(invincibleTime);
         color.a = 1f;
         rendUpper.color = color;
         rendLower.color = color;
@@ -540,7 +539,7 @@ public class Character : Singleton<Character>
         rendUpper.color = white;
         rendLower.color = white;
 
-        yield return new WaitForSeconds(invincibleTime - 0.3f);
+        yield return CoroutineCaching.WaitForSeconds(invincibleTime - 0.3f);
     }
 
     private IEnumerator PlayerColorBlink()
@@ -550,11 +549,11 @@ public class Character : Singleton<Character>
 
         rendUpper.color = red;
         rendLower.color = red;
-        yield return new WaitForSeconds(0.1f);
+        yield return CoroutineCaching.WaitForSeconds(0.1f);
 
         rendUpper.color = white;
         rendLower.color = white;
-        yield return new WaitForSeconds(0.1f);
+        yield return CoroutineCaching.WaitForSeconds(0.1f);
 
         rendUpper.color = red;
         rendLower.color = red;

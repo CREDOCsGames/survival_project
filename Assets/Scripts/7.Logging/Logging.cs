@@ -225,7 +225,7 @@ public class Logging : Singleton<Logging>
         failText.color = color;
         failText.gameObject.SetActive(true);
 
-        yield return new WaitForSeconds(1f);
+        yield return CoroutineCaching.WaitForSeconds(1f);
         failText.gameObject.SetActive(false);
         lilpa.isCanControl = true;
         Initialize();

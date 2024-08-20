@@ -68,7 +68,7 @@ public class WeaponChanger : MonoBehaviour
     {
         canScroll = false;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return CoroutineCaching.WaitForSeconds(0.5f);
 
         canScroll = true;
     }

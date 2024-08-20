@@ -12,7 +12,7 @@ public class StatDescription : MonoBehaviour
     public void ShowStatDescription(int num)
     {
         descripPanel.SetActive(true);
-        descripPanel.GetComponent<DescriptionUI>().SetTextInfo(num);
+        descripPanel.GetComponent<DescriptionUI>().SetTextInfo((StatText)num);
     }
 
     public void CloseStatDescription()

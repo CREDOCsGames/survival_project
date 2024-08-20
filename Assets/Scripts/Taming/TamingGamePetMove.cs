@@ -132,7 +132,7 @@ public class TamingGamePetMove : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(1.5f);
+            yield return CoroutineCaching.WaitForSeconds(1.5f);
 
             isDash = true;
 
@@ -177,7 +177,7 @@ public class TamingGamePetMove : MonoBehaviour
                     break;
             }
 
-            yield return new WaitForSeconds(2f);
+            yield return CoroutineCaching.WaitForSeconds(2f);
         }
     }
 
@@ -187,7 +187,7 @@ public class TamingGamePetMove : MonoBehaviour
         {
             speedRatio = Random.Range(1f, 2f);
 
-            yield return new WaitForSeconds(1.5f);
+            yield return CoroutineCaching.WaitForSeconds(1.5f);
         }
     }
 

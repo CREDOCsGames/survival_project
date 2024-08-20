@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: 01006
   m_EditorClassIdentifier: 
   itemNum: 1006
+  weightValue: 2
   itemSprite: {fileID: 2064621875, guid: 42d8dc065bd494547807c3092b4881aa, type: 3}
   itemName: "\uD68C\uB791\uD558\uB294 \uD56D\uD574\uC0AC\uC758 \uC601\uD63C"
   maxHp: 10
   damage: 5
+  closeDamage: 0
+  longDamage: 0
   recoverHp: 0
   defence: 3
   attackSpeed: 0
@@ -32,8 +35,15 @@ MonoBehaviour:
   isEye: 0
   isRaisin: 0
   isSoulmate: 0
-  isRoar: 0
-  maxCount: 1
+  isGrape: 0
+  isTabatiere: 0
+  isSoulMate: 0
+  isInvincible: 0
+  isSilverBullet: 0
+  isBloodMadness: 0
+  isRottenCheese: 0
+  isTurtle: 0
+  maxCount: 3
   itemShape:
     _width: 2
     _height: 2

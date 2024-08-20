@@ -82,13 +82,13 @@ public class Campfire : MonoBehaviour, IMouseInteraction
 
         debuffValues[debuffType] = 1;
 
-        character.recoverHpRatio = gameManager.status[Status.Recover] * (10 - debuffValues[Debuff.RECOVERY_HEALTH]) * 0.1f;
+        character.recoverHpRatio -= debuffValues[Debuff.RECOVERY_HEALTH];
 
-        character.attackSpeed = (int)(gameManager.status[Status.AttackSpeed] * (10 + debuffValues[Debuff.ATTACK_SPEED]) * 0.1f);
+        character.attackSpeed *= (10 + debuffValues[Debuff.ATTACK_SPEED]) * 0.1f;
 
-        character.speed = (int)(gameManager.status[Status.MoveSpeed] * (10 - debuffValues[Debuff.SPEED] * 2) * 0.1f);
+        character.speed *= (10 - debuffValues[Debuff.SPEED] * 2) * 0.1f;
 
-        gameManager.percentDamage = 100 - (debuffValues[Debuff.POWER]) * 20;
+        character.percentDamage -= (debuffValues[Debuff.POWER]) * 20;
 
         debuffIcon.GetComponent<CampFireDebuff>().SetDebuff(debuffType);
         debuffIcon.SetActive(true);
@@ -115,7 +115,7 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         character.maxHp = (int)(character.maxHp * (100 + mxHps[buffValues[Buff.MAXHEALTH]- num]) * 0.01f);
         character.currentHp = character.maxHp;
 
-        character.recoverHpRatio *= (100 + reHps[buffValues[Buff.RECOVERY_HEALTH] - num]) * 0.01f;
+        character.recoverHpRatio += reHps[buffValues[Buff.RECOVERY_HEALTH] - num];
 
         character.speed *= (100 + speeds[buffValues[Buff.SPEED] - num]) * 0.01f;
         character.avoid += avoids[buffValues[Buff.SPEED] - num];
@@ -222,7 +222,7 @@ public class Campfire : MonoBehaviour, IMouseInteraction
     IEnumerator BuffCoolTime(float time)
     {
         canCookFish = false;
-        yield return new WaitForSeconds(time);
+        yield return CoroutineCaching.WaitForSeconds(time);
 
         if (!gamesceneManager.isNight)
         {
@@ -238,7 +238,7 @@ public class Campfire : MonoBehaviour, IMouseInteraction
 
     public IEnumerator EndInteraction(Animator anim, float waitTime)
     {
-        yield return new WaitForSeconds(waitTime);
+        yield return CoroutineCaching.WaitForSeconds(waitTime);
     }
 
     public bool ReturnCanInteraction()

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,8 +13,10 @@ public class Fishing : Singleton<Fishing>
     [SerializeField] Text[] catchItemsText;
     [SerializeField] Image catchFishImage;
     [SerializeField] Sprite[] fishTypeImage;
+    [SerializeField] GameObject pieceCard;
+    [SerializeField] DiabolicItemInfo[] fishingPieceList;
 
-    int[] catchItemsCount = { 0, 0, 0 };
+    int[] catchItemsCount = { 0, 0};
     bool isCatch = false;
     [HideInInspector] public bool isCatchingStart = false;
     
@@ -23,6 +26,7 @@ public class Fishing : Singleton<Fishing>
     GameManager gameManager;
     GamesceneManager gamesceneManager;
     FishingAnim fishingAnim;
+    ItemManager itemManager;
 
     float randSpeedRatio;
 
@@ -33,6 +37,8 @@ public class Fishing : Singleton<Fishing>
     float initCatchPointStart;
     float initCatchPointEnd;
 
+    List<DiabolicItemInfo> itemList = new List<DiabolicItemInfo>();
+
     protected override void Awake()
     {
         base.Awake();
@@ -40,8 +46,12 @@ public class Fishing : Singleton<Fishing>
         gameManager = GameManager.Instance;
         gamesceneManager = GamesceneManager.Instance;
         fishingAnim = FishingAnim.Instance;
+        itemManager = ItemManager.Instance;
+
 
         gameObject.SetActive(false);
+        pieceCard.SetActive(false);
+
         catchBarWidth = catchBar.GetComponent<RectTransform>().sizeDelta.x;
 
         initCatchPointStart = catchPoint.offsetMin.x;
@@ -148,28 +158,78 @@ public class Fishing : Singleton<Fishing>
 
         rand += (int)((randSpeedRatio - 1) * 5);
 
-        int high = gameManager.specialStatus[SpecialStatus.BaitWarm] ? 46 : 66;
+        int high = gameManager.specialStatus[SpecialStatus.BaitWarm] ? 70 : 90;
 
-        if (rand < 33)
+        if (rand < high)
         {
             catchItemsCount[0]++;
             catchItemsText[0].text = catchItemsCount[0].ToString();
             catchFishImage.sprite = fishTypeImage[0];
         }
 
-        else if (rand < high)
+        else
         {
             catchItemsCount[1]++;
             catchItemsText[1].text = catchItemsCount[1].ToString();
             catchFishImage.sprite = fishTypeImage[1];
+
+            rand = Random.Range(0, 100);
+
+            if (rand >= 95)
+            {
+                GetRandomPiece();
+            }
+        }
+    }
+
+    void GetRandomPiece()
+    {
+        itemList.Clear();
+
+        for (int i = 0; i < fishingPieceList.Length; ++i)
+        {
+            if (!itemManager.getItems.ContainsKey(fishingPieceList[i]))
+            {
+                itemList.Add(fishingPieceList[i]);
+            }
+
+            else
+            {
+                if (itemManager.getItems[fishingPieceList[i]] < fishingPieceList[i].MaxCount)
+                    itemList.Add(fishingPieceList[i]);
+            }
         }
 
-        else
+        if (itemList.Count <= 0)
         {
-            catchItemsCount[2]++;
-            catchItemsText[2].text = catchItemsCount[2].ToString();
-            catchFishImage.sprite = fishTypeImage[1];
+            return;
         }
+
+        int totalWeightValue = 0;
+
+        for (int i = 0; i<itemList.Count; ++i)
+        {
+            totalWeightValue += itemList[i].WeightValue;
+        }
+
+        int rand = Random.Range(0, totalWeightValue);
+
+        float total = 0;
+
+        for (int i = 0; i < itemList.Count; i++)
+        {
+            total += itemList[i].WeightValue;
+
+            if (rand < total)
+            {
+                rand = i;
+                break;
+            }
+        }
+
+        pieceCard.GetComponent<PieceCard>().GetRandomItem(itemList[rand]);
+        pieceCard.gameObject.SetActive(true);
+        ItemManager.Instance.AddItem(itemList[rand]);
     }
 
     public IEnumerator FishingEnd()
@@ -177,7 +237,9 @@ public class Fishing : Singleton<Fishing>
         currentFishCount--;
         currentFishingCount.text = currentFishCount.ToString();
 
-        yield return new WaitForSeconds(2f);
+        yield return CoroutineCaching.WaitForSeconds(2f);
+
+        pieceCard.SetActive(false);
 
         if (currentFishCount <= 0)
         {

@@ -156,7 +156,7 @@ public class Pet : MonoBehaviour
 
     IEnumerator AttackCool()
     {
-        yield return new WaitForSeconds(5);
+        yield return CoroutineCaching.WaitForSeconds(5);
 
         canAttack = true;
     }

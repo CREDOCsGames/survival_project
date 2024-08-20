@@ -82,7 +82,7 @@ public class FireBullet : FireProjectile
     {
         character.isCanControll = false;
 
-        yield return new WaitForSeconds(1);
+        yield return CoroutineCaching.WaitForSeconds(1);
 
         character.isCanControll = true;
     }

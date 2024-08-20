@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fab9a0293a87af439ca27dbaa59a391, type: 3}
   m_Name: 01008
   m_EditorClassIdentifier: 
-  itemNum: 0
+  itemNum: 1008
+  weightValue: 5
   itemSprite: {fileID: 21300000, guid: 2215859e4486ca34bb3da64e466f1cc3, type: 3}
   itemName: "\uBC14\uB2E4 \uAC70\uBD81 \uB4F1\uB531\uC9C0"
   maxHp: 0
@@ -20,7 +21,7 @@ MonoBehaviour:
   closeDamage: 0
   longDamage: 0
   recoverHp: 0
-  defence: 30
+  defence: 0
   attackSpeed: 0
   speed: 0
   critical: 0
@@ -34,12 +35,19 @@ MonoBehaviour:
   isEye: 0
   isRaisin: 0
   isSoulmate: 0
-  isRoar: 0
-  maxCount: 0
+  isGrape: 0
+  isTabatiere: 0
+  isSoulMate: 0
+  isInvincible: 0
+  isSilverBullet: 0
+  isBloodMadness: 0
+  isRottenCheese: 0
+  isTurtle: 0
+  maxCount: 1
   itemShape:
     _width: 2
     _height: 1
     _shape: 0101
-  specialStatInfo: 
+  specialStatInfo: "\uBC29\uC5B4\uB825 30% \uC99D\uAC00."
   description: "\uC120\uBC15\uC5D0 \uC7A1\uC544\uB2E4 \uC0B6\uC544 \uBA39\uACE0,
     \uAECD\uC9C8\uB85C\uB294 \uC218\uD1B5\uC744 \uB9CC\uB4E4\uC5C8\uB2E4."
