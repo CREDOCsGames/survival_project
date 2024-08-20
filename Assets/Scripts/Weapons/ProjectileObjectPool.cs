@@ -16,6 +16,7 @@ public class ProjectileObjectPool : MonoBehaviour
     int currentPenetrateCount;
 
     GameManager gameManager;
+    Character character;
 
     public bool isPenetrate = false;
 
@@ -27,6 +28,7 @@ public class ProjectileObjectPool : MonoBehaviour
     private void Start()
     {
         gameManager = GameManager.Instance;
+        character = Character.Instance;
         currentPenetrateCount = penetrateCount;
     }
 
@@ -38,7 +40,7 @@ public class ProjectileObjectPool : MonoBehaviour
 
             DamageUI damage = damagePool.Get();
 
-            damage.realDamage = Mathf.Clamp((projectileDamage + gameManager.status[Status.Damage]), 0, projectileDamage) * gameManager.percentDamage;
+            damage.realDamage = (projectileDamage + gameManager.status[Status.Damage] + gameManager.status[Status.LongDamage] + gameManager.bloodDamage) * (100 + character.percentDamage) * 0.01f;
 
             if (canCri)
             {

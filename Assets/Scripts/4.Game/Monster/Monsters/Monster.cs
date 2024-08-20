@@ -114,7 +114,7 @@ public class Monster : MonoBehaviour
         rend.color = initcolor;
     }   
 
-    protected virtual void OnTriggerStay(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Character") && !isDead)
         {

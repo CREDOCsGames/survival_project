@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GatherFruit : MonoBehaviour, IMouseInteraction
 {
-    [SerializeField] float defaultGaugeUpValue;
+    [SerializeField] int defaultGaugeUpValue;
 
     bool canGather;
 
@@ -44,7 +44,7 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
     {
         int rand = Random.Range(0, 100);
         int fruitNum = (rand >= 0 && rand < 80) ? 0 : 1;
-        float ratio = (fruitNum == 0) ? 1 : 1.5f;
+        int ratio = (fruitNum == 0) ? 1 : 2;
 
         character.fruitUI.GetComponent<FruitUI>().SetImage(fruitNum);
         character.fruitUI.gameObject.SetActive(true);

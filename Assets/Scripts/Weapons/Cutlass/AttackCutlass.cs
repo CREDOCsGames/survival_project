@@ -13,12 +13,14 @@ public class AttackCutlass : MonoBehaviour
     protected IObjectPool<DamageUI> damagePool;
 
     GameManager gameManager;
+    Character character;
 
     private void Awake()
     {
         damagePool = new ObjectPool<DamageUI>(CreateDamageUI, OnGetDamageUI, OnReleaseDamageUI, OnDestroyDamageUI, maxSize: 20);
 
         gameManager = GameManager.Instance;
+        character = Character.Instance;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -31,7 +33,7 @@ public class AttackCutlass : MonoBehaviour
 
             bool isCri = gameManager.status[Status.Critical] >= Random.Range(0f, 100f);
 
-            damageUI.realDamage = Mathf.Clamp(damage + gameManager.status[Status.Damage], 0, damage) * gameManager.percentDamage;
+            damageUI.realDamage = (damage + gameManager.status[Status.Damage] + gameManager.status[Status.CloseDamage] + gameManager.bloodDamage) * character.percentDamage;
 
             damageUI.realDamage *= isCri ? 2 : 1;
 

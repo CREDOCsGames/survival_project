@@ -35,16 +35,20 @@ public class Character : Singleton<Character>
     [HideInInspector] public int maxHp;
     [HideInInspector] public float currentHp;
     [HideInInspector] public float recoverHpRatio;
-    [HideInInspector] public int speed;
+    [HideInInspector] public float speed;
     [HideInInspector] public int avoid;
     [HideInInspector] public int attackSpeed;
-    [HideInInspector] public int defence;
+    /*[HideInInspector]*/ public int defence;
     [SerializeField] float invincibleTime;
+    public int percentDamage;
+    public int percentDefence;
 
-    public float maxRecoveryGauge;
-    [HideInInspector] public float currentRecoveryGauge;
+    public int maxRecoveryGauge;
+    int initMaxRecGauge;
+    [HideInInspector] public int currentRecoveryGauge;
     public GameObject fruitUI;
     int recoveryValue = 10;
+    public int RecoveryValue => recoveryValue;
 
     [Header("Summon")]
     [SerializeField] GameObject tamedPet;
@@ -103,10 +107,12 @@ public class Character : Singleton<Character>
         agent.enabled = false;
 
         gameManager = GameManager.Instance;
-        gamesceneManager = GamesceneManager.Instance;
         transform.position = new Vector3(0f, 0f, -40f);
 
-        UpdateStat();
+        initMaxRecGauge = maxRecoveryGauge;
+        currentRecoveryGauge = 50;
+
+        //UpdateStat();
 
         dashCoolTime = 4;
         dashCount = gameManager.dashCount;
@@ -166,13 +172,28 @@ public class Character : Singleton<Character>
 
     public void UpdateStat()
     {
+        if(gamesceneManager == null)
+            gamesceneManager = GamesceneManager.Instance;
+
         maxHp = gameManager.status[Status.Maxhp];
-        currentHp = maxHp;
+        currentHp = maxHp/2;
         speed = gameManager.status[Status.MoveSpeed];
         avoid = gameManager.status[Status.Avoid];
-        recoveryValue = gameManager.status[Status.Recover];
+        recoverHpRatio = gameManager.status[Status.Recover];
         attackSpeed = gameManager.status[Status.AttackSpeed];
         defence = gameManager.status[Status.Defence];
+
+        maxRecoveryGauge = gameManager.specialStatus[SpecialStatus.Grape] ? initMaxRecGauge + 10 : initMaxRecGauge;
+        speed = gameManager.specialStatus[SpecialStatus.Tabatiere] & !gamesceneManager.isNight ? speed * 1.1f : speed;
+        invincibleTime = gameManager.specialStatus[SpecialStatus.Invincible] ? 0.2f : 0;
+        defence = gameManager.specialStatus[SpecialStatus.SilverBullet] ? defence + 5 : defence;
+
+        percentDamage = gameManager.percentDamage;
+        percentDamage = gameManager.specialStatus[SpecialStatus.RottenCheese] ? percentDamage + 30 : percentDamage;
+
+        percentDefence = gameManager.percentDefence;
+        percentDefence = gameManager.specialStatus[SpecialStatus.TurTle] ? percentDefence + 30 : percentDefence;
+        percentDefence = gameManager.specialStatus[SpecialStatus.RottenCheese] ? percentDefence - 20 : percentDefence;
     }
 
     void HpSetting()
@@ -198,6 +219,7 @@ public class Character : Singleton<Character>
     {
         isCanControll = false;
         currentHp += Mathf.CeilToInt(recoveryValue * recoverHpRatio);
+        Debug.Log(recoverHpRatio);
         currentRecoveryGauge -= recoveryValue;
 
         yield return new WaitForSeconds(0.5f);
@@ -435,12 +457,15 @@ public class Character : Singleton<Character>
                 {
                     SoundManager.Instance.PlayES("Hit");
 
-                    int trueDamage = Mathf.RoundToInt(damage * (100 - gameManager.status[Status.Defence]) / 100);
+                    int trueDamage = Mathf.RoundToInt((damage - gameManager.status[Status.Defence]) * (100 + percentDefence) * 0.01f);
 
                     if (gameManager.specialStatus[SpecialStatus.Rum])
-                        trueDamage *= 2;
+                        trueDamage = Mathf.RoundToInt(trueDamage * 1.5f);
 
                     currentHp -= trueDamage;
+
+                    if (gameManager.specialStatus[SpecialStatus.BloodMadness])
+                        gameManager.bloodDamage = Mathf.Clamp(gameManager.bloodDamage + 1, 0, 15);
                 }
 
                 if (currentCoroutine != null)

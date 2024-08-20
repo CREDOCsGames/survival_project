@@ -7,6 +7,8 @@ public enum Status
 {
     Maxhp,
     Damage,
+    CloseDamage,
+    LongDamage,
     Recover,
     Defence,
     AttackSpeed,
@@ -26,7 +28,14 @@ public enum SpecialStatus
     Eye,
     Raisin,
     Soulmate,
-    Roar,
+    Grape,
+    Tabatiere,
+    SoulMate,
+    Invincible,
+    SilverBullet,
+    BloodMadness,
+    RottenCheese,
+    TurTle,
     Count,
 }
 
@@ -49,8 +58,9 @@ public class GameManager : Singleton<GameManager>
 
     [Header("StatData")]
     [SerializeField] int maxHp;
-    [SerializeField] public float percentDamage;
     [SerializeField] int damage;
+    [SerializeField] int closeDamage;
+    [SerializeField] int longDamage;
     [SerializeField] int recoverHp;
     [SerializeField] int absorbHp;
     [SerializeField] int defence;
@@ -60,6 +70,10 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] int critical;
     [SerializeField] int avoid;
     [SerializeField] public int dashCount;
+
+    public int percentDamage;
+    public int percentDefence;
+    public int bloodDamage;
 
     [HideInInspector] public string currentScene;
 
@@ -84,12 +98,14 @@ public class GameManager : Singleton<GameManager>
     public Dictionary<Status, int> status = new Dictionary<Status, int>();
     public Dictionary<SpecialStatus, bool> specialStatus = new Dictionary<SpecialStatus, bool>();
 
-    public static string[] statNames = { "최대 체력", "공격력", "회복 수치", "방어력", "공격 속도", "이동 속도", "크리티컬", "회피율" };
+    public static string[] statNames = { "최대 체력", "공격력", "근거리 공격력", "원거리 공격력", "회복 수치", "방어력", "공격 속도", "이동 속도", "크리티컬", "회피율" };
 
     protected override void Awake()
     {
         base.Awake();
         DontDestroyOnLoad(this);
+
+        InitSetting();
     }
 
     private void Start()
@@ -107,8 +123,6 @@ public class GameManager : Singleton<GameManager>
         PlayerPrefs.SetInt("BossTuto", 1);
         PlayerPrefs.SetInt("BagicClear", 0);
 */
-        InitSetting();
-
         isPause = false;
         Time.timeScale = 1;
         isPause = false;
@@ -137,10 +151,17 @@ public class GameManager : Singleton<GameManager>
         luck = 0;
         critical = 5;
         avoid = 1;
+
+        percentDamage = 100;
+        percentDefence = 100;
+        bloodDamage = 0;
+        
 #endif
 
         status.Add(Status.Maxhp, maxHp);
         status.Add(Status.Damage, damage);
+        status.Add(Status.CloseDamage, closeDamage);
+        status.Add(Status.LongDamage, longDamage);
         status.Add(Status.Recover, recoverHp);
         status.Add(Status.Defence, defence);
         status.Add(Status.AttackSpeed, attackSpeed);
@@ -153,7 +174,7 @@ public class GameManager : Singleton<GameManager>
             specialStatus.Add((SpecialStatus)i, false);
         }
 
-        //specialStatus[SpecialStatus.RustyHarpoon] = true;
+        specialStatus[SpecialStatus.RottenCheese] = true;
     }
 
     private void Update()

@@ -9,7 +9,8 @@ public class ItemManager : Singleton<ItemManager>
 
     [HideInInspector] public DiabolicItemInfo[] items;
     [HideInInspector] public int[] itemQuantity;
-    [HideInInspector] public Dictionary<DiabolicItemInfo, int> itemDict = new Dictionary<DiabolicItemInfo, int>();
+    [HideInInspector] public Dictionary<DiabolicItemInfo, int> getItems = new Dictionary<DiabolicItemInfo, int>();
+    [HideInInspector] public Dictionary<DiabolicItemInfo, int> currentEquipItems = new Dictionary<DiabolicItemInfo, int>();
 
     protected override void Awake()
     {
@@ -17,11 +18,6 @@ public class ItemManager : Singleton<ItemManager>
 
         items = new DiabolicItemInfo[slotParent.childCount];
         itemQuantity = new int[slotParent.childCount];
-
-        for (int i = 0; i < allPieceItemsList.Length; i++)
-        {
-            itemDict.Add(allPieceItemsList[i], 0);
-        }
     }
 
     public void AddItem(DiabolicItemInfo selectedItem)
@@ -36,6 +32,7 @@ public class ItemManager : Singleton<ItemManager>
             if (items[i] == selectedItem)
             {
                 itemQuantity[i]++;
+                getItems[items[i]] = itemQuantity[i];
                 return;
             }
         }
@@ -43,6 +40,6 @@ public class ItemManager : Singleton<ItemManager>
         items[emptyIndex] = selectedItem;
         itemQuantity[emptyIndex]++;
 
-        itemDict[items[emptyIndex]] = itemQuantity[emptyIndex];
+        getItems.Add(items[emptyIndex], itemQuantity[emptyIndex]);
     }
 }

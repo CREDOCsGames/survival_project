@@ -44,7 +44,7 @@ public class DiabolicInven : Singleton<DiabolicInven>
         }
     }
 
-    public void InstantItemImage(DiabolicItemInfo item, GameObject blockImage, int pieceSlotIndex)
+    public void InstantItemImage(DiabolicItemInfo item, GameObject blockImage, int pieceSlotIndex, int itemQuantity)
     {
         OffSlotSetImage();
 
@@ -53,15 +53,21 @@ public class DiabolicInven : Singleton<DiabolicInven>
             return;
         }
 
-        Instantiate(itemImage, itemImageParent).GetComponent<DiabolicSlotItem>().ItemSetOnInventory(slots[currentIndex].GetComponent<RectTransform>().localPosition, item, TransferIndexesNum(), currentIndex, pieceSlotIndex);
+        Instantiate(itemImage, itemImageParent).GetComponent<DiabolicSlotItem>().ItemSetOnInventory(slots[currentIndex].GetComponent<RectTransform>().localPosition, item, TransferIndexesNum(), currentIndex, pieceSlotIndex, itemQuantity);
         blockImage.SetActive(true);
 
         AddStatus(pieceSlotIndex);
 
         SetSlotIsEmpty(height, width, itemShape, row, column, false);
+
+        if (!itemManager.currentEquipItems.ContainsKey(dragUI.DragItem))
+            itemManager.currentEquipItems.Add(dragUI.DragItem, 1);
+
+        else
+            itemManager.currentEquipItems[dragUI.DragItem]++;
     }
 
-    void AddStatus(int pieceSlotIndex)
+    public void AddStatus(int pieceSlotIndex)
     {
         itemStatus = dragUI.DragItem.Stat();
         itemSpecialStatus = dragUI.DragItem.SpecialStat();
@@ -71,7 +77,7 @@ public class DiabolicInven : Singleton<DiabolicInven>
             if (itemStatus[(Status)i] == 0)
                 continue;
 
-            gameManager.status[(Status)i] += itemStatus[(Status)i] * itemManager.itemQuantity[pieceSlotIndex];
+            gameManager.status[(Status)i] += itemStatus[(Status)i] * (itemManager.itemQuantity[pieceSlotIndex]);
         }
 
         for (int i = 0; i < gameManager.specialStatus.Count; ++i)

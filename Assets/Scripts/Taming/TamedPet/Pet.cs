@@ -112,7 +112,7 @@ public class Pet : MonoBehaviour
             Monster monster = other.transform.parent.GetComponent<Monster>();
 
             DamageUI damageUI = pool.Get();
-            damageUI.realDamage = damage;
+            damageUI.realDamage = gameManager.specialStatus[SpecialStatus.Soulmate] ? damage + 4 : damage;
 
             damageUI.UISetting(false, false);
             damageUI.transform.position = monster.transform.position;

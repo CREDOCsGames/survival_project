@@ -22,6 +22,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
     [Header("HP")]
     [SerializeField] Text hpText;
     [SerializeField] Slider hpBar;
+    [SerializeField] Text recText;
     [SerializeField] Slider recoveryGaugeBar;
 
     [Header("Items")]
@@ -47,9 +48,12 @@ public class GameSceneUI : Singleton<GameSceneUI>
     [Header("Stat")]
     [SerializeField] GameObject statWindow;
     [SerializeField] Text maxHp;
+    [SerializeField] Text recoverHp;
     [SerializeField] Text def;
     [SerializeField] Text avoid;
     [SerializeField] Text damage;
+    [SerializeField] Text closeDamage;
+    [SerializeField] Text longDamage;
     [SerializeField] Text aSpd;
     [SerializeField] Text spd;
     [SerializeField] Text cri;
@@ -269,9 +273,12 @@ public class GameSceneUI : Singleton<GameSceneUI>
     void SettingStatText()
     {
         maxHp.text = character.maxHp.ToString();
+        recoverHp.text = Mathf.CeilToInt(character.RecoveryValue * character.recoverHpRatio).ToString();
         def.text = character.defence.ToString("0.#");
         avoid.text = character.avoid.ToString("0.#");
         damage.text = gameManager.status[Status.Damage].ToString("0.0#");
+        closeDamage.text = gameManager.status[Status.CloseDamage].ToString("0.0#");
+        longDamage.text = gameManager.status[Status.LongDamage].ToString("0.0#");
         aSpd.text = character.attackSpeed.ToString("0.#");
         spd.text = character.speed.ToString("0.##");
         cri.text = gameManager.status[Status.Critical].ToString("0.#");
@@ -324,8 +331,10 @@ public class GameSceneUI : Singleton<GameSceneUI>
         hpBar.value = (character.currentHp / character.maxHp);
     }
 
-    public void RecoveryGauegeUI()
+    void RecoveryGauegeUI()
     {
+        recText.text = $"{character.currentRecoveryGauge} / {character.maxRecoveryGauge}";
+
         recoveryGaugeBar.value = Mathf.Clamp(character.currentRecoveryGauge / character.maxRecoveryGauge, 0f, 1f);
     }
 

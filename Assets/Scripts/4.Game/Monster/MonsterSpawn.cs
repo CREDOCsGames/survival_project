@@ -46,7 +46,7 @@ public class MonsterSpawn : MonoBehaviour
             totalWeight += weightValue[i];
         }
 
-        StartCoroutine(UpdateSpawn());
+        //StartCoroutine(UpdateSpawn());
     }
 
     private void Update()

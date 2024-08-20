@@ -11,6 +11,7 @@ public class DiabolicSlotItem : MonoBehaviour
     GameManager gameManager;
     DiabolicInven inven;
     ItemManager itemManager;
+    Character character;
 
     DiabolicItemInfo itemData;
     Dictionary<Status, int> itemStatus;
@@ -20,13 +21,44 @@ public class DiabolicSlotItem : MonoBehaviour
     int firstIndex;
 
     int pieceSlotIndex;
+    int itemQuantity;
 
-    private void Start()
+    private void Awake()
     {
         dragUI = DragUI.Instance;
         gameManager = GameManager.Instance;
         inven = DiabolicInven.Instance;
         itemManager = ItemManager.Instance;
+        character = Character.Instance;
+    }
+
+    private void OnEnable()
+    {
+        if (itemManager.currentEquipItems == null)
+            return;
+
+        foreach(var equipItemData in itemManager.currentEquipItems)
+        {
+            if(equipItemData.Key == itemData)
+            {
+                if(itemQuantity != itemManager.itemQuantity[pieceSlotIndex])
+                {
+                    Dictionary<Status, int> itemStatus = itemData.Stat();
+
+                    for (int i = 0; i < gameManager.status.Count; i++)
+                    {
+                        if (itemStatus[(Status)i] == 0)
+                            continue;
+
+                        gameManager.status[(Status)i] += itemStatus[(Status)i] * (itemManager.itemQuantity[pieceSlotIndex] - itemQuantity);
+                    }
+
+                    character.UpdateStat();
+                }
+
+                break;
+            }
+        }
     }
 
     private void Update()
@@ -35,7 +67,7 @@ public class DiabolicSlotItem : MonoBehaviour
             SubtractItem();
     }
 
-    public void ItemSetOnInventory(Vector3 instantPos, DiabolicItemInfo item, List<int> _indexes, int _firstIndex, int _pieceSlotIndex)
+    public void ItemSetOnInventory(Vector3 instantPos, DiabolicItemInfo item, List<int> _indexes, int _firstIndex, int _pieceSlotIndex, int _itemQuantity)
     {
         itemData = item;
         SetImage(item);
@@ -43,6 +75,7 @@ public class DiabolicSlotItem : MonoBehaviour
         indexes = _indexes;
         firstIndex = _firstIndex;
         pieceSlotIndex = _pieceSlotIndex;
+        itemQuantity = _itemQuantity;
     }
 
     void SetImage(DiabolicItemInfo item)

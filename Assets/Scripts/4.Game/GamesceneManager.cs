@@ -54,7 +54,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
 #else
         gameManager.dashCount = 0;
 #endif
-
+        gameManager.bloodDamage = 0;
         gameSceneUI.CursorChange(CursorType.Normal);
         isNight = false;
         nightFilter.SetActive(false);
@@ -94,8 +94,6 @@ public class GamesceneManager : Singleton<GamesceneManager>
         //yield return new WaitForSeconds(gameManager.gameDayTime);
         yield return CoroutineCaching.WaitForSeconds(gameManager.gameDayTime);
 
-        campFire.GetComponent<Campfire>().ToNightScene();
-
         StartCoroutine(NightRoutine()); 
     }
 
@@ -109,6 +107,8 @@ public class GamesceneManager : Singleton<GamesceneManager>
         character.UpdateStat();
         character.weaponParent.gameObject.SetActive(true);
         character.transform.position = new Vector3(0f, 0f, -40f);
+
+        campFire.GetComponent<Campfire>().ToNightScene();
 
         currentGameTime = gameManager.gameNightTime;
 

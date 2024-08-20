@@ -51,6 +51,8 @@ public class DiabolicItemInfo : ScriptableObject
     [Header("Stat")]
     [SerializeField] int maxHp;
     [SerializeField] int damage;
+    [SerializeField] int closeDamage;
+    [SerializeField] int longDamage;
     [SerializeField] int recoverHp;
     [SerializeField] int defence;
     [SerializeField] int attackSpeed;
@@ -68,7 +70,14 @@ public class DiabolicItemInfo : ScriptableObject
     [SerializeField] bool isEye;
     [SerializeField] bool isRaisin;
     [SerializeField] bool isSoulmate;
-    [SerializeField] bool isRoar;
+    [SerializeField] bool isGrape;
+    [SerializeField] bool isTabatiere;
+    [SerializeField] bool isSoulMate;
+    [SerializeField] bool isInvincible;
+    [SerializeField] bool isSilverBullet;
+    [SerializeField] bool isBloodMadness;
+    [SerializeField] bool isRottenCheese;
+    [SerializeField] bool isTurtle;
 
     [SerializeField] int maxCount;
     [SerializeField] ItemShape itemShape;  // 아이템 모양
@@ -93,6 +102,8 @@ public class DiabolicItemInfo : ScriptableObject
         {
             itemStatus.Add(Status.Maxhp, maxHp);
             itemStatus.Add(Status.Damage, damage);
+            itemStatus.Add(Status.CloseDamage, closeDamage);
+            itemStatus.Add(Status.LongDamage, longDamage);
             itemStatus.Add(Status.Recover, recoverHp);
             itemStatus.Add(Status.Defence, defence);
             itemStatus.Add(Status.AttackSpeed, attackSpeed);
@@ -105,6 +116,8 @@ public class DiabolicItemInfo : ScriptableObject
         {
             itemStatus[Status.Maxhp] = maxHp;
             itemStatus[Status.Damage] = damage;
+            itemStatus[Status.CloseDamage] = closeDamage;
+            itemStatus[Status.LongDamage] = longDamage;
             itemStatus[Status.Recover] = recoverHp;
             itemStatus[Status.Defence] = defence;
             itemStatus[Status.AttackSpeed] = attackSpeed;
@@ -129,7 +142,14 @@ public class DiabolicItemInfo : ScriptableObject
             itemSpecialStatus.Add(SpecialStatus.Eye, isEye);
             itemSpecialStatus.Add(SpecialStatus.Raisin, isRaisin);
             itemSpecialStatus.Add(SpecialStatus.Soulmate, isSoulmate);
-            itemSpecialStatus.Add(SpecialStatus.Roar, isRoar);
+            itemSpecialStatus.Add(SpecialStatus.Grape, isGrape);
+            itemSpecialStatus.Add(SpecialStatus.Tabatiere, isTabatiere);
+            itemSpecialStatus.Add(SpecialStatus.Soulmate, isSoulMate);
+            itemSpecialStatus.Add(SpecialStatus.Invincible, isInvincible);
+            itemSpecialStatus.Add(SpecialStatus.SilverBullet, isSilverBullet);
+            itemSpecialStatus.Add(SpecialStatus.BloodMadness, isBloodMadness);
+            itemSpecialStatus.Add(SpecialStatus.RottenCheese, isRottenCheese);
+            itemSpecialStatus.Add(SpecialStatus.TurTle, isTurtle);
         }
 
         else
@@ -143,7 +163,13 @@ public class DiabolicItemInfo : ScriptableObject
             itemSpecialStatus[SpecialStatus.Eye] = isEye;
             itemSpecialStatus[SpecialStatus.Raisin] = isRaisin;
             itemSpecialStatus[SpecialStatus.Soulmate] = isSoulmate;
-            itemSpecialStatus[SpecialStatus.Roar] = isRoar;
+            itemSpecialStatus[SpecialStatus.Grape] = isGrape;
+            itemSpecialStatus[SpecialStatus.Tabatiere] = isTabatiere;
+            itemSpecialStatus[SpecialStatus.Soulmate] = isSoulMate;
+            itemSpecialStatus[SpecialStatus.SilverBullet] = isSilverBullet;
+            itemSpecialStatus[SpecialStatus.BloodMadness] = isBloodMadness;
+            itemSpecialStatus[SpecialStatus.RottenCheese] = isRottenCheese;
+            itemSpecialStatus[SpecialStatus.TurTle] = isTurtle;
         }
 
         return itemSpecialStatus;

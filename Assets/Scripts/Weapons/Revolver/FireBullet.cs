@@ -9,6 +9,8 @@ public class FireBullet : FireProjectile
 
     Coroutine currentCoroutine;
 
+    public int BulletCount => bulletCount;
+
     private void OnEnable()
     {
         bulletCount = gameManager.specialStatus[SpecialStatus.AmmoPouch] ? 5 : 4;
@@ -56,7 +58,13 @@ public class FireBullet : FireProjectile
             bulletParent.GetChild(bulletCount - 1).gameObject.SetActive(false);
             bulletCount--;
 
-            if(currentCoroutine != null)
+            if (gameManager.specialStatus[SpecialStatus.SilverBullet])
+            {
+                if (bulletCount <= 0)
+                    character.defence -= 5;
+            }
+
+            if (currentCoroutine != null)
                 StopCoroutine(currentCoroutine);
 
             currentCoroutine = StartCoroutine(FreezeCharacter());

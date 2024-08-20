@@ -22,9 +22,15 @@ public class RandomPieceCard : MonoBehaviour
 
         for (int i = 0; i < itemManager.allPieceItemsList.Length; i++)
         {
-            if (itemManager.itemDict[itemManager.allPieceItemsList[i]] < itemManager.allPieceItemsList[i].MaxCount)
+            if(!itemManager.getItems.ContainsKey(itemManager.allPieceItemsList[i]))
             {
                 itemList.Add(itemManager.allPieceItemsList[i]);
+            }    
+
+            else
+            {
+                if (itemManager.getItems[itemManager.allPieceItemsList[i]] < itemManager.allPieceItemsList[i].MaxCount)
+                    itemList.Add(itemManager.allPieceItemsList[i]);
             }
         }
 
