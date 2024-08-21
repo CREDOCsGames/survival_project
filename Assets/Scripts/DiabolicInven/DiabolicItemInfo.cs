@@ -79,6 +79,7 @@ public class DiabolicItemInfo : ScriptableObject
     [SerializeField] bool isBloodMadness;
     [SerializeField] bool isRottenCheese;
     [SerializeField] bool isTurtle;
+    [SerializeField] bool isMirror;
 
     [SerializeField] int maxCount;
     [SerializeField] ItemShape itemShape;  // 아이템 모양
@@ -152,6 +153,7 @@ public class DiabolicItemInfo : ScriptableObject
             itemSpecialStatus.Add(SpecialStatus.BloodMadness, isBloodMadness);
             itemSpecialStatus.Add(SpecialStatus.RottenCheese, isRottenCheese);
             itemSpecialStatus.Add(SpecialStatus.TurTle, isTurtle);
+            itemSpecialStatus.Add(SpecialStatus.Mirror, isMirror);
         }
 
         else
@@ -172,6 +174,7 @@ public class DiabolicItemInfo : ScriptableObject
             itemSpecialStatus[SpecialStatus.BloodMadness] = isBloodMadness;
             itemSpecialStatus[SpecialStatus.RottenCheese] = isRottenCheese;
             itemSpecialStatus[SpecialStatus.TurTle] = isTurtle;
+            itemSpecialStatus[SpecialStatus.Mirror] = isMirror;
         }
 
         return itemSpecialStatus;

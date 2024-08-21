@@ -5270,7 +5270,7 @@ MonoBehaviour:
   damageStorage: {fileID: 1692643827}
   initGameTime: 10000
   gameDayTime: 0
-  gameNightTime: 1
+  gameNightTime: 303
   money: 0
   round: 0
   woodCount: 30
@@ -5450,6 +5450,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1005871281}
+  - component: {fileID: 1005871282}
   m_Layer: 0
   m_Name: BulletStorage
   m_TagString: Untagged
@@ -5472,6 +5473,19 @@ Transform:
   m_Father: {fileID: 936130855}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1005871282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005871280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbe7a3bd9114ae846a1e4a8fea75b702, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageUI: {fileID: 7694887781048525286, guid: 45a00b432fc93984ebeefaf1b44503d3, type: 3}
 --- !u!1 &1016113528
 GameObject:
   m_ObjectHideFlags: 0

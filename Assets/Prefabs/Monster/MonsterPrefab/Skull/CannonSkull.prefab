@@ -294,6 +294,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2360768902883065048}
   - component: {fileID: 3223408100450381840}
+  - component: {fileID: 4978174670763100109}
   m_Layer: 20
   m_Name: monColl
   m_TagString: MonsterAttacked
@@ -329,3 +330,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.19262786, y: 0.34787947, z: 0}
   m_Center: {x: -0.01948501, y: -0.0143843535, z: 3.7936153e-14}
+--- !u!114 &4978174670763100109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3320297759258608929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65a46de7c0c3504c86eb5331f5eefc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

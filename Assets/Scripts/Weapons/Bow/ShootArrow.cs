@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class ShootArrow : FireProjectile
 {
-    [SerializeField] GameObject catchBar;
-
     void Update()
     {
         FireAppliedCoolTime();

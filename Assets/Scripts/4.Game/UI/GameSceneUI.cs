@@ -371,15 +371,20 @@ public class GameSceneUI : Singleton<GameSceneUI>
         }
     }
 
+    bool isNight = false;
+
     void WeaponUI()
     {
-        if (gamesceneManager.isNight)
+        if (isNight == gamesceneManager.isNight)
+            return;
+
+        isNight = gamesceneManager.isNight;
+
+        if (isNight)
             weaponUI.SetActive(true);
 
         else
-        {
             weaponUI.SetActive(false);
-        }
     }
 
     public void OnOffStatWindow()

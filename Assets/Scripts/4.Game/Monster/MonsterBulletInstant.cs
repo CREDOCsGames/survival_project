@@ -58,7 +58,7 @@ public class MonsterBulletInstant : MonoBehaviour
 
     private MonsterBullet CreateBullet()
     {
-        MonsterBullet bullet = Instantiate(bulletPrefab, bulletPos.position, transform.rotation).GetComponent<MonsterBullet>();
+        MonsterBullet bullet = Instantiate(bulletPrefab, bulletPos.position, transform.rotation, transform.parent).GetComponent<MonsterBullet>();
         bullet.SetManagedPool(pool);
         return bullet;
     }

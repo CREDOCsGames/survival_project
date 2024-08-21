@@ -87,6 +87,17 @@ public class GamesceneManager : Singleton<GamesceneManager>
         if (gameManager.round > 1)
             multicellInvenPanel.SetActive(true);
 
+        character.canWeaponChange = true;
+
+        for (int i = 0; i < character.weaponParent.childCount; ++i)
+        {
+            if (!character.weaponParent.GetChild(i).gameObject.activeSelf)
+            {
+                character.weaponParent.GetChild(i).gameObject.SetActive(true);
+                character.weaponParent.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+
         //yield return new WaitWhile(() => multicellInvenPanel.activeSelf);
         yield return CoroutineCaching.WaitWhile(() => multicellInvenPanel.activeSelf);
 
@@ -113,6 +124,9 @@ public class GamesceneManager : Singleton<GamesceneManager>
         character.transform.position = new Vector3(0f, 0f, -40f);
 
         campFire.GetComponent<Campfire>().ToNightScene();
+
+        gameManager.dashCount = 10;
+        character.dashCount = gameManager.dashCount;
 
         currentGameTime = gameManager.gameNightTime;
 

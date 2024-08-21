@@ -249,65 +249,62 @@ public class Character : Singleton<Character>
 
     void Dash()
     {
-        if (!isCanControll)
+        if (gameManager.dashCount <= 0)
             return;
 
-        if (gameManager.dashCount > 0)
+        if (dashCount > 0 && isCanControll)
         {
             Vector3 beforePos;
             Vector3 afterPos;
 
-            if (dashCount > 0)
+            particle.transform.localScale = rendUpper.flipX ? new Vector3(1, 1, 1) * particleScale : new Vector3(-1, 1, 1) * particleScale;
+
+            if (Input.GetKeyDown((KeyCode)PlayerPrefs.GetInt("Key_Dash")))
             {
-                particle.transform.localScale = rendUpper.flipX ? new Vector3(1, 1, 1) * particleScale : new Vector3(-1, 1, 1) * particleScale;
+                particle.GetComponentInChildren<Renderer>().enabled = true;
 
-                if (Input.GetKeyDown((KeyCode)PlayerPrefs.GetInt("Key_Dash")))
+                beforePos = transform.position;
+
+                if (x == 0 && z == 0)
+                    afterPos = new Vector3(transform.position.x + 2, 0, transform.position.z);
+
+                else
+                    afterPos = transform.position + new Vector3(x, 0, z) * 4;
+
+                NavMeshHit hit;
+
+                if (NavMesh.SamplePosition(afterPos, out hit, 1000, NavMesh.AllAreas))
                 {
-                    particle.GetComponentInChildren<Renderer>().enabled = true;
-
-                    beforePos = transform.position;
-
-                    if (x == 0 && z == 0)
-                        afterPos = new Vector3(transform.position.x + 2, 0, transform.position.z);
-
-                    else
-                        afterPos = transform.position + new Vector3(x, 0, z) * 4;
-
-                    NavMeshHit hit;
-
-                    if (NavMesh.SamplePosition(afterPos, out hit, 1000, NavMesh.AllAreas))
-                    {
-                        afterPos = hit.position;
-                    }
-
-                    afterPos = new Vector3(afterPos.x, transform.position.y, afterPos.z);
-
-                    agent.enabled = false;
-
-                    //transform.position = Vector3.Lerp(beforePos, afterPos, 1);
-                    transform.position = afterPos;
-
-                    agent.enabled = true;
-
-                    dashCount--;
-                    Invoke("ParticleOff", 0.2f);
-
-                    if (currentCoroutine != null)
-                        StopCoroutine(currentCoroutine);
-
-                    currentCoroutine = StartCoroutine(IEDashInvincible());
+                    afterPos = hit.position;
                 }
+
+                afterPos = new Vector3(afterPos.x, transform.position.y, afterPos.z);
+
+                agent.enabled = false;
+
+                //transform.position = Vector3.Lerp(beforePos, afterPos, 1);
+                transform.position = afterPos;
+
+                agent.enabled = true;
+
+                dashCount--;
+                Invoke("ParticleOff", 0.2f);
+
+                if (currentCoroutine != null)
+                    StopCoroutine(currentCoroutine);
+
+                currentCoroutine = StartCoroutine(IEDashInvincible());
             }
+        }
 
-            if (dashCount != gameManager.dashCount)
+        if (dashCount < gameManager.dashCount)
+        {
+            dashCoolTime -= Time.deltaTime;
+
+            if (dashCoolTime <= 0)
             {
-                dashCoolTime -= Time.deltaTime;
-
-                if (dashCoolTime <= 0)
-                {
-                    dashCount++;
-                    dashCoolTime = initDashCoolTime;
-                }
+                dashCount++;
+                dashCoolTime = initDashCoolTime;
             }
         }
     }
@@ -382,7 +379,7 @@ public class Character : Singleton<Character>
 
         agent.speed = speed;
         agent.Move(dir * speed * Time.deltaTime);
-
+        
         if (ground == null)
             ground = GamesceneManager.Instance.walkableArea;
 
@@ -431,7 +428,7 @@ public class Character : Singleton<Character>
 
     int avoidRand;
 
-    public void OnDamaged(float damage)
+    public void OnDamaged(float damage, GameObject damagedObject)
     {
         if (!isAttacked)
         {
@@ -451,6 +448,13 @@ public class Character : Singleton<Character>
                         trueDamage = Mathf.RoundToInt(trueDamage * 1.5f);
 
                     currentHp -= trueDamage;
+
+                    if(gameManager.specialStatus[SpecialStatus.Mirror])
+                    {
+                        damagedObject.GetComponent<IDamageable>().Attacked(Mathf.Round(trueDamage / 2), this.gameObject);
+                        damagedObject.GetComponent<IDamageable>().RendDamageUI(Mathf.Round(trueDamage / 2), damagedObject.transform.position, false, false);
+                    }
+
 
                     if (gameManager.specialStatus[SpecialStatus.BloodMadness])
                         gameManager.bloodDamage = Mathf.Clamp(gameManager.bloodDamage + 1, 0, 15);

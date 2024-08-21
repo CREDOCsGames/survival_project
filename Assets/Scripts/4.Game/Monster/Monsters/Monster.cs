@@ -32,6 +32,7 @@ public class Monster : MonoBehaviour
     GameManager gameManager;
     Character character;
     GamesceneManager gamesceneManager;
+    
 
     IEnumerator runningCoroutine;
 
@@ -132,7 +133,7 @@ public class Monster : MonoBehaviour
     {
         if (other.CompareTag("Character") && !isDead)
         {
-           character.OnDamaged(damage);
+           character.OnDamaged(damage, this.gameObject.transform.GetComponentInChildren<MonsterHit>().gameObject);
         }
     }
 
@@ -266,4 +267,6 @@ public class Monster : MonoBehaviour
         GetComponent<MonsterMove>().agent.enabled = false;
         hitCollder.enabled = false;
     }
+
+    
 }

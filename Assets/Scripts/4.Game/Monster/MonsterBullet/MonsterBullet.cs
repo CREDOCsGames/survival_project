@@ -33,7 +33,7 @@ public class MonsterBullet : MonoBehaviour
         if (other.tag == "Character")
         {
             realDamage = bulletDamage * (1 + Mathf.Floor(gameManager.round / 30)) + Mathf.Floor(gameManager.round / 5) * 2f;
-            other.transform.parent.GetComponent<Character>().OnDamaged(realDamage);
+            other.transform.parent.GetComponent<Character>().OnDamaged(realDamage, transform.parent.transform.GetComponentInChildren<MonsterHit>().gameObject);
             DestroyBullet();
         }
     }

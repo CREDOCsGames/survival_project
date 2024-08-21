@@ -2,11 +2,9 @@ using UnityEngine;
 using System.Linq;
 using UnityEditor;
 using System.Collections;
-using UnityEngine.Pool;
 
 public class Pet : MonoBehaviour
 {
-    [SerializeField] DamageUI damageUIPreFab;
     [SerializeField] float moveRange;
     [SerializeField] float speed;
     [SerializeField] float detactRange;
@@ -32,12 +30,6 @@ public class Pet : MonoBehaviour
 
     bool canAttack = true;
 
-    protected IObjectPool<DamageUI> pool;
-
-    private void Awake()
-    {
-        pool = new ObjectPool<DamageUI>(CreateDamageUI, OnGetDamageUI, OnReleaseDamageUI, OnDestroyDamageUI, maxSize: 10);
-    }
 
     private void Start()
     {
@@ -107,18 +99,13 @@ public class Pet : MonoBehaviour
         if (!isAttack)
             return;
 
-        if (other.CompareTag("Monster") && other.transform.parent.GetComponent<Monster>() != null)
+        //if (other.CompareTag("Monster") && other.transform.parent.GetComponent<Monster>() != null)
+        if(other.GetComponent<IDamageable>() != null)
         {
-            Monster monster = other.transform.parent.GetComponent<Monster>();
+            float realDamage = gameManager.specialStatus[SpecialStatus.Soulmate] ? damage + 4 : damage;
 
-            DamageUI damageUI = pool.Get();
-            damageUI.realDamage = gameManager.specialStatus[SpecialStatus.Soulmate] ? damage + 4 : damage;
-
-            damageUI.UISetting(false, false);
-            damageUI.transform.position = monster.transform.position;
-            damageUI.gameObject.transform.SetParent(gameManager.damageStorage);
-
-            monster.OnDamaged(damage);
+            other.GetComponent<IDamageable>().Attacked(realDamage, this.gameObject);
+            other.GetComponent<IDamageable>().RendDamageUI(realDamage, other.transform.position, false, false);
         }
     }
 
@@ -173,35 +160,5 @@ public class Pet : MonoBehaviour
     {
         if (character.GetPetRound + 5 == gameManager.round)
             character.RunAwayPet();
-    }
-
-    private DamageUI CreateDamageUI()
-    {
-        DamageUI damageUIPool = Instantiate(damageUIPreFab, transform.position, damageUIPreFab.transform.rotation).GetComponent<DamageUI>();
-        damageUIPool.SetManagedPool(pool);
-        damageUIPool.transform.SetParent(gameManager.bulletStorage);
-        return damageUIPool;
-    }
-
-    private void OnGetDamageUI(DamageUI damageUIPool)
-    {
-        damageUIPool.gameObject.SetActive(true);
-    }
-
-    private void OnReleaseDamageUI(DamageUI damageUIPool)
-    {
-        damageUIPool.gameObject.SetActive(false);
-    }
-
-    private void OnDestroyDamageUI(DamageUI damageUIPool)
-    {
-        Destroy(damageUIPool.gameObject);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, detactRange);
-
     }
 }

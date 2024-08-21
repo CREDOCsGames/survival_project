@@ -8,20 +8,21 @@ public class DamageUI : MonoBehaviour
 
     float printTime, initPrintTime;
 
-    public float realDamage;
+    float realDamage;
     public float swordBulletDamage;
 
     [HideInInspector] public bool isMiss;
 
     protected IObjectPool<DamageUI> managedPool;
 
-    public void UISetting(bool canCri, bool isCri)
+    public void UISetting(bool canCri, bool isCri, float _realDamage)
     {
         printTime = 1f;
         initPrintTime = printTime;
 
         damageText.color = canCri & isCri ? Color.red : Color.green;
 
+        realDamage = _realDamage;
         damageText.text = realDamage.ToString("0.##");
     }
 

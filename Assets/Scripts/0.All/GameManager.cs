@@ -36,6 +36,7 @@ public enum SpecialStatus
     BloodMadness,
     RottenCheese,
     TurTle,
+    Mirror,
     Count,
 }
 
@@ -178,7 +179,7 @@ public class GameManager : Singleton<GameManager>
             specialStatus.Add((SpecialStatus)i, false);
         }
 
-        specialStatus[SpecialStatus.RottenCheese] = true;
+        specialStatus[SpecialStatus.Mirror] = true;
     }
 
     private void Update()

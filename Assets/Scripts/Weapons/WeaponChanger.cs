@@ -44,19 +44,8 @@ public class WeaponChanger : MonoBehaviour
 
     private void OnDisable()
     {
-        for (int i = 0; i < character.weaponParent.childCount; ++i)
-        {
-            if (!character.weaponParent.GetChild(i).gameObject.activeSelf)
-            {
-                character.weaponParent.GetChild(i).gameObject.SetActive(true);
-                character.weaponParent.GetChild(i).gameObject.SetActive(false);
-            }
-        }
-
         StopAllCoroutines();
-
         canScroll = true;
-        character.canWeaponChange = true;
     }
 
     void Update()
