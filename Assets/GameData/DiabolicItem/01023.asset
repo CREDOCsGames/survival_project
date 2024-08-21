@@ -21,7 +21,7 @@ MonoBehaviour:
   closeDamage: 0
   longDamage: 0
   recoverHp: 0
-  defence: 2
+  defence: 1
   attackSpeed: 0
   speed: 0
   critical: 0
@@ -43,6 +43,7 @@ MonoBehaviour:
   isBloodMadness: 0
   isRottenCheese: 0
   isTurtle: 0
+  isMirror: 0
   maxCount: 3
   itemShape:
     _width: 1

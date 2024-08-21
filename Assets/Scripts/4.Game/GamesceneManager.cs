@@ -130,6 +130,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
         currentGameTime = gameManager.gameNightTime;
 
+        character.isCanControll = true;
         //yield return new WaitForSeconds(gameManager.gameNightTime);
         yield return CoroutineCaching.WaitForSeconds(gameManager.gameNightTime);
 

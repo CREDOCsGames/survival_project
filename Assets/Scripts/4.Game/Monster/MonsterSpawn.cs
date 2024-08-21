@@ -138,8 +138,8 @@ public class MonsterSpawn : MonoBehaviour
             }
         }
 
-        /*if (currentCoroutine != null)
-            StopCoroutine(currentCoroutine);*/
+        if (currentCoroutine != null)
+            StopCoroutine(currentCoroutine);
     }
 
 

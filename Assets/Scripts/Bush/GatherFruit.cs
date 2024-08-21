@@ -5,13 +5,14 @@ using UnityEngine;
 public class GatherFruit : MonoBehaviour, IMouseInteraction
 {
     [SerializeField] int defaultGaugeUpValue;
-    [SerializeField] GameObject pieceCard;
     [SerializeField] DiabolicItemInfo[] bushPieceList;
 
     bool canGather;
 
     Character character;
     ItemManager itemManager;
+    GameSceneUI gameSceneUI;
+    GamesceneManager gamesceneManager;
 
     List<DiabolicItemInfo> itemList = new List<DiabolicItemInfo>();
 
@@ -20,7 +21,8 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
         canGather = false;
         character = Character.Instance;
         itemManager = ItemManager.Instance;
-        pieceCard.SetActive(false);
+        gameSceneUI = GameSceneUI.Instance;
+        gamesceneManager = GamesceneManager.Instance;
     }
 
     private void OnDisable()
@@ -73,8 +75,7 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
             }
         }
 
-        pieceCard.GetComponent<PieceCard>().GetRandomItem(itemList[rand]);
-        pieceCard.gameObject.SetActive(true);
+        gameSceneUI.UpdatePieceCardUI(itemList[rand]);
         ItemManager.Instance.AddItem(itemList[rand]);
     }
 
@@ -95,12 +96,17 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
     {
         yield return CoroutineCaching.WaitForSeconds(1);
 
+        yield return CoroutineCaching.WaitForSeconds(waitTime);
+
+        if (gamesceneManager.isNight)
+            yield break;
+
         int rand = Random.Range(0, 100);
 
         if (rand > 95)
             GetRandomPiece();
 
-        yield return CoroutineCaching.WaitForSeconds(waitTime);
+        Debug.Log("1");
 
         RecoveryGaugeUp();
         Destroy(gameObject);

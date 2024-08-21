@@ -230,8 +230,8 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         if (!gamesceneManager.isNight)
         {
             interactionUI.SetActive(true);
-            canCookFish = true;
         }
+        canCookFish = true;
     }
 
     public void CanInteraction(bool _canInteraction)

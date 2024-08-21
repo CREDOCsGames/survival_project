@@ -9,6 +9,7 @@ public class PieceCard : MonoBehaviour
     [SerializeField] Text itemName;
     [SerializeField] Text maxCount;
     [SerializeField] GameObject[] descriptPrefabs;
+    [SerializeField] Text descriptText;
     
     DiabolicItemInfo item;
 
@@ -43,19 +44,17 @@ public class PieceCard : MonoBehaviour
         {
             if (itemStatus[(Status)i] > 0)
             {
-                descriptPrefabs[count].transform.GetChild(0).GetComponent<Text>().text = GameManager.statNames[i];
-                descriptPrefabs[count].transform.GetChild(2).GetComponent<Text>().text = ($"+{itemStatus[(Status)i]}");
+                descriptPrefabs[count].transform.GetChild(0).GetComponent<Text>().text = $"{GameManager.statNames[i]}   :   <color=lime>+{itemStatus[(Status)i]}</color>";
 
                 /*if (gameManager.status[(Status)i] < 0)
                 {
                     descriptPrefabs[count].transform.GetChild(2).GetComponent<Text>().color = Color.red;
                     descriptPrefabs[count].transform.GetChild(2).GetComponent<Text>().text = stats[i].ToString();
                 }*/
+
                 descriptPrefabs[count].gameObject.SetActive(true);
                 descriptPrefabs[count].transform.GetChild(0).gameObject.SetActive(true);
-                descriptPrefabs[count].transform.GetChild(1).gameObject.SetActive(true);
-                descriptPrefabs[count].transform.GetChild(2).gameObject.SetActive(true);
-                descriptPrefabs[count].transform.GetChild(3).gameObject.SetActive(false);
+                descriptPrefabs[count].transform.GetChild(1).gameObject.SetActive(false);
 
                 count++;
             }
@@ -63,29 +62,20 @@ public class PieceCard : MonoBehaviour
 
         for (int i = max - 1; i >= count; i--)
         {
-            if (i == count - 1)
+            if (i == count)
             {
-                descriptPrefabs[count].gameObject.SetActive(true);
-                descriptPrefabs[count].transform.GetChild(0).gameObject.SetActive(false);
-                descriptPrefabs[count].transform.GetChild(1).gameObject.SetActive(false);
-                descriptPrefabs[count].transform.GetChild(2).gameObject.SetActive(false);
-                descriptPrefabs[count].transform.GetChild(3).gameObject.SetActive(true);
-                descriptPrefabs[count].transform.GetChild(3).GetComponent<Text>().text = item.SpecialStatInfo;
-            }
+                descriptPrefabs[count].transform.GetChild(1).GetComponent<Text>().text = item.SpecialStatInfo;
 
-            else if (i == count)
-            {
                 descriptPrefabs[count].gameObject.SetActive(true);
                 descriptPrefabs[count].transform.GetChild(0).gameObject.SetActive(false);
-                descriptPrefabs[count].transform.GetChild(1).gameObject.SetActive(false);
-                descriptPrefabs[count].transform.GetChild(2).gameObject.SetActive(false);
-                descriptPrefabs[count].transform.GetChild(3).gameObject.SetActive(true);
-                descriptPrefabs[count].transform.GetChild(3).GetComponent<Text>().text = item.Description;
+                descriptPrefabs[count].transform.GetChild(1).gameObject.SetActive(true);
             }
 
             else
                 descriptPrefabs[i].gameObject.SetActive(false);
         }
+
+        descriptText.text = item.Description;
     }
 
     public void GetRandomItem(DiabolicItemInfo itemInfo)

@@ -139,16 +139,16 @@ public class MonsterMove : MonoBehaviour
         //rend.flipX = dir.x > 0;
     }
 
-    public void RotateWeapon()
+    public void RotateWeapon(Vector3 bulletDir)
     {
         float scaleX = transform.localScale.x > 0 ? 1 : -1;
         weapon.transform.localScale =  new Vector3(scaleX, weapon.transform.localScale.y, transform.localScale.z);
 
-        float angle = Mathf.Atan2(dir.z, dir.x) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(bulletDir.z, bulletDir.x) * Mathf.Rad2Deg;
 
         weapon.transform.rotation = Quaternion.Euler(90, -angle + 180, 0);
 
-        if (dir.x < 0)
+        if (bulletDir.x < 0)
             weapon.transform.rotation *= Quaternion.Euler(0, 0, 0);
 
         else

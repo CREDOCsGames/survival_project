@@ -96,6 +96,9 @@ public class LogTree : MonoBehaviour, IMouseInteraction
 
         yield return CoroutineCaching.WaitForSeconds(waitTime);
 
+        if (gamesceneManager.isNight)
+            yield break;
+
         SpawnObstacle();
 
         int rand = Random.Range(1, 4);

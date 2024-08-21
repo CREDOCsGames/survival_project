@@ -532,6 +532,9 @@ public class Character : Singleton<Character>
         rendUpper.color = white;
         rendLower.color = white;
 
+        if (invincibleTime - 0.3f > 0)
+            yield break;
+
         yield return CoroutineCaching.WaitForSeconds(invincibleTime - 0.3f);
     }
 
@@ -550,11 +553,15 @@ public class Character : Singleton<Character>
 
         rendUpper.color = red;
         rendLower.color = red;
-        yield return new WaitForSeconds(0.1f);
+        yield return CoroutineCaching.WaitForSeconds(0.1f);
 
         rendUpper.color = white;
         rendLower.color = white;
-        yield return new WaitForSeconds(invincibleTime - 0.3f);
+
+        if (invincibleTime - 0.3f > 0)
+            yield break;
+
+        yield return CoroutineCaching.WaitForSeconds(invincibleTime - 0.3f);
     }
 
     public IEnumerator MoveToInteractableObject(Vector3 logPos, GameObject interactionObejct)
@@ -567,12 +574,18 @@ public class Character : Singleton<Character>
 
         while (transform.position != logPos)
         {
+            if(gamesceneManager.isNight)
+            {
+                isCanControll = true;
+                yield break;
+            }
+
             transform.position = Vector3.MoveTowards(transform.position, logPos, Time.deltaTime * speed);
 
             anim.SetFloat("moveSpeed", 1 + (speed * 0.1f));
             anim.SetBool("isRun", true);
 
-            if (transform.position == logPos)
+            if (transform.position == logPos && !gamesceneManager.isNight)
             {
                 ChangeAnimationController(1);
                 anim.SetBool("isLogging", true);

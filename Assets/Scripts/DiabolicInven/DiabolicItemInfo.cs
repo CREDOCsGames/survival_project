@@ -83,6 +83,7 @@ public class DiabolicItemInfo : ScriptableObject
 
     [SerializeField] int maxCount;
     [SerializeField] ItemShape itemShape;  // 아이템 모양
+    [TextArea]
     [SerializeField] string specialStatInfo;
     [TextArea]
     [SerializeField] string description;

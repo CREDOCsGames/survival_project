@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 01020
   m_EditorClassIdentifier: 
   itemNum: 1020
+  weightValue: 0
   itemSprite: {fileID: 21300000, guid: 421057b64e041cc47b6e7443f2d9d9d9, type: 3}
   itemName: "\uD53C\uC640 \uAD11\uAE30"
   maxHp: 0
@@ -42,12 +43,13 @@ MonoBehaviour:
   isBloodMadness: 1
   isRottenCheese: 0
   isTurtle: 0
+  isMirror: 0
   maxCount: 1
   itemShape:
     _width: 3
     _height: 3
     _shape: 000100010101000100
-  specialStatInfo: "\uD53C\uACA9\uC2DC \uACF5\uACA9\uB825 +1 \uCD94\uAC00 (\uCD5C\uB300
-    15 \uC81C\uD55C)"
+  specialStatInfo: "\uD53C\uACA9\uC2DC \uACF5\uACA9\uB825 <color=lime>+1</color>
+    \uCD94\uAC00\n(\uCD5C\uB300 <color=lime>15</color> \uC81C\uD55C)"
   description: "\uC0B4\uAE30\uB97C \uB290\uB080\uB2E4. \uD53C\uB97C \uBCF4\uACE0
     \uD765\uBD84\uD55C \uC190\uC740 \uD718\uB450\uB974\uAE38 \uBA48\uCD94\uC9C0 \uC54A\uC558\uB2E4."

@@ -5,14 +5,16 @@ public class MonsterBullet : MonoBehaviour
 {
     public float bulletDamage;
 
-    protected IObjectPool<MonsterBullet> managedPool;
+    IObjectPool<MonsterBullet> managedPool;
 
-    protected GameManager gameManager;
-    protected GamesceneManager gameSceneManager;
+    GameManager gameManager;
+    GamesceneManager gameSceneManager;
 
-    protected float realDamage;
+    float realDamage;
 
     [HideInInspector] public Vector3 destroyPos;
+
+    [HideInInspector] public Transform parentObject;
 
     private void Start()
     {
@@ -33,7 +35,7 @@ public class MonsterBullet : MonoBehaviour
         if (other.tag == "Character")
         {
             realDamage = bulletDamage * (1 + Mathf.Floor(gameManager.round / 30)) + Mathf.Floor(gameManager.round / 5) * 2f;
-            other.transform.parent.GetComponent<Character>().OnDamaged(realDamage, transform.parent.transform.GetComponentInChildren<MonsterHit>().gameObject);
+            other.transform.parent.GetComponent<Character>().OnDamaged(realDamage, parentObject.GetComponentInChildren<MonsterHit>().gameObject);
             DestroyBullet();
         }
     }

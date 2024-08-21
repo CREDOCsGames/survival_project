@@ -179,7 +179,7 @@ public class GameManager : Singleton<GameManager>
             specialStatus.Add((SpecialStatus)i, false);
         }
 
-        specialStatus[SpecialStatus.Mirror] = true;
+        //specialStatus[SpecialStatus.Mirror] = true;
     }
 
     private void Update()

@@ -43,11 +43,12 @@ MonoBehaviour:
   isBloodMadness: 0
   isRottenCheese: 0
   isTurtle: 0
+  isMirror: 0
   maxCount: 1
   itemShape:
     _width: 2
     _height: 2
     _shape: 01010100
-  specialStatInfo: "\uBC8C\uBAA9 \uC18D\uB3C4\uAC00 2\uBC30 \uBE68\uB77C\uC9C4\uB2E4."
-  description: "\uC591\uCABD\uC5D0 \uB0A0\uC774 \uB2EC\uB9B0 \uB3C4\uB07C. \uBC8C\uBAA9\uC6A9\uC73C\uB85C
+  specialStatInfo: "\uBC8C\uBAA9 \uC18D\uB3C4\uAC00 <color=lime>2\uBC30</color> \uBE68\uB77C\uC9C4\uB2E4."
+  description: "\uC591\uCABD\uC5D0 \uB0A0\uC774 \uB2EC\uB9B0 \uB3C4\uB07C.\n\uBC8C\uBAA9\uC6A9\uC73C\uB85C
     \uBCF4\uC774\uC9C4 \uC54A\uB294\uB2E4."

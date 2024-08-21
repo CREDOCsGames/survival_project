@@ -43,11 +43,13 @@ MonoBehaviour:
   isBloodMadness: 0
   isRottenCheese: 1
   isTurtle: 0
+  isMirror: 0
   maxCount: 1
   itemShape:
     _width: 1
     _height: 1
     _shape: 01
-  specialStatInfo: "\uACF5\uACA9\uB825 + 30%, \uBC29\uC5B4\uB825 -20%"
+  specialStatInfo: "\uACF5\uACA9\uB825 <color=lime>30%</color> \uC99D\uAC00,\n\uBC29\uC5B4\uB825
+    <color=red>20%</color> \uAC10\uC18C"
   description: "\uACE0\uC57D\uD55C \uC545\uCDE8\uAC00 \uC9C4\uB3D9\uD558\uC9C0\uB9CC.
     \uADF8\uB798\uB3C4 \uB9DB\uC740 \uC788\uC744 \uD14C\uC9C0."

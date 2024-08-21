@@ -29,10 +29,9 @@ public class DirectianalMovement : MonoBehaviour
         transform.position += dir * moveSpeed * Time.deltaTime;
     }
 
-    public void SetDir(Vector3 basePos)
+    public void SetDir(Vector3 _dir)
     {
-        dir = (character.transform.position - basePos).normalized;
-        dir.y = 0;
+        dir = _dir;
 
         angle = Mathf.Atan2(dir.z, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(90, -angle + 180, 0);

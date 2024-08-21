@@ -75,6 +75,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
 
     [SerializeField] GameObject fishingGame;
     [SerializeField] GameObject weaponUI;
+    [SerializeField] GameObject pieceCard;
 
     Color initTimeColor;
 
@@ -411,5 +412,11 @@ public class GameSceneUI : Singleton<GameSceneUI>
             nextScene = "Logging";
 
         SelectScene(nextScene);
+    }
+
+    public void UpdatePieceCardUI(DiabolicItemInfo getItem)
+    {
+        pieceCard.GetComponent<PieceCard>().GetRandomItem(getItem);
+        pieceCard.gameObject.SetActive(true);
     }
 }

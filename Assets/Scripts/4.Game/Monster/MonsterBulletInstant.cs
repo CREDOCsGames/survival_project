@@ -15,7 +15,7 @@ public class MonsterBulletInstant : MonoBehaviour
 
     Character character;
 
-    float angle;
+    Vector3 dir;
 
     private void Awake()
     {
@@ -29,22 +29,26 @@ public class MonsterBulletInstant : MonoBehaviour
         if (transform.parent.GetComponent<Monster>().attackCount <= 0)
             return;
 
+        transform.parent.GetComponent<Monster>().attackCount--;
+
+        MonsterBullet bullet = pool.Get();
+
+        dir = (character.transform.position - transform.position).normalized;
+
         if (weapon != null)
         {
-            transform.parent.GetComponent<MonsterMove>().RotateWeapon();
+            transform.parent.GetComponent<MonsterMove>().RotateWeapon(dir);
         }
 
-        transform.parent.GetComponent<Monster>().attackCount--;
-        MonsterBullet bullet = pool.Get();
         bullet.transform.position = new Vector3(bulletPos.position.x, 0, bulletPos.position.z);
         bullet.bulletDamage = transform.parent.GetComponent<Monster>().stat.monsterDamage;
 
         if (bullet.GetComponent<DirectianalMovement>() != null)
         {
-            bullet.GetComponent<DirectianalMovement>().SetDir(transform.parent.transform.position);
+            bullet.GetComponent<DirectianalMovement>().SetDir(dir);
         }
 
-        else if (bullet.gameObject.GetComponent<ThrowObjecMovement>() != null ) 
+        else if (bullet.gameObject.GetComponent<ThrowObjecMovement>() != null)
         {
             bullet.gameObject.GetComponent<ThrowObjecMovement>().SetStartEndPoint(bullet.transform.position, character.transform.position);
             bullet.destroyPos = character.transform.position;
@@ -58,8 +62,9 @@ public class MonsterBulletInstant : MonoBehaviour
 
     private MonsterBullet CreateBullet()
     {
-        MonsterBullet bullet = Instantiate(bulletPrefab, bulletPos.position, transform.rotation, transform.parent).GetComponent<MonsterBullet>();
+        MonsterBullet bullet = Instantiate(bulletPrefab, bulletPos.position, transform.rotation).GetComponent<MonsterBullet>();
         bullet.SetManagedPool(pool);
+        bullet.parentObject = transform.parent;
         return bullet;
     }
 
