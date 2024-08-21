@@ -7,7 +7,9 @@
             "monsterDamage": 6.0,
             "monsterSpeed": 6.0,
             "attackDelay": 0.5,
-            "moveDelay": 1.0
+            "attackCount": 1,
+            "moveDelay": 1.0,
+            "itemDropPercent": 0
         },
         {
             "monsterNum": 102,
@@ -16,7 +18,9 @@
             "monsterDamage": 15.0,
             "monsterSpeed": 1.0,
             "attackDelay": 1.6,
-            "moveDelay": 0.5
+            "attackCount": 1,
+            "moveDelay": 0.5,
+            "itemDropPercent": 0
         },
         {
             "monsterNum": 103,
@@ -25,7 +29,9 @@
             "monsterDamage": 10.0,
             "monsterSpeed": 2.4,
             "attackDelay": 1.0,
-            "moveDelay": 0.3
+            "attackCount": 1,
+            "moveDelay": 0.3,
+            "itemDropPercent": 3
         },
         {
             "monsterNum": 201,
@@ -34,7 +40,9 @@
             "monsterDamage": 9.0,
             "monsterSpeed": 10.0,
             "attackDelay": 0.3,
-            "moveDelay": 0.7
+            "attackCount": 1,
+            "moveDelay": 0.7,
+            "itemDropPercent": 0
         },
         {
             "monsterNum": 202,
@@ -43,7 +51,9 @@
             "monsterDamage": 40.0,
             "monsterSpeed": 1.0,
             "attackDelay": 2.0,
-            "moveDelay": 0.5
+            "attackCount": 1,
+            "moveDelay": 0.5,
+            "itemDropPercent": 0
         },
         {
             "monsterNum": 203,
@@ -52,7 +62,9 @@
             "monsterDamage": 14.0,
             "monsterSpeed": 2.7,
             "attackDelay": 1.0,
-            "moveDelay": 0.9
+            "attackCount": 3,
+            "moveDelay": 0.9,
+            "itemDropPercent": 5
         }
     ]
 }

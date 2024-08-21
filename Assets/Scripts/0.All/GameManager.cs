@@ -100,6 +100,8 @@ public class GameManager : Singleton<GameManager>
 
     public static string[] statNames = { "최대 체력", "공격력", "근거리 공격력", "원거리 공격력", "회복 수치", "방어력", "공격 속도", "이동 속도", "크리티컬", "회피율" };
 
+    public int totalBulletCount;
+
     protected override void Awake()
     {
         base.Awake();
@@ -155,6 +157,8 @@ public class GameManager : Singleton<GameManager>
         percentDamage = 100;
         percentDefence = 100;
         bloodDamage = 0;
+
+        totalBulletCount = 1;
         
 #endif
 

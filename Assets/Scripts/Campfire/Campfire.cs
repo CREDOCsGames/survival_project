@@ -90,6 +90,9 @@ public class Campfire : MonoBehaviour, IMouseInteraction
 
         character.percentDamage -= (debuffValues[Debuff.POWER]) * 20;
 
+        gameManager.dashCount = 0;
+        character.dashCount = gameManager.dashCount;
+
         debuffIcon.GetComponent<CampFireDebuff>().SetDebuff(debuffType);
         debuffIcon.SetActive(true);
     }

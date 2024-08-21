@@ -29,6 +29,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
     [SerializeField] Text woodCount;
     [SerializeField] Text fish1Count;
     [SerializeField] Text fish2Count;
+    [SerializeField] Text bulletCount;
 
     [Header("Time")]
     [SerializeField] Text timeText;
@@ -343,6 +344,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
         woodCount.text = gameManager.woodCount.ToString();
         fish1Count.text = gameManager.fishLowGradeCount.ToString();
         fish2Count.text = gameManager.fishHighGradeCount.ToString();
+        bulletCount.text = gameManager.totalBulletCount.ToString();
     }
 
     void RoundUI()
@@ -371,11 +373,13 @@ public class GameSceneUI : Singleton<GameSceneUI>
 
     void WeaponUI()
     {
-        if(gamesceneManager.isNight)
+        if (gamesceneManager.isNight)
             weaponUI.SetActive(true);
 
         else
+        {
             weaponUI.SetActive(false);
+        }
     }
 
     public void OnOffStatWindow()

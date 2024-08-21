@@ -26,11 +26,15 @@ public class MonsterBulletInstant : MonoBehaviour
 
     public void Shoot()
     {
+        if (transform.parent.GetComponent<Monster>().attackCount <= 0)
+            return;
+
         if (weapon != null)
         {
             transform.parent.GetComponent<MonsterMove>().RotateWeapon();
         }
 
+        transform.parent.GetComponent<Monster>().attackCount--;
         MonsterBullet bullet = pool.Get();
         bullet.transform.position = new Vector3(bulletPos.position.x, 0, bulletPos.position.z);
         bullet.bulletDamage = transform.parent.GetComponent<Monster>().stat.monsterDamage;
@@ -45,6 +49,11 @@ public class MonsterBulletInstant : MonoBehaviour
             bullet.gameObject.GetComponent<ThrowObjecMovement>().SetStartEndPoint(bullet.transform.position, character.transform.position);
             bullet.destroyPos = character.transform.position;
         }
+    }
+
+    public void AttackEnd()
+    {
+        transform.parent.GetComponent<Monster>().attackCount = transform.parent.GetComponent<Monster>().InitAttackCount;
     }
 
     private MonsterBullet CreateBullet()

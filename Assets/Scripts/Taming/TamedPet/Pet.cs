@@ -169,11 +169,6 @@ public class Pet : MonoBehaviour
             isAttack = false;
     }
 
-    public void EndAttack()
-    {
-
-    }
-
     public void RunAway()
     {
         if (character.GetPetRound + 5 == gameManager.round)

@@ -34,6 +34,11 @@ public class TamingViewUI : MonoBehaviour
         Cursor.visible = false;     // esc 누르면 다시 초기화됨.
     }
 
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     private void Update()
     {
         if(gamesceneManager.isNight)

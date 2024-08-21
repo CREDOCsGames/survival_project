@@ -4,15 +4,19 @@ using UnityEngine.Pool;
 
 public class Monster : MonoBehaviour
 {
-    [SerializeField] protected Rigidbody rigid;
-    [SerializeField] protected SpriteRenderer rend;
-    [SerializeField] protected Animator anim;
-    [SerializeField] protected Collider attackColl;
-    [SerializeField] protected Vector2 attackRange;
+    [SerializeField] SpriteRenderer rend;
+    [SerializeField] Animator anim;
+    [SerializeField] Collider attackColl;
+    [SerializeField] BoxCollider hitCollder;
+    [SerializeField] Vector2 attackRange;
     [SerializeField] float attackDelay;
     [SerializeField] float moveDelay;
-    protected float moveSpeed;
-    protected float damage;
+    [SerializeField] public int attackCount;
+    int itemDropPercent;
+    int initAttackCount;
+    public int InitAttackCount => initAttackCount;
+    float moveSpeed;
+    float damage;
 
 
     [HideInInspector] protected bool isDead = false, isAttack = false;
@@ -25,13 +29,13 @@ public class Monster : MonoBehaviour
 
     private IObjectPool<Monster> managedPool;
 
-    protected GameManager gameManager;
-    protected Character character;
-    protected GamesceneManager gamesceneManager;
+    GameManager gameManager;
+    Character character;
+    GamesceneManager gamesceneManager;
 
-    protected IEnumerator runningCoroutine;
+    IEnumerator runningCoroutine;
 
-    protected Color initcolor;
+    Color initcolor;
 
     public float Speed => moveSpeed;
 
@@ -60,6 +64,11 @@ public class Monster : MonoBehaviour
         StartSetting();
     }
 
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     protected void StartSetting()
     {
         initScale = transform.localScale;
@@ -83,9 +92,12 @@ public class Monster : MonoBehaviour
         moveSpeed = stat.monsterSpeed;
         initSpeed = moveSpeed;
         attackDelay = stat.attackDelay;
+        attackCount = stat.attackCount;
         moveDelay = stat.moveDelay;
         initAttackDelay = attackDelay;
+        initAttackCount = attackCount;
         initMoveDelay = moveDelay;
+        itemDropPercent = stat.itemDropPercent;
         isDead = false;
         isAttack = false;
         canAttack = false;
@@ -95,6 +107,8 @@ public class Monster : MonoBehaviour
         rend.sortingOrder = initOrder;
 
         GetComponent<MonsterMove>().InitSetting(moveSpeed);
+
+        hitCollder.enabled = true;
     }
 
     protected IEnumerator MonsterColorBlink()
@@ -194,25 +208,41 @@ public class Monster : MonoBehaviour
 
     public void OnDead()
     {
-        if (hp <= 0 || (gameManager.isClear && gameManager.isBossDead) || character.isDead || !gamesceneManager.isNight)
+        if (hp <= 0 || character.isDead || !gamesceneManager.isNight)
         {
-            GetComponent<MonsterMove>().agent.enabled = false;
-            rend.sortingOrder = 0;
-            anim.speed = 1f;
-            isDead = true;
-            rend.color = Color.white;
-
-            if (runningCoroutine != null)
-                StopCoroutine(runningCoroutine);
-
-            if (attackColl != null)
-                attackColl.enabled = false;
-
-            anim.SetTrigger("Die");
-
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Die"))
+            if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Die"))
             {
-                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+                GetComponent<MonsterMove>().agent.enabled = false;
+                rend.sortingOrder = 0;
+                anim.speed = 1f;
+                isDead = true;
+                rend.color = Color.white;
+
+                if (itemDropPercent > 0)
+                {
+                    int rand = Random.Range(0, 100);
+
+                    if (rand < itemDropPercent)
+                    {
+                        gameManager.totalBulletCount++;
+
+                        character.getItemUI.GetComponent<GetItemUI>().SetBulletGetImage();
+                        character.getItemUI.gameObject.SetActive(true);
+                    }
+                }
+
+                if (runningCoroutine != null)
+                    StopCoroutine(runningCoroutine);
+
+                if (attackColl != null)
+                    attackColl.enabled = false;
+
+                anim.SetTrigger("Die");
+            }
+
+            else if (anim.GetCurrentAnimatorStateInfo(0).IsName("Die"))
+            {
+                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f)
                 {
                     DestroyMonster();
                 }
@@ -233,6 +263,7 @@ public class Monster : MonoBehaviour
     public void DestroyMonster()
     {
         managedPool.Release(this);
-        transform.position = Vector3.zero;
+        GetComponent<MonsterMove>().agent.enabled = false;
+        hitCollder.enabled = false;
     }
 }

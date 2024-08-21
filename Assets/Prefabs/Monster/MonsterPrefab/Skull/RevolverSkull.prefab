@@ -108,12 +108,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: a6d71e3cd16086f42897b1818f5afcf2, type: 3}
+  m_Sprite: {fileID: -807074456, guid: a6d71e3cd16086f42897b1818f5afcf2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.32, y: 0.32}
+  m_Size: {x: 0.34045455, y: 0.51545453}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -241,13 +241,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27cbc2faeb2722444acf9eb84865c70d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigid: {fileID: 738799171344922668}
   rend: {fileID: 6229552049790309985}
   anim: {fileID: 7712788725761189160}
   attackColl: {fileID: 0}
+  hitCollder: {fileID: 3223408100450381840}
   attackRange: {x: 10, y: 4}
   attackDelay: 0.5
   moveDelay: 1
+  attackCount: 0
   hp: 0
   maxHp: 0
   stat:
@@ -257,7 +258,10 @@ MonoBehaviour:
     monsterDamage: 0
     monsterSpeed: 0
     attackDelay: 0
+    attackCount: 0
     moveDelay: 0
+    itemDropPercent: 0
+  monsterNum: 0
 --- !u!114 &1961197510592707002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,9 +274,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 359adba1a40804947a2ef8051c524904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
-  moveTime: 0
-  waitTime: 0
   groundLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -281,6 +282,9 @@ MonoBehaviour:
   anim: {fileID: 7712788725761189160}
   weapon: {fileID: 565951696481399372}
   agent: {fileID: 0}
+  initMoveTime: 0
+  initWaitTime: 0
+  initSpeed: 0
 --- !u!1 &2899852601022208516
 GameObject:
   m_ObjectHideFlags: 0

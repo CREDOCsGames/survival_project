@@ -209,24 +209,6 @@ MonoBehaviour:
   dashCoolTime: 2
   initDashCoolTime: 0
   dashCount: 2
-  WeaponParent: {fileID: 0}
-  weapons:
-  - {fileID: 4942268788761087581, guid: 941e5330dd1395442b47913c209b6bed, type: 3}
-  - {fileID: 8135749844320535992, guid: cedc7bc35d28ac5418d3797670a41177, type: 3}
-  - {fileID: 6764600053607474693, guid: c19aafc67653a1443aef94024a3479e4, type: 3}
-  - {fileID: 2248372346044479991, guid: b872dfb1ed4b3884c8ed97d2037060be, type: 3}
-  - {fileID: 9028005816716633080, guid: fbb664a8801da9e4a9628218a1e9dcff, type: 3}
-  - {fileID: 3017180892472580022, guid: 949b7201d47b60940bbdfa9dec543bf5, type: 3}
-  - {fileID: 5714639909406512148, guid: 8e91689e30c1e564ea5e83e87ef0b52a, type: 3}
-  - {fileID: 9074234498593581902, guid: ccfc3c65966facd459af73ff761bff11, type: 3}
-  - {fileID: 7974142016502416161, guid: e4ab428c25307904e95417e1b89af9fc, type: 3}
-  weaponPoses:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   maxHp: 0
   currentHp: 0
   recoverHpRatio: 0
@@ -235,9 +217,11 @@ MonoBehaviour:
   attackSpeed: 0
   defence: 0
   invincibleTime: 1.5
+  percentDamage: 0
+  percentDefence: 0
   maxRecoveryGauge: 100
   currentRecoveryGauge: 0
-  fruitUI: {fileID: 9083610162007046966}
+  getItemUI: {fileID: 9083610162007046966}
   tamedPet: {fileID: 7444320351319460353}
   isDead: 0
   x: 0
@@ -5695,7 +5679,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 1216860658, guid: a0745f37baecd8047abdac0c0009756b, type: 3}
+  m_Sprite: {fileID: -1380407709, guid: dfad55d35fa0a354a84b15610450bbb0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6596,7 +6580,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3517399654191483345, guid: 7e949ac991baea841a5fa52078ebd85c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.47
+      value: -0.372
       objectReference: {fileID: 0}
     - target: {fileID: 3517399654191483345, guid: 7e949ac991baea841a5fa52078ebd85c, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -6616,7 +6600,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3517399654191483346, guid: 7e949ac991baea841a5fa52078ebd85c, type: 3}
       propertyPath: m_Name
-      value: FruitUI
+      value: GetItemUI
       objectReference: {fileID: 0}
     - target: {fileID: 3517399654191483346, guid: 7e949ac991baea841a5fa52078ebd85c, type: 3}
       propertyPath: m_IsActive
@@ -6626,6 +6610,14 @@ PrefabInstance:
       propertyPath: m_PresetInfoIsWorld
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6128375213351512045, guid: 7e949ac991baea841a5fa52078ebd85c, type: 3}
+      propertyPath: bulletImage
+      value: 
+      objectReference: {fileID: -132017182, guid: cf0ce21e53fb3b04a94581a0bfe7abe1, type: 3}
+    - target: {fileID: 8322794640468331207, guid: 7e949ac991baea841a5fa52078ebd85c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -132017182, guid: cf0ce21e53fb3b04a94581a0bfe7abe1, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e949ac991baea841a5fa52078ebd85c, type: 3}
 --- !u!224 &9083610162007046965 stripped

@@ -23,6 +23,11 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
         pieceCard.SetActive(false);
     }
 
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     void GetRandomPiece()
     {
         itemList.Clear();
@@ -111,8 +116,8 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
         int fruitNum = (rand >= 0 && rand < 80) ? 0 : 1;
         int ratio = (fruitNum == 0) ? 1 : 2;
 
-        character.fruitUI.GetComponent<FruitUI>().SetImage(fruitNum);
-        character.fruitUI.gameObject.SetActive(true);
+        character.getItemUI.GetComponent<GetItemUI>().SetFruitGetImage(fruitNum);
+        character.getItemUI.gameObject.SetActive(true);
 
         character.currentRecoveryGauge += defaultGaugeUpValue * ratio;
     }

@@ -37,8 +37,8 @@ public class MonsterSpawn : MonoBehaviour
         gameManager = GameManager.Instance;
         gamesceneManager = GamesceneManager.Instance;
 
-        //weightValue = new float[] { 100, 0, 0};
-        weightValue = new float[] { 40, 30, 30};
+        weightValue = new float[] { 0, 0, 100};
+        //weightValue = new float[] { 40, 30, 30};
         //ground = GamesceneManager.Instance.walkableArea;
 
         for (int i = 0; i < weightValue.Length; i++)
@@ -81,8 +81,8 @@ public class MonsterSpawn : MonoBehaviour
             Destroy(spawnMark, 1f);
             StartCoroutine(SpawnMonster(true, pos, Color.red));
 
-            SpawnSubordinateMonster(pos, Random.Range(4, 7));
-            
+            //SpawnSubordinateMonster(pos, Random.Range(4, 7));
+
             //yield return new WaitForSeconds(time);
             yield return CoroutineCaching.WaitForSeconds(time);
         }

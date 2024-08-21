@@ -5,35 +5,51 @@ public class FireBullet : FireProjectile
 {
     [SerializeField] Transform bulletParent;
 
-    int bulletCount = 4;
+    int maxBulletCount;
+    int currentBulletCount;
 
     Coroutine currentCoroutine;
 
-    public int BulletCount => bulletCount;
+    bool isDayChange = true; 
 
     private void OnEnable()
     {
-        bulletCount = gameManager.specialStatus[SpecialStatus.AmmoPouch] ? 5 : 4;
+        if (!isDayChange)
+            return;
 
-        for (int i = 0; i < bulletCount; ++i)
+        maxBulletCount = gameManager.specialStatus[SpecialStatus.AmmoPouch] ? 5 : 4;
+        maxBulletCount = gameManager.totalBulletCount < maxBulletCount ? gameManager.totalBulletCount : maxBulletCount;
+        currentBulletCount = maxBulletCount;
+
+        for (int i = 0; i < maxBulletCount; ++i)
         {
             bulletParent.GetChild(i).gameObject.SetActive(true);
         }
 
-        for(int i = bulletCount; i<bulletParent.childCount; ++i) 
+        for(int i = maxBulletCount; i<bulletParent.childCount; ++i) 
         {
             bulletParent.GetChild(i).gameObject.SetActive(false);
         }
     }
+    private void OnDisable()
+    {
+        if (isDayChange)
+            isDayChange = false;
+
+        if(!GamesceneManager.Instance.isNight)
+            isDayChange = true;
+
+        StopAllCoroutines();
+    }
 
     void Update()
     {
-        if (bulletCount > 0)
+        if (currentBulletCount > 0)
         {
             FireAppliedCoolTime();
         }
 
-        else if (bulletCount <= 0)
+        else if (currentBulletCount <= 0)
             character.canWeaponChange = true;
 
 #if UNITY_EDITOR
@@ -44,7 +60,7 @@ public class FireBullet : FireProjectile
                 bullet.gameObject.SetActive(true);
             }
 
-            bulletCount = 4;
+            currentBulletCount = 5;
         }
 #endif
     }
@@ -55,12 +71,13 @@ public class FireBullet : FireProjectile
         {
             character.canWeaponChange = false;
             SetFire();
-            bulletParent.GetChild(bulletCount - 1).gameObject.SetActive(false);
-            bulletCount--;
+            bulletParent.GetChild(currentBulletCount - 1).gameObject.SetActive(false);
+            currentBulletCount--;
+            gameManager.totalBulletCount--;
 
             if (gameManager.specialStatus[SpecialStatus.SilverBullet])
             {
-                if (bulletCount <= 0)
+                if (currentBulletCount <= 0)
                     character.defence -= 5;
             }
 

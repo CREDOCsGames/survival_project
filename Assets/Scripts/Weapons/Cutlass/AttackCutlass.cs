@@ -33,7 +33,7 @@ public class AttackCutlass : MonoBehaviour
 
             bool isCri = gameManager.status[Status.Critical] >= Random.Range(0f, 100f);
 
-            damageUI.realDamage = (damage + gameManager.status[Status.Damage] + gameManager.status[Status.CloseDamage] + gameManager.bloodDamage) * character.percentDamage;
+            damageUI.realDamage = (damage + gameManager.status[Status.Damage] + gameManager.status[Status.CloseDamage] + gameManager.bloodDamage) * (100 + character.percentDamage) * 0.01f;
 
             damageUI.realDamage *= isCri ? 2 : 1;
 

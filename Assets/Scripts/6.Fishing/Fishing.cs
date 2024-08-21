@@ -80,6 +80,17 @@ public class Fishing : Singleton<Fishing>
         Initialize();
     }
 
+    private void OnDisable()
+    {
+        pieceCard.SetActive(false);
+
+        Character.Instance.isCanControll = true;
+        gameManager.fishLowGradeCount = catchItemsCount[0];
+        gameManager.fishHighGradeCount = catchItemsCount[1];
+
+        Initialize();
+    }
+
     void Update()
     {
         if (gamesceneManager.isNight)

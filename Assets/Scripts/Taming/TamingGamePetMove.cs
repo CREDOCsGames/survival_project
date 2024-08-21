@@ -59,6 +59,11 @@ public class TamingGamePetMove : MonoBehaviour
         offsetX = 1000; offsetY = 1000;*/
     }
 
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     private void Update()
     {
         if (!isCatch)

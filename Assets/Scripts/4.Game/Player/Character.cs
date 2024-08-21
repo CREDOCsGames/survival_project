@@ -28,11 +28,6 @@ public class Character : Singleton<Character>
     [HideInInspector] public float initDashCoolTime;
     [HideInInspector] public int dashCount;
 
-    [Header("Weapon")]
-    [SerializeField] GameObject WeaponParent;
-    [SerializeField] public GameObject[] weapons;
-    [SerializeField] public Transform[] weaponPoses;
-
     [HideInInspector] public int maxHp;
     [HideInInspector] public int currentHp;
     [HideInInspector] public int recoverHpRatio;
@@ -47,7 +42,7 @@ public class Character : Singleton<Character>
     public int maxRecoveryGauge;
     int initMaxRecGauge;
     [HideInInspector] public int currentRecoveryGauge;
-    public GameObject fruitUI;
+    public GameObject getItemUI;
     int recoveryValue = 10;
     public int RecoveryValue => recoveryValue;
 
@@ -117,7 +112,7 @@ public class Character : Singleton<Character>
         dashCount = gameManager.dashCount;
         initDashCoolTime = dashCoolTime;
 
-        fruitUI.gameObject.SetActive(false);
+        getItemUI.gameObject.SetActive(false);
 
         tamedPet.SetActive(false);
 
@@ -200,7 +195,7 @@ public class Character : Singleton<Character>
         if (currentHp > maxHp)
             currentHp = maxHp;
 
-        playerHpBar.value = 1 - (currentHp / maxHp);
+        playerHpBar.value = 1 - ((float)currentHp / maxHp);
     }
 
     void UseRecoveyGauege()
@@ -325,11 +320,6 @@ public class Character : Singleton<Character>
     void ParticleOff()
     {
         particle.GetComponentInChildren<Renderer>().enabled = false;
-    }
-
-    public void ReleaseEquip(int num)
-    {
-        Destroy(weaponPoses[num].GetChild(0).gameObject);
     }
 
     bool isDownUp = false;
@@ -483,8 +473,7 @@ public class Character : Singleton<Character>
         isRun = false;
         isDead = true;
 
-        if (currentCoroutine != null)
-            StopCoroutine(currentCoroutine);
+        StopAllCoroutines();
     }
 
     public IEnumerator OnInvincible()

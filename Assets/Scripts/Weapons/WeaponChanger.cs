@@ -37,6 +37,26 @@ public class WeaponChanger : MonoBehaviour
             character = Character.Instance;
 
         character.ChangeAnimationController(currentIndex + 2);
+
+        canScroll = true;
+        character.canWeaponChange = true;
+    }
+
+    private void OnDisable()
+    {
+        for (int i = 0; i < character.weaponParent.childCount; ++i)
+        {
+            if (!character.weaponParent.GetChild(i).gameObject.activeSelf)
+            {
+                character.weaponParent.GetChild(i).gameObject.SetActive(true);
+                character.weaponParent.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+
+        StopAllCoroutines();
+
+        canScroll = true;
+        character.canWeaponChange = true;
     }
 
     void Update()
@@ -46,22 +66,32 @@ public class WeaponChanger : MonoBehaviour
 
         float mouseWheel = Input.GetAxis("Mouse ScrollWheel");
 
+        if (mouseWheel == 0)
+            return;
+
+        beforeIndex = currentIndex;
+
         if (mouseWheel > 0)
         {
-            beforeIndex = currentIndex;
             currentIndex = currentIndex + 1 >= weaponImages.Length ? 0 : currentIndex + 1;
             nextIndex = currentIndex + 1 >= weaponImages.Length ? 0 : currentIndex + 1;
-
-            character.ChangeAnimationController(currentIndex + 2);
-
-            currentItemImage.sprite = weaponImages[currentIndex];
-            nextItemImage.sprite = weaponImages[nextIndex];
-
-            character.weaponParent.GetChild(beforeIndex).gameObject.SetActive(false);
-            character.weaponParent.GetChild(currentIndex).gameObject.SetActive(true);
-
-            StartCoroutine(ScrollCoolDown());
         }
+
+        else if (mouseWheel < 0)
+        {
+            currentIndex = currentIndex - 1 < 0 ? weaponImages.Length - 1 : currentIndex - 1;
+            nextIndex = beforeIndex;
+        }
+
+        character.ChangeAnimationController(currentIndex + 2);
+
+        currentItemImage.sprite = weaponImages[currentIndex];
+        nextItemImage.sprite = weaponImages[nextIndex];
+
+        character.weaponParent.GetChild(beforeIndex).gameObject.SetActive(false);
+        character.weaponParent.GetChild(currentIndex).gameObject.SetActive(true);
+
+        StartCoroutine(ScrollCoolDown());
     }
 
     IEnumerator ScrollCoolDown()

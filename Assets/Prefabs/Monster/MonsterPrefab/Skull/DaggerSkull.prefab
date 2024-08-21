@@ -206,13 +206,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27cbc2faeb2722444acf9eb84865c70d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigid: {fileID: 738799171344922668}
   rend: {fileID: 6229552049790309985}
   anim: {fileID: 7712788725761189160}
   attackColl: {fileID: 8129587856583149474}
+  hitCollder: {fileID: 3223408100450381840}
   attackRange: {x: 0.8, y: 1}
   attackDelay: 0.5
   moveDelay: 1
+  attackCount: 0
   hp: 0
   maxHp: 0
   stat:
@@ -222,7 +223,10 @@ MonoBehaviour:
     monsterDamage: 0
     monsterSpeed: 0
     attackDelay: 0
+    attackCount: 0
     moveDelay: 0
+    itemDropPercent: 0
+  monsterNum: 0
 --- !u!114 &1961197510592707002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,16 +239,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 359adba1a40804947a2ef8051c524904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
-  moveTime: 1.5
-  waitTime: 0.3
   groundLayer:
     serializedVersion: 2
     m_Bits: 1024
   boxCollider: {fileID: 3223408100450381840}
   weaponBoxCollider: {fileID: 8129587856583149474}
   anim: {fileID: 7712788725761189160}
+  weapon: {fileID: 0}
   agent: {fileID: 0}
+  initMoveTime: 0
+  initWaitTime: 0
+  initSpeed: 0
 --- !u!1 &3320297759258608929
 GameObject:
   m_ObjectHideFlags: 0

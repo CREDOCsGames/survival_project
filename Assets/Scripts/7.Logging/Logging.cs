@@ -156,6 +156,11 @@ public class Logging : Singleton<Logging>
         }
     }
 
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     private void OnGUI()
     {
         if (isStart)

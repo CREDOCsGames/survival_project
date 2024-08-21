@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5270,7 +5270,7 @@ MonoBehaviour:
   damageStorage: {fileID: 1692643827}
   initGameTime: 10000
   gameDayTime: 0
-  gameNightTime: 1000
+  gameNightTime: 1
   money: 0
   round: 0
   woodCount: 30
@@ -5303,6 +5303,7 @@ MonoBehaviour:
   cursorSize: 0
   isTuto: 0
   characterSpawnPos: {x: 0, y: 0, z: -40}
+  totalBulletCount: 10
 --- !u!4 &936130855
 Transform:
   m_ObjectHideFlags: 0
@@ -5347,42 +5348,54 @@ MonoBehaviour:
     monsterDamage: 6
     monsterSpeed: 6
     attackDelay: 0.5
+    attackCount: 1
     moveDelay: 1
+    itemDropPercent: 0
   - monsterNum: 102
     monsterName: "\uB300\uD3EC \uD574\uC801"
     monsterMaxHp: 100
     monsterDamage: 15
     monsterSpeed: 1
     attackDelay: 1.6
+    attackCount: 1
     moveDelay: 0.5
+    itemDropPercent: 0
   - monsterNum: 103
     monsterName: "\uB9AC\uBCFC\uBC84 \uD574\uC801"
     monsterMaxHp: 70
     monsterDamage: 10
     monsterSpeed: 2.4
     attackDelay: 1
+    attackCount: 1
     moveDelay: 0.3
+    itemDropPercent: 3
   - monsterNum: 201
     monsterName: "\uC554\uC0B4 \uD574\uC801"
     monsterMaxHp: 80
     monsterDamage: 9
     monsterSpeed: 10
     attackDelay: 0.3
+    attackCount: 1
     moveDelay: 0.7
+    itemDropPercent: 0
   - monsterNum: 202
     monsterName: "\uB300\uD3EC \uD574\uC801"
     monsterMaxHp: 250
     monsterDamage: 40
     monsterSpeed: 1
     attackDelay: 2
+    attackCount: 1
     moveDelay: 0.5
+    itemDropPercent: 0
   - monsterNum: 203
     monsterName: "\uB9AC\uBCFC\uBC84 \uD574\uC801"
     monsterMaxHp: 100
     monsterDamage: 14
     monsterSpeed: 2.7
     attackDelay: 1
+    attackCount: 3
     moveDelay: 0.9
+    itemDropPercent: 5
 --- !u!1 &994559795
 GameObject:
   m_ObjectHideFlags: 0

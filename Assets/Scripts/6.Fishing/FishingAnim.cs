@@ -25,6 +25,11 @@ public class FishingAnim : Singleton<FishingAnim>
         anim.SetBool("CatchSuccess", CatchSuccess);
     }
 
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     public void IsCatchingStart()
     {
         fishing.isCatchingStart = true;

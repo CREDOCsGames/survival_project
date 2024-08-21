@@ -29,6 +29,11 @@ public class LogTree : MonoBehaviour, IMouseInteraction
             canLog = false;
     }
 
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     Vector3 LogAngle()
     {
         Vector3 logDir = (Character.Instance.transform.position - transform.position).normalized;

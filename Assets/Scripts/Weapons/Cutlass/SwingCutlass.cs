@@ -32,6 +32,11 @@ public class SwingCutlass : MonoBehaviour
         canAttack = true;
     }
 
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     private void Update()
     {
         Attack();
