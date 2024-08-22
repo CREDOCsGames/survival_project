@@ -145,7 +145,7 @@ public class Monster : MonoBehaviour
         xDistance = Mathf.Abs(character.transform.position.x - transform.position.x);
         zDistance = Mathf.Abs(character.transform.position.z - transform.position.z);
 
-        if (!isAttack)
+        if (!isAttack && !character.isDead)
         {
             if (xDistance <= attackRange.x && zDistance <= attackRange.y)
             {
@@ -209,7 +209,7 @@ public class Monster : MonoBehaviour
 
     public void OnDead()
     {
-        if (hp <= 0 || character.isDead || !gamesceneManager.isNight)
+        if (hp <= 0 || !gamesceneManager.isNight)
         {
             if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Die"))
             {

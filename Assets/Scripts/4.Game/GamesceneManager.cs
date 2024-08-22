@@ -131,6 +131,8 @@ public class GamesceneManager : Singleton<GamesceneManager>
     {
         gameSceneUI.ChangeDayText(1, "밤이 되었습니다.");
         gameSceneUI.CursorChange(CursorType.Attack);
+
+
         isNight = true;
         nightFilter.SetActive(true);
 
@@ -139,11 +141,10 @@ public class GamesceneManager : Singleton<GamesceneManager>
         character.transform.position = new Vector3(-1f, 0f, -41f);
 
         campFire.GetComponent<Campfire>().ToNightScene();
+        currentGameTime = gameManager.gameNightTime;
 
         gameManager.dashCount = 10;
         character.dashCount = gameManager.dashCount;
-
-        currentGameTime = gameManager.gameNightTime;
 
         character.isCanControll = true;
         //yield return new WaitForSeconds(gameManager.gameNightTime);

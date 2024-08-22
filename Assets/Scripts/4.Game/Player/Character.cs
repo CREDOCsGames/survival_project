@@ -88,6 +88,8 @@ public class Character : Singleton<Character>
 
     public bool IsFlip => rendUpper.flipX;
 
+    Vector3 initParticleScale;
+
     protected override void Awake()
     {
         base.Awake();
@@ -114,6 +116,8 @@ public class Character : Singleton<Character>
         getItemUI.gameObject.SetActive(false);
 
         tamedPet.SetActive(false);
+
+        initParticleScale = particle.transform.localScale;
 
         ChangeAnimationController(0);
 
@@ -249,16 +253,13 @@ public class Character : Singleton<Character>
 
         if (dashCount > 0 && isCanControll)
         {
-            Vector3 beforePos;
             Vector3 afterPos;
 
-            particle.transform.localScale = rendUpper.flipX ? new Vector3(1, 1, 1) * particleScale : new Vector3(-1, 1, 1) * particleScale;
+            particle.transform.localScale = rendUpper.flipX ? initParticleScale * particleScale : new Vector3(-initParticleScale.x, initParticleScale.y, initParticleScale.z) * particleScale;
 
             if (Input.GetKeyDown((KeyCode)PlayerPrefs.GetInt("Key_Dash")))
             {
                 particle.GetComponentInChildren<Renderer>().enabled = true;
-
-                beforePos = transform.position;
 
                 if (x == 0 && z == 0)
                     afterPos = new Vector3(transform.position.x + 2, 0, transform.position.z);

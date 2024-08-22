@@ -40,31 +40,31 @@ public class LogTree : MonoBehaviour, IMouseInteraction
 
         float angle = Mathf.Atan2(logDir.z, logDir.x) * Mathf.Rad2Deg;
 
-        if (angle > 0 && angle <= 90)
+        if (angle >= 0 && angle < 90)
         {
             posNum = 3;
-            angle = -90;
-        }
-
-        else if (angle > 90 && angle <= 180)
-        {
-            posNum = 0;
             angle = 180;
         }
 
-        else if (angle > -90 && angle <= 0)
+        else if (angle >= 90 && angle < 180)
         {
-            posNum = 1;
-            angle = 0;
+            posNum = 0;
+            angle = -90;
         }
 
-        else if (angle > -180 && angle <= -90)
+        else if (angle >= -90 && angle < 0)
         {
-            posNum = 2;
+            posNum = 1;
             angle = 90;
         }
 
-        return new Vector3(90, 0, -angle);
+        else if (angle >= -180 && angle < -90)
+        {
+            posNum = 2;
+            angle = 0;
+        }
+
+        return new Vector3(90, 0, angle);
     }
 
     public void InteractionLeftButtonFuc(GameObject hitObject)
@@ -79,7 +79,8 @@ public class LogTree : MonoBehaviour, IMouseInteraction
 
     void SpawnObstacle()
     {
-        Instantiate(obstacle, transform.position, Quaternion.Euler(obstacleAngle), GamesceneManager.Instance.treeParent);
+        GameObject ob = Instantiate(obstacle, transform.position, Quaternion.Euler(obstacleAngle), GamesceneManager.Instance.treeParent);
+        ob.GetComponentInChildren<Obstacle>().SetObstacleImage(posNum);
 
         Destroy(gameObject);
     }

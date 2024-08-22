@@ -49,8 +49,15 @@ public class MonsterMove : MonoBehaviour
     {
         anim.SetBool("isWalk", agent.enabled);
 
-        if (!GetComponent<Monster>().CanMove)
+        if (!GetComponent<Monster>().CanMove || character.isDead)
+        {
+            if(character.isDead) 
+            {
+                agent.enabled = false;
+            }
+
             return;
+        }
 
         Flip();
 

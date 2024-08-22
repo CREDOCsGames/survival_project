@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Obstacle : MonoBehaviour, IDamageable
 {
     [SerializeField] LayerMask collLayer;
+    [SerializeField] Sprite[] obstacleSprites;
+    [SerializeField] SpriteRenderer spriteRenderer;
 
     public void Attacked(float damage, GameObject hitObject)
     {
@@ -30,6 +30,36 @@ public class Obstacle : MonoBehaviour, IDamageable
         if(other.gameObject.layer == LayerMask.NameToLayer("MouseInteraction"))
         {
             Destroy(other.gameObject);
+        }
+    }
+
+    public void SetObstacleImage(int num)
+    {
+        spriteRenderer.sprite = obstacleSprites[num];
+
+        if(num == 0)
+        {
+            spriteRenderer.gameObject.transform.localRotation = Quaternion.Euler(0, 0, 90);
+        }
+
+        else if(num == 1)
+        {
+            spriteRenderer.gameObject.transform.localRotation = Quaternion.Euler(0, 0, -90);
+        }
+
+        else
+        {
+            spriteRenderer.gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
+
+            if(num == 2)
+            {
+                spriteRenderer.flipX = true;
+            }
+
+            else if (num == 3)
+            {
+                spriteRenderer.flipX = false;
+            }
         }
     }
 }

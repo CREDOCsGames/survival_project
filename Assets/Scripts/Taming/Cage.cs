@@ -86,6 +86,9 @@ public class Cage : MonoBehaviour, IMouseInteraction
 
         yield return CoroutineCaching.WaitForSeconds(0.5f);
 
+        if (gameSceneManager.isNight)
+            yield break;
+
         gameSceneUI.tamingGame.SetActive(true);
     }
 }

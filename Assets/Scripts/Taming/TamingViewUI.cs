@@ -9,6 +9,7 @@ public class TamingViewUI : MonoBehaviour
     [SerializeField] Text catchText;
     [SerializeField] Text failText;
     [SerializeField] GameObject tamingPet;
+    [SerializeField] GameObject tamingMouseUI;
 
     [HideInInspector] public bool isGaugeUp = false;
 
@@ -89,5 +90,11 @@ public class TamingViewUI : MonoBehaviour
         Cursor.visible = true;
         gameObject.SetActive(false);
         character.isCanControll = true;
+    }
+
+    public void OverExitButton(bool isEnter)
+    {
+        Cursor.visible = isEnter;
+        tamingMouseUI.gameObject.SetActive(!isEnter);
     }
 }

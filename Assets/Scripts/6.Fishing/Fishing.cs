@@ -80,8 +80,6 @@ public class Fishing : Singleton<Fishing>
 
     private void OnDisable()
     {
-        Debug.Log("dis");
-
         pieceCard.SetActive(false);
 
         Character.Instance.isCanControll = true;
