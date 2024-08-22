@@ -79,6 +79,7 @@ public class WeaponChanger : MonoBehaviour
 
         character.weaponParent.GetChild(beforeIndex).gameObject.SetActive(false);
         character.weaponParent.GetChild(currentIndex).gameObject.SetActive(true);
+        character.currentWeaponIndex = currentIndex;
 
         StartCoroutine(ScrollCoolDown());
     }

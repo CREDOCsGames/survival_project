@@ -20,6 +20,7 @@ public class Character : Singleton<Character>
     [SerializeField] float particleScale;
 
     [SerializeField] Slider playerHpBar;
+    [SerializeField] SpriteRenderer[] weaponImages;
 
     [Header("Stat")]
     [SerializeField] RuntimeAnimatorController[] currentController;
@@ -62,16 +63,13 @@ public class Character : Singleton<Character>
     [HideInInspector] public float x;
     [HideInInspector] public float z;
 
-    [HideInInspector] public bool isBuff = false;
-    [HideInInspector] public float charBuffDmg = 0;
-    [HideInInspector] public float buffTime = 5;
-
     Coroutine currentCoroutine;
 
     [HideInInspector] public CharacterInfo currentCharacterInfo;
 
     public Transform weaponParent;
     public bool canWeaponChange = true;
+    public int currentWeaponIndex;
 
     NavMeshAgent agent;
 
@@ -103,10 +101,11 @@ public class Character : Singleton<Character>
         agent.enabled = false;
 
         gameManager = GameManager.Instance;
-        transform.position = new Vector3(0f, 0f, -40f);
 
         initMaxRecGauge = maxRecoveryGauge;
         currentRecoveryGauge = 0;
+
+        currentWeaponIndex = 0;
 
         dashCoolTime = 4;
         dashCount = gameManager.dashCount;
@@ -119,6 +118,8 @@ public class Character : Singleton<Character>
         ChangeAnimationController(0);
 
         rendLower.gameObject.SetActive(false);
+
+        transform.position = gameManager.characterSpawnPos;
     }
     
     void Update()
@@ -127,17 +128,14 @@ public class Character : Singleton<Character>
         {
             HpSetting();
 
-            if (currentHp > 0 && (!gameManager.isClear || !gameManager.isBossDead))
+            if (!isCanControll)
+                return;
+
+            if (currentHp > 0)
             {
                 UseRecoveyGauege();
                 Dash();
                 //AutoRecoverHp();
-            }
-
-            else if (gameManager.isClear && gameManager.isBossDead)
-            {
-                isBuff = false;
-                buffTime = 5;
             }
         }
     }
@@ -200,9 +198,6 @@ public class Character : Singleton<Character>
 
     void UseRecoveyGauege()
     {
-        if (!isCanControll)
-            return;
-
         if (currentRecoveryGauge >= recoveryValue && Input.GetKeyDown(KeyCode.Q))
         {
             StartCoroutine(ConvertRecoveryGauge());
@@ -449,7 +444,7 @@ public class Character : Singleton<Character>
 
                     currentHp -= trueDamage;
 
-                    if(gameManager.specialStatus[SpecialStatus.Mirror])
+                    if (gameManager.specialStatus[SpecialStatus.Mirror])
                     {
                         damagedObject.GetComponent<IDamageable>().Attacked(Mathf.Round(trueDamage / 2), this.gameObject);
                         damagedObject.GetComponent<IDamageable>().RendDamageUI(Mathf.Round(trueDamage / 2), damagedObject.transform.position, false, false);
@@ -457,13 +452,10 @@ public class Character : Singleton<Character>
 
 
                     if (gameManager.specialStatus[SpecialStatus.BloodMadness])
-                        gameManager.bloodDamage = Mathf.Clamp(gameManager.bloodDamage + 1, 0, 15);
+                        gameManager.bloodDamage = Mathf.Clamp(gameManager.bloodDamage + 2, 0, 20);
                 }
 
-                if (currentCoroutine != null)
-                    StopCoroutine(currentCoroutine);
-
-                currentCoroutine = StartCoroutine(OnInvincible());
+                ChangeHitColor();
             }
 
             if (currentHp <= 0)
@@ -473,14 +465,18 @@ public class Character : Singleton<Character>
 
     void OnDead()
     {
+        currentHp = 0;
+
         isAttacked = true;
         isRun = false;
         isDead = true;
 
         StopAllCoroutines();
+
+        gameObject.SetActive(false);
     }
 
-    public IEnumerator OnInvincible()
+    void ChangeHitColor()
     {
         isAttacked = true;
 
@@ -500,79 +496,99 @@ public class Character : Singleton<Character>
 
             currentCoroutine = StartCoroutine(PlayerColorInvincible());
         }
-
-        yield return CoroutineCaching.WaitForSeconds(invincibleTime);
-        rendUpper.color = Color.white;
-        rendLower.color = Color.white;
-        isAttacked = false;
     }
 
     public IEnumerator IEDashInvincible()
     {
-        Color color = Color.white;
+        Color semiWhite = Color.white;
 
         isAttacked = true;
-        color.a = 0.5f;
-        rendUpper.color = color;
-        rendLower.color = color;
+        semiWhite.a = 0.5f;
+        rendUpper.color = semiWhite;
+        rendLower.color = semiWhite;
+        if (weaponImages[currentWeaponIndex] != null)
+            weaponImages[currentWeaponIndex].color = semiWhite;
 
-        yield return CoroutineCaching.WaitForSeconds(invincibleTime);
-        color.a = 1f;
-        rendUpper.color = color;
-        rendLower.color = color;
+        yield return CoroutineCaching.WaitForSeconds(0.5f);
+        
         rendUpper.color = Color.white;
         rendLower.color = Color.white;
+        if (weaponImages[currentWeaponIndex] != null)
+            weaponImages[currentWeaponIndex].color = Color.white;
+
         isAttacked = false;
     }
 
     private IEnumerator PlayerColorInvincible()
     {
-        Color white = new Color(1, 1, 1, 0.5f);
+        Color semiWhite = new Color(1, 1, 1, 0.5f);
 
-        rendUpper.color = white;
-        rendLower.color = white;
+        rendUpper.color = semiWhite;
+        rendLower.color = semiWhite;
+        if (weaponImages[currentWeaponIndex] != null)
+            weaponImages[currentWeaponIndex].color = semiWhite;
 
-        if (invincibleTime - 0.3f > 0)
-            yield break;
+        float waitTime = invincibleTime <= 0 ? 0 : invincibleTime;
 
-        yield return CoroutineCaching.WaitForSeconds(invincibleTime - 0.3f);
+        yield return CoroutineCaching.WaitForSeconds(waitTime);
+
+        rendUpper.color = Color.white;
+        rendLower.color = Color.white;
+        if (weaponImages[currentWeaponIndex] != null)
+            weaponImages[currentWeaponIndex].color = Color.white;
+
+        isAttacked = false;
     }
 
     private IEnumerator PlayerColorBlink()
     {
-        Color red = new Color(1, 0, 0, 0.5f);
-        Color white = new Color(1, 1, 1, 0.5f);
+        Color semiRed = new Color(1, 0, 0, 0.5f);
+        Color semiWhite = new Color(1, 1, 1, 0.5f);
 
-        rendUpper.color = red;
-        rendLower.color = red;
+        rendUpper.color = semiRed;
+        rendLower.color = semiRed;
+        if (weaponImages[currentWeaponIndex] != null)
+            weaponImages[currentWeaponIndex].color = semiRed;
         yield return CoroutineCaching.WaitForSeconds(0.1f);
 
-        rendUpper.color = white;
-        rendLower.color = white;
+        rendUpper.color = semiWhite;
+        rendLower.color = semiWhite;
+        if (weaponImages[currentWeaponIndex] != null)
+            weaponImages[currentWeaponIndex].color = semiWhite;
         yield return CoroutineCaching.WaitForSeconds(0.1f);
 
-        rendUpper.color = red;
-        rendLower.color = red;
+        rendUpper.color = semiRed;
+        rendLower.color = semiRed;
+        if (weaponImages[currentWeaponIndex] != null)
+            weaponImages[currentWeaponIndex].color = semiRed;
         yield return CoroutineCaching.WaitForSeconds(0.1f);
 
-        rendUpper.color = white;
-        rendLower.color = white;
+        rendUpper.color = semiWhite;
+        rendLower.color = semiWhite;
+        if (weaponImages[currentWeaponIndex] != null)
+            weaponImages[currentWeaponIndex].color = semiWhite;
 
-        if (invincibleTime - 0.3f > 0)
-            yield break;
+        float waitTime = invincibleTime - 0.3f <= 0 ? 0 : invincibleTime;
 
-        yield return CoroutineCaching.WaitForSeconds(invincibleTime - 0.3f);
+        yield return CoroutineCaching.WaitForSeconds(waitTime);
+
+        rendUpper.color = Color.white;
+        rendLower.color = Color.white;
+        if (weaponImages[currentWeaponIndex] != null)
+            weaponImages[currentWeaponIndex].color = Color.white;
+
+        isAttacked = false;
     }
 
-    public IEnumerator MoveToInteractableObject(Vector3 logPos, GameObject interactionObejct)
+    public IEnumerator MoveToInteractableObject(Vector3 movePos, GameObject interactionObejct, float animTime)
     {
         isCanControll = false;
 
-        dir = (logPos - transform.position).normalized;
+        dir = (movePos - transform.position).normalized;
 
         Flip();
 
-        while (transform.position != logPos)
+        while (transform.position != movePos)
         {
             if(gamesceneManager.isNight)
             {
@@ -580,16 +596,16 @@ public class Character : Singleton<Character>
                 yield break;
             }
 
-            transform.position = Vector3.MoveTowards(transform.position, logPos, Time.deltaTime * speed);
+            transform.position = Vector3.MoveTowards(transform.position, movePos, Time.deltaTime * speed);
 
             anim.SetFloat("moveSpeed", 1 + (speed * 0.1f));
             anim.SetBool("isRun", true);
 
-            if (transform.position == logPos && !gamesceneManager.isNight)
+            if (transform.position == movePos && !gamesceneManager.isNight)
             {
                 ChangeAnimationController(1);
                 anim.SetBool("isLogging", true);
-                StartCoroutine(interactionObejct.GetComponent<IMouseInteraction>().EndInteraction(anim, 3));
+                StartCoroutine(interactionObejct.GetComponent<IMouseInteraction>().EndInteraction(anim, animTime));
             }
 
             yield return null;

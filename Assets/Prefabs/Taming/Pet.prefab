@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 8
-  m_Sprite: {fileID: -430972571, guid: 918d574f81a006e4da73689d5e37ba22, type: 3}
+  m_Sprite: {fileID: -1246883522, guid: e57ec03f3520a45409ce9eff71ec0f12, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -150,7 +150,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78196cfc13492f242a0ff2e045668d63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageUIPreFab: {fileID: 7694887781048525286, guid: 753c57903dfa6c343ac44acffa5bde8b, type: 3}
   moveRange: 4
   speed: 3
   detactRange: 5

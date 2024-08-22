@@ -32,9 +32,6 @@ MonoBehaviour:
   isHandMirror: 0
   isRustyHarpoon: 0
   isBaitWarm: 0
-  isEye: 0
-  isRaisin: 0
-  isSoulmate: 0
   isGrape: 0
   isTabatiere: 0
   isSoulMate: 0
@@ -42,7 +39,7 @@ MonoBehaviour:
   isSilverBullet: 0
   isBloodMadness: 0
   isRottenCheese: 0
-  isTurtle: 0
+  isTurtle: 1
   isMirror: 0
   maxCount: 1
   itemShape:
@@ -50,5 +47,5 @@ MonoBehaviour:
     _height: 1
     _shape: 0101
   specialStatInfo: "\uBC29\uC5B4\uB825 <color=lime>30%</color> \uC99D\uAC00."
-  description: "\uC120\uBC15\uC5D0 \uC7A1\uC544\uB2E4 \uC0B6\uC544 \uBA39\uACE0,
-    \uAECD\uC9C8\uB85C\uB294 \uC218\uD1B5\uC744 \uB9CC\uB4E4\uC5C8\uB2E4."
+  description: "\uC7A1\uC544\uB2E4 \uC0B6\uC544 \uBA39\uACE0, \n\uAECD\uC9C8\uB85C\uB294
+    \uC218\uD1B5\uC744 \uB9CC\uB4E4\uC5C8\uB2E4."

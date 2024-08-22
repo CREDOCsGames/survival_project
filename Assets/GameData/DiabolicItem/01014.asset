@@ -32,9 +32,6 @@ MonoBehaviour:
   isHandMirror: 0
   isRustyHarpoon: 0
   isBaitWarm: 0
-  isEye: 0
-  isRaisin: 0
-  isSoulmate: 0
   isGrape: 1
   isTabatiere: 0
   isSoulMate: 0
@@ -50,6 +47,6 @@ MonoBehaviour:
     _height: 1
     _shape: 01
   specialStatInfo: "\uD68C\uBCF5 \uAC8C\uC774\uC9C0 \uCD5C\uB300 \uC218\uCE58 <color=lime>10</color>
-    \uC99D\uAC00"
-  description: "\uC2E0\uC120\uD55C \uACFC\uC721\uC744 \uAC00\uC9C4 \uD3EC\uB3C4.
-    \uBC14\uB2E4\uC5D0\uC11C \uBCF4\uAE30 \uD798\uB4E0 \uAC83\uC774\uB2E4."
+    \uC99D\uAC00."
+  description: "\uC2E0\uC120\uD55C \uACFC\uC721\uC744 \uAC00\uC9C4 \uD3EC\uB3C4.\n\uBC14\uB2E4\uC5D0\uC11C
+    \uBCF4\uAE30 \uD798\uB4E0 \uAC83\uC774\uB2E4."

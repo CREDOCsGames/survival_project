@@ -22,7 +22,7 @@ public class OptionUI : MonoBehaviour
 
     protected GameManager gameManager;
     SoundManager soundManager;
-    LoggingLilpa lilpa;
+    GamesceneManager gamesceneManager;
 
     bool muteAllVolume;
     bool muteBgmVolume;
@@ -35,9 +35,7 @@ public class OptionUI : MonoBehaviour
 
         gameManager = GameManager.Instance;
         soundManager = SoundManager.Instance;
-
-        if (LoggingLilpa.Instance != null)
-            lilpa = LoggingLilpa.Instance;
+        gamesceneManager = GamesceneManager.Instance;
 
         cursorNormal = gameManager.useCursorNormal;
         cursorAttack = gameManager.useCursorAttack;
@@ -64,28 +62,13 @@ public class OptionUI : MonoBehaviour
         bUnMark.SetActive(muteBgmVolume);
         sUnMark.SetActive(muteSfxVolume);
 
-        if (lilpa != null)
+        if (!gameManager.isTuto)
         {
-            if (lilpa.isCanControl)
-            {
-                if (Input.GetKeyDown(KeyCode.Escape) && !gameManager.isPause)
-                    PauseGame();
+            if (Input.GetKeyDown(KeyCode.Escape) && !gameManager.isPause)
+                PauseGame();
 
-                else if (Input.GetKeyDown(KeyCode.Escape) && gameManager.isPause)
-                    ReturnToGame();
-            }
-        }
-
-        else
-        {
-            if (!gameManager.isTuto)
-            {
-                if (Input.GetKeyDown(KeyCode.Escape) && !gameManager.isPause)
-                    PauseGame();
-
-                else if (Input.GetKeyDown(KeyCode.Escape) && gameManager.isPause)
-                    ReturnToGame();
-            }
+            else if (Input.GetKeyDown(KeyCode.Escape) && gameManager.isPause)
+                ReturnToGame();
         }
     }
 
@@ -218,7 +201,7 @@ public class OptionUI : MonoBehaviour
 
             if (gameManager.currentScene == "Game")
             {
-                if (gameManager.isBossDead && gameManager.isClear)
+                if (!gamesceneManager.isNight)
                 {
                     Vector2 cursorHotSpot = new Vector3(cursorNormal.width * 0.5f, cursorNormal.height * 0.5f);
                     Cursor.SetCursor(cursorNormal, cursorHotSpot, CursorMode.ForceSoftware);

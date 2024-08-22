@@ -132,6 +132,7 @@ public class DiabolicSlotItem : MonoBehaviour
 
             Character.Instance.UpdateStat();
             PieceItemInven.Instance.SlotBlockImage(pieceSlotIndex);
+            DiabolicInven.Instance.canSetImage = false;
         }
     }
 }

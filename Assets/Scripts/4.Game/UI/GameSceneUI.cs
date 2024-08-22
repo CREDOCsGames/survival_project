@@ -89,7 +89,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
         statWindow.SetActive(false);
         tutoPanel.SetActive(false);
         tamingGame.SetActive(false);
-        fishingGame.SetActive(true);
+        fishingGame.SetActive(false);
         weaponUI.SetActive(false);
         dayChangeGO.SetActive(false);
 
@@ -365,8 +365,8 @@ public class GameSceneUI : Singleton<GameSceneUI>
 
         else
         {
-            if(timeText.color != Color.red)
-            timeText.color = Color.red;
+            if (timeText.color != Color.red)
+                timeText.color = Color.red;
 
             timeText.text = (gamesceneManager.currentGameTime).ToString("F2");
         }
@@ -414,9 +414,17 @@ public class GameSceneUI : Singleton<GameSceneUI>
         SelectScene(nextScene);
     }
 
-    public void UpdatePieceCardUI(DiabolicItemInfo getItem)
+    public void ShowPieceCard(DiabolicItemInfo getItem)
+    {
+        StartCoroutine(ShowPieceCardUI(getItem));
+    }
+
+    IEnumerator ShowPieceCardUI(DiabolicItemInfo getItem)
     {
         pieceCard.GetComponent<PieceCard>().GetRandomItem(getItem);
         pieceCard.gameObject.SetActive(true);
+
+        yield return CoroutineCaching.WaitForSeconds(2);
+        pieceCard.gameObject.SetActive(false);
     }
 }

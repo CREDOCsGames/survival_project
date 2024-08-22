@@ -32,9 +32,6 @@ MonoBehaviour:
   isHandMirror: 0
   isRustyHarpoon: 0
   isBaitWarm: 0
-  isEye: 0
-  isRaisin: 0
-  isSoulmate: 0
   isGrape: 0
   isTabatiere: 0
   isSoulMate: 0
@@ -43,11 +40,12 @@ MonoBehaviour:
   isBloodMadness: 0
   isRottenCheese: 0
   isTurtle: 0
+  isMirror: 0
   maxCount: 3
   itemShape:
     _width: 1
     _height: 1
     _shape: 01
   specialStatInfo: 
-  description: "\uBC18\uC9DD\uC774\uB294 \uB3D9\uC804\uC5D0 \uBAA9\uC228\uC744 \uAC78\uC5B4\uBCF4\uC9C0.
-    \uADF8\uAC83\uC774 \uD574\uC801\uC774 \uB2E8\uBA85\uD558\uB294 \uC774\uC720\uB2C8\uAE4C."
+  description: "\uBC18\uC9DD\uC774\uB294 \uB3D9\uC804\uC5D0 \uBAA9\uC228\uC744 \uAC78\uC5B4\uBCF4\uC9C0.\n\uADF8\uAC83\uC774
+    \uD574\uC801\uC774 \uB2E8\uBA85\uD558\uB294 \uC774\uC720\uB2C8\uAE4C."

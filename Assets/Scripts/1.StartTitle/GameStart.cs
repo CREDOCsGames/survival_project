@@ -31,7 +31,8 @@ public class GameStart : MonoBehaviour
     public void ClickStart(string scene)
     {
         soundManager.PlayES("StartButton");
-        SceneManager.LoadScene(scene);
+        GameManager.Instance.ToNextScene("Game");
+        //SceneManager.LoadScene(scene);
     }
 
     public void ClickOption()

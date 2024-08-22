@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5268,10 +5268,9 @@ MonoBehaviour:
   - {fileID: 2800000, guid: c0c44c8cded839e4aa905be859e44c9c, type: 3}
   bulletStorage: {fileID: 1005871281}
   damageStorage: {fileID: 1692643827}
-  initGameTime: 10000
-  gameDayTime: 3
-  gameNightTime: 1000
-  money: 0
+  characterPrefab: {fileID: 289213144344291185, guid: 8d77a8f4167ea0b469ec40c27f9686ea, type: 3}
+  gameDayTime: 10
+  gameNightTime: 0
   round: 0
   woodCount: 30
   fishHighGradeCount: 2
@@ -5302,7 +5301,7 @@ MonoBehaviour:
   useCursorAttack: {fileID: 0}
   cursorSize: 0
   isTuto: 0
-  characterSpawnPos: {x: 0, y: 0, z: -40}
+  characterSpawnPos: {x: 0, y: 0, z: -69}
   totalBulletCount: 10
 --- !u!4 &936130855
 Transform:

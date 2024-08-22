@@ -31,10 +31,7 @@ MonoBehaviour:
   isAmmoPouch: 0
   isHandMirror: 0
   isRustyHarpoon: 0
-  isBaitWarm: 0
-  isEye: 0
-  isRaisin: 0
-  isSoulmate: 0
+  isBaitWarm: 1
   isGrape: 0
   isTabatiere: 0
   isSoulMate: 0
@@ -50,5 +47,5 @@ MonoBehaviour:
     _height: 1
     _shape: 0101
   specialStatInfo: "\uACE0\uAE09 \uBB3C\uACE0\uAE30\uAC00 \uB09A\uC77C \uD655\uB960
-    <color=lime>20%</color> \uC99D\uAC00"
+    <color=lime>20%</color> \uC99D\uAC00."
   description: "\uBB3C\uACE0\uAE30\uB97C \uC720\uC778\uD558\uB294 \uC791\uC740 \uBC8C\uB808."

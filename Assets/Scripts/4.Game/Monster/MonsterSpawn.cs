@@ -15,6 +15,8 @@ public class MonsterSpawn : MonoBehaviour
     [SerializeField] int poolCount;
     [SerializeField] int spawnRange;
     [SerializeField] float spawnDelay;
+    [SerializeField] float spawnDelayDecrease;
+    [SerializeField] int spawnAmount;
     Collider ground;
 
     private IObjectPool<Monster> pool;
@@ -26,6 +28,12 @@ public class MonsterSpawn : MonoBehaviour
     GamesceneManager gamesceneManager;
 
     Coroutine currentCoroutine;
+
+    float currentDelayTime;
+    int currentSpawnAmount;
+
+    Color leaderColor = new Color(0, 1, 0.43f, 1);
+
 
     private void Awake()
     {
@@ -46,14 +54,17 @@ public class MonsterSpawn : MonoBehaviour
             totalWeight += weightValue[i];
         }
 
+        currentDelayTime = spawnDelay;
+        currentSpawnAmount = spawnAmount;
+
         StartCoroutine(UpdateSpawn());
     }
 
-    private void Update()
+    /*private void Update()
     {
         if (bosssParent.transform.childCount == 0)
             gameManager.isBossDead = true;
-    }
+    }*/
 
     IEnumerator UpdateSpawn()
     {
@@ -62,7 +73,12 @@ public class MonsterSpawn : MonoBehaviour
             //yield return new WaitUntil(() => gamesceneManager.isNight);
             yield return CoroutineCaching.WaitWhile(() => !gamesceneManager.isNight);
 
-            currentCoroutine = StartCoroutine(RendSpawnImage(6));
+            if (gameManager.round % 3 == 1 && gameManager.round != 1)
+                currentSpawnAmount++;
+
+            currentDelayTime = spawnDelay;
+            currentCoroutine = StartCoroutine(RendSpawnImage());
+            StartCoroutine(DecreaseSpawnDelay(10));
 
             //yield return new WaitUntil(() => !gamesceneManager.isNight);
             yield return CoroutineCaching.WaitWhile(() => gamesceneManager.isNight);
@@ -72,19 +88,29 @@ public class MonsterSpawn : MonoBehaviour
         }
     }
 
-    IEnumerator RendSpawnImage(float time)
+    IEnumerator RendSpawnImage()
     {
         while (gamesceneManager.isNight)
         {
             Vector3 pos = SpawnPosition();
             GameObject spawnMark = Instantiate(spawnImage, pos, spawnImage.transform.rotation, storageParent);
             Destroy(spawnMark, 1f);
-            StartCoroutine(SpawnMonster(true, pos, Color.red));
+            StartCoroutine(SpawnMonster(true, pos, leaderColor));
 
-            //SpawnSubordinateMonster(pos, Random.Range(4, 7));
+            SpawnSubordinateMonster(pos, currentSpawnAmount);
 
             //yield return new WaitForSeconds(time);
+            yield return CoroutineCaching.WaitForSeconds(currentDelayTime);
+        }
+    }
+
+    IEnumerator DecreaseSpawnDelay(float time)
+    {
+        while (gamesceneManager.isNight)
+        {
             yield return CoroutineCaching.WaitForSeconds(time);
+
+            currentDelayTime -= spawnDelayDecrease;
         }
     }
 
@@ -113,7 +139,7 @@ public class MonsterSpawn : MonoBehaviour
 
     IEnumerator SpawnMonster(bool isLeader, Vector3 pos, Color color)
     {
-        yield return new WaitForSeconds(1);
+        yield return CoroutineCaching.WaitForSeconds(1);
 
         Monster monster = pool.Get();
         monster.stat = isLeader ? MonsterInfo.Instance.monsterInfos[monster.monsterNum + (normalMonsterPrefab.Length)] : MonsterInfo.Instance.monsterInfos[monster.monsterNum];
@@ -138,8 +164,8 @@ public class MonsterSpawn : MonoBehaviour
             }
         }
 
-        if (currentCoroutine != null)
-            StopCoroutine(currentCoroutine);
+        /*if (currentCoroutine != null)
+            StopCoroutine(currentCoroutine);*/
     }
 
 

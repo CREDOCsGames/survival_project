@@ -5,13 +5,23 @@ using UnityEngine.UI;
 
 public class PieceCard : MonoBehaviour
 {
+    [SerializeField] Image statPanelImage;
+    [SerializeField] Image descripPanelImage;
     [SerializeField] Image itemImage;
     [SerializeField] Text itemName;
     [SerializeField] Text maxCount;
     [SerializeField] GameObject[] descriptPrefabs;
     [SerializeField] Text descriptText;
+    [SerializeField] Color[] gradeColors;
     
     DiabolicItemInfo item;
+
+    public static Color[] GradeColors;
+
+    private void Awake()
+    {
+        GradeColors = gradeColors;
+    }
 
     private void OnEnable()
     {
@@ -25,16 +35,28 @@ public class PieceCard : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(null);
         }
     }
+    
 
     public void UpdateCardUI(DiabolicItemInfo item)
     {
+        ItemManager itemManager = ItemManager.Instance;
+
+        int itemQuantity = 1;
+
+        if (itemManager.getItems.ContainsKey(item))
+        {
+            itemQuantity += itemManager.getItems[item];
+        }
+
+        statPanelImage.color = gradeColors[(item.MaxCount - 1) - (itemQuantity - 1)];
+        descripPanelImage.color = statPanelImage.color;
         itemImage.sprite = item.ItemSprite;
         itemName.text = item.ItemName;
         maxCount.text = item.MaxCount.ToString();
-        DescriptionInfo(item);
+        DescriptionInfo(item, itemQuantity);
     }
 
-    void DescriptionInfo(DiabolicItemInfo item)
+    void DescriptionInfo(DiabolicItemInfo item, int itemQuantity)
     {
         int max = descriptPrefabs.Length;
         int count = 0;
@@ -44,7 +66,7 @@ public class PieceCard : MonoBehaviour
         {
             if (itemStatus[(Status)i] > 0)
             {
-                descriptPrefabs[count].transform.GetChild(0).GetComponent<Text>().text = $"{GameManager.statNames[i]}   :   <color=lime>+{itemStatus[(Status)i]}</color>";
+                descriptPrefabs[count].transform.GetChild(0).GetComponent<Text>().text = $"{GameManager.statNames[i]}   :   <color=lime>+{itemStatus[(Status)i] * itemQuantity}</color>";
 
                 /*if (gameManager.status[(Status)i] < 0)
                 {

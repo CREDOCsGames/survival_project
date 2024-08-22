@@ -48,8 +48,6 @@ public class Fishing : Singleton<Fishing>
         fishingAnim = FishingAnim.Instance;
         itemManager = ItemManager.Instance;
 
-
-        gameObject.SetActive(false);
         pieceCard.SetActive(false);
 
         catchBarWidth = catchBar.GetComponent<RectTransform>().sizeDelta.x;
@@ -82,6 +80,8 @@ public class Fishing : Singleton<Fishing>
 
     private void OnDisable()
     {
+        Debug.Log("dis");
+
         pieceCard.SetActive(false);
 
         Character.Instance.isCanControll = true;
@@ -186,7 +186,7 @@ public class Fishing : Singleton<Fishing>
 
             rand = Random.Range(0, 100);
 
-            if (rand >= 95)
+            if (rand >= 96)
             {
                 GetRandomPiece();
             }

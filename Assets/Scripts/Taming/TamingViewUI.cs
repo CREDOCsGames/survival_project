@@ -83,4 +83,11 @@ public class TamingViewUI : MonoBehaviour
             }
         }
     }
+
+    public void ExitGame()
+    {
+        Cursor.visible = true;
+        gameObject.SetActive(false);
+        character.isCanControll = true;
+    }
 }

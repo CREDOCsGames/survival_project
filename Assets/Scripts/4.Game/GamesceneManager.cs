@@ -16,17 +16,19 @@ public class GamesceneManager : Singleton<GamesceneManager>
     [SerializeField] GameObject nightFilter;
     [SerializeField] GameObject cardSelecter;
     [SerializeField] GameObject multicellInvenPanel;
+    [SerializeField] GameObject initSpawnPos;
 
     [HideInInspector] public float currentGameTime;
 
     [HideInInspector] public bool isNight = false;
 
-    bool isCardSetting = true;
+    bool isSetPieceEnd = true;
 
     GameManager gameManager;
     Character character;
     GameSceneUI gameSceneUI;
     ItemManager itemManager;
+    ItemSpawner beach;
 
     private void Start()
     {
@@ -34,6 +36,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
         character = Character.Instance;
         gameSceneUI = GameSceneUI.Instance;
         itemManager = ItemManager.Instance;
+        beach = ItemSpawner.Instance;
 
         character.GetComponent<NavMeshAgent>().enabled = true;
 
@@ -45,9 +48,17 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
     private void Update()
     {
-        if (character.currentHp > 0 && currentGameTime > 0 && !gameManager.isPause && !isCardSetting)
+        if (character.currentHp > 0 && currentGameTime > 0 && !gameManager.isPause && isSetPieceEnd)
         {
             currentGameTime -= Time.deltaTime;
+
+            if (currentGameTime < 0)
+                currentGameTime = 0;
+        }
+
+        else if(character.currentHp <= 0)
+        {
+            StopAllCoroutines();
         }
     }
 
@@ -60,6 +71,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
 #endif
         gameManager.bloodDamage = 0;
         gameSceneUI.CursorChange(CursorType.Normal);
+
         isNight = false;
         nightFilter.SetActive(false);
         character.ChangeAnimationController(0);
@@ -73,13 +85,16 @@ public class GamesceneManager : Singleton<GamesceneManager>
         }
 
         StartCoroutine(SpawnBush());
+        StartCoroutine(beach.SpawnItem());
 
         cardSelecter.SetActive(true);
 
-        isCardSetting = true;
+        isSetPieceEnd = false;
         character.isCanControll = false;
         //yield return new WaitWhile(() => cardSelecter.activeSelf);
         yield return CoroutineCaching.WaitWhile(() => cardSelecter.activeSelf);
+
+        character.transform.position = gameManager.round == 0 ? initSpawnPos.transform.position : new Vector3(-1f, 0f, -41f);
 
         gameManager.round++;
         currentGameTime = gameManager.gameDayTime;
@@ -103,7 +118,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
         gameSceneUI.ChangeDayText(0, "아침이 밝았습니다.");
 
-        isCardSetting = false;
+        isSetPieceEnd = true;
         character.isCanControll = true;
 
         //yield return new WaitForSeconds(gameManager.gameDayTime);
@@ -121,7 +136,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
         character.UpdateStat();
         character.weaponParent.gameObject.SetActive(true);
-        character.transform.position = new Vector3(0f, 0f, -40f);
+        character.transform.position = new Vector3(-1f, 0f, -41f);
 
         campFire.GetComponent<Campfire>().ToNightScene();
 

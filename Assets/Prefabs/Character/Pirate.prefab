@@ -200,6 +200,10 @@ MonoBehaviour:
   particle: {fileID: 289213144844355932}
   particleScale: 1.4
   playerHpBar: {fileID: 289213144616889224}
+  weaponImages:
+  - {fileID: 7183370604035136507}
+  - {fileID: 9155483838891345940}
+  - {fileID: 0}
   currentController:
   - {fileID: 9100000, guid: 835e9c6fe2a4a1b4dbe6507c5c7f4a71, type: 2}
   - {fileID: 9100000, guid: f7d74ad42290f264386975d3d6f346dc, type: 2}
@@ -226,12 +230,10 @@ MonoBehaviour:
   isDead: 0
   x: 0
   z: 0
-  isBuff: 0
-  charBuffDmg: 0
-  buffTime: 8
   currentCharacterInfo: {fileID: 0}
   weaponParent: {fileID: 4566666533326533890}
   canWeaponChange: 1
+  currentWeaponIndex: 0
   isCanControll: 1
   canFlip: 1
 --- !u!114 &2030790823311812204
@@ -6490,6 +6492,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
+--- !u!212 &7183370604035136507 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 2988402651215989648, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
+  m_PrefabInstance: {fileID: 5388704157994569835}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7994953468776557293 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2610753198198880902, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
@@ -6829,5 +6836,10 @@ PrefabInstance:
 --- !u!4 &3519880206322321320 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5658278016135252954, guid: cedc7bc35d28ac5418d3797670a41177, type: 3}
+  m_PrefabInstance: {fileID: 9106029435041188978}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &9155483838891345940 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 95083074069677158, guid: cedc7bc35d28ac5418d3797670a41177, type: 3}
   m_PrefabInstance: {fileID: 9106029435041188978}
   m_PrefabAsset: {fileID: 0}

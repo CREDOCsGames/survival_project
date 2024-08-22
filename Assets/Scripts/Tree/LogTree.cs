@@ -72,8 +72,8 @@ public class LogTree : MonoBehaviour, IMouseInteraction
         if (canLog)
         {
             obstacleAngle = LogAngle();
-
-            StartCoroutine(character.MoveToInteractableObject(logPoses[posNum].position, gameObject));
+            canLog = false;
+            StartCoroutine(character.MoveToInteractableObject(logPoses[posNum].position, gameObject, 3));
         }
     }
 

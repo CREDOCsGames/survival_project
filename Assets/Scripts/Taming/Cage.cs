@@ -25,12 +25,15 @@ public class Cage : MonoBehaviour, IMouseInteraction
 
     private void Update()
     {
-        if (gameSceneManager.isNight && isCanInteraction)
+        if (gameSceneManager.isNight && isCanInteraction && character.IsTamingPet)
             isCanInteraction = false;
     }
 
     public void CanInteraction(bool _canInteraction)
     {
+        if (character.IsTamingPet)
+            return;
+
         isCanInteraction = _canInteraction;
     }
 

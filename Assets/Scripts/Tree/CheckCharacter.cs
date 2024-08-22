@@ -72,6 +72,11 @@ public class CheckCharacter : MonoBehaviour
                 Vector3 logDir = -(Character.Instance.transform.position - transform.position).normalized;
                 ArrowRatateToDir(logDir);
             }
+
+            if(!transform.parent.GetComponent<IMouseInteraction>().ReturnCanInteraction())
+            {
+                clickUI.SetActive(false);
+            }
         }
     }
 

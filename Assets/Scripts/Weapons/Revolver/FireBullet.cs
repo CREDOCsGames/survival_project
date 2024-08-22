@@ -67,7 +67,7 @@ public class FireBullet : FireProjectile
 
     protected override void Fire()
     {
-        if (Input.GetMouseButton(0) && !(gameManager.isClear || gameManager.isPause))
+        if (Input.GetMouseButton(0) && !(gameManager.isPause))
         {
             character.canWeaponChange = false;
             SetFire();

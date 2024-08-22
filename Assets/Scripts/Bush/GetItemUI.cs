@@ -32,6 +32,11 @@ public class GetItemUI : MonoBehaviour
         uiImage.sprite = bulletImage;
     }
 
+    public void SetGetItemImage(Sprite getItemSprite)
+    {
+        uiImage.sprite = getItemSprite;
+    }
+
     void AlphaChange()
     {
         Color uiColor = uiImage.color;        // 텍스트의 색상값

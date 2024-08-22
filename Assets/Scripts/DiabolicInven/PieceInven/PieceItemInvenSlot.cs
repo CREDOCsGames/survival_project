@@ -15,8 +15,6 @@ public class PieceItemInvenSlot : MonoBehaviour
 
     int indexNum;
 
-    bool isDragging = false;
-
     Dictionary<Status,int> status = new Dictionary<Status,int>();
 
     private void Awake()
@@ -34,35 +32,20 @@ public class PieceItemInvenSlot : MonoBehaviour
     private void OnEnable()
     {
         UpdateSlotData();
-    }
-
-    private void Update()
-    {
         ChangeSlotColor();
     }
 
     void ChangeSlotColor()
     {
-        switch(pieceInven.itemQuantity[indexNum])
+        if (pieceInven.itemQuantity[indexNum] == 0)
         {
-            case 0:
-                GradeColorImage.gameObject.SetActive(false);
-                break;
+            GradeColorImage.gameObject.SetActive(false);
+        }
 
-            case 1:
-                GradeColorImage.gameObject.SetActive(true);
-                GradeColorImage.color = Color.gray;
-                break;
-
-            case 2:
-                GradeColorImage.gameObject.SetActive(true);
-                GradeColorImage.color = Color.yellow;
-                break;
-
-            case 3:
-                GradeColorImage.gameObject.SetActive(true);
-                GradeColorImage.color = Color.green;
-                break;
+        else
+        {
+            GradeColorImage.gameObject.SetActive(true);
+            GradeColorImage.color = PieceCard.GradeColors[(pieceInven.items[indexNum].MaxCount - 1) - (pieceInven.itemQuantity[indexNum] - 1)];
         }
     }
 
@@ -82,6 +65,12 @@ public class PieceItemInvenSlot : MonoBehaviour
 
     public void UpdateDiscription()
     {
+        if (dragUI == null)
+            dragUI = DragUI.Instance;
+
+        if (dragUI.isDragging)
+            return;
+
         itemDiscriptionText.text = "";
 
         if (pieceInven.items[indexNum] == null)
@@ -105,19 +94,19 @@ public class PieceItemInvenSlot : MonoBehaviour
 
     public void DragBeginItem()
     {
-        if (pieceInven.items[indexNum] == null || isDragging || blockImage.gameObject.activeSelf)
-            return;
-
         if(dragUI == null)
             dragUI = DragUI.Instance;
 
+        if (pieceInven.items[indexNum] == null || dragUI.isDragging || blockImage.gameObject.activeSelf)
+            return;
+
         dragUI.SettingDragUI(pieceInven.items[indexNum]);
-        isDragging = true;
+        dragUI.isDragging = true;
     }
 
     public void DraggingItem()
     {
-        if (!isDragging)
+        if (!dragUI.isDragging)
             return;
 
         dragUI.MoveDragUI();
@@ -125,13 +114,13 @@ public class PieceItemInvenSlot : MonoBehaviour
 
     public void DragEndItem()
     {
-        if (!isDragging)
+        if (!dragUI.isDragging)
             return;
 
         DiabolicInven.Instance.InstantItemImage(dragUI.DragItem, blockImage.gameObject, indexNum, pieceInven.itemQuantity[indexNum]);
 
         dragUI.OffDragUI();
-        isDragging = false;
+        dragUI.isDragging = false;
     }
 
     public void OffBlockImage()

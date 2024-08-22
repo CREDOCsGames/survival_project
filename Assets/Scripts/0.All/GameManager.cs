@@ -22,15 +22,11 @@ public enum SpecialStatus
     DoubleAxe,
     Rum,
     AmmoPouch,
-    HandMirror,
     RustyHarpoon,
     BaitWarm,
-    Eye,
-    Raisin,
     Soulmate,
     Grape,
     Tabatiere,
-    SoulMate,
     Invincible,
     SilverBullet,
     BloodMadness,
@@ -48,10 +44,9 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] public Transform damageStorage;
 
     [Header("GameData")]
-    [SerializeField] float initGameTime;
+    [SerializeField] GameObject characterPrefab;
     [SerializeField] public float gameDayTime;
     [SerializeField] public float gameNightTime;
-    [SerializeField] public int money;
     [SerializeField] public int round;
     [SerializeField] public int woodCount;
     public int fishHighGradeCount = 0;
@@ -78,8 +73,6 @@ public class GameManager : Singleton<GameManager>
 
     [HideInInspector] public string currentScene;
 
-    Scene scene;
-
     [HideInInspector] public bool isPause;
     [HideInInspector] public bool isClear;
     [HideInInspector] public bool isBossDead;
@@ -94,7 +87,7 @@ public class GameManager : Singleton<GameManager>
 
     [HideInInspector] public bool isTuto = false;
 
-    [HideInInspector] public Vector3 characterSpawnPos = new Vector3(0, 0, -40);
+    public Vector3 characterSpawnPos = new Vector3(0, 0, -69f);
 
     public Dictionary<Status, int> status = new Dictionary<Status, int>();
     public Dictionary<SpecialStatus, bool> specialStatus = new Dictionary<SpecialStatus, bool>();
@@ -119,7 +112,7 @@ public class GameManager : Singleton<GameManager>
 
         Vector2 cursorHotSpot = new Vector3(useCursorNormal.width * 0.5f, useCursorNormal.height * 0.5f);
         Cursor.SetCursor(useCursorNormal, cursorHotSpot, CursorMode.ForceSoftware);
-        Cursor.lockState = CursorLockMode.None;
+        Cursor.lockState = CursorLockMode.Confined;
 
         //PlayerPrefs.SetInt("GameTuto", 1);
         /*PlayerPrefs.SetInt("ShopTuto", 1);
@@ -155,6 +148,9 @@ public class GameManager : Singleton<GameManager>
         critical = 5;
         avoid = 1;
 
+        fishLowGradeCount = 0;
+        fishHighGradeCount = 0;
+
         percentDamage = 100;
         percentDefence = 100;
         bloodDamage = 0;
@@ -182,48 +178,15 @@ public class GameManager : Singleton<GameManager>
         //specialStatus[SpecialStatus.Mirror] = true;
     }
 
-    private void Update()
-    {
-        scene = SceneManager.GetActiveScene();
-        //currentScene = scene.name;
-
-        if (scene.buildIndex > 1)
-        {
-            OnGameScene();
-        }
-    }
-
-    void OnGameScene()
-    {
-        if (currentScene == "Game")
-        {
-            if (money <= 0)
-                money = 0;
-        }
-    }
-
     public void ToNextScene(string sceneName)
     {
-        Character character = Character.Instance;
+        Character character = Instantiate(characterPrefab, Vector3.zero, characterPrefab.transform.rotation).GetComponent<Character>();
         character.GetComponent<NavMeshAgent>().enabled = false;
         character.transform.position = characterSpawnPos;
         
         currentScene = sceneName;
 
-        //character.currentHp = character.maxHp;
-        character.dashCount = dashCount;
-        character.dashCoolTime = character.initDashCoolTime;
-
-        SceneManager.LoadScene(currentScene);
-
-        //gameTime = Mathf.Clamp(initGameTime + (round - 1) * 3f, initGameTime, 60f);
-
-        /*if (round != 8)
-            gameTime = 0;
-
-        else
-            gameTime = 30;*/
-
-        isClear = false;
+        SceneManager.LoadScene(sceneName);
+        //isClear = false;
     }
 }

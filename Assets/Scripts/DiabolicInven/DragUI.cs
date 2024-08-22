@@ -12,6 +12,8 @@ public class DragUI : Singleton<DragUI>
     public DiabolicItemInfo DragItem => dragItem;
     public int Count => haveCount;
 
+    public bool isDragging = false;
+
 
     private void Start()
     {

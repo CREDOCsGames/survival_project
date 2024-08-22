@@ -75,7 +75,7 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
             }
         }
 
-        gameSceneUI.UpdatePieceCardUI(itemList[rand]);
+        gameSceneUI.ShowPieceCard(itemList[rand]);
         ItemManager.Instance.AddItem(itemList[rand]);
     }
 
@@ -88,14 +88,13 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
     {
         if (canGather)
         {
-            StartCoroutine(character.MoveToInteractableObject(transform.position, gameObject));
+            canGather = false;
+            StartCoroutine(character.MoveToInteractableObject(transform.position, gameObject, 3));
         }
     }
 
     public IEnumerator EndInteraction(Animator anim, float waitTime)
     {
-        yield return CoroutineCaching.WaitForSeconds(1);
-
         yield return CoroutineCaching.WaitForSeconds(waitTime);
 
         if (gamesceneManager.isNight)
@@ -103,10 +102,8 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
 
         int rand = Random.Range(0, 100);
 
-        if (rand > 95)
+        if (rand >= 96)
             GetRandomPiece();
-
-        Debug.Log("1");
 
         RecoveryGaugeUp();
         Destroy(gameObject);

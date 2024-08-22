@@ -15,7 +15,7 @@ MonoBehaviour:
   itemNum: 1016
   weightValue: 0
   itemSprite: {fileID: 21300000, guid: 421057b64e041cc47b6e7443f2d9d9d9, type: 3}
-  itemName: "\uCF54\uB2F4\uBC30\uAC12"
+  itemName: "\uCF54\uB2F4\uBC43\uAC11"
   maxHp: 0
   damage: 0
   closeDamage: 0
@@ -32,9 +32,6 @@ MonoBehaviour:
   isHandMirror: 0
   isRustyHarpoon: 0
   isBaitWarm: 0
-  isEye: 0
-  isRaisin: 0
-  isSoulmate: 0
   isGrape: 0
   isTabatiere: 1
   isSoulMate: 0
@@ -49,7 +46,7 @@ MonoBehaviour:
     _width: 1
     _height: 1
     _shape: 01
-  specialStatInfo: "\uC544\uCE68\uC5D0 \uC774\uB3D9\uC18D\uB3C4 <color=lime>10%</color>
-    \uC99D\uAC00"
+  specialStatInfo: "\uB0AE\uB3D9\uC548 \uC774\uB3D9\uC18D\uB3C4 <color=lime>10%</color>
+    \uC99D\uAC00."
   description: "\uB2F4\uBC30\uB97C \uD53C\uC6B0\uBA70 \uB0B4\uC26C\uB294 \uD55C\uC228\uC740
-    \uACF5\uD5C8\uB97C \uB2EC\uB798\uB294 \uC720\uC77C\uD55C \uC218\uB2E8\uC774\uB2E4."
+    \n\uACF5\uD5C8\uB97C \uB2EC\uB798\uB294 \uC720\uC77C\uD55C \uC218\uB2E8\uC774\uB2E4."

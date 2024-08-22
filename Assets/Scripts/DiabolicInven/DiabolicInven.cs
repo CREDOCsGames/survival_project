@@ -24,7 +24,7 @@ public class DiabolicInven : Singleton<DiabolicInven>
     int column;
     int row;
 
-    bool canSetImage;
+    public bool canSetImage;
 
     Dictionary<Status,int> itemStatus;
     Dictionary<SpecialStatus, bool> itemSpecialStatus;
@@ -65,6 +65,8 @@ public class DiabolicInven : Singleton<DiabolicInven>
 
         else
             itemManager.currentEquipItems[dragUI.DragItem]++;
+
+        canSetImage = false;
     }
 
     public void AddStatus(int pieceSlotIndex)
