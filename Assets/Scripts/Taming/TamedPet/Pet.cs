@@ -99,12 +99,16 @@ public class Pet : MonoBehaviour
         if (!isAttack)
             return;
 
+        Debug.Log(isAttack);
+
         //if (other.CompareTag("Monster") && other.transform.parent.GetComponent<Monster>() != null)
         if(other.GetComponent<IDamageable>() != null)
         {
+            Debug.Log(other.name);
+
             float realDamage = gameManager.specialStatus[SpecialStatus.Soulmate] ? damage + 4 : damage;
 
-            other.GetComponent<IDamageable>().Attacked(realDamage, this.gameObject);
+            other.GetComponent<IDamageable>().Attacked(realDamage, gameObject);
             other.GetComponent<IDamageable>().RendDamageUI(realDamage, other.transform.position, false, false);
         }
     }
@@ -119,7 +123,7 @@ public class Pet : MonoBehaviour
         if (monsters.Length > 0)
         {
             var find = from monster in monsters
-                       where monster.CompareTag("Monster") && monster.transform.parent.GetComponent<Monster>() != null
+                       where monster.transform.parent.GetComponent<Monster>() != null
                        orderby Vector3.Distance(transform.position, monster.transform.position)
                        select monster.gameObject;
 
@@ -160,5 +164,11 @@ public class Pet : MonoBehaviour
     {
         if (character.GetPetRound + 5 == gameManager.round)
             character.RunAwayPet();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detactRange);
     }
 }
