@@ -5,6 +5,8 @@ public class LogTree : MonoBehaviour, IMouseInteraction
 {
     [SerializeField] GameObject obstacle;
     [SerializeField] Transform[] logPoses;
+    [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] GameObject arrow;
 
     bool canLog = false;
     [HideInInspector] int posNum;
@@ -71,9 +73,17 @@ public class LogTree : MonoBehaviour, IMouseInteraction
     {
         if (canLog)
         {
+            arrow.SetActive(false);
             obstacleAngle = LogAngle();
             canLog = false;
-            StartCoroutine(character.MoveToInteractableObject(logPoses[posNum].position, gameObject, 3 , 1, posNum));
+            StartCoroutine(character.MoveToInteractableObject(logPoses[posNum].position, gameObject, 3, 1, posNum, -1));
+
+            if(posNum == 0)
+            {
+                Color color = spriteRenderer.color;
+                color.a = 0.4f;
+                spriteRenderer.color = color;
+            }
         }
     }
 
@@ -110,11 +120,11 @@ public class LogTree : MonoBehaviour, IMouseInteraction
         character.ChangeAnimationController(0);
     }
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, 2);
-    }
+    }*/
 
     public void InteractionRightButtonFuc(GameObject hitObject)
     {

@@ -107,8 +107,8 @@ TextureImporter:
       name: LeatherBoots_0
       rect:
         serializedVersion: 2
-        x: 254
-        y: 290
+        x: 215
+        y: 275
         width: 683
         height: 612
       alignment: 0
@@ -118,8 +118,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4b4e558ec15610e4589fc82cef7ac981
-      internalID: -1362139449
+      spriteID: 2bed37e5bda4f06409193023c9ed1ded
+      internalID: 269796661
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      LeatherBoots_0: -1362139449
+      LeatherBoots_0: 269796661
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

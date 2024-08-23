@@ -5,6 +5,7 @@ using UnityEngine;
 public class BeachItem : MonoBehaviour, IMouseInteraction
 {
     [SerializeField] DiabolicItemInfo[] beachPieceList;
+    [SerializeField] Transform[] gatherPoints;
 
     bool canInteract = false;
 
@@ -89,7 +90,10 @@ public class BeachItem : MonoBehaviour, IMouseInteraction
         yield return CoroutineCaching.WaitForSeconds(waitTime);
 
         if (gamesceneManager.isNight)
+        {
+            character.canFlip = true;
             yield break;
+        }
 
         gameManager.woodCount++;
         character.getItemUI.GetComponent<GetItemUI>().SetGetItemImage(GetComponent<SpriteRenderer>().sprite);
@@ -103,6 +107,7 @@ public class BeachItem : MonoBehaviour, IMouseInteraction
         }
 
         anim.SetBool("isLogging", false);
+        character.canFlip = true;
         character.isCanControll = true;
         character.ChangeAnimationController(0);
 
@@ -114,8 +119,10 @@ public class BeachItem : MonoBehaviour, IMouseInteraction
         if (!canInteract)
             return;
 
+        int num = (character.transform.position - transform.position).x > 0 ? 0 : 1;
+
         canInteract = false;
-        StartCoroutine(character.MoveToInteractableObject(transform.position, gameObject, 2, 5));
+        StartCoroutine(character.MoveToInteractableObject(gatherPoints[num].position, gameObject, 2, 5, -1, num));
     }
 
     public void InteractionRightButtonFuc(GameObject hitObject)

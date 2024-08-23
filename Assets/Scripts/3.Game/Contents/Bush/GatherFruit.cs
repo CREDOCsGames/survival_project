@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GatherFruit : MonoBehaviour, IMouseInteraction
 {
-    [SerializeField] Transform gatherPoint;
+    [SerializeField] Transform[] gatherPoint;
     [SerializeField] int defaultGaugeUpValue;
     [SerializeField] DiabolicItemInfo[] bushPieceList;
 
@@ -90,7 +90,10 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
         if (canGather)
         {
             canGather = false;
-            StartCoroutine(character.MoveToInteractableObject(gatherPoint.position, gameObject, 3, 5));
+
+            int num = (character.transform.position - transform.position).x > 0 ? 0 : 1;
+
+            StartCoroutine(character.MoveToInteractableObject(gatherPoint[num].position, gameObject, 3, 5, -1, num));
         }
     }
 
@@ -99,11 +102,13 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
         yield return CoroutineCaching.WaitForSeconds(waitTime);
 
         if (gamesceneManager.isNight)
+        {
+            character.isCanControll = true;
+            character.canFlip = true;
             yield break;
+        }
 
-        int rand = Random.Range(0, 100);
-
-        if (rand >= 96)
+        if (Random.Range(0, 100) >= 96)
             GetRandomPiece();
 
         RecoveryGaugeUp();
@@ -111,6 +116,7 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
 
         anim.SetBool("isLogging", false);
         character.isCanControll = true;
+        character.canFlip = true;
         character.ChangeAnimationController(0); 
     }
 
@@ -138,10 +144,10 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
     }
 
 #if UNITY_EDITOR
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, 2);
-    }
+    }*/
 #endif
 }

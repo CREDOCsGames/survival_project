@@ -168,9 +168,9 @@ public class Pet : MonoBehaviour
             character.RunAwayPet();
     }
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detactRange);
-    }
+    }*/
 }

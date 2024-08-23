@@ -71,12 +71,12 @@ public class PieceItemInvenSlot : MonoBehaviour
         if (dragUI.isDragging)
             return;
 
-        itemDiscriptionText.text = "";
-
         if (pieceInven.items[indexNum] == null)
         {
             return;
         }
+
+        itemDiscriptionText.text = pieceInven.items[indexNum].ItemName + "\n";
 
         status = pieceInven.items[indexNum].Stat();
 

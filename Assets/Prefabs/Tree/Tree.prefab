@@ -808,6 +808,8 @@ MonoBehaviour:
   - {fileID: 6230937246724226121}
   - {fileID: 7276809156506558141}
   - {fileID: 8811283004285978934}
+  spriteRenderer: {fileID: 6399602793108957509}
+  arrow: {fileID: 5077988449566647711}
 --- !u!1 &7412166656126384603
 GameObject:
   m_ObjectHideFlags: 0

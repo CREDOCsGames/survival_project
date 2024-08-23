@@ -8,6 +8,8 @@ public class ItemManager : Singleton<ItemManager>
     public DiabolicItemInfo[] startPieceList;
     public DiabolicItemInfo[] nightPieceList;
     public DiabolicItemInfo[] pieceItemsList = null;
+    [SerializeField]
+    DiabolicItemInfo[] testList;
 
     [HideInInspector] public DiabolicItemInfo[] items;
     [HideInInspector] public int[] itemQuantity;
@@ -20,6 +22,13 @@ public class ItemManager : Singleton<ItemManager>
 
         items = new DiabolicItemInfo[slotParent.childCount];
         itemQuantity = new int[slotParent.childCount];
+
+#if UNITY_EDITOR
+        for(int i=0;i< testList.Length;++i)
+        {
+            AddItem(testList[i]);
+        }
+#endif
     }
 
     public void AddItem(DiabolicItemInfo selectedItem)

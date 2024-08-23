@@ -585,7 +585,7 @@ public class Character : Singleton<Character>
         isAttacked = false;
     }
 
-    public IEnumerator MoveToInteractableObject(Vector3 movePos, GameObject interactionObejct, float animTime, int animNum, int clipNum = -1)
+    public IEnumerator MoveToInteractableObject(Vector3 movePos, GameObject interactionObejct, float animTime, int animNum, int clipNum = -1, int flipNum = -1)
     {
         isCanControll = false;
 
@@ -594,8 +594,11 @@ public class Character : Singleton<Character>
         Flip();
 
         ChangeAnimationController(animNum);
+
         if (clipNum != -1)
+        {
             ChangeAnimClip(clipNum);
+        }
 
         while (transform.position != movePos)
         {
@@ -612,6 +615,12 @@ public class Character : Singleton<Character>
 
             if (transform.position == movePos && !gamesceneManager.isNight)
             {
+                if(flipNum != -1)
+                {
+                    canFlip = false;
+                    rendUpper.flipX = flipNum != 0;
+                }
+
                 anim.SetBool("isLogging", true);
                 StartCoroutine(interactionObejct.GetComponent<IMouseInteraction>().EndInteraction(anim, animTime));
             }

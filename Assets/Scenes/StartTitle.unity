@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4834,7 +4834,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -132}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 0}
 --- !u!1 &874970098
@@ -5269,13 +5269,13 @@ MonoBehaviour:
   bulletStorage: {fileID: 1005871281}
   damageStorage: {fileID: 1692643827}
   characterPrefab: {fileID: 289213144344291185, guid: 8d77a8f4167ea0b469ec40c27f9686ea, type: 3}
-  gameDayTime: 0
-  gameNightTime: 0
+  gameDayTime: 180
+  gameNightTime: 60
   round: 0
   woodCount: 30
   fishHighGradeCount: 2
   fishLowGradeCount: 100
-  maxHp: 10000
+  maxHp: 100
   damage: 0
   closeDamage: 0
   longDamage: 0
@@ -5732,7 +5732,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1031973232
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8830,7 +8830,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 183.00006, y: 50}
+  m_AnchoredPosition: {x: 183, y: 175}
   m_SizeDelta: {x: 316.7656, y: 75.1333}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1851451979

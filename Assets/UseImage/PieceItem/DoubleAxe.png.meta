@@ -107,8 +107,8 @@ TextureImporter:
       name: DoubleAxe_0
       rect:
         serializedVersion: 2
-        x: 219
-        y: 223
+        x: 229
+        y: 222
         width: 702
         height: 696
       alignment: 0
@@ -118,8 +118,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 77b54dd1dbd7b7f4cad603547bbdc937
-      internalID: 237766749
+      spriteID: b6b44a7766b258948acfd65ec2ce26e0
+      internalID: -922314347
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      DoubleAxe_0: 237766749
+      DoubleAxe_0: -922314347
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

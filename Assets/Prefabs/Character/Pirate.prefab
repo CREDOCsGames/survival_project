@@ -210,6 +210,7 @@ MonoBehaviour:
   - {fileID: 9100000, guid: c8f46930449af74408f846ce96fd79ec, type: 2}
   - {fileID: 9100000, guid: 6a009263e7a27b0448468cc43906e675, type: 2}
   - {fileID: 9100000, guid: fe15ed084fcfba5468cd7e6adf9a5695, type: 2}
+  - {fileID: 9100000, guid: ef15f392a3401984b86385e75d77c999, type: 2}
   dashCoolTime: 2
   initDashCoolTime: 0
   dashCount: 2
@@ -5686,7 +5687,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: -1380407709, guid: dfad55d35fa0a354a84b15610450bbb0, type: 3}
+  m_Sprite: {fileID: 118082829, guid: 47133dd730df3904e9c3db02fb654261, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5707,7 +5708,7 @@ Animator:
   m_GameObject: {fileID: 3087141058172693515}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f7d74ad42290f264386975d3d6f346dc, type: 2}
+  m_Controller: {fileID: 9100000, guid: ef15f392a3401984b86385e75d77c999, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5817,7 +5818,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7774479967119995242
 Transform:
   m_ObjectHideFlags: 0
