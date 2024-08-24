@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletDamage: 3
   destroyPos: {x: 0, y: 0, z: 0}
+  parentObject: {fileID: 0}
 --- !u!135 &7966259111163919104
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -127,6 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   height: 1
+  moveSpeed: 1.35
   totalThrowLength: 2
   flyingHit: 1
   scaleChange: 0

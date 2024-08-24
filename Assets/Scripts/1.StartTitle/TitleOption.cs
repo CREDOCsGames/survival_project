@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +19,8 @@ public class TitleOption : MonoBehaviour
     [SerializeField] GameObject sUnMark;
     [SerializeField] GameObject normalToggle;
     [SerializeField] GameObject doubleToggle;
+    [SerializeField] GameObject[] optionPanels;
+    [SerializeField] Text[] keyTexts;
 
     SoundManager soundManager;
     GameManager gameManager;
@@ -30,7 +33,7 @@ public class TitleOption : MonoBehaviour
     int key = -1;
     int checkKey = -1;
 
-    [SerializeField] Text[] keyTexts;
+    int currentOptionIndex = 0;
 
     private void Start()
     {
@@ -77,6 +80,13 @@ public class TitleOption : MonoBehaviour
         for (int i = 0; i < keyTexts.Length; i++)
         {
             keyTexts[i].text = KeySetting.keys[(KeyAction)i].ToString();    // keyText에 keys의 keyCode값 대입
+        }
+
+        currentOptionIndex = PlayerPrefs.GetInt("Option_Index", 0);
+
+        for (int i = 0; i < optionPanels.Length; ++i)
+        {
+            optionPanels[i].SetActive(i == currentOptionIndex);
         }
     }
 
@@ -285,5 +295,15 @@ public class TitleOption : MonoBehaviour
     public void TextFx()
     {
         soundManager.PlayES("SelectButton");
+    }
+
+    public void OptionIndex(int index)
+    {
+        PlayerPrefs.SetInt("Option_Index", index);
+
+        for (int i = 0; i < optionPanels.Length; ++i)
+        {
+            optionPanels[i].SetActive(i == index);
+        }
     }
 }

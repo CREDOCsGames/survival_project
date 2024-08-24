@@ -107,7 +107,7 @@ TextureImporter:
       name: DownLogging_0
       rect:
         serializedVersion: 2
-        x: 114
+        x: 127
         y: 0
         width: 1222
         height: 1689
@@ -128,7 +128,7 @@ TextureImporter:
       name: DownLogging_1
       rect:
         serializedVersion: 2
-        x: 1450
+        x: 1463
         y: 0
         width: 1222
         height: 1689
@@ -151,7 +151,7 @@ TextureImporter:
         serializedVersion: 2
         x: 2786
         y: 0
-        width: 1108
+        width: 1222
         height: 1689
       alignment: 0
       pivot: {x: 0.5, y: 0.5}

@@ -85,11 +85,11 @@ public class PieceItemInvenSlot : MonoBehaviour
             if (status[(Status)i] == 0)
                 continue;
 
-            itemDiscriptionText.text += GameManager.statNames[i] + ": " + status[(Status)i] * itemManager.itemQuantity[indexNum] + "\n";
+            itemDiscriptionText.text += "\n" + GameManager.statNames[i] + ": " + status[(Status)i] * itemManager.itemQuantity[indexNum];
         }
 
         itemDiscriptionText.text += "\n" + pieceInven.items[indexNum].SpecialStatInfo;
-        itemDiscriptionText.text += "\n" + pieceInven.items[indexNum].Description;
+        itemDiscriptionText.text += "\n\n" + pieceInven.items[indexNum].Description;
     }
 
     public void DragBeginItem()

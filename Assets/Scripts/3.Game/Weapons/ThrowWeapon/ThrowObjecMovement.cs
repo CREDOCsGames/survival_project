@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ThrowObjecMovement : ParabolaLineRenderer
 {
+    [SerializeField] float moveSpeed;
     [SerializeField] float totalThrowLength;
     [SerializeField] bool flyingHit;
     [SerializeField] bool scaleChange;
@@ -42,7 +43,7 @@ public class ThrowObjecMovement : ParabolaLineRenderer
         else
             beforeDelta = Mathf.Clamp(beforeDelta + Time.deltaTime * 1, 1.5f, 3);
 
-        currentThrowLength += (Time.deltaTime * beforeDelta);
+        currentThrowLength += (Time.deltaTime * beforeDelta * moveSpeed);
 
         transform.position = ParabolicPos(startPos, endPos, currentThrowLength, totalThrowLength);
 
