@@ -7,6 +7,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
     [SerializeField] GameObject monsterSpawner;
     [SerializeField] public Transform treeParent;
     [SerializeField] Transform bushParent;
+    [SerializeField] Transform beachParent;
     [SerializeField] GameObject treePrefab;
     [SerializeField] GameObject bushPrefab;
     [SerializeField] GameObject campFire;
@@ -85,7 +86,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
         }
 
         StartCoroutine(SpawnBush());
-        StartCoroutine(beach.SpawnItem());
+        StartCoroutine(beach.SpawnItem(beachParent));
 
         cardSelecter.SetActive(true);
 

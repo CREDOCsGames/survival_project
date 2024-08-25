@@ -64,6 +64,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
     [SerializeField] Text dayChangeText;
     [SerializeField] Image dayChangeImage;
     [SerializeField] Sprite[] dayChangeSprites;
+    [SerializeField] Image currentDayImage;
 
     [Header("Text")]
     [SerializeField] Text bossSceneText;
@@ -175,6 +176,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
     {
         dayChangeText.text = text;
         dayChangeImage.sprite = dayChangeSprites[index];
+        currentDayImage.sprite = dayChangeSprites[index];
 
         dayChangeGO.SetActive(true);
 

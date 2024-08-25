@@ -10,16 +10,16 @@ public class ItemSpawner : Singleton<ItemSpawner>
     [SerializeField] bool isCheckOtherItem;
     [SerializeField] LayerMask interactionLayer;
 
-    public IEnumerator SpawnItem()
+    public IEnumerator SpawnItem(Transform instanceParent)
     {
-        foreach(Transform item in transform)
+        foreach(Transform item in instanceParent)
         {
             Destroy(item.gameObject);
         }
 
         for (int i = 0; i < spawnAmount; ++i)
         {
-            Instantiate(dropItem, GetSpawnPosWithCheck(), dropItem.transform.rotation, transform);
+            Instantiate(dropItem, GetSpawnPosWithCheck(), dropItem.transform.rotation, instanceParent);
             yield return null;
         }
     }

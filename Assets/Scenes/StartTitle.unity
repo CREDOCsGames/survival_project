@@ -5280,7 +5280,7 @@ MonoBehaviour:
   damageStorage: {fileID: 1692643827}
   characterPrefab: {fileID: 289213144344291185, guid: 8d77a8f4167ea0b469ec40c27f9686ea, type: 3}
   gameDayTime: 0
-  gameNightTime: 0
+  gameNightTime: 1000
   round: 0
   woodCount: 30
   fishHighGradeCount: 2
