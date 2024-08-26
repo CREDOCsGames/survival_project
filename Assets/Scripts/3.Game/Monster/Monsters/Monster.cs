@@ -146,7 +146,7 @@ public class Monster : MonoBehaviour
         xDistance = Mathf.Abs(character.transform.position.x - transform.position.x);
         zDistance = Mathf.Abs(character.transform.position.z - transform.position.z);
 
-        if (!isAttack && !character.isDead)
+        if (!isAttack && !gameManager.isClear)
         {
             if (xDistance <= attackRange.x && zDistance <= attackRange.y)
             {

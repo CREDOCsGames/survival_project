@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -63,6 +64,11 @@ public class GamesceneManager : Singleton<GamesceneManager>
         }
     }
 
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     IEnumerator DayRoutine()
     {
 #if UNITY_EDITOR
@@ -116,7 +122,6 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
         //yield return new WaitWhile(() => multicellInvenPanel.activeSelf);
         yield return CoroutineCaching.WaitWhile(() => multicellInvenPanel.activeSelf);
-
         gameSceneUI.ChangeDayText(0, "아침이 밝았습니다.");
 
         isSetPieceEnd = true;
@@ -151,18 +156,28 @@ public class GamesceneManager : Singleton<GamesceneManager>
         //yield return new WaitForSeconds(gameManager.gameNightTime);
         yield return CoroutineCaching.WaitForSeconds(gameManager.gameNightTime);
 
-        gameManager.fishLowGradeCount = 0;
-        gameManager.fishHighGradeCount = 0;
+        if (gameManager.round != 30)
+        {
+            gameManager.fishLowGradeCount = 0;
+            gameManager.fishHighGradeCount = 0;
 
-        if (character.IsTamingPet)
-            character.TamedPed.GetComponent<Pet>().RunAway();
+            if (character.IsTamingPet)
+                character.TamedPed.GetComponent<Pet>().RunAway();
 
-        campFire.GetComponent<Campfire>().ToDayScene();
+            campFire.GetComponent<Campfire>().ToDayScene();
 
-        itemManager.pieceItemsList = itemManager.nightPieceList;
+            itemManager.pieceItemsList = itemManager.nightPieceList;
 
-        if (gameManager.round < 30)
             StartCoroutine(DayRoutine());
+        }
+
+        else
+        {
+            StopAllCoroutines();
+            gameManager.isClear = true;
+
+            StartCoroutine(gameSceneUI.GameClear(1));
+        }
     }
 
     IEnumerator SpawnTree()

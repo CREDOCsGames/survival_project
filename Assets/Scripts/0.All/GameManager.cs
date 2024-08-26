@@ -77,9 +77,6 @@ public class GameManager : Singleton<GameManager>
     [HideInInspector] public bool isClear;
     [HideInInspector] public bool isBossDead;
 
-    [HideInInspector] public float gameStartTime;
-    [HideInInspector] public float gameEndTime;
-
     [HideInInspector] public Texture2D useCursorNormal;
     [HideInInspector] public Texture2D useCursorAttack;
 

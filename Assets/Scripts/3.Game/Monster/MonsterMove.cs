@@ -13,6 +13,7 @@ public class MonsterMove : MonoBehaviour
     [SerializeField] GameObject weapon;
 
     Character character;
+    GameManager gameManager;
 
     Vector3 dir;
 
@@ -30,6 +31,7 @@ public class MonsterMove : MonoBehaviour
     private void Awake()
     {
         character = Character.Instance;
+        gameManager = GameManager.Instance;
         agent = GetComponent<NavMeshAgent>();
 
         agent.updateRotation = false;
@@ -49,9 +51,9 @@ public class MonsterMove : MonoBehaviour
     {
         anim.SetBool("isWalk", agent.enabled);
 
-        if (!GetComponent<Monster>().CanMove || character.isDead)
+        if (!GetComponent<Monster>().CanMove || gameManager.isClear)
         {
-            if(character.isDead) 
+            if(gameManager.isClear) 
             {
                 agent.enabled = false;
             }

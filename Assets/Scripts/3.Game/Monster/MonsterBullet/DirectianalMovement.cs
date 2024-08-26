@@ -7,16 +7,9 @@ public class DirectianalMovement : MonoBehaviour
     [SerializeField] float moveSpeed;
     [SerializeField] float shootRange;
 
-    Character character;
-
     Vector3 dir;
     float angle;
     Vector3 startPoint, endPoint;
-
-    private void Awake()
-    {
-        character = Character.Instance;
-    }
 
     private void Update()
     {

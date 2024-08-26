@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class SceneCam : MonoBehaviour
 {
     GameManager gameManager;
-    Character lilpa;
+    Character character;
 
     Vector3 camPos;
 
@@ -13,14 +13,14 @@ public class SceneCam : MonoBehaviour
         gameManager = GameManager.Instance;
 
         if (gameManager.currentScene == "Game")
-            lilpa = Character.Instance;
+            character = Character.Instance;
     }
 
     private void LateUpdate()
     {
-        if (lilpa != null && !lilpa.isDead)
+        if (character != null && !character.isDead)
         {
-            camPos = lilpa.transform.position;
+            camPos = character.transform.position;
             camPos.y = transform.position.y;
 
             transform.position = camPos;

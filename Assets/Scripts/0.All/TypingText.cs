@@ -8,7 +8,7 @@ public class TypingText : MonoBehaviour
     [SerializeField] string textMasage;
     [SerializeField] float typingSpeed;
 
-    public bool isOver = false;
+    [HideInInspector] public bool isOver = false;
 
     private void Start()
     {

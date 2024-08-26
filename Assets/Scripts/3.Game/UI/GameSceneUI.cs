@@ -1,7 +1,8 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
+using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
 public enum CursorType
@@ -77,6 +78,16 @@ public class GameSceneUI : Singleton<GameSceneUI>
     [SerializeField] GameObject fishingGame;
     [SerializeField] GameObject weaponUI;
     [SerializeField] GameObject pieceCard;
+    [SerializeField] public TilemapRenderer tileMap;
+    [SerializeField] Material lightingMat;
+    [SerializeField] GameObject spotlight;
+
+    [Header("Clear")]
+    [SerializeField] Image clearImage;
+    [SerializeField] Sprite[] clearImages;
+    [SerializeField] Text clearClickText;
+    [SerializeField] TypingText gameClearText;
+    [SerializeField] TypingText gameOverText;
 
     Color initTimeColor;
 
@@ -93,6 +104,13 @@ public class GameSceneUI : Singleton<GameSceneUI>
         fishingGame.SetActive(false);
         weaponUI.SetActive(false);
         dayChangeGO.SetActive(false);
+
+        spotlight.SetActive(false);
+
+        clearImage.gameObject.SetActive(false);
+        clearClickText.gameObject.SetActive(false);
+        gameClearText.gameObject.SetActive(false);
+        gameOverText.gameObject.SetActive(false);
 
         gameManager = GameManager.Instance;
 
@@ -121,7 +139,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
         soundManager = SoundManager.Instance;
         gamesceneManager = GamesceneManager.Instance;
 
-        if (gameManager.round == 10 || gameManager.round == 20 || gameManager.round == 30)
+        /*if (gameManager.round == 10 || gameManager.round == 20 || gameManager.round == 30)
         {
             soundManager.PlayBGM(2, true);
             soundManager.PlayES("Alert");
@@ -130,14 +148,18 @@ public class GameSceneUI : Singleton<GameSceneUI>
         }
 
         else
-            soundManager.PlayBGM(1, true);
-
-        if (gameManager.round == 1)
-            gameManager.gameStartTime = Time.realtimeSinceStartup;
-
-        character.GetComponent<NavMeshAgent>().enabled = true;
+            soundManager.PlayBGM(1, true);*/
 
         initTimeColor = timeText.color;
+    }
+
+    public void ChangeTilemapMat(Vector3 pos)
+    {
+        tileMap.material = lightingMat;
+
+        spotlight.transform.position = pos;
+
+        spotlight.SetActive(true);
     }
 
     IEnumerator BlinkBossSceneText()
@@ -198,6 +220,62 @@ public class GameSceneUI : Singleton<GameSceneUI>
         DashUI();
         WeaponUI();
         SettingStatText();
+
+        if(clearClickText.gameObject.activeSelf)
+        {
+            if (Input.GetMouseButtonUp(0))
+            {
+                SceneManager.LoadScene(0);
+
+                if (soundManager.gameObject != null)
+                    Destroy(soundManager.gameObject);
+
+                if (gameManager.gameObject != null)
+                    Destroy(gameManager.gameObject);
+
+                if (character.gameObject != null)
+                    Destroy(character.gameObject);
+            }
+        }
+    }
+
+    TypingText typingText;
+
+    public IEnumerator GameClear(int num)
+    {
+        StopAllCoroutines();
+
+        cursorNormal = GameManager.Instance.useCursorNormal;
+
+        Vector2 cursorHotSpot = new Vector3(cursorNormal.width * 0.5f, cursorNormal.height * 0.5f);
+        Cursor.SetCursor(cursorNormal, cursorHotSpot, CursorMode.ForceSoftware);
+        //SoundManager.Instance.PlayBGM(4, false);
+
+        if (num == 0)
+        {
+            typingText = gameOverText;
+        }
+
+        else if (num == 1)
+        {
+            typingText = gameClearText;
+        }
+
+        if(typingText == null)
+            yield break;
+
+        typingText.gameObject.SetActive(true);
+        
+        yield return CoroutineCaching.WaitWhile(() => !typingText.isOver);
+
+        typingText.gameObject.SetActive(false);
+
+        if (clearImages.Length > 0)
+            clearImage.sprite = clearImages[num];
+
+        clearImage.gameObject.SetActive(true);
+
+        StartCoroutine(ClearImageFadeIn(clearImage, 2, clearClickText.gameObject));
     }
 
     public void CursorChange(CursorType cursorType)
@@ -272,6 +350,27 @@ public class GameSceneUI : Singleton<GameSceneUI>
         yield return null;
 
         go.SetActive(false);
+    }
+
+    IEnumerator ClearImageFadeIn(Image image, float fadeTime, GameObject text)
+    {
+        Color imageColor = image.color;
+
+        do
+        {
+            fadeTime = Mathf.Clamp(fadeTime - Time.deltaTime, 0f, fadeTime);
+
+            imageColor.a = 1 - fadeTime / 2f;
+
+            image.color = imageColor;
+
+            yield return null;
+        }
+        while (fadeTime > 0);
+
+        yield return null;
+
+        text.SetActive(true);
     }
 
     void SettingStatText()

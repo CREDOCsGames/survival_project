@@ -20,6 +20,7 @@ public class Character : Singleton<Character>
     [SerializeField] public Animator anim;
     [SerializeField] ParticleSystem particle;
     [SerializeField] float particleScale;
+    [SerializeField] GameObject coffinObject;
 
     [SerializeField] Slider playerHpBar;
     [SerializeField] SpriteRenderer[] weaponImages;
@@ -94,10 +95,14 @@ public class Character : Singleton<Character>
 
     [SerializeField] AnimationClip[] loggingClips;
 
+    int walkLayer;
+
     protected override void Awake()
     {
         base.Awake();
         DontDestroyOnLoad(this);
+
+        walkLayer = 1 << NavMesh.GetAreaFromName("CharacterWalkable");
     }
 
     void Start()
@@ -162,7 +167,7 @@ public class Character : Singleton<Character>
 
             isRun = false;
 
-            if (currentHp > 0)
+            if (currentHp > 0 && agent.enabled)
                 Move();
 
             anim.SetFloat("moveSpeed", 1 + (speed * 0.1f));
@@ -259,7 +264,7 @@ public class Character : Singleton<Character>
         {
             Vector3 afterPos;
 
-            particle.transform.localScale = rendUpper.flipX ? initParticleScale * particleScale : new Vector3(-initParticleScale.x, initParticleScale.y, initParticleScale.z) * particleScale;
+            particle.transform.localScale = !rendUpper.flipX ? initParticleScale * particleScale : new Vector3(-initParticleScale.x, initParticleScale.y, initParticleScale.z) * particleScale;
 
             if (Input.GetKeyDown((KeyCode)PlayerPrefs.GetInt("Key_Dash")))
             {
@@ -273,7 +278,8 @@ public class Character : Singleton<Character>
 
                 NavMeshHit hit;
 
-                if (NavMesh.SamplePosition(afterPos, out hit, 1000, NavMesh.AllAreas))
+                //if (NavMesh.SamplePosition(afterPos, out hit, 1000, NavMesh.AllAreas))
+                if (NavMesh.SamplePosition(afterPos, out hit, 1000, walkLayer))
                 {
                     afterPos = hit.position;
                 }
@@ -475,10 +481,19 @@ public class Character : Singleton<Character>
         isAttacked = true;
         isRun = false;
         isDead = true;
+        gameManager.isClear = true;
 
         StopAllCoroutines();
 
-        gameObject.SetActive(false);
+        GameSceneUI.Instance.ChangeTilemapMat(transform.position + new Vector3(0, 7, 0));
+
+        Instantiate(coffinObject, transform.position, coffinObject.transform.rotation);
+
+        StartCoroutine(GameSceneUI.Instance.GameClear(0));
+
+        transform.localScale = Vector3.zero;
+
+        //gameObject.SetActive(false);
     }
 
     void ChangeHitColor()

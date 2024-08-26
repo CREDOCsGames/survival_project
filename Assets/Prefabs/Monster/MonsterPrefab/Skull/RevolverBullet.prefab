@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8404765568145024352}
   - component: {fileID: 3658012667562279667}
   - component: {fileID: -222202106925327735}
-  - component: {fileID: 7966259111163919104}
   - component: {fileID: 3159731852433235191}
+  - component: {fileID: 832188592183868161}
   m_Layer: 0
   m_Name: RevolverBullet
   m_TagString: monsterBullet
@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3246047406680868606}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.0032, y: 0, z: 0.0008}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -101,19 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletDamage: 3
   destroyPos: {x: 0, y: 0, z: 0}
---- !u!135 &7966259111163919104
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3246047406680868606}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.03
-  m_Center: {x: -0.03, y: -0.005, z: 0}
+  parentObject: {fileID: 0}
 --- !u!114 &3159731852433235191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,3 +116,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 6
   shootRange: 13
+--- !u!136 &832188592183868161
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3246047406680868606}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.03
+  m_Height: 0.2
+  m_Direction: 0
+  m_Center: {x: -0.01, y: 0.015, z: 0}

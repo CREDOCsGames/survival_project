@@ -168,7 +168,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 289213144344291185}
   m_Enabled: 0
-  m_AgentTypeID: 0
+  m_AgentTypeID: -1372625422
   m_Radius: 0.1
   m_Speed: 1
   m_Acceleration: 1000
@@ -178,9 +178,9 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
-  m_Height: 0.1
-  m_BaseOffset: 0
-  m_WalkableMask: 3
+  m_Height: 0.2
+  m_BaseOffset: 0.1
+  m_WalkableMask: 8
   m_ObstacleAvoidanceType: 0
 --- !u!114 &289213144344291184
 MonoBehaviour:
@@ -199,6 +199,7 @@ MonoBehaviour:
   anim: {fileID: 7037617160102815328}
   particle: {fileID: 289213144844355932}
   particleScale: 1.4
+  coffinObject: {fileID: 2485090385785070415, guid: 3da2be123dc37eb4eb9efdaeb93aa8cd, type: 3}
   playerHpBar: {fileID: 289213144616889224}
   weaponImages:
   - {fileID: 7183370604035136507}

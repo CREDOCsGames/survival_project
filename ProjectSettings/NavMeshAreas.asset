@@ -11,7 +11,7 @@ NavMeshProjectSettings:
     cost: 1
   - name: Jump
     cost: 2
-  - name: 
+  - name: CharacterWalkable
     cost: 1
   - name: 
     cost: 1
@@ -91,10 +91,10 @@ NavMeshProjectSettings:
       m_Flags: 0
   - serializedVersion: 2
     agentTypeID: -1372625422
-    agentRadius: 1
+    agentRadius: 0.5
     agentHeight: 0.1
     agentSlope: 0
-    agentClimb: 0.01
+    agentClimb: 0.001
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
@@ -109,4 +109,4 @@ NavMeshProjectSettings:
       m_Flags: 0
   m_SettingNames:
   - NormalMonster
-  - BossMonster
+  - Character
