@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b426d130afdb03f44b821ff91f6f5aff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 20
   damage: 26
 --- !u!1 &3285831500780197140
 GameObject:
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b426d130afdb03f44b821ff91f6f5aff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 10
   damage: 13
 --- !u!1 &4942740927780279737
 GameObject:
@@ -255,7 +255,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17fbdbce41f121349ab5742e987381ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageUI: {fileID: 7694887781048525286, guid: 45a00b432fc93984ebeefaf1b44503d3, type: 3}
   projectileDamage: 0
   penetrateCount: 10
   fireRange: 0

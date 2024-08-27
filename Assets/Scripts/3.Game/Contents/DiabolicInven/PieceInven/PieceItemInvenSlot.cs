@@ -23,9 +23,10 @@ public class PieceItemInvenSlot : MonoBehaviour
         dragUI = DragUI.Instance;
         itemManager = ItemManager.Instance;
 
+        Debug.Log(pieceInven);
+
         indexNum = transform.GetSiblingIndex();
-        itemDiscriptionText = pieceInven.DiscriptionPanel.GetComponent<Text>();
-        itemDiscriptionText.text = "";
+
         blockImage.gameObject.SetActive(false);
     }
 
@@ -51,6 +52,11 @@ public class PieceItemInvenSlot : MonoBehaviour
 
     public void UpdateSlotData()
     {
+        if (pieceInven == null)
+        {
+            pieceInven = PieceItemInven.Instance;
+        }
+
         if (pieceInven.items[indexNum] == null)
         {
             itemImage.gameObject.SetActive(false);
@@ -75,6 +81,9 @@ public class PieceItemInvenSlot : MonoBehaviour
         {
             return;
         }
+
+        if(itemDiscriptionText == null)
+            itemDiscriptionText = pieceInven.DiscriptionPanel.GetComponent<Text>();
 
         itemDiscriptionText.text = pieceInven.items[indexNum].ItemName + "\n";
 

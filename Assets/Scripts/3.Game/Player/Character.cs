@@ -1,9 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
-using UnityEditor.Animations;
 using System.Linq;
 
 public enum CHARACTER_NUM
@@ -94,6 +92,7 @@ public class Character : Singleton<Character>
     Vector3 initParticleScale;
 
     [SerializeField] AnimationClip[] loggingClips;
+    [SerializeField] AnimatorOverrideController[] loggingAnimators;
 
     int walkLayer;
 
@@ -213,6 +212,9 @@ public class Character : Singleton<Character>
 
     void UseRecoveyGauege()
     {
+        if (maxHp - currentHp < 5)
+            return;
+
         if (currentRecoveryGauge >= recoveryValue && Input.GetKeyDown(KeyCode.Q))
         {
             StartCoroutine(ConvertRecoveryGauge());
@@ -661,9 +663,14 @@ public class Character : Singleton<Character>
 
     void ChangeAnimClip(int num)
     {
-        var controller = (AnimatorController)anim.runtimeAnimatorController;
-        var state = controller.layers[0].stateMachine.states.FirstOrDefault(s => s.state.name.Equals("Logging")).state;
-        controller.SetStateEffectiveMotion(state, loggingClips[num]);
+        /*var controller = anim.runtimeAnimatorController;
+        //var state = controller.animationClips[ .layers[0].stateMachine.states.FirstOrDefault(s => s.state.name.Equals("Logging")).state;
+        var state = controller.animationClips.FirstOrDefault(s => s.name.Equals("Logging"));
+        controller.clip
+
+        controller.animationClips SetStateEffectiveMotion(state, loggingClips[num]);*/
+
+        anim.runtimeAnimatorController = loggingAnimators[num];
     }
 
     public void ChangeAnimationController(int num)

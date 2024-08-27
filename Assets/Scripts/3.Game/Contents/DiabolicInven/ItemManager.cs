@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +6,7 @@ public class ItemManager : Singleton<ItemManager>
     [SerializeField] Transform slotParent;
     public DiabolicItemInfo[] startPieceList;
     public DiabolicItemInfo[] nightPieceList;
-    public DiabolicItemInfo[] pieceItemsList = null;
+    [HideInInspector] public DiabolicItemInfo[] pieceItemsList;
     [SerializeField]
     DiabolicItemInfo[] testList;
 
@@ -20,14 +19,16 @@ public class ItemManager : Singleton<ItemManager>
     {
         base.Awake();
 
+        pieceItemsList.Initialize();
+
         items = new DiabolicItemInfo[slotParent.childCount];
         itemQuantity = new int[slotParent.childCount];
 
 #if UNITY_EDITOR
-        for(int i=0;i< testList.Length;++i)
+        /*for(int i=0;i< testList.Length;++i)
         {
             AddItem(testList[i]);
-        }
+        }*/
 #endif
     }
 

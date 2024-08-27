@@ -108,7 +108,9 @@ public class LogTree : MonoBehaviour, IMouseInteraction
     public IEnumerator EndInteraction(Animator anim, float waitTime)
     {
         if (gameManager.specialStatus[SpecialStatus.DoubleAxe])
+        {
             waitTime *= 0.5f;
+        }
 
         yield return CoroutineCaching.WaitForSeconds(waitTime);
 

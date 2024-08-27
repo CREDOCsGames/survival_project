@@ -42,6 +42,11 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
         character.GetComponent<NavMeshAgent>().enabled = true;
 
+        /*for (int i = 0; i < itemManager.startPieceList.Length; ++i)
+        {
+            itemManager.pieceItemsList.
+        }*/
+
         itemManager.pieceItemsList = itemManager.startPieceList;
 
         currentGameTime = gameManager.gameDayTime;
@@ -74,8 +79,8 @@ public class GamesceneManager : Singleton<GamesceneManager>
 #if UNITY_EDITOR
 
 #else
-        gameManager.dashCount = 0;
 #endif
+        gameManager.dashCount = 0;
         gameManager.bloodDamage = 0;
         gameSceneUI.CursorChange(CursorType.Normal);
 
@@ -122,6 +127,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
         //yield return new WaitWhile(() => multicellInvenPanel.activeSelf);
         yield return CoroutineCaching.WaitWhile(() => multicellInvenPanel.activeSelf);
+
         gameSceneUI.ChangeDayText(0, "아침이 밝았습니다.");
 
         isSetPieceEnd = true;
@@ -147,10 +153,8 @@ public class GamesceneManager : Singleton<GamesceneManager>
         character.transform.position = new Vector3(-1f, 0f, -41f);
 
         campFire.GetComponent<Campfire>().ToNightScene();
-        currentGameTime = gameManager.gameNightTime;
 
-        gameManager.dashCount = 10;
-        character.dashCount = gameManager.dashCount;
+        currentGameTime = gameManager.gameNightTime;
 
         character.isCanControll = true;
         //yield return new WaitForSeconds(gameManager.gameNightTime);

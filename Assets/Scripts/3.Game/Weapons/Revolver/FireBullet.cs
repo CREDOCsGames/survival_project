@@ -31,6 +31,7 @@ public class FireBullet : FireProjectile
             bulletParent.GetChild(i).gameObject.SetActive(false);
         }
     }
+
     private void OnDisable()
     {
         if (isDayChange)
@@ -67,7 +68,7 @@ public class FireBullet : FireProjectile
 
     protected override void Fire()
     {
-        if (Input.GetMouseButton(0) && !(gameManager.isPause))
+        if (Input.GetMouseButton(0) && !gameManager.isPause && canFire)
         {
             character.canWeaponChange = false;
             SetFire();

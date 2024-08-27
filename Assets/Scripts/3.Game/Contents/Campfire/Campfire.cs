@@ -90,8 +90,8 @@ public class Campfire : MonoBehaviour, IMouseInteraction
 
         character.percentDamage -= (debuffValues[Debuff.POWER]) * 20;
 
-        gameManager.dashCount = 0;
-        character.dashCount = gameManager.dashCount;
+        //gameManager.dashCount = 0;
+        character.dashCount = 0;
 
         debuffIcon.GetComponent<CampFireDebuff>().SetDebuff(debuffType);
         debuffIcon.SetActive(true);
@@ -115,17 +115,17 @@ public class Campfire : MonoBehaviour, IMouseInteraction
 
     void SettingBuff(int num)
     {
-        character.maxHp = (int)(character.maxHp * (100 + mxHps[buffValues[Buff.MAXHEALTH]- num]) * 0.01f);
+        character.maxHp = Mathf.RoundToInt(character.maxHp * (100 + mxHps[buffValues[Buff.MAXHEALTH]- num]) * 0.01f);
         character.currentHp = character.maxHp;
 
         character.recoverHpRatio += reHps[buffValues[Buff.RECOVERY_HEALTH] - num];
 
         character.speed *= (100 + speeds[buffValues[Buff.SPEED] - num]) * 0.01f;
         character.avoid += avoids[buffValues[Buff.SPEED] - num];
-        gameManager.dashCount = buffValues[Buff.SPEED] - num == 3 ? 1 : 0;
-        character.dashCount = gameManager.dashCount;
+        //gameManager.dashCount = buffValues[Buff.SPEED] - num == 3 ? 1 : 0;
+        character.dashCount = buffValues[Buff.SPEED] - num == 3 ? 1 : 0;
 
-        character.percentDamage += 100 + dmgs[buffValues[Buff.POWER] - num];
+        character.percentDamage += dmgs[buffValues[Buff.POWER] - num];
         character.defence += dfs[buffValues[Buff.POWER] - num];
     }
 

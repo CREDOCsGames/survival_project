@@ -33,12 +33,12 @@ public class GetItemUI : MonoBehaviour
         uiImage.sprite = getItemSprite;
         getQuantity = _getQuantity;
 
-        if (getQuantity > 1)
+        if (getQuantity > 0)
         {
             quantityText.text = $"x {getQuantity}";
         }
 
-        quantityText.enabled = getQuantity > 1;
+        quantityText.enabled = getQuantity > 0;
     }
 
     void AlphaChange()

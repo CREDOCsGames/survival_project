@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
+using UnityEngine.TextCore.Text;
 
 public class OptionUI : MonoBehaviour
 {
@@ -238,21 +239,14 @@ public class OptionUI : MonoBehaviour
 
     public void TitleScene()
     {
-        if (SceneManager.GetActiveScene().buildIndex > 2)
-        {
-            //Destroy(ItemManager.Instance.gameObject);
-        }
-
-        if (SceneManager.GetActiveScene().buildIndex > 1)
-        {
-            Destroy(Character.Instance.gameObject);
-        }
-
         if (soundManager.gameObject != null)
             Destroy(soundManager.gameObject);
 
         if (gameManager.gameObject != null)
             Destroy(gameManager.gameObject);
+
+        if (Character.Instance.gameObject != null)
+            Destroy(Character.Instance.gameObject);
 
         SceneManager.LoadScene("StartTitle");
     }

@@ -58,11 +58,9 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] int closeDamage;
     [SerializeField] int longDamage;
     [SerializeField] int recoverHp;
-    [SerializeField] int absorbHp;
     [SerializeField] int defence;
     [SerializeField] int attackSpeed;
     [SerializeField] int speed;
-    [SerializeField] int range;
     [SerializeField] int critical;
     [SerializeField] int avoid;
     [SerializeField] public int dashCount;
@@ -125,25 +123,22 @@ public class GameManager : Singleton<GameManager>
 
     void InitSetting()
     {
-
 #if UNITY_EDITOR
 
 #else
-        initGameTime = 20;
-        gameDayTime = initGameTime;
-        money = 0;
+        gameDayTime = 120;
+        gameNightTime = 60;
         woodCount = 0;
         round = 0;
-        maxHp = 30;
+        maxHp = 100;
         recoverHp = 1;
-        absorbHp = 0;
         defence = 3;
-        attackSpeed = 0;
+        attackSpeed = 1;
         speed = 3;
-        range = 0;
-        luck = 0;
         critical = 5;
-        avoid = 1;
+        avoid = 3;
+
+        dashCount = 0;
 
         fishLowGradeCount = 0;
         fishHighGradeCount = 0;
@@ -153,7 +148,6 @@ public class GameManager : Singleton<GameManager>
         bloodDamage = 0;
 
         totalBulletCount = 1;
-        
 #endif
 
         status.Add(Status.Maxhp, maxHp);

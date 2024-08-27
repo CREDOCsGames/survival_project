@@ -76,6 +76,9 @@ public class SwingCutlass : MonoBehaviour
 
     IEnumerator AttackDelay()
     {
+        if (character == null)
+            character = Character.Instance;
+
         coolTime = initCoolTime * character.attackSpeed;
         yield return CoroutineCaching.WaitForSeconds(coolTime);
 

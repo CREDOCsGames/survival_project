@@ -243,6 +243,11 @@ MonoBehaviour:
   - {fileID: 7400000, guid: 8c627ac816b83e742bcef09d46d1c99f, type: 2}
   - {fileID: 7400000, guid: 13f8e6636b6820d4fa5da915fa0d86ae, type: 2}
   - {fileID: 7400000, guid: 6a3345cb0a03c1247b007c824c611d83, type: 2}
+  loggingAnimators:
+  - {fileID: 22100000, guid: d8f12c61914430f4a89449874624b7cc, type: 2}
+  - {fileID: 22100000, guid: 644091fd12587af4ab5f88bc53065dbc, type: 2}
+  - {fileID: 22100000, guid: 6b85780a447fc2341b177cc4bf2ef51d, type: 2}
+  - {fileID: 22100000, guid: 2ba418e42565f6b459e8b6d3a7a81e10, type: 2}
 --- !u!114 &2030790823311812204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5709,7 +5714,7 @@ Animator:
   m_GameObject: {fileID: 3087141058172693515}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ef15f392a3401984b86385e75d77c999, type: 2}
+  m_Controller: {fileID: 22100000, guid: d8f12c61914430f4a89449874624b7cc, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5881,7 +5886,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b87c8a9d31bc016429b05f8084a78dc8, type: 3}
+  m_Sprite: {fileID: 553344388, guid: 515270b66132f084d9d3fdbfce2d8ef6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

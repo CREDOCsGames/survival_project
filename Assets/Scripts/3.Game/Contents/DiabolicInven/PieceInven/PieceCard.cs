@@ -21,6 +21,11 @@ public class PieceCard : MonoBehaviour
     private void Awake()
     {
         GradeColors = gradeColors;
+#if UNITY_EDITOR
+
+#else
+        gameObject.SetActive(false);
+#endif
     }
 
     private void OnEnable()

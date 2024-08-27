@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 8154831264171076226}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.9, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -129,8 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17fbdbce41f121349ab5742e987381ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageUI: {fileID: 7694887781048525286, guid: 45a00b432fc93984ebeefaf1b44503d3, type: 3}
-  projectileDamage: 80
+  projectileDamage: 120
   penetrateCount: 5
   fireRange: 0
   canCri: 0
@@ -148,4 +147,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 5
-  speed: 10
+  speed: 12

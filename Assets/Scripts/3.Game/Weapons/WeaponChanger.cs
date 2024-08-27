@@ -17,7 +17,7 @@ public class WeaponChanger : MonoBehaviour
 
     Character character;
 
-    void Start()
+    void Awake()
     {
         character = Character.Instance;
         currentItemImage.sprite = weaponImages[0];
@@ -29,6 +29,8 @@ public class WeaponChanger : MonoBehaviour
         }
 
         character.weaponParent.GetChild(0).gameObject.SetActive(true);
+
+        gameObject.SetActive(false);
     }
 
     private void OnEnable()
