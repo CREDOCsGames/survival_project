@@ -56,6 +56,8 @@ public class MouseInteraction : MonoBehaviour
             if (interactable != null)
             {
                 interactionFuc(hit[i].transform.gameObject);
+
+                //if(hit[i].transform.gameObject.GetComponentInChildren<)
                 return;
             }
         }

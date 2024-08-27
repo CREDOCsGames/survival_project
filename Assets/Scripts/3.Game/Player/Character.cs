@@ -47,7 +47,7 @@ public class Character : Singleton<Character>
     int initMaxRecGauge;
     [HideInInspector] public int currentRecoveryGauge;
     public GameObject getItemUI;
-    int recoveryValue = 10;
+    int recoveryValue = 5;
     public int RecoveryValue => recoveryValue;
 
     [Header("Summon")]
@@ -113,8 +113,10 @@ public class Character : Singleton<Character>
 
         gameManager = GameManager.Instance;
 
+        maxRecoveryGauge = 80;
         initMaxRecGauge = maxRecoveryGauge;
         currentRecoveryGauge = 0;
+        recoveryValue = 5;
 
         currentWeaponIndex = 0;
 
@@ -493,6 +495,11 @@ public class Character : Singleton<Character>
 
         transform.localScale = Vector3.zero;
 
+        foreach (var monster in gamesceneManager.monsterSpawner.GetComponentsInChildren<Transform>())
+        {
+            monster.gameObject.SetActive(false);
+        }
+
         //gameObject.SetActive(false);
     }
 
@@ -604,6 +611,8 @@ public class Character : Singleton<Character>
     {
         isCanControll = false;
 
+        movePos = new Vector3(movePos.x, transform.position.y, movePos.z);
+
         dir = (movePos - transform.position).normalized;
 
         Flip();
@@ -634,6 +643,12 @@ public class Character : Singleton<Character>
                 {
                     canFlip = false;
                     rendUpper.flipX = flipNum != 0;
+                }
+
+                else
+                {
+                    canFlip = false;
+                    rendUpper.flipX = false;
                 }
 
                 anim.SetBool("isLogging", true);

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemNum: 1012
   weightValue: 0
-  itemSprite: {fileID: 21300000, guid: 421057b64e041cc47b6e7443f2d9d9d9, type: 3}
+  itemSprite: {fileID: 632557901, guid: 75f2aff8023f3ad45b5bed51618ad8a6, type: 3}
   itemName: "\uAC70\uC801\uB54C\uAE30"
   maxHp: 0
   damage: 0

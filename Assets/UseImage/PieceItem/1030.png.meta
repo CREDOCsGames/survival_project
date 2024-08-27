@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 97ee10d1bb0202d478108226d7d83787
+guid: 7040925ac8afee64280f5ba637eefc5a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -69,7 +69,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -104,22 +104,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Blueberry_0
+      name: 1030_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 5
-        width: 59
-        height: 54
+        x: 34
+        y: 346
+        width: 1166
+        height: 628
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0a4348985c3988647904239894dab50a
-      internalID: 1969710455
+      spriteID: a82c6bd71de74714e822fc37cc58dddb
+      internalID: 1916679209
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Blueberry_0: 1969710455
+      1030_0: 1916679209
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

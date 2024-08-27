@@ -7,6 +7,8 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
     [SerializeField] Transform[] gatherPoint;
     [SerializeField] int defaultGaugeUpValue;
     [SerializeField] DiabolicItemInfo[] bushPieceList;
+    [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] Sprite fruitImage;
 
     bool canGather;
 
@@ -17,6 +19,8 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
 
     List<DiabolicItemInfo> itemList = new List<DiabolicItemInfo>();
 
+    Color outlineColor;
+
     private void Start()
     {
         canGather = false;
@@ -24,6 +28,7 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
         itemManager = ItemManager.Instance;
         gameSceneUI = GameSceneUI.Instance;
         gamesceneManager = GamesceneManager.Instance;
+        outlineColor = spriteRenderer.material.GetColor("_SolidOutline");
     }
 
     private void OnDisable()
@@ -122,14 +127,12 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
 
     void RecoveryGaugeUp()
     {
-        int rand = Random.Range(0, 100);
-        int fruitNum = (rand >= 0 && rand < 80) ? 0 : 1;
-        int ratio = (fruitNum == 0) ? 1 : 2;
+        int getFruitQuantity = Random.Range(1, 5);
 
-        character.getItemUI.GetComponent<GetItemUI>().SetFruitGetImage(fruitNum);
+        character.getItemUI.GetComponent<GetItemUI>().SetGetItemImage(fruitImage, getFruitQuantity);
         character.getItemUI.gameObject.SetActive(true);
 
-        character.currentRecoveryGauge += defaultGaugeUpValue * ratio;
+        character.currentRecoveryGauge = Mathf.Clamp(character.currentRecoveryGauge + defaultGaugeUpValue * getFruitQuantity, 0, character.maxRecoveryGauge);
     }
 
 
@@ -141,6 +144,39 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
     public bool ReturnCanInteraction()
     {
         return canGather;
+    }
+
+    private void OnMouseOver()
+    {
+        if (canGather)
+        {
+            if (outlineColor.a == 1)
+                return;
+
+            outlineColor.a = 1;
+
+            spriteRenderer.material.SetColor("_SolidOutline", outlineColor);
+        }
+
+        else
+        {
+            if (outlineColor.a == 0)
+                return;
+
+            outlineColor.a = 0;
+
+            spriteRenderer.material.SetColor("_SolidOutline", outlineColor);
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        if (outlineColor.a == 0)
+            return;
+
+        outlineColor.a = 0;
+
+        spriteRenderer.material.SetColor("_SolidOutline", outlineColor);
     }
 
 #if UNITY_EDITOR

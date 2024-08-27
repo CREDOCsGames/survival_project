@@ -10,7 +10,7 @@ public class SlotScroll : MonoBehaviour
         EventTrigger.Entry entryBegin = new EventTrigger.Entry(), entryDrag = new EventTrigger.Entry(), entryEnd = new EventTrigger.Entry(), entrypotential = new EventTrigger.Entry()
             , entryScroll = new EventTrigger.Entry();
 
-        entryBegin.eventID = EventTriggerType.BeginDrag;
+        /*entryBegin.eventID = EventTriggerType.BeginDrag;
         entryBegin.callback.AddListener((data) => { scrollView.OnBeginDrag((PointerEventData)data); });
         trigger.triggers.Add(entryBegin);
 
@@ -24,7 +24,7 @@ public class SlotScroll : MonoBehaviour
 
         entrypotential.eventID = EventTriggerType.InitializePotentialDrag;
         entrypotential.callback.AddListener((data) => { scrollView.OnInitializePotentialDrag((PointerEventData)data); });
-        trigger.triggers.Add(entrypotential);
+        trigger.triggers.Add(entrypotential);*/
 
         entryScroll.eventID = EventTriggerType.Scroll;
         entryScroll.callback.AddListener((data) => { scrollView.OnScroll((PointerEventData)data); });

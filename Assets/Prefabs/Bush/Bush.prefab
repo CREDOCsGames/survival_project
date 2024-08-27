@@ -57,7 +57,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2318804817492436751}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.209, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 2418993141755308114}
   - component: {fileID: 6892218125167748256}
   - component: {fileID: 4065876531615089374}
+  - component: {fileID: 6226669219626314849}
   m_Layer: 18
   m_Name: Bush
   m_TagString: Untagged
@@ -151,7 +152,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ecfa92a9ed2189d4583817d66cef3e55, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -216,6 +217,24 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ab34f39b37efd43428cf63615ae0de83, type: 2}
   - {fileID: 11400000, guid: 910f590978a2cbb468eccabfb1a8605a, type: 2}
   - {fileID: 11400000, guid: ab487546d2c145d4282ad7431fe253b1, type: 2}
+  spriteRenderer: {fileID: 2418993141755308114}
+  fruitImage: {fileID: 21300000, guid: 421057b64e041cc47b6e7443f2d9d9d9, type: 3}
+--- !u!54 &6226669219626314849
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2418993141755308113}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &4631520160852066382
 GameObject:
   m_ObjectHideFlags: 0

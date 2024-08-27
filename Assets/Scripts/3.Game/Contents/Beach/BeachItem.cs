@@ -6,6 +6,7 @@ public class BeachItem : MonoBehaviour, IMouseInteraction
 {
     [SerializeField] DiabolicItemInfo[] beachPieceList;
     [SerializeField] Transform[] gatherPoints;
+    [SerializeField] SpriteRenderer spriteRenderer;
 
     bool canInteract = false;
 
@@ -16,12 +17,16 @@ public class BeachItem : MonoBehaviour, IMouseInteraction
     Character character;
     ItemManager itemManager;
 
+    Color outlineColor;
+
     private void Start()
     {
         itemManager = ItemManager.Instance;
         character = Character.Instance;
         gamesceneManager = GamesceneManager.Instance;
         gameManager = GameManager.Instance;
+
+        outlineColor = spriteRenderer.material.GetColor("_SolidOutline");
 
         canInteract = false;
     }
@@ -96,7 +101,7 @@ public class BeachItem : MonoBehaviour, IMouseInteraction
         }
 
         gameManager.woodCount++;
-        character.getItemUI.GetComponent<GetItemUI>().SetGetItemImage(GetComponent<SpriteRenderer>().sprite);
+        character.getItemUI.GetComponent<GetItemUI>().SetGetItemImage(GetComponent<SpriteRenderer>().sprite, 1);
         character.getItemUI.gameObject.SetActive(true);
 
         //int rand = Random.Range(0, 100);
@@ -133,5 +138,38 @@ public class BeachItem : MonoBehaviour, IMouseInteraction
     public bool ReturnCanInteraction()
     {
         return canInteract;
+    }
+
+    private void OnMouseOver()
+    {
+        if (canInteract)
+        {
+            if (outlineColor.a == 1)
+                return;
+
+            outlineColor.a = 1;
+
+            spriteRenderer.material.SetColor("_SolidOutline", outlineColor);
+        }
+
+        else
+        {
+            if (outlineColor.a == 0)
+                return;
+
+            outlineColor.a = 0;
+
+            spriteRenderer.material.SetColor("_SolidOutline", outlineColor);
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        if (outlineColor.a == 0)
+            return;
+
+        outlineColor.a = 0;
+
+        spriteRenderer.material.SetColor("_SolidOutline", outlineColor);
     }
 }

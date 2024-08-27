@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class GamesceneManager : Singleton<GamesceneManager>
 {
-    [SerializeField] GameObject monsterSpawner;
+    [SerializeField] public GameObject monsterSpawner;
     [SerializeField] public Transform treeParent;
     [SerializeField] Transform bushParent;
     [SerializeField] Transform beachParent;

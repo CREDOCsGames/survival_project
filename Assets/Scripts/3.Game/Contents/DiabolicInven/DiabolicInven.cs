@@ -55,7 +55,7 @@ public class DiabolicInven : Singleton<DiabolicInven>
 
         Vector3 setPos = slots[currentIndex].GetComponent<RectTransform>().localPosition;
 
-        setPos = new Vector3(setPos.x - 3, setPos.y- 39, setPos.z);
+        //setPos = new Vector3(setPos.x - 3, setPos.y- 39, setPos.z);
 
         Instantiate(itemImage, itemImageParent).GetComponent<DiabolicSlotItem>().ItemSetOnInventory(setPos, item, TransferIndexesNum(), currentIndex, pieceSlotIndex, itemQuantity);
         blockImage.SetActive(true);

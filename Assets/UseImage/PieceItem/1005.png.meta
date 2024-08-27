@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1c7632fa7cb73954384f9a86026f9a80
+guid: ab0da8f143d86d840962b56e273fc57f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -104,22 +104,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DoubleAxe_0
+      name: 1005_0
       rect:
         serializedVersion: 2
-        x: 229
-        y: 222
-        width: 702
-        height: 696
+        x: 108
+        y: 412
+        width: 860
+        height: 376
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b6b44a7766b258948acfd65ec2ce26e0
-      internalID: -922314347
+      spriteID: 30bfcd9ca3fe0cf48a99a0968748f1b3
+      internalID: -189757851
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      DoubleAxe_0: -922314347
+      1005_0: -189757851
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

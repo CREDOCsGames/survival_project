@@ -7,6 +7,7 @@ public class LogTree : MonoBehaviour, IMouseInteraction
     [SerializeField] Transform[] logPoses;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] GameObject arrow;
+    [SerializeField] Sprite woodSprite;
 
     bool canLog = false;
     [HideInInspector] int posNum;
@@ -17,12 +18,16 @@ public class LogTree : MonoBehaviour, IMouseInteraction
 
     Vector3 obstacleAngle;
 
+    Color outlineColor;
+
     private void Start()
     {
         canLog = false;
         character = Character.Instance;
         gameManager = GameManager.Instance;
         gamesceneManager = GamesceneManager.Instance;
+
+        outlineColor = spriteRenderer.material.GetColor("_SolidOutline");
     }
 
     private void Update()
@@ -112,11 +117,14 @@ public class LogTree : MonoBehaviour, IMouseInteraction
 
         SpawnObstacle();
 
-        int rand = Random.Range(1, 4);
+        int getWoodQuantity = Random.Range(1, 5);
 
-        gameManager.woodCount += rand;
+        character.getItemUI.GetComponent<GetItemUI>().SetGetItemImage(woodSprite, getWoodQuantity);
+        character.getItemUI.gameObject.SetActive(true);
+        gameManager.woodCount += getWoodQuantity;
         anim.SetBool("isLogging", false);
         character.isCanControll = true;
+        character.canFlip = true;
         character.ChangeAnimationController(0);
     }
 
@@ -134,5 +142,38 @@ public class LogTree : MonoBehaviour, IMouseInteraction
     public bool ReturnCanInteraction()
     {
         return canLog;
+    }
+
+    private void OnMouseOver()
+    {
+        if (canLog)
+        {
+            if (outlineColor.a == 1)
+                return;
+
+            outlineColor.a = 1;
+
+            spriteRenderer.material.SetColor("_SolidOutline", outlineColor);
+        }
+
+        else
+        {
+            if (outlineColor.a == 0)
+                return;
+
+            outlineColor.a = 0;
+
+            spriteRenderer.material.SetColor("_SolidOutline", outlineColor);
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        if (outlineColor.a == 0)
+            return;
+
+        outlineColor.a = 0;
+
+        spriteRenderer.material.SetColor("_SolidOutline", outlineColor);
     }
 }

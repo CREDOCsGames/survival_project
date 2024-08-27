@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 38f75a78850547b46b6c759c66c9c1af
+guid: c3ffe290d71e7df40995bf43e5033b01
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -104,22 +104,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: LeatherBoots_0
+      name: 1002_0
       rect:
         serializedVersion: 2
-        x: 215
-        y: 275
-        width: 683
-        height: 612
+        x: 348
+        y: 0
+        width: 504
+        height: 1098
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2bed37e5bda4f06409193023c9ed1ded
-      internalID: 269796661
+      spriteID: 9b1e87e32ef94c64ba86a5fab4e9bfe9
+      internalID: -1527921157
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      LeatherBoots_0: 269796661
+      1002_0: -1527921157
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
