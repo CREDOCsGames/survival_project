@@ -24,11 +24,13 @@ public class FireBullet : FireProjectile
         for (int i = 0; i < maxBulletCount; ++i)
         {
             bulletParent.GetChild(i).gameObject.SetActive(true);
+            bulletParent.GetChild(i).GetChild(0).gameObject.SetActive(true);
         }
 
         for(int i = maxBulletCount; i<bulletParent.childCount; ++i) 
         {
             bulletParent.GetChild(i).gameObject.SetActive(false);
+            bulletParent.GetChild(i).GetChild(0).gameObject.SetActive(false);
         }
     }
 
@@ -58,7 +60,7 @@ public class FireBullet : FireProjectile
         {
             foreach (Transform bullet in bulletParent)
             {
-                bullet.gameObject.SetActive(true);
+                bullet.GetChild(0).gameObject.SetActive(true);
             }
 
             currentBulletCount = 5;
@@ -72,7 +74,7 @@ public class FireBullet : FireProjectile
         {
             character.canWeaponChange = false;
             SetFire();
-            bulletParent.GetChild(currentBulletCount - 1).gameObject.SetActive(false);
+            bulletParent.GetChild(currentBulletCount - 1).GetChild(0).gameObject.SetActive(false);
             currentBulletCount--;
             gameManager.totalBulletCount--;
 
