@@ -23,8 +23,6 @@ public class PieceItemInvenSlot : MonoBehaviour
         dragUI = DragUI.Instance;
         itemManager = ItemManager.Instance;
 
-        Debug.Log(pieceInven);
-
         indexNum = transform.GetSiblingIndex();
 
         blockImage.gameObject.SetActive(false);

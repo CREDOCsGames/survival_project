@@ -17,6 +17,7 @@ public class Campfire : MonoBehaviour, IMouseInteraction
     [SerializeField] GameObject buffIcon;
     [SerializeField] GameObject debuffIcon;
     [SerializeField] GameObject fireImage;
+    [SerializeField] BuffDescription buffDescriptionPanel;
 
     GameManager gameManager;
     Character character;
@@ -39,6 +40,7 @@ public class Campfire : MonoBehaviour, IMouseInteraction
     int[] avoids = { 0, 3, 5, 7 };
     int[] dmgs = { 0, 10, 15, 20 };
     int[] dfs = { 0, 0, 5, 10 };
+    int[] dash = { 0, 0, 0, 1 };
 
     private void Start()
     {
@@ -82,7 +84,7 @@ public class Campfire : MonoBehaviour, IMouseInteraction
 
         debuffValues[debuffType] = 1;
 
-        character.recoverHpRatio -= debuffValues[Debuff.RECOVERY_HEALTH];
+        character.recoverHpRatio -= debuffValues[Debuff.RECOVERY_HEALTH] * 10;
 
         character.attackSpeed *= (10 + debuffValues[Debuff.ATTACK_SPEED]) * 0.1f;
 
@@ -90,11 +92,10 @@ public class Campfire : MonoBehaviour, IMouseInteraction
 
         character.percentDamage -= (debuffValues[Debuff.POWER]) * 20;
 
-        //gameManager.dashCount = 0;
-        character.dashCount = 0;
-
         debuffIcon.GetComponent<CampFireDebuff>().SetDebuff(debuffType);
         debuffIcon.SetActive(true);
+
+        buffDescriptionPanel.SetDeBuffTextInfo(debuffType);
     }
 
     void OnBuff()
@@ -123,7 +124,7 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         character.speed *= (100 + speeds[buffValues[Buff.SPEED] - num]) * 0.01f;
         character.avoid += avoids[buffValues[Buff.SPEED] - num];
         //gameManager.dashCount = buffValues[Buff.SPEED] - num == 3 ? 1 : 0;
-        character.dashCount = buffValues[Buff.SPEED] - num == 3 ? 1 : 0;
+        character.dashCount = dash[buffValues[Buff.SPEED - num]];
 
         character.percentDamage += dmgs[buffValues[Buff.POWER] - num];
         character.defence += dfs[buffValues[Buff.POWER] - num];
@@ -218,6 +219,25 @@ public class Campfire : MonoBehaviour, IMouseInteraction
 
         buffIcon.GetComponent<FishBuffIcon>().SetBuffIcon(buffType, buffValues[buffType]);
         buffIcon.SetActive(true);
+
+        switch (buffType)
+        {
+            case Buff.MAXHEALTH:
+                buffDescriptionPanel.SetBuffTextInfo(buffType, mxHps[buffValues[Buff.MAXHEALTH]]);
+                break;
+
+            case Buff.POWER:
+                buffDescriptionPanel.SetBuffTextInfo(buffType, dmgs[buffValues[Buff.POWER]], dfs[buffValues[Buff.POWER]]);
+                break;
+
+            case Buff.SPEED:
+                buffDescriptionPanel.SetBuffTextInfo(buffType, speeds[buffValues[Buff.SPEED]], avoids[buffValues[Buff.SPEED]], dash[buffValues[Buff.SPEED]]);
+                break;
+
+            case Buff.RECOVERY_HEALTH:
+                buffDescriptionPanel.SetBuffTextInfo(buffType, reHps[buffValues[Buff.RECOVERY_HEALTH]]);
+                break;
+        }
 
         StartCoroutine(BuffCoolTime(1.5f));
     }

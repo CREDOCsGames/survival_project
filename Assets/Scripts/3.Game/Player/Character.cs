@@ -115,7 +115,7 @@ public class Character : Singleton<Character>
         maxRecoveryGauge = 80;
         initMaxRecGauge = maxRecoveryGauge;
         currentRecoveryGauge = 0;
-        recoveryValue = 5;
+        recoveryValue = 20;
 
         currentWeaponIndex = 0;
 
@@ -212,10 +212,10 @@ public class Character : Singleton<Character>
 
     void UseRecoveyGauege()
     {
-        if (maxHp - currentHp < 5)
+        if (maxHp == currentHp)
             return;
 
-        if (currentRecoveryGauge >= recoveryValue && Input.GetKeyDown(KeyCode.Q))
+        if (currentRecoveryGauge >= recoveryValue && Input.GetKeyDown((KeyCode)PlayerPrefs.GetInt("Key_Recover")))
         {
             StartCoroutine(ConvertRecoveryGauge());
         }
@@ -224,10 +224,10 @@ public class Character : Singleton<Character>
     IEnumerator ConvertRecoveryGauge()
     {
         isCanControll = false;
-        currentHp += Mathf.CeilToInt(recoveryValue * (100 + recoverHpRatio) * 0.01f);
+        currentHp += Mathf.RoundToInt(recoveryValue * (100 + recoverHpRatio) * 0.01f);
         currentRecoveryGauge -= recoveryValue;
 
-        yield return CoroutineCaching.WaitForSeconds(0.5f);
+        yield return CoroutineCaching.WaitForSeconds(0.3f);
 
         isCanControll = true;
     }
@@ -612,6 +612,7 @@ public class Character : Singleton<Character>
     public IEnumerator MoveToInteractableObject(Vector3 movePos, GameObject interactionObejct, float animTime, int animNum, int clipNum = -1, int flipNum = -1)
     {
         isCanControll = false;
+        agent.enabled = false;
 
         movePos = new Vector3(movePos.x, transform.position.y, movePos.z);
 
@@ -655,6 +656,8 @@ public class Character : Singleton<Character>
 
                 anim.SetBool("isLogging", true);
                 StartCoroutine(interactionObejct.GetComponent<IMouseInteraction>().EndInteraction(anim, animTime));
+
+                agent.enabled = true;
             }
 
             yield return null;

@@ -4,7 +4,7 @@ using System.Diagnostics.Contracts;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum KeyAction { UP, DOWN ,LEFT, RIGHT, DASH, COUNT}
+public enum KeyAction { UP, DOWN ,LEFT, RIGHT, DASH, RECORVER, COUNT}
 
 public static class KeySetting { public static Dictionary<KeyAction, KeyCode> keys = new Dictionary<KeyAction, KeyCode>(); }
 
@@ -58,16 +58,18 @@ public class TitleOption : MonoBehaviour
         sUnMark.SetActive(muteSfxVolume);
 
         defaultKeys = new int[] { PlayerPrefs.GetInt("Key_Up", (int)KeyCode.W),
-                                    PlayerPrefs.GetInt("Key_Down", (int)KeyCode.S),
-                                    PlayerPrefs.GetInt("Key_Left", (int)KeyCode.A),
-                                    PlayerPrefs.GetInt("Key_Right", (int)KeyCode.D),
-                                    PlayerPrefs.GetInt("Key_Dash", (int)KeyCode.Space)};
+                                  PlayerPrefs.GetInt("Key_Down", (int)KeyCode.S),
+                                  PlayerPrefs.GetInt("Key_Left", (int)KeyCode.A),
+                                  PlayerPrefs.GetInt("Key_Right", (int)KeyCode.D),
+                                  PlayerPrefs.GetInt("Key_Dash", (int)KeyCode.Space),
+                                  PlayerPrefs.GetInt("Key_Recover",(int)KeyCode.Q)};
 
         PlayerPrefs.SetInt("Key_Up", defaultKeys[0]);
         PlayerPrefs.SetInt("Key_Down", defaultKeys[1]);
         PlayerPrefs.SetInt("Key_Left", defaultKeys[2]);
         PlayerPrefs.SetInt("Key_Right", defaultKeys[3]);
         PlayerPrefs.SetInt("Key_Dash", defaultKeys[4]);
+        PlayerPrefs.SetInt("Key_Recover", defaultKeys[5]);
 
         for (int i = 0; i < (int)KeyAction.COUNT; i++)
         {
@@ -145,6 +147,10 @@ public class TitleOption : MonoBehaviour
                 case KeyAction.DASH:
                     PlayerPrefs.SetInt("Key_Dash", (int)keyEvent.keyCode);
                     break;
+
+                case KeyAction.RECORVER:
+                    PlayerPrefs.SetInt("Key_Recover", (int)keyEvent.keyCode);
+                    break;
             }
 
             KeyCode keycode = keyEvent.keyCode;
@@ -184,6 +190,12 @@ public class TitleOption : MonoBehaviour
 
                             case 4:
                                 PlayerPrefs.SetInt("Key_Dash", 0);
+                                KeySetting.keys.Remove((KeyAction)i);
+                                KeySetting.keys.Add((KeyAction)i, KeyCode.None);
+                                break;
+
+                            case 5:
+                                PlayerPrefs.SetInt("Key_Recover", 0);
                                 KeySetting.keys.Remove((KeyAction)i);
                                 KeySetting.keys.Add((KeyAction)i, KeyCode.None);
                                 break;

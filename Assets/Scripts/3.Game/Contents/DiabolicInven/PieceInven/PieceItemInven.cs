@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PieceItemInven : Singleton<PieceItemInven>
 {
@@ -9,6 +10,13 @@ public class PieceItemInven : Singleton<PieceItemInven>
     [HideInInspector] public int[] itemQuantity;
 
     ItemManager itemManager;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        DiscriptionPanel.GetComponent<Text>().text = "";
+    }
 
     private void OnEnable()
     {

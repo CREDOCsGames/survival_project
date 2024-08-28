@@ -17,7 +17,6 @@ public class Fishing : Singleton<Fishing>
     [SerializeField] DiabolicItemInfo[] fishingPieceList;
     [SerializeField] GameObject clickUI;
 
-    int[] catchItemsCount = { 0, 0};
     bool isCatch = false;
     [HideInInspector] public bool isCatchingStart = false;
     
@@ -71,11 +70,6 @@ public class Fishing : Singleton<Fishing>
         maxFishingCount.text = maxFishCount.ToString();
         currentFishingCount.text = currentFishCount.ToString();
 
-        for (int i = 0; i < catchItemsText.Length; i++)
-        {
-            catchItemsText[i].text = catchItemsCount[i].ToString();
-        }
-
         catchPointStart = gameManager.specialStatus[SpecialStatus.RustyHarpoon] ? initCatchPointStart - (catchBarWidth - initCatchPointEnd - initCatchPointStart) : initCatchPointStart;
 
         catchPoint.offsetMin = new Vector2(catchPointStart, catchPoint.offsetMin.y);
@@ -88,8 +82,6 @@ public class Fishing : Singleton<Fishing>
         pieceCard.SetActive(false);
 
         Character.Instance.isCanControll = true;
-        gameManager.fishLowGradeCount = catchItemsCount[0];
-        gameManager.fishHighGradeCount = catchItemsCount[1];
 
         Initialize();
     }
@@ -109,7 +101,7 @@ public class Fishing : Singleton<Fishing>
             catchBar.gameObject.SetActive(true);
             isCatchingStart = false;
 
-            randSpeedRatio = Random.Range(1, 5);
+            randSpeedRatio = Random.Range(1f, 3f);
         }
 
         MoveBar();
@@ -122,33 +114,7 @@ public class Fishing : Singleton<Fishing>
 
         if (!isCatch && !isCatchingStart)
         {
-            if (Input.GetMouseButton(0))
-            {
-                if(!isPress)
-                {
-                    clickUI.SetActive(false);
-                }
-
-                isPress = true;
-
-                catchBar.value += Time.deltaTime * 200 * randSpeedRatio;
-
-                if (catchBar.value >= catchBar.maxValue)
-                {
-                    isCatch = true;
-                    fishingAnim.isCatch = true;
-
-                    fishingAnim.CatchSuccess = false;
-                    catchText.text = "놓쳤다...";
-                    catchText.color = Color.red;
-
-                    catchText.gameObject.SetActive(true);
-
-                    return;
-                }
-            }
-
-            else if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonUp(0))
             {
                 isCatch = true;
                 fishingAnim.isCatch = true;
@@ -170,6 +136,35 @@ public class Fishing : Singleton<Fishing>
 
                 catchText.gameObject.SetActive(true);
             }
+
+            else if (Input.GetMouseButton(0))
+            {
+                if(!isPress)
+                {
+                    clickUI.SetActive(false);
+                }
+
+                isPress = true;
+
+                if (Input.GetMouseButtonUp(0))
+                    return;
+
+                catchBar.value += Time.deltaTime * 200 * randSpeedRatio;
+
+                if (catchBar.value >= catchBar.maxValue)
+                {
+                    isCatch = true;
+                    fishingAnim.isCatch = true;
+
+                    fishingAnim.CatchSuccess = false;
+                    catchText.text = "놓쳤다...";
+                    catchText.color = Color.red;
+
+                    catchText.gameObject.SetActive(true);
+
+                    return;
+                }
+            }
         }
     }
 
@@ -183,15 +178,13 @@ public class Fishing : Singleton<Fishing>
 
         if (rand < high)
         {
-            catchItemsCount[0]++;
-            catchItemsText[0].text = catchItemsCount[0].ToString();
+            gameManager.fishLowGradeCount++;
             catchFishImage.sprite = fishTypeImage[0];
         }
 
         else
         {
-            catchItemsCount[1]++;
-            catchItemsText[1].text = catchItemsCount[1].ToString();
+            gameManager.fishHighGradeCount++;
             catchFishImage.sprite = fishTypeImage[1];
 
             rand = Random.Range(0, 100);
@@ -287,8 +280,6 @@ public class Fishing : Singleton<Fishing>
         if (currentFishCount <= 0)
         {
             Character.Instance.isCanControll = true;
-            gameManager.fishLowGradeCount = catchItemsCount[0];
-            gameManager.fishHighGradeCount = catchItemsCount[1];
             gameObject.SetActive(false);
         }
 

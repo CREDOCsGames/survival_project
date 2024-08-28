@@ -16,12 +16,13 @@ public class FishingPoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        currentRound = gameManager.round;
+
         if (round > currentRound)
             return;
 
         if (other.CompareTag("Character"))
         {
-            currentRound = gameManager.round;
             round = currentRound;
 
             Character.Instance.isCanControll = false;

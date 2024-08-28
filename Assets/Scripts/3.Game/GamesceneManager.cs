@@ -79,8 +79,8 @@ public class GamesceneManager : Singleton<GamesceneManager>
 #if UNITY_EDITOR
 
 #else
-#endif
         gameManager.dashCount = 0;
+#endif
         gameManager.bloodDamage = 0;
         gameSceneUI.CursorChange(CursorType.Normal);
 

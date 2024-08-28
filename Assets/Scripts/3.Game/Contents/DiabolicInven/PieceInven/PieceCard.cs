@@ -13,6 +13,7 @@ public class PieceCard : MonoBehaviour
     [SerializeField] GameObject[] descriptPrefabs;
     [SerializeField] Text descriptText;
     [SerializeField] Color[] gradeColors;
+    [SerializeField] Transform itemShapeViewParent;
     
     DiabolicItemInfo item;
 
@@ -40,7 +41,6 @@ public class PieceCard : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(null);
         }
     }
-    
 
     public void UpdateCardUI(DiabolicItemInfo item)
     {
@@ -59,6 +59,30 @@ public class PieceCard : MonoBehaviour
         itemName.text = item.ItemName;
         maxCount.text = item.MaxCount.ToString();
         DescriptionInfo(item, itemQuantity);
+
+        ItemShape(item);
+    }
+
+    void ItemShape(DiabolicItemInfo item)
+    {
+        itemShapeViewParent.GetComponent<GridLayoutGroup>().constraintCount = item.ItemShape.Width;
+
+        for (int i = 0; i < 3; ++i)
+        {
+            for (int j = 0; j < 3; ++j)
+            {
+                if (i < item.ItemShape.Height && j < item.ItemShape.Width)
+                {
+                    itemShapeViewParent.GetChild(i * 3 + j).GetComponent<Image>().color = item.ItemShape.Shape[i * item.ItemShape.Width + j] ? Color.blue : Color.grey;
+                    itemShapeViewParent.GetChild(i * 3 + j).gameObject.SetActive(true);
+                }
+
+                else
+                {
+                    itemShapeViewParent.GetChild(i * 3 + j).gameObject.SetActive(false);
+                }
+            }
+        }
     }
 
     void DescriptionInfo(DiabolicItemInfo item, int itemQuantity)
