@@ -8,6 +8,7 @@ public class WeaponChanger : MonoBehaviour
     [SerializeField] Sprite[] weaponImages;
     [SerializeField] Image currentItemImage;
     [SerializeField] Image nextItemImage;
+    [SerializeField] GameObject bulletText;
 
     int beforeIndex = 0;
     int currentIndex = 0;
@@ -30,6 +31,7 @@ public class WeaponChanger : MonoBehaviour
 
         character.weaponParent.GetChild(0).gameObject.SetActive(true);
 
+        bulletText.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
 
@@ -81,6 +83,10 @@ public class WeaponChanger : MonoBehaviour
 
         character.weaponParent.GetChild(beforeIndex).gameObject.SetActive(false);
         character.weaponParent.GetChild(currentIndex).gameObject.SetActive(true);
+
+        if(currentIndex == 1)
+            bulletText.gameObject.SetActive(true);
+
         character.currentWeaponIndex = currentIndex;
 
         StartCoroutine(ScrollCoolDown());

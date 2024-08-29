@@ -218,7 +218,7 @@ public class TitleOption : MonoBehaviour
     {
         if (panel.activeSelf)
         {
-            if (AllSound.value == 1)
+            if (AllSound.value == 0)
             {
                 muteAllVolume = true;
                 muteBgmVolume = muteAllVolume;
@@ -232,19 +232,19 @@ public class TitleOption : MonoBehaviour
                 muteSfxVolume = muteAllVolume;
             }
 
-            soundManager.WholeVolume((1 - AllSound.value), muteBgmVolume, muteSfxVolume);
+            soundManager.WholeVolume(AllSound.value, muteBgmVolume, muteSfxVolume);
         }
     }
 
     public void OnOffWholeVolume()
     {
-        if (AllSound.value != 1)
+        if (AllSound.value != 0)
             muteAllVolume = !muteAllVolume;
 
-        if (bgmSound.value != 1)
+        if (bgmSound.value != 0)
             muteBgmVolume = muteAllVolume;
 
-        if (sfxSound.value != 1)
+        if (sfxSound.value != 0)
             muteSfxVolume = muteAllVolume;
 
         soundManager.WholeVolumeOnOff(muteAllVolume);
@@ -254,13 +254,13 @@ public class TitleOption : MonoBehaviour
     {
         if (panel.activeSelf)
         {
-            if (bgmSound.value == 1)
+            if (bgmSound.value == 0)
                 muteBgmVolume = true;
 
             else 
                 muteBgmVolume = false;
 
-            soundManager.BgmVolume((1 - bgmSound.value), muteBgmVolume);
+            soundManager.BgmVolume(bgmSound.value, muteBgmVolume);
         }
     }
 
@@ -277,13 +277,13 @@ public class TitleOption : MonoBehaviour
     {
         if (panel.activeSelf)
         {
-            if (sfxSound.value == 1)
+            if (sfxSound.value == 0)
                 muteSfxVolume = true;
 
             else
                 muteSfxVolume = false;
 
-            soundManager.EsVolume((1 - sfxSound.value), muteSfxVolume);
+            soundManager.EsVolume(sfxSound.value, muteSfxVolume);
         }
     }
 

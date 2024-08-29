@@ -43,10 +43,6 @@ public class GameSceneUI : Singleton<GameSceneUI>
     [SerializeField] GameObject dash;
     [SerializeField] Text dashKey;
     [SerializeField] Image dashImage;
-    [SerializeField] Text dashCoolTime;
-    [SerializeField] GameObject dashCountParent;
-    [SerializeField] Text dashCount;
-    [SerializeField] Text maxDashCount;
 
     [Header("Stat")]
     [SerializeField] GameObject statWindow;
@@ -401,34 +397,15 @@ public class GameSceneUI : Singleton<GameSceneUI>
             return;
         }
 
-        dash.SetActive(true);
+        if (!dash.activeSelf)
+            dash.SetActive(true);
+
+        dashImage.gameObject.SetActive(dashImage.fillAmount != 1);
         dashKey.text = KeySetting.keys[KeyAction.DASH].ToString();
-        Color color = dashImage.color;
-        dashImage.fillAmount = 1;
+        dashImage.fillAmount = 0;
 
-        if (character.dashCount == 0)
-        {
-            color.a = 0.5f;
-            dashImage.color = color;
-
-            dashCountParent.gameObject.SetActive(false);
-
-            dashCoolTime.gameObject.SetActive(true);
-            dashImage.fillAmount = 1 - (character.dashCoolTime / character.initDashCoolTime);
-            dashCoolTime.text = character.dashCoolTime.ToString("F2");
-        }
-
-        else if (character.dashCount > 0)
-        {
-            color.a = 1f;
-            dashImage.color = color;
-
-            dashCountParent.gameObject.SetActive(true);
-            dashCount.text = character.dashCount.ToString();
-            maxDashCount.text = gameManager.dashCount.ToString();
-
-            dashCoolTime.gameObject.SetActive(false);
-        }
+        dashImage.fillAmount = (character.dashCoolTime / character.initDashCoolTime);
+        
     }
 
     void HpUI()

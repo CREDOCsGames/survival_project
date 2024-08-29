@@ -52,7 +52,7 @@ public class BowCatchBar : MonoBehaviour
 
     void Catch()
     {
-        isCatch = catchBar.value >= 80 && catchBar.value <= 120 ? true : false;
+        isCatch = catchBar.value >= 77 && catchBar.value <= 123 ? true : false;
     }
 
     public bool IsCatch()

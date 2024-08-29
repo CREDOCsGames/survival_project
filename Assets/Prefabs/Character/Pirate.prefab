@@ -6767,8 +6767,52 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 244321374575750638, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.18
+      value: 1.24
       objectReference: {fileID: 0}
+    - target: {fileID: 263365160958242813, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 263365160958242813, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 839791618018243146, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 839791618018243146, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -810352585, guid: 5b29b2d401d150143b265c0a8d1f858a, type: 3}
+    - target: {fileID: 1900517635763401077, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1900517635763401077, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465078515871814876, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1642747734, guid: 38d07495d8a932646ac2edbde4228b24, type: 3}
+    - target: {fileID: 2465078515871814876, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465078515871814876, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465078515871814876, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465078515871814876, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 2610753198198880902, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -6853,6 +6897,26 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0.6
       objectReference: {fileID: 0}
+    - target: {fileID: 5315837506877119511, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5828552150350768270, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
+      propertyPath: m_Transition
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6007886501266755142, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7203320443229012577, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -154
+      objectReference: {fileID: 0}
+    - target: {fileID: 7203320443229012577, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7451276543573718348, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.517
@@ -6877,7 +6941,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7636675697460205826, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
+    - {fileID: 7158274714799532376, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
+    - {fileID: 1071399654811202389, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
 --- !u!212 &7183370604035136507 stripped
 SpriteRenderer:
