@@ -31,6 +31,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
     [SerializeField] Text fish1Count;
     [SerializeField] Text fish2Count;
     [SerializeField] Text bulletCount;
+    [SerializeField] GameObject itemPanel;
 
     [Header("Time")]
     [SerializeField] Text timeText;
@@ -81,6 +82,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
     [SerializeField] public TilemapRenderer tileMap;
     [SerializeField] Material lightingMat;
     [SerializeField] GameObject spotlight;
+    [SerializeField] Image nightFilter;
 
     [Header("Clear")]
     [SerializeField] Image clearImage;
@@ -160,6 +162,8 @@ public class GameSceneUI : Singleton<GameSceneUI>
         spotlight.transform.position = pos;
 
         spotlight.SetActive(true);
+
+        nightFilter.color = new Color(0, 0, 0, 1);
     }
 
     IEnumerator BlinkBossSceneText()
@@ -218,7 +222,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
         RoundUI();
         TimeUI();
         DashUI();
-        WeaponUI();
+        WeaponAndItemUI();
         SettingStatText();
 
         if(clearClickText.gameObject.activeSelf)
@@ -475,7 +479,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
 
     bool isNight = false;
 
-    void WeaponUI()
+    void WeaponAndItemUI()
     {
         if (isNight == gamesceneManager.isNight)
             return;
@@ -483,10 +487,16 @@ public class GameSceneUI : Singleton<GameSceneUI>
         isNight = gamesceneManager.isNight;
 
         if (isNight)
+        {
             weaponUI.SetActive(true);
+            itemPanel.SetActive(false);
+        }
 
         else
+        {
             weaponUI.SetActive(false);
+            itemPanel.SetActive(true);
+        }
     }
 
     public void OnOffStatWindow()
