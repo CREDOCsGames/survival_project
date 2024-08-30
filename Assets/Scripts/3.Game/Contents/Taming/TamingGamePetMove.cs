@@ -13,6 +13,7 @@ public class TamingGamePetMove : MonoBehaviour
     [SerializeField] RectTransform moveArea;
     [SerializeField] ParticleSystem dashParticle;
     [SerializeField] float defaultSpeed = 300f;
+
     [HideInInspector] public float moveSpeed;
     float speedRatio = 1;
 

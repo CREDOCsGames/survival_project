@@ -18,10 +18,13 @@ public class Campfire : MonoBehaviour, IMouseInteraction
     [SerializeField] GameObject debuffIcon;
     [SerializeField] GameObject fireImage;
     [SerializeField] BuffDescription buffDescriptionPanel;
+    [SerializeField] AudioClip buffSound;
+    [SerializeField] AudioClip igniteSound;
 
     GameManager gameManager;
     Character character;
     GamesceneManager gamesceneManager;
+    SoundManager soundManager;
 
     bool canInteraction = false;
     bool canCookFish = false;
@@ -47,6 +50,7 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         gameManager = GameManager.Instance;
         character = Character.Instance;
         gamesceneManager = GamesceneManager.Instance;
+        soundManager = SoundManager.Instance;
 
         fireInitScale = fireImage.transform.localScale;
 
@@ -187,6 +191,8 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         fireImage.transform.localScale = fireInitScale;
         isWoodRefill = true;
 
+        soundManager.PlaySFX(igniteSound);
+
         StartCoroutine(BuffCoolTime(1.5f));
     }
 
@@ -238,6 +244,8 @@ public class Campfire : MonoBehaviour, IMouseInteraction
                 buffDescriptionPanel.SetBuffTextInfo(buffType, reHps[buffValues[Buff.RECOVERY_HEALTH]]);
                 break;
         }
+
+        soundManager.PlaySFX(igniteSound);
 
         StartCoroutine(BuffCoolTime(1.5f));
     }

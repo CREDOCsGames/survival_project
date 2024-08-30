@@ -83,6 +83,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collder: {fileID: 505979245457942671}
   initCoolTime: 0.6
+  attackSound: {fileID: 8300000, guid: 35e0809e9c8b3d34dabc1ac273add326, type: 3}
 --- !u!114 &519280415528450255
 MonoBehaviour:
   m_ObjectHideFlags: 0

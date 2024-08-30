@@ -7,8 +7,10 @@ public class FireProjectile : MonoBehaviour
     [SerializeField] protected Transform normalFirePos;
     [SerializeField] protected int poolCount;
     [SerializeField] protected float initCoolTime = 1f;
+    [SerializeField] protected AudioClip weaponSound;
 
     protected GameManager gameManager;
+    protected SoundManager soundManager;
 
     protected IObjectPool<ProjectileObjectPool> projectilePool;
 
@@ -27,6 +29,7 @@ public class FireProjectile : MonoBehaviour
 
         gameManager = GameManager.Instance;
         character = Character.Instance;
+        soundManager = SoundManager.Instance;
         coolTime = initCoolTime;
     }
 
@@ -39,6 +42,7 @@ public class FireProjectile : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0) && !gameManager.isPause && canFire)
         {
+            soundManager.PlaySFX(weaponSound);
             SetFire();
         }
     }

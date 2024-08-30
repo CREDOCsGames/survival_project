@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class FireBullet : FireProjectile
 {
+    [SerializeField] AudioClip reloadingSound;
     [SerializeField] Transform bulletParent;
 
     int maxBulletCount;
@@ -70,6 +71,8 @@ public class FireBullet : FireProjectile
     {
         if (Input.GetMouseButton(0) && !gameManager.isPause && canFire)
         {
+            soundManager.PlaySFX(weaponSound);
+
             character.canWeaponChange = false;
             SetFire();
             bulletParent.GetChild(currentBulletCount - 1).gameObject.SetActive(false);
@@ -98,6 +101,7 @@ public class FireBullet : FireProjectile
 
     IEnumerator FreezeCharacter()
     {
+        soundManager.PlaySFX(reloadingSound);
         character.isCanControll = false;
 
         yield return CoroutineCaching.WaitForSeconds(1);

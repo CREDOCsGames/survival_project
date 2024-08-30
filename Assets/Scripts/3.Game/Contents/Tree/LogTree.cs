@@ -8,6 +8,8 @@ public class LogTree : MonoBehaviour, IMouseInteraction
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] GameObject arrow;
     [SerializeField] Sprite woodSprite;
+    [SerializeField] AudioClip loggingSound;
+    [SerializeField] AudioClip instanceObstacleSound;
 
     bool canLog = false;
     [HideInInspector] int posNum;
@@ -15,10 +17,13 @@ public class LogTree : MonoBehaviour, IMouseInteraction
     Character character;
     GameManager gameManager;
     GamesceneManager gamesceneManager;
+    SoundManager soundManager;
 
     Vector3 obstacleAngle;
 
     Color outlineColor;
+
+    EffectSound currentSfx;
 
     private void Start()
     {
@@ -26,6 +31,7 @@ public class LogTree : MonoBehaviour, IMouseInteraction
         character = Character.Instance;
         gameManager = GameManager.Instance;
         gamesceneManager = GamesceneManager.Instance;
+        soundManager = SoundManager.Instance;
 
         outlineColor = spriteRenderer.material.GetColor("_SolidOutline");
     }
@@ -97,6 +103,8 @@ public class LogTree : MonoBehaviour, IMouseInteraction
         GameObject ob = Instantiate(obstacle, transform.position, Quaternion.Euler(obstacleAngle), GamesceneManager.Instance.treeParent);
         ob.GetComponentInChildren<Obstacle>().SetObstacleImage(posNum);
 
+        soundManager.PlaySFX(instanceObstacleSound);
+
         Destroy(gameObject);
     }
 
@@ -111,6 +119,8 @@ public class LogTree : MonoBehaviour, IMouseInteraction
         {
             waitTime *= 0.5f;
         }
+
+        currentSfx = soundManager.PlaySFXAndReturn(loggingSound, true);
 
         yield return CoroutineCaching.WaitForSeconds(waitTime);
 
@@ -128,6 +138,11 @@ public class LogTree : MonoBehaviour, IMouseInteraction
         character.isCanControll = true;
         character.canFlip = true;
         character.ChangeAnimationController(0);
+
+        if (currentSfx != null)
+        {
+            soundManager.StopLoopSFX(currentSfx);
+        }
     }
 
     /*private void OnDrawGizmos()

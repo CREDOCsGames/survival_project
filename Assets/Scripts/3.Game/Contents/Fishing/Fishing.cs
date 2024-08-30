@@ -16,6 +16,8 @@ public class Fishing : Singleton<Fishing>
     [SerializeField] GameObject pieceCard;
     [SerializeField] DiabolicItemInfo[] fishingPieceList;
     [SerializeField] GameObject clickUI;
+    [SerializeField] AudioClip successSound;
+    [SerializeField] AudioClip failSound;
 
     bool isCatch = false;
     [HideInInspector] public bool isCatchingStart = false;
@@ -27,6 +29,7 @@ public class Fishing : Singleton<Fishing>
     GamesceneManager gamesceneManager;
     FishingAnim fishingAnim;
     ItemManager itemManager;
+    SoundManager soundManager;
 
     float randSpeedRatio;
 
@@ -49,6 +52,7 @@ public class Fishing : Singleton<Fishing>
         gamesceneManager = GamesceneManager.Instance;
         fishingAnim = FishingAnim.Instance;
         itemManager = ItemManager.Instance;
+        soundManager = SoundManager.Instance;
 
         pieceCard.SetActive(false);
 
@@ -123,16 +127,16 @@ public class Fishing : Singleton<Fishing>
                 if (catchBar.value < catchPointStart || catchBar.value > catchBarWidth - catchPointEnd)
                 {
                     fishingAnim.CatchSuccess = false;
-                    catchText.text = "놓쳤다...";
-                    catchText.color = Color.red;
+                    catchText.text = $"<color=#A52D39>놓쳤다...</color>";
+                    soundManager.PlaySFX(failSound);
                 }
 
                 else if (catchBar.value >= catchPointStart && catchBar.value <= catchBarWidth - catchPointEnd)
                 {
                     GetItem();
                     fishingAnim.CatchSuccess = true;
-                    catchText.text = "낚아챘다!";
-                    catchText.color = Color.yellow;
+                    catchText.text = $"<color=#B09F5E>낚아챘다!</color>";
+                    soundManager.PlaySFX(successSound);
                 }
 
                 catchText.gameObject.SetActive(true);
@@ -158,8 +162,8 @@ public class Fishing : Singleton<Fishing>
                     fishingAnim.isCatch = true;
 
                     fishingAnim.CatchSuccess = false;
-                    catchText.text = "놓쳤다...";
-                    catchText.color = Color.red;
+                    catchText.text = $"<color=#A52D39>놓쳤다...</color>";
+                    soundManager.PlaySFX(failSound);
 
                     catchText.gameObject.SetActive(true);
 
@@ -263,8 +267,8 @@ public class Fishing : Singleton<Fishing>
         fishingAnim.isCatch = true;
 
         fishingAnim.CatchSuccess = false;
-        catchText.text = "놓쳤다...";
-        catchText.color = Color.red;
+        catchText.text = "<color=A52D39>놓쳤다...</color>";
+        soundManager.PlaySFX(failSound);
 
         catchText.gameObject.SetActive(true);
     }

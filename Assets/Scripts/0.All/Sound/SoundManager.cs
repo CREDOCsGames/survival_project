@@ -54,11 +54,7 @@ public class SoundManager : Singleton<SoundManager>
     {
         audioSource.clip = bgms[num];
 
-        if (isLoop)
-            audioSource.loop = true;
-
-        else if (!isLoop)
-            audioSource.loop = false;
+        audioSource.loop = isLoop;
 
         if (!audioSource.isPlaying)
         {
@@ -93,7 +89,7 @@ public class SoundManager : Singleton<SoundManager>
         muteBgm = isMute;
     }
 
-    public void EsVolume(float num, bool isMute)
+    public void SfxVolume(float num, bool isMute)
     {
         sfxSoundVolume = num ;
         muteSfx = isMute;
@@ -116,7 +112,7 @@ public class SoundManager : Singleton<SoundManager>
         audioSource.Pause();
     }
 
-    public void PlayES(string name)
+    public void PlaySFX(string name)
     {
         if (!muteSfx)
         {
@@ -125,7 +121,7 @@ public class SoundManager : Singleton<SoundManager>
                 if (effects[i].name == name)
                 {
                     EffectSound effect = objectPool.Get();
-                    effect.PlayES(effects[i]);
+                    effect.PlaySFX(effects[i]);
                     effect.source.volume = sfxSoundVolume * AllSoundVolume;
                     break;
                 }
@@ -133,14 +129,43 @@ public class SoundManager : Singleton<SoundManager>
         }
     }
 
-    public void PlayES(AudioClip audioClip)
+    public void PlaySFX(AudioClip audioClip)
     {
         if (!muteSfx)
         {
             EffectSound effect = objectPool.Get();
-            effect.PlayES(audioClip);
+            effect.PlaySFX(audioClip);
             effect.source.volume = sfxSoundVolume * AllSoundVolume;
         }
+    }
+
+    public void PlaySFX(AudioClip audioClip, bool isLoop)
+    {
+        if (!muteSfx)
+        {
+            EffectSound effect = objectPool.Get();
+            effect.PlaySFX(audioClip, isLoop);
+            effect.source.volume = sfxSoundVolume * AllSoundVolume;
+        }
+    }
+
+    public EffectSound PlaySFXAndReturn(AudioClip audioClip, bool isLoop)
+    {
+        if (!muteSfx)
+        {
+            EffectSound effect = objectPool.Get();
+            effect.PlaySFX(audioClip, isLoop);
+            effect.source.volume = sfxSoundVolume * AllSoundVolume;
+
+            return effect;
+        }
+
+        return null;
+    }
+
+    public void StopLoopSFX(EffectSound sfx)
+    {
+        sfx.DestroyPool();
     }
 
     private EffectSound CreatePool()

@@ -8,10 +8,12 @@ public class FishingPoint : MonoBehaviour
     int currentRound = 0;
 
     GameManager gameManager;
+    SoundManager soundManager;
 
     private void Start()
     {
         gameManager = GameManager.Instance;
+        soundManager = SoundManager.Instance;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -24,6 +26,8 @@ public class FishingPoint : MonoBehaviour
         if (other.CompareTag("Character"))
         {
             round = currentRound;
+
+            soundManager.PlayBGM(2, true);
 
             Character.Instance.isCanControll = false;
             fishingGame.SetActive(true);
@@ -38,6 +42,7 @@ public class FishingPoint : MonoBehaviour
         if (other.CompareTag("Character"))
         {
             round++;
+            soundManager.PlayBGM(1, true);
         }
     }
 }

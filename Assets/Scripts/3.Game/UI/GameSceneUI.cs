@@ -62,7 +62,6 @@ public class GameSceneUI : Singleton<GameSceneUI>
     [SerializeField] Text dayChangeText;
     [SerializeField] Image dayChangeImage;
     [SerializeField] Sprite[] dayChangeSprites;
-    [SerializeField] Image currentDayImage;
 
     [Header("Text")]
     [SerializeField] Text bossSceneText;
@@ -78,7 +77,6 @@ public class GameSceneUI : Singleton<GameSceneUI>
     [SerializeField] public TilemapRenderer tileMap;
     [SerializeField] Material lightingMat;
     [SerializeField] GameObject spotlight;
-    [SerializeField] Image nightFilter;
 
     [Header("Clear")]
     [SerializeField] Image clearImage;
@@ -102,6 +100,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
         fishingGame.SetActive(false);
         weaponUI.SetActive(false);
         dayChangeGO.SetActive(false);
+        itemPanel.SetActive(true);
 
         spotlight.SetActive(false);
 
@@ -158,8 +157,6 @@ public class GameSceneUI : Singleton<GameSceneUI>
         spotlight.transform.position = pos;
 
         spotlight.SetActive(true);
-
-        nightFilter.color = new Color(0, 0, 0, 1);
     }
 
     IEnumerator BlinkBossSceneText()
@@ -198,7 +195,6 @@ public class GameSceneUI : Singleton<GameSceneUI>
     {
         dayChangeText.text = text;
         dayChangeImage.sprite = dayChangeSprites[index];
-        currentDayImage.sprite = dayChangeSprites[index];
 
         dayChangeGO.SetActive(true);
 

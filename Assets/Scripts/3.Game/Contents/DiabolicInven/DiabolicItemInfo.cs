@@ -48,6 +48,7 @@ public class DiabolicItemInfo : ScriptableObject
     [SerializeField] int weightValue;
     [SerializeField] Sprite itemSprite;
     [SerializeField] string itemName;
+    [SerializeField] AudioClip equipSound;
 
     [Header("Stat")]
     [SerializeField] int maxHp;
@@ -92,6 +93,7 @@ public class DiabolicItemInfo : ScriptableObject
     public int WeightValue => weightValue;
     public Sprite ItemSprite => itemSprite;
     public string ItemName => itemName;
+    public AudioClip EquipSound => equipSound;
     public int MaxCount => maxCount;
     public ItemShape ItemShape => itemShape;
     public string SpecialStatInfo => specialStatInfo;

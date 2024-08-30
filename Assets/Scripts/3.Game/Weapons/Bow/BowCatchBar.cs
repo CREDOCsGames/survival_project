@@ -4,6 +4,9 @@ using UnityEngine.UI;
 public class BowCatchBar : MonoBehaviour
 {
     [SerializeField] Slider catchBar;
+    [SerializeField] AudioClip chargingSound;
+
+    SoundManager soundManager;
 
     float barSpeed;
     float maxBarSpeed = 600;
@@ -11,6 +14,13 @@ public class BowCatchBar : MonoBehaviour
     bool isMin = true;
 
     bool isCatch = false;
+
+    EffectSound currentSfx = null;
+
+    private void Awake()
+    {
+        soundManager = SoundManager.Instance;
+    }
 
     private void OnEnable()
     {
@@ -24,6 +34,10 @@ public class BowCatchBar : MonoBehaviour
         {
             if (GetComponent<ShootArrow>().checkCanFire())
             {
+                if (currentSfx == null)
+                {
+                    currentSfx = soundManager.PlaySFXAndReturn(chargingSound, true);
+                }
                 catchBar.gameObject.SetActive(true);
                 MoveBar();
             }
@@ -31,6 +45,9 @@ public class BowCatchBar : MonoBehaviour
 
         else if (Input.GetMouseButtonUp(0))
         {
+            soundManager.StopLoopSFX(currentSfx);
+            currentSfx = null;
+
             Catch();
             catchBar.gameObject.SetActive(false);
             catchBar.value = 0;

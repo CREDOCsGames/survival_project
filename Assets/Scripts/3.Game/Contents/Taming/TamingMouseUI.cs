@@ -6,10 +6,18 @@ public class TamingMouseUI : MonoBehaviour
     [SerializeField] RectTransform moveArea;
     [SerializeField] RectTransform pet;
     [SerializeField] GameObject UIView;
+    [SerializeField] AudioClip overlapSound;
+
+    SoundManager soundManager;
+
     RectTransform rectTransform;
+
+    EffectSound currentSfx = null;
 
     void Start()
     {
+        soundManager = SoundManager.Instance;
+
         rectTransform = GetComponent<RectTransform>();
     }
 
@@ -42,6 +50,19 @@ public class TamingMouseUI : MonoBehaviour
         bool isOverlap = rectUI.Overlaps(rectPet);
 
         rect2.GetComponent<TamingGamePetMove>().moveSpeed = isOverlap ? rect2.GetComponent<TamingGamePetMove>().DefalutSpeed + 100f : rect2.GetComponent<TamingGamePetMove>().DefalutSpeed;
+
+        if(currentSfx == null)
+        {
+            currentSfx = soundManager.PlaySFXAndReturn(overlapSound, false);
+        }
+
+        else
+        {
+            if (!currentSfx.source.isPlaying)
+            {
+                currentSfx = null;
+            }
+        }
 
         return isOverlap;
     }

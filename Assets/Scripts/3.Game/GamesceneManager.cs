@@ -31,6 +31,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
     GameSceneUI gameSceneUI;
     ItemManager itemManager;
     ItemSpawner beach;
+    SoundManager soundManager;
 
     private void Start()
     {
@@ -39,6 +40,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
         gameSceneUI = GameSceneUI.Instance;
         itemManager = ItemManager.Instance;
         beach = ItemSpawner.Instance;
+        soundManager = SoundManager.Instance;
 
         character.GetComponent<NavMeshAgent>().enabled = true;
 
@@ -50,6 +52,9 @@ public class GamesceneManager : Singleton<GamesceneManager>
         itemManager.pieceItemsList = itemManager.startPieceList;
 
         currentGameTime = gameManager.gameDayTime;
+
+        soundManager.StopBGM();
+
         StartCoroutine(DayRoutine());
     }
 
@@ -112,7 +117,10 @@ public class GamesceneManager : Singleton<GamesceneManager>
         currentGameTime = gameManager.gameDayTime;
 
         if (gameManager.round > 1)
+        {
+            soundManager.PlayBGM(5, true);
             multicellInvenPanel.SetActive(true);
+        }
 
         character.canWeaponChange = true;
 
@@ -130,6 +138,8 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
         gameSceneUI.ChangeDayText(0, "아침이 밝았습니다.");
 
+        soundManager.PlayBGM(1, true);
+
         isSetPieceEnd = true;
         character.isCanControll = true;
 
@@ -141,6 +151,8 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
     IEnumerator NightRoutine()
     {
+        soundManager.PlayBGM(4, true);
+
         gameSceneUI.ChangeDayText(1, "밤이 되었습니다.");
         gameSceneUI.CursorChange(CursorType.Attack);
 
@@ -180,6 +192,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
             StopAllCoroutines();
             gameManager.isClear = true;
 
+            soundManager.StopBGM();
             StartCoroutine(gameSceneUI.GameClear(1));
         }
     }

@@ -283,7 +283,7 @@ public class TitleOption : MonoBehaviour
             else
                 muteSfxVolume = false;
 
-            soundManager.EsVolume(sfxSound.value, muteSfxVolume);
+            soundManager.SfxVolume(sfxSound.value, muteSfxVolume);
         }
     }
 
@@ -306,7 +306,7 @@ public class TitleOption : MonoBehaviour
 
     public void TextFx()
     {
-        soundManager.PlayES("SelectButton");
+        soundManager.PlaySFX("SelectButton");
     }
 
     public void OptionIndex(int index)

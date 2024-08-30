@@ -9,6 +9,7 @@ public class Cage : MonoBehaviour, IMouseInteraction
     GameSceneUI gameSceneUI;
     GamesceneManager gameSceneManager;
     GameManager gameManager;
+    SoundManager soundManager;
 
     bool isCanInteraction = false;
 
@@ -18,6 +19,7 @@ public class Cage : MonoBehaviour, IMouseInteraction
         gameSceneUI = GameSceneUI.Instance;
         gameSceneManager = GamesceneManager.Instance;
         gameManager = GameManager.Instance;
+        soundManager = SoundManager.Instance;
 
         gameSceneUI.tamingGame.SetActive(false);
         tamingPet.SetActive(false);
@@ -39,7 +41,11 @@ public class Cage : MonoBehaviour, IMouseInteraction
 
     public IEnumerator EndInteraction(Animator anim, float waitTime)
     {
+        soundManager.StopBGM();
+
         yield return CoroutineCaching.WaitForSeconds(waitTime);
+
+        soundManager.PlayBGM(1, true);
 
         Cursor.visible = true;
         gameSceneUI.tamingGame.SetActive(false);
@@ -88,6 +94,8 @@ public class Cage : MonoBehaviour, IMouseInteraction
 
         if (gameSceneManager.isNight)
             yield break;
+
+        soundManager.PlayBGM(3, true);
 
         gameSceneUI.tamingGame.SetActive(true);
     }

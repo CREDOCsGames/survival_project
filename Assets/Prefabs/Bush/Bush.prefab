@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrow: {fileID: 0}
-  clickUI: {fileID: 0}
+  clickUI: {fileID: 6566186335256038341}
   coll: {fileID: 5927185803636976845}
 --- !u!1 &2418993141755308113
 GameObject:
@@ -219,6 +219,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ab487546d2c145d4282ad7431fe253b1, type: 2}
   spriteRenderer: {fileID: 2418993141755308114}
   fruitImage: {fileID: 553344388, guid: 515270b66132f084d9d3fdbfce2d8ef6, type: 3}
+  gatheringSound: {fileID: 8300000, guid: 1cf7185285f854b45b041b00a3c82de2, type: 3}
+  eatFishSound: {fileID: 8300000, guid: 6d8f6d5205c53154b8079b9faeb424b0, type: 3}
 --- !u!54 &6226669219626314849
 Rigidbody:
   m_ObjectHideFlags: 0

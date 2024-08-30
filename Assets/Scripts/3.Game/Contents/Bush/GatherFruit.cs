@@ -9,6 +9,8 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
     [SerializeField] DiabolicItemInfo[] bushPieceList;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Sprite fruitImage;
+    [SerializeField] AudioClip gatheringSound;
+    [SerializeField] AudioClip eatFishSound;
 
     bool canGather;
 
@@ -16,10 +18,13 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
     ItemManager itemManager;
     GameSceneUI gameSceneUI;
     GamesceneManager gamesceneManager;
+    SoundManager soundManager;
 
     List<DiabolicItemInfo> itemList = new List<DiabolicItemInfo>();
 
     Color outlineColor;
+
+    EffectSound currentSfx;
 
     private void Start()
     {
@@ -28,6 +33,7 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
         itemManager = ItemManager.Instance;
         gameSceneUI = GameSceneUI.Instance;
         gamesceneManager = GamesceneManager.Instance;
+        soundManager = SoundManager.Instance;
         outlineColor = spriteRenderer.material.GetColor("_SolidOutline");
     }
 
@@ -104,6 +110,8 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
 
     public IEnumerator EndInteraction(Animator anim, float waitTime)
     {
+        currentSfx = soundManager.PlaySFXAndReturn(gatheringSound, true);
+
         yield return CoroutineCaching.WaitForSeconds(waitTime);
 
         if (gamesceneManager.isNight)
@@ -123,6 +131,11 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
         character.isCanControll = true;
         character.canFlip = true;
         character.ChangeAnimationController(0); 
+
+        if(currentSfx != null)
+        {
+            soundManager.StopLoopSFX(currentSfx);
+        }
     }
 
     void RecoveryGaugeUp()
@@ -133,6 +146,8 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
         character.getItemUI.gameObject.SetActive(true);
 
         character.currentRecoveryGauge = Mathf.Clamp(character.currentRecoveryGauge + defaultGaugeUpValue * getFruitQuantity, 0, character.maxRecoveryGauge);
+
+        soundManager.PlaySFX(eatFishSound);
     }
 
 

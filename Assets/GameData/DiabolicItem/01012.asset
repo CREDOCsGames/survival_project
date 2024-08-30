@@ -16,6 +16,7 @@ MonoBehaviour:
   weightValue: 0
   itemSprite: {fileID: 632557901, guid: 75f2aff8023f3ad45b5bed51618ad8a6, type: 3}
   itemName: "\uAC70\uC801\uB54C\uAE30"
+  equipSound: {fileID: 8300000, guid: b837ac1620e99804f904538082317d72, type: 3}
   maxHp: 0
   damage: 0
   closeDamage: 0

@@ -10,6 +10,7 @@ public class TamingViewUI : MonoBehaviour
     [SerializeField] Text failText;
     [SerializeField] GameObject tamingPet;
     [SerializeField] GameObject tamingMouseUI;
+    [SerializeField] AudioClip catchSound;
 
     [HideInInspector] public bool isGaugeUp = false;
 
@@ -17,10 +18,12 @@ public class TamingViewUI : MonoBehaviour
 
     GamesceneManager gamesceneManager;
     Character character;
+    GameManager gameManager;
 
     private void Awake()
     {
         gamesceneManager = GamesceneManager.Instance;
+        gameManager = GameManager.Instance;
         character = Character.Instance;
     }
 
@@ -49,15 +52,18 @@ public class TamingViewUI : MonoBehaviour
             character.isCanControll = true;
         }
 
+        if (tamingPet.GetComponent<TamingGamePetMove>().isCatch)
+            return;
+
         if (tamingGauge.value < 1)
         {
             if (tamingPet.activeSelf)
             {
-/*#if UNITY_EDITOR
+#if UNITY_EDITOR
+                tamingGauge.value += isGaugeUp ? Time.deltaTime * gaugeSpeed : -Time.deltaTime * gaugeSpeed * 0f;
+#else
                 tamingGauge.value += isGaugeUp ? Time.deltaTime * gaugeSpeed : -Time.deltaTime * gaugeSpeed * 0.3f;
-#else*/
-                tamingGauge.value += isGaugeUp ? Time.deltaTime * gaugeSpeed : -Time.deltaTime * gaugeSpeed * 0.8f;
-//#endif
+#endif
             }
 
             if (tamingGauge.value <= 0)
@@ -76,6 +82,8 @@ public class TamingViewUI : MonoBehaviour
         {
             tamingPet.GetComponent<TamingGamePetMove>().isCatch = true;
             catchText.gameObject.SetActive(true);
+
+            SoundManager.Instance.PlaySFX(catchSound);
 
             if (catchPet != null)
             {

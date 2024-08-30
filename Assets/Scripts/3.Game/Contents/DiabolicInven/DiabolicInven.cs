@@ -7,6 +7,7 @@ public class DiabolicInven : Singleton<DiabolicInven>
     [SerializeField] Transform slotParent;
     [SerializeField] Transform itemImageParent;
     [SerializeField] GameObject itemImage;
+    [SerializeField] AudioClip cantEquipSound;
 
     DiabolicInvenSlot[] slots;
 
@@ -16,6 +17,7 @@ public class DiabolicInven : Singleton<DiabolicInven>
     GameManager gameManager;
     Character character;
     ItemManager itemManager;
+    SoundManager soundManager;
 
     int width;
     int height;
@@ -35,6 +37,7 @@ public class DiabolicInven : Singleton<DiabolicInven>
         dragUI = DragUI.Instance;
         character = Character.Instance;
         itemManager = ItemManager.Instance;
+        soundManager = SoundManager.Instance;
 
         slots = new DiabolicInvenSlot[slotParent.childCount];
 
@@ -50,12 +53,15 @@ public class DiabolicInven : Singleton<DiabolicInven>
 
         if (!canSetImage)
         {
+            soundManager.PlaySFX(cantEquipSound);
             return;
         }
 
         Vector3 setPos = slots[currentIndex].GetComponent<RectTransform>().localPosition;
 
         //setPos = new Vector3(setPos.x - 3, setPos.y- 39, setPos.z);
+
+        soundManager.PlaySFX(item.EquipSound);
 
         Instantiate(itemImage, itemImageParent).GetComponent<DiabolicSlotItem>().ItemSetOnInventory(setPos, item, TransferIndexesNum(), currentIndex, pieceSlotIndex, itemQuantity);
         blockImage.SetActive(true);

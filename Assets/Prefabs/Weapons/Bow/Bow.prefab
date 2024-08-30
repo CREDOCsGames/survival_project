@@ -173,7 +173,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &2314199126490667219
@@ -328,7 +328,7 @@ MonoBehaviour:
   normalFirePos: {fileID: 9127276467427897190}
   poolCount: 10
   initCoolTime: 1
-  catchBar: {fileID: 0}
+  weaponSound: {fileID: 8300000, guid: ce40a9644c0da514eae7e2c3939ff620, type: 3}
 --- !u!114 &5844579215938408588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,6 +342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   catchBar: {fileID: 5828552150350768270}
+  chargingSound: {fileID: 8300000, guid: 22ab665479442ef4084495b16b34be02, type: 3}
 --- !u!1 &5117317563410280222
 GameObject:
   m_ObjectHideFlags: 0

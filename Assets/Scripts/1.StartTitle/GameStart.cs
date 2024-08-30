@@ -30,26 +30,26 @@ public class GameStart : MonoBehaviour
 
     public void ClickStart(string scene)
     {
-        soundManager.PlayES("StartButton");
+        soundManager.PlaySFX("StartButton");
         GameManager.Instance.ToNextScene("Game");
         //SceneManager.LoadScene(scene);
     }
 
     public void ClickOption()
     {
-        soundManager.PlayES("SelectButton");
+        soundManager.PlaySFX("SelectButton");
         optionPanel.SetActive(true);
     }
 
     public void ClickExit()
     {
-        soundManager.PlayES("SelectButton");
+        soundManager.PlaySFX("SelectButton");
         Application.Quit();
     }
 
     public void OnSelectSound()
     {
-        soundManager.PlayES("SelectButton");
+        soundManager.PlaySFX("SelectButton");
     }
 
     private DamageUI CreateDamageUI()

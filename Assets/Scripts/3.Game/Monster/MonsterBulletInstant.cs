@@ -10,10 +10,12 @@ public class MonsterBulletInstant : MonoBehaviour
     [SerializeField] GameObject weapon;
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform bulletPos;
+    [SerializeField] AudioClip attackSound;
 
     private IObjectPool<MonsterBullet> pool;
 
     Character character;
+    SoundManager soundManager;
 
     Vector3 dir;
 
@@ -22,12 +24,15 @@ public class MonsterBulletInstant : MonoBehaviour
         pool = new ObjectPool<MonsterBullet>(CreateBullet, OnGetBullet, OnReleaseBullet, OnDestroyBullet, maxSize: 5);
 
         character = Character.Instance;
+        soundManager = SoundManager.Instance;
     }
 
     public void Shoot()
     {
         if (transform.parent.GetComponent<Monster>().attackCount <= 0)
             return;
+
+        soundManager.PlaySFX(attackSound);
 
         transform.parent.GetComponent<Monster>().attackCount--;
 

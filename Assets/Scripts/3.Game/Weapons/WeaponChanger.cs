@@ -9,6 +9,7 @@ public class WeaponChanger : MonoBehaviour
     [SerializeField] Image currentItemImage;
     [SerializeField] Image nextItemImage;
     [SerializeField] GameObject bulletText;
+    [SerializeField] AudioClip changeSound;
 
     int beforeIndex = 0;
     int currentIndex = 0;
@@ -17,10 +18,13 @@ public class WeaponChanger : MonoBehaviour
     bool canScroll = true;
 
     Character character;
+    SoundManager soundManager;
 
     void Awake()
     {
         character = Character.Instance;
+        soundManager = SoundManager.Instance;
+
         currentItemImage.sprite = weaponImages[0];
         nextItemImage.sprite = weaponImages[1];
 
@@ -66,12 +70,14 @@ public class WeaponChanger : MonoBehaviour
 
         if (mouseWheel > 0)
         {
+            soundManager.PlaySFX(changeSound);
             currentIndex = currentIndex + 1 >= weaponImages.Length ? 0 : currentIndex + 1;
             nextIndex = currentIndex + 1 >= weaponImages.Length ? 0 : currentIndex + 1;
         }
 
         else if (mouseWheel < 0)
         {
+            soundManager.PlaySFX(changeSound);
             currentIndex = currentIndex - 1 < 0 ? weaponImages.Length - 1 : currentIndex - 1;
             nextIndex = beforeIndex;
         }

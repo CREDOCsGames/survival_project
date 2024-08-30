@@ -6,12 +6,14 @@ using UnityEngine.UI;
 public class DiabolicSlotItem : MonoBehaviour
 {
     [SerializeField] Image itemImage;
+    [SerializeField] AudioClip unEquipSound;
 
     DragUI dragUI;
     GameManager gameManager;
     DiabolicInven inven;
     ItemManager itemManager;
     Character character;
+    SoundManager soundManager;
 
     DiabolicItemInfo itemData;
     Dictionary<Status, int> itemStatus;
@@ -30,6 +32,7 @@ public class DiabolicSlotItem : MonoBehaviour
         inven = DiabolicInven.Instance;
         itemManager = ItemManager.Instance;
         character = Character.Instance;
+        soundManager = SoundManager.Instance;
 
         //GetComponent<Image>().alphaHitTestMinimumThreshold = 0.1f;
     }
@@ -129,6 +132,8 @@ public class DiabolicSlotItem : MonoBehaviour
                 inven.SetSlotIsEmpty(itemData.ItemShape.Height, itemData.ItemShape.Width, itemData.ItemShape.Shape, row, column, true);
 
                 Destroy(gameObject);
+
+                soundManager.PlaySFX(unEquipSound);
 
                 Character.Instance.UpdateStat();
                 PieceItemInven.Instance.SlotBlockImage(pieceSlotIndex);

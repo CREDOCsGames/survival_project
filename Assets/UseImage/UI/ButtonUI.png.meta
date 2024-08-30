@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c0f8106791ca4ec46bbe838f55bae524
+guid: 4e12394cd0703854d9df36446acb0cc8
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -107,10 +107,10 @@ TextureImporter:
       name: ButtonUI_0
       rect:
         serializedVersion: 2
-        x: 99
-        y: 87
-        width: 577
-        height: 116
+        x: 20
+        y: 13
+        width: 397
+        height: 111
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,8 +118,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e48c04c4ad4bebc40bd538cf4bab94fd
-      internalID: 1499254952
+      spriteID: 3bf417d8157a0b042b9bc0b321b7380f
+      internalID: -702476898
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      ButtonUI_0: 1499254952
+      ButtonUI_0: -702476898
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

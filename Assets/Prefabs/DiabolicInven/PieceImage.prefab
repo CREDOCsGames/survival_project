@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 2208195276284292796}
+  unEquipSound: {fileID: 8300000, guid: db0d35405d234994884056f043443bf4, type: 3}
 --- !u!114 &3240569075929780478
 MonoBehaviour:
   m_ObjectHideFlags: 0

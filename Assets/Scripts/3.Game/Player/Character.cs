@@ -86,6 +86,7 @@ public class Character : Singleton<Character>
     public GameObject TamedPed => tamedPet;
 
     GamesceneManager gamesceneManager;
+    SoundManager soundManager;
 
     public bool IsFlip => rendUpper.flipX;
 
@@ -93,6 +94,10 @@ public class Character : Singleton<Character>
 
     [SerializeField] AnimationClip[] loggingClips;
     [SerializeField] AnimatorOverrideController[] loggingAnimators;
+
+    [SerializeField] AudioClip damagedSound;
+    [SerializeField] AudioClip deadSound;
+    [SerializeField] AudioClip dashSound;
 
     int walkLayer;
 
@@ -111,6 +116,7 @@ public class Character : Singleton<Character>
         agent.enabled = false;
 
         gameManager = GameManager.Instance;
+        soundManager = SoundManager.Instance;
 
         maxRecoveryGauge = 80;
         initMaxRecGauge = maxRecoveryGauge;
@@ -298,6 +304,7 @@ public class Character : Singleton<Character>
                 agent.enabled = true;
 
                 dashCount--;
+                soundManager.PlaySFX(dashSound);
                 Invoke("ParticleOff", 0.2f);
 
                 if (currentCoroutine != null)
@@ -450,7 +457,7 @@ public class Character : Singleton<Character>
             {
                 if (!isAvoid)
                 {
-                    SoundManager.Instance.PlayES("Hit");
+                    soundManager.PlaySFX(damagedSound);
 
                     int trueDamage = Mathf.RoundToInt((damage - gameManager.status[Status.Defence]) * (100 + percentDefence) * 0.01f);
 
@@ -487,6 +494,9 @@ public class Character : Singleton<Character>
         isDead = true;
         gameManager.isClear = true;
 
+        soundManager.StopBGM();
+        soundManager.PlaySFX(deadSound);
+
         StopAllCoroutines();
 
         GameSceneUI.Instance.ChangeTilemapMat(transform.position + new Vector3(0, 7, 0));
@@ -519,7 +529,7 @@ public class Character : Singleton<Character>
 
         if(currentHp > 0 && isAvoid)
         {
-            SoundManager.Instance.PlayES("Avoid");
+            SoundManager.Instance.PlaySFX("Avoid");
             if (currentCoroutine != null)
                 StopCoroutine(currentCoroutine);
 

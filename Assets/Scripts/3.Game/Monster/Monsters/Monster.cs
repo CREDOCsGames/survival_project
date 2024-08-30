@@ -12,8 +12,11 @@ public class Monster : MonoBehaviour
     [SerializeField] float attackDelay;
     [SerializeField] float moveDelay;
     [SerializeField] public int attackCount;
+    [SerializeField] AudioClip damagedSound;
+
     int itemDropPercent;
     int initAttackCount;
+
     public int InitAttackCount => initAttackCount;
     float moveSpeed;
     float damage;
@@ -32,7 +35,7 @@ public class Monster : MonoBehaviour
     GameManager gameManager;
     Character character;
     GamesceneManager gamesceneManager;
-    
+    SoundManager soundManager;
 
     IEnumerator runningCoroutine;
 
@@ -61,6 +64,7 @@ public class Monster : MonoBehaviour
         gameManager = GameManager.Instance;
         gamesceneManager = GamesceneManager.Instance;
         character = Character.Instance;
+        soundManager = SoundManager.Instance;
 
         StartSetting();
     }
@@ -206,6 +210,8 @@ public class Monster : MonoBehaviour
     }
     public void OnDamaged(float damage)
     {
+        soundManager.PlaySFX(damagedSound);
+
         hp -= damage;
 
         if (runningCoroutine != null)

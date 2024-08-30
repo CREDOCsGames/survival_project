@@ -7,17 +7,21 @@ public class ItemManager : Singleton<ItemManager>
     public DiabolicItemInfo[] startPieceList;
     public DiabolicItemInfo[] nightPieceList;
     [HideInInspector] public DiabolicItemInfo[] pieceItemsList;
-    [SerializeField]
-    DiabolicItemInfo[] testList;
+    [SerializeField] DiabolicItemInfo[] testList;
+    [SerializeField] AudioClip getPieceSound;
 
     [HideInInspector] public DiabolicItemInfo[] items;
     [HideInInspector] public int[] itemQuantity;
     [HideInInspector] public Dictionary<DiabolicItemInfo, int> getItems = new Dictionary<DiabolicItemInfo, int>();
     [HideInInspector] public Dictionary<DiabolicItemInfo, int> currentEquipItems = new Dictionary<DiabolicItemInfo, int>();
 
+    SoundManager soundManager;
+
     protected override void Awake()
     {
         base.Awake();
+
+        soundManager = SoundManager.Instance;
 
         pieceItemsList.Initialize();
 
@@ -53,5 +57,7 @@ public class ItemManager : Singleton<ItemManager>
         itemQuantity[emptyIndex]++;
 
         getItems.Add(items[emptyIndex], itemQuantity[emptyIndex]);
+
+        soundManager.PlaySFX(getPieceSound);
     }
 }

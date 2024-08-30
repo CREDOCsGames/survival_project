@@ -8,10 +8,19 @@ public class EffectSound : MonoBehaviour
 
     private IObjectPool<EffectSound> managedPool;
 
-    public void PlayES(AudioClip clip)
+    public void PlaySFX(AudioClip clip)
     {
         source.clip = clip;
         source.loop = false;
+        source.Play();
+
+        StartCoroutine(CheckPlay());
+    }
+
+    public void PlaySFX(AudioClip clip, bool isLoop)
+    {
+        source.clip = clip;
+        source.loop = isLoop;
         source.Play();
 
         StartCoroutine(CheckPlay());

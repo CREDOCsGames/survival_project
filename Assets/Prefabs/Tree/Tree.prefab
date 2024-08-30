@@ -812,6 +812,8 @@ MonoBehaviour:
   spriteRenderer: {fileID: 6399602793108957509}
   arrow: {fileID: 5077988449566647711}
   woodSprite: {fileID: 21300000, guid: b87c8a9d31bc016429b05f8084a78dc8, type: 3}
+  loggingSound: {fileID: 8300000, guid: 26076fddf3691dc4a851f0d2502af741, type: 3}
+  instanceObstacleSound: {fileID: 8300000, guid: 7400be75740030c44934b0b63902a386, type: 3}
 --- !u!54 &6851097734795936922
 Rigidbody:
   m_ObjectHideFlags: 0

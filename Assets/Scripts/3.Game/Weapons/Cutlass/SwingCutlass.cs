@@ -9,9 +9,11 @@ public class SwingCutlass : MonoBehaviour
 {
     [SerializeField] BoxCollider collder;
     [SerializeField] float initCoolTime;
+    [SerializeField] AudioClip attackSound;
 
     Animator anim;
     Character character;
+    SoundManager soundManager;
 
     bool canAttack;
 
@@ -21,6 +23,7 @@ public class SwingCutlass : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         character = Character.Instance;
+        soundManager = SoundManager.Instance;
     }
 
     private void OnEnable()
@@ -49,6 +52,8 @@ public class SwingCutlass : MonoBehaviour
 
         if (Input.GetMouseButton(0) && character.isCanControll)
         {
+            soundManager.PlaySFX(attackSound);
+
             character.canWeaponChange = false;
             character.canFlip = false;
             character.anim.SetTrigger("isAttack");
