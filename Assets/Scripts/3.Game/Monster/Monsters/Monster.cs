@@ -138,7 +138,7 @@ public class Monster : MonoBehaviour
     {
         if (other.CompareTag("Character") && !isDead)
         {
-           character.OnDamaged(damage, this.gameObject.transform.GetComponentInChildren<MonsterHit>().gameObject);
+           character.OnDamaged(damage, gameObject.transform.GetComponentInChildren<MonsterHit>().gameObject);
         }
     }
 
@@ -210,8 +210,6 @@ public class Monster : MonoBehaviour
     }
     public void OnDamaged(float damage)
     {
-        soundManager.PlaySFX(damagedSound);
-
         hp -= damage;
 
         if (runningCoroutine != null)
@@ -219,6 +217,9 @@ public class Monster : MonoBehaviour
 
         runningCoroutine = MonsterColorBlink();
         StartCoroutine(runningCoroutine);
+
+        if(hp <= 0)
+            soundManager.PlaySFX(damagedSound);
     }
 
     public void OnDead()

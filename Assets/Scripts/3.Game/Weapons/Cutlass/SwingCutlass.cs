@@ -14,6 +14,7 @@ public class SwingCutlass : MonoBehaviour
     Animator anim;
     Character character;
     SoundManager soundManager;
+    GameManager gameManager;
 
     bool canAttack;
 
@@ -24,6 +25,7 @@ public class SwingCutlass : MonoBehaviour
         anim = GetComponent<Animator>();
         character = Character.Instance;
         soundManager = SoundManager.Instance;
+        gameManager = GameManager.Instance;
     }
 
     private void OnEnable()
@@ -47,7 +49,7 @@ public class SwingCutlass : MonoBehaviour
 
     void Attack()
     {
-        if (!canAttack)
+        if (!canAttack || gameManager.isPause || character.isDead)
             return;
 
         if (Input.GetMouseButton(0) && character.isCanControll)

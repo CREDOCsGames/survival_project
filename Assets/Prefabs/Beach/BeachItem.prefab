@@ -172,6 +172,7 @@ MonoBehaviour:
   - {fileID: 6691247678152933779}
   - {fileID: 2964632260305361915}
   spriteRenderer: {fileID: 4071240023943095142}
+  getWoodSound: {fileID: 8300000, guid: 65da1d5a3ca89734f9054747c92203e6, type: 3}
 --- !u!65 &5499804377006913791
 BoxCollider:
   m_ObjectHideFlags: 0

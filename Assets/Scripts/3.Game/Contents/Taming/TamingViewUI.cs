@@ -60,7 +60,7 @@ public class TamingViewUI : MonoBehaviour
             if (tamingPet.activeSelf)
             {
 #if UNITY_EDITOR
-                tamingGauge.value += isGaugeUp ? Time.deltaTime * gaugeSpeed : -Time.deltaTime * gaugeSpeed * 0f;
+                tamingGauge.value += isGaugeUp ? Time.deltaTime * gaugeSpeed : -Time.deltaTime * gaugeSpeed * 0.2f;
 #else
                 tamingGauge.value += isGaugeUp ? Time.deltaTime * gaugeSpeed : -Time.deltaTime * gaugeSpeed * 0.3f;
 #endif

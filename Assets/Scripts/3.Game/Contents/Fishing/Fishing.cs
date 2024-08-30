@@ -93,6 +93,9 @@ public class Fishing : Singleton<Fishing>
 
     void Update()
     {
+        if(gameManager.isPause)
+            return;
+
         if (gamesceneManager.isNight)
         {
             Character.Instance.isCanControll = true;

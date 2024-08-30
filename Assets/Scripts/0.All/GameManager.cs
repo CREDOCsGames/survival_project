@@ -108,6 +108,7 @@ public class GameManager : Singleton<GameManager>
         Vector2 cursorHotSpot = new Vector3(useCursorNormal.width * 0.5f, useCursorNormal.height * 0.5f);
         Cursor.SetCursor(useCursorNormal, cursorHotSpot, CursorMode.ForceSoftware);
         Cursor.lockState = CursorLockMode.Confined;
+        //Cursor.visible = false;
 
         //PlayerPrefs.SetInt("GameTuto", 1);
         /*PlayerPrefs.SetInt("ShopTuto", 1);

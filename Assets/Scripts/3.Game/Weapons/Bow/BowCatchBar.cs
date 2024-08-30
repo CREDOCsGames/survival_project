@@ -7,6 +7,8 @@ public class BowCatchBar : MonoBehaviour
     [SerializeField] AudioClip chargingSound;
 
     SoundManager soundManager;
+    GameManager gameManager;
+    Character character;
 
     float barSpeed;
     float maxBarSpeed = 600;
@@ -20,6 +22,8 @@ public class BowCatchBar : MonoBehaviour
     private void Awake()
     {
         soundManager = SoundManager.Instance;
+        gameManager = GameManager.Instance;
+        character = Character.Instance;
     }
 
     private void OnEnable()
@@ -30,14 +34,24 @@ public class BowCatchBar : MonoBehaviour
 
     private void Update()
     {
+        if (gameManager.isPause || character.isDead)
+            return;
+
         if (Input.GetMouseButton(0))
         {
             if (GetComponent<ShootArrow>().checkCanFire())
             {
                 if (currentSfx == null)
                 {
-                    currentSfx = soundManager.PlaySFXAndReturn(chargingSound, true);
+                    currentSfx = soundManager.PlaySFXAndReturn(chargingSound, false);
                 }
+
+                else
+                {
+                    if (!currentSfx.source.isPlaying)
+                        currentSfx = null;
+                }
+
                 catchBar.gameObject.SetActive(true);
                 MoveBar();
             }
@@ -45,7 +59,9 @@ public class BowCatchBar : MonoBehaviour
 
         else if (Input.GetMouseButtonUp(0))
         {
-            soundManager.StopLoopSFX(currentSfx);
+            if (!currentSfx.source.isPlaying)
+                soundManager.StopLoopSFX(currentSfx);
+
             currentSfx = null;
 
             Catch();

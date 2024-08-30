@@ -103,8 +103,6 @@ public class LogTree : MonoBehaviour, IMouseInteraction
         GameObject ob = Instantiate(obstacle, transform.position, Quaternion.Euler(obstacleAngle), GamesceneManager.Instance.treeParent);
         ob.GetComponentInChildren<Obstacle>().SetObstacleImage(posNum);
 
-        soundManager.PlaySFX(instanceObstacleSound);
-
         Destroy(gameObject);
     }
 
@@ -127,6 +125,13 @@ public class LogTree : MonoBehaviour, IMouseInteraction
         if (gamesceneManager.isNight)
             yield break;
 
+        if (currentSfx != null)
+        {
+            soundManager.StopLoopSFX(currentSfx);
+        }
+
+        soundManager.PlaySFX(instanceObstacleSound);
+
         SpawnObstacle();
 
         int getWoodQuantity = Random.Range(1, 5);
@@ -138,11 +143,6 @@ public class LogTree : MonoBehaviour, IMouseInteraction
         character.isCanControll = true;
         character.canFlip = true;
         character.ChangeAnimationController(0);
-
-        if (currentSfx != null)
-        {
-            soundManager.StopLoopSFX(currentSfx);
-        }
     }
 
     /*private void OnDrawGizmos()

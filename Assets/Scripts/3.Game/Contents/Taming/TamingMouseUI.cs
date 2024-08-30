@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TamingMouseUI : MonoBehaviour
@@ -61,6 +62,14 @@ public class TamingMouseUI : MonoBehaviour
             if (!currentSfx.source.isPlaying)
             {
                 currentSfx = null;
+            }
+
+            else
+            {
+                if (rect2.GetComponent<TamingGamePetMove>().isCatch)
+                {
+                    soundManager.StopLoopSFX(currentSfx);
+                }
             }
         }
 

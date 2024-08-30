@@ -41,9 +41,9 @@ public class OptionUI : MonoBehaviour
         cursorNormal = gameManager.useCursorNormal;
         cursorAttack = gameManager.useCursorAttack;
 
-        AllSound.value = 1 - PlayerPrefs.GetFloat("Sound_All");
-        bgmSound.value = 1 - PlayerPrefs.GetFloat("Sound_Bgm");
-        sfxSound.value = 1 - PlayerPrefs.GetFloat("Sound_Sfx");
+        AllSound.value = PlayerPrefs.GetFloat("Sound_All");
+        bgmSound.value = PlayerPrefs.GetFloat("Sound_Bgm");
+        sfxSound.value = PlayerPrefs.GetFloat("Sound_Sfx");
 
         muteAllVolume = Convert.ToBoolean(PlayerPrefs.GetInt("Mute_All", 0));
         muteBgmVolume = Convert.ToBoolean(PlayerPrefs.GetInt("Mute_Bgm", 0));

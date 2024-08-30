@@ -19,11 +19,13 @@ public class WeaponChanger : MonoBehaviour
 
     Character character;
     SoundManager soundManager;
+    GameManager gameManager;
 
     void Awake()
     {
         character = Character.Instance;
         soundManager = SoundManager.Instance;
+        gameManager = GameManager.Instance;
 
         currentItemImage.sprite = weaponImages[0];
         nextItemImage.sprite = weaponImages[1];
@@ -58,7 +60,7 @@ public class WeaponChanger : MonoBehaviour
 
     void Update()
     {
-        if (!canScroll || !character.isCanControll || !character.canWeaponChange)
+        if (!canScroll || !character.isCanControll || !character.canWeaponChange || gameManager.isPause)
             return;
 
         float mouseWheel = Input.GetAxis("Mouse ScrollWheel");

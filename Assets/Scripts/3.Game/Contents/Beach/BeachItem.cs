@@ -7,6 +7,7 @@ public class BeachItem : MonoBehaviour, IMouseInteraction
     [SerializeField] DiabolicItemInfo[] beachPieceList;
     [SerializeField] Transform[] gatherPoints;
     [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] AudioClip getWoodSound;
 
     bool canInteract = false;
 
@@ -16,8 +17,11 @@ public class BeachItem : MonoBehaviour, IMouseInteraction
     GamesceneManager gamesceneManager;
     Character character;
     ItemManager itemManager;
+    SoundManager soundManager;
 
     Color outlineColor;
+
+    EffectSound currentSfx;
 
     private void Start()
     {
@@ -25,6 +29,7 @@ public class BeachItem : MonoBehaviour, IMouseInteraction
         character = Character.Instance;
         gamesceneManager = GamesceneManager.Instance;
         gameManager = GameManager.Instance;
+        soundManager = SoundManager.Instance;
 
         outlineColor = spriteRenderer.material.GetColor("_SolidOutline");
 
@@ -92,7 +97,14 @@ public class BeachItem : MonoBehaviour, IMouseInteraction
 
     public IEnumerator EndInteraction(Animator anim, float waitTime)
     {
+        currentSfx = soundManager.PlaySFXAndReturn(getWoodSound, true);
+
         yield return CoroutineCaching.WaitForSeconds(waitTime);
+
+        if(currentSfx != null)
+        {
+            soundManager.StopLoopSFX(currentSfx);
+        }
 
         if (gamesceneManager.isNight)
         {

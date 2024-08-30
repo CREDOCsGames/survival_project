@@ -66,8 +66,6 @@ public class Character : Singleton<Character>
 
     Coroutine currentCoroutine;
 
-    [HideInInspector] public CharacterInfo currentCharacterInfo;
-
     public Transform weaponParent;
     [HideInInspector] public bool canWeaponChange = true;
     [HideInInspector] public int currentWeaponIndex;
@@ -98,6 +96,7 @@ public class Character : Singleton<Character>
     [SerializeField] AudioClip damagedSound;
     [SerializeField] AudioClip deadSound;
     [SerializeField] AudioClip dashSound;
+    [SerializeField] AudioClip eatFruitSound;
 
     int walkLayer;
 
@@ -224,6 +223,8 @@ public class Character : Singleton<Character>
         if (currentRecoveryGauge >= recoveryValue && Input.GetKeyDown((KeyCode)PlayerPrefs.GetInt("Key_Recover")))
         {
             StartCoroutine(ConvertRecoveryGauge());
+
+            soundManager.PlaySFX(eatFruitSound);
         }
     }
 
@@ -529,7 +530,7 @@ public class Character : Singleton<Character>
 
         if(currentHp > 0 && isAvoid)
         {
-            SoundManager.Instance.PlaySFX("Avoid");
+            //SoundManager.Instance.PlaySFX("Avoid");
             if (currentCoroutine != null)
                 StopCoroutine(currentCoroutine);
 

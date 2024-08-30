@@ -245,7 +245,7 @@ public class Campfire : MonoBehaviour, IMouseInteraction
                 break;
         }
 
-        soundManager.PlaySFX(igniteSound);
+        soundManager.PlaySFX(buffSound);
 
         StartCoroutine(BuffCoolTime(1.5f));
     }

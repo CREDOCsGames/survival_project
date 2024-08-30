@@ -10,16 +10,8 @@ public class GameStart : MonoBehaviour
     [SerializeField] GameObject etcInfoPanel;
     SoundManager soundManager;
 
-    protected IObjectPool<DamageUI> damagePool;
-
-    protected virtual void Awake()
-    {
-        damagePool = new ObjectPool<DamageUI>(CreateDamageUI, OnGetDamageUI, OnReleaseDamageUI, OnDestroyDamageUI, maxSize: 20);
-    }
-
     private void Start()
     {
-        damagePool.Get();
         optionPanel.SetActive(false);
         gameInfoPanel.SetActive(false);
         etcInfoPanel.SetActive(false);
@@ -30,47 +22,25 @@ public class GameStart : MonoBehaviour
 
     public void ClickStart(string scene)
     {
-        soundManager.PlaySFX("StartButton");
+        //soundManager.PlaySFX("StartButton");
         GameManager.Instance.ToNextScene("Game");
         //SceneManager.LoadScene(scene);
     }
 
     public void ClickOption()
     {
-        soundManager.PlaySFX("SelectButton");
+        //soundManager.PlaySFX("SelectButton");
         optionPanel.SetActive(true);
     }
 
     public void ClickExit()
     {
-        soundManager.PlaySFX("SelectButton");
+        //soundManager.PlaySFX("SelectButton");
         Application.Quit();
     }
 
     public void OnSelectSound()
     {
-        soundManager.PlaySFX("SelectButton");
-    }
-
-    private DamageUI CreateDamageUI()
-    {
-        DamageUI damageUIPool = Instantiate(damageUI, Vector3.zero, Quaternion.Euler(90, 0, 0)).GetComponent<DamageUI>();
-        damageUIPool.SetManagedPool(damagePool);
-        return damageUIPool;
-    }
-
-    private void OnGetDamageUI(DamageUI damageUIPool)
-    {
-        damageUIPool.gameObject.SetActive(true);
-    }
-
-    private void OnReleaseDamageUI(DamageUI damageUIPool)
-    {
-        damageUIPool.gameObject.SetActive(false);
-    }
-
-    private void OnDestroyDamageUI(DamageUI damageUIPool)
-    {
-        Destroy(damageUIPool.gameObject);
+        //soundManager.PlaySFX("SelectButton");
     }
 }

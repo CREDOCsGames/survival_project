@@ -13,11 +13,12 @@ public class TamingGamePetMove : MonoBehaviour
     [SerializeField] RectTransform moveArea;
     [SerializeField] ParticleSystem dashParticle;
     [SerializeField] float defaultSpeed = 300f;
+    [SerializeField] RectTransform catchUI;
 
     [HideInInspector] public float moveSpeed;
     float speedRatio = 1;
 
-    RectTransform rectTranform;
+    RectTransform rectTransform;
 
     Rect areaRect;
 
@@ -40,7 +41,7 @@ public class TamingGamePetMove : MonoBehaviour
 
     private void Awake()
     {
-        rectTranform = GetComponent<RectTransform>();
+        rectTransform = GetComponent<RectTransform>();
         dashParticle.GetComponentInChildren<Renderer>().enabled = false;
         areaRect = moveArea.rect;
 
@@ -87,7 +88,11 @@ public class TamingGamePetMove : MonoBehaviour
         }
 
         else
+        {
             StopAllCoroutines();
+
+            rectTransform.localPosition = catchUI.localPosition;
+        }
     }
 
     void Flip()
@@ -110,11 +115,11 @@ public class TamingGamePetMove : MonoBehaviour
             dir = -dir;
         }
 
-        nextPos = rectTranform.localPosition + dir * Time.deltaTime * moveSpeed * speedRatio;
+        nextPos = rectTransform.localPosition + dir * Time.deltaTime * moveSpeed * speedRatio;
 
         if (areaRect.Contains(nextPos))
         {
-            rectTranform.localPosition = nextPos;
+            rectTransform.localPosition = nextPos;
         }
 
         else
@@ -125,10 +130,10 @@ public class TamingGamePetMove : MonoBehaviour
 
     void MoveDirectly()
     {
-        nextPos = rectTranform.localPosition + dir * Time.deltaTime * moveSpeed * speedRatio * 1.5f;
+        nextPos = rectTransform.localPosition + dir * Time.deltaTime * moveSpeed * speedRatio * 1.5f;
 
         if (areaRect.Contains(nextPos))
-            rectTranform.localPosition = nextPos;
+            rectTransform.localPosition = nextPos;
 
         else
             dir = -dir;
@@ -153,7 +158,7 @@ public class TamingGamePetMove : MonoBehaviour
 
             dashParticle.GetComponentInChildren<Renderer>().enabled = true;
             
-            rectTranform.localPosition = new Vector3(xPos, yPos, 0f);
+            rectTransform.localPosition = new Vector3(xPos, yPos, 0f);
 
             Invoke("ParticleOff", 0.2f);
 

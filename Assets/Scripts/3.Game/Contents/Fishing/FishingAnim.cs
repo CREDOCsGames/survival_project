@@ -37,14 +37,20 @@ public class FishingAnim : Singleton<FishingAnim>
         StopAllCoroutines();
     }
 
-    public void ThrowAnimStart()
+    public void ThrowSoundStart()
     {
         soundManager.PlaySFX(throwSound);
     }
 
-    public void CatchingStartAnimStart()
+    public void CatchingSoundStart()
     {
        currentSfx = soundManager.PlaySFXAndReturn(catchingSound, true);
+    }
+
+    public void CatchingSoundStop()
+    {
+        if (currentSfx != null)
+            soundManager.StopLoopSFX(currentSfx);
     }
 
     public void IsCatchingStart()
@@ -56,8 +62,5 @@ public class FishingAnim : Singleton<FishingAnim>
     public void IsCatchingEnd()
     {
         StartCoroutine(fishing.FishingEnd());
-
-        if (currentSfx != null)
-            soundManager.StopLoopSFX(currentSfx);
     }
 }

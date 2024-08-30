@@ -248,8 +248,9 @@ MonoBehaviour:
   - {fileID: 22100000, guid: 6b85780a447fc2341b177cc4bf2ef51d, type: 2}
   - {fileID: 22100000, guid: 2ba418e42565f6b459e8b6d3a7a81e10, type: 2}
   damagedSound: {fileID: 8300000, guid: 8ebbac2aecd794f4e9ae715ecb673e35, type: 3}
-  deadSound: {fileID: 8300000, guid: b6666a110077f8142b53fad64183a95a, type: 3}
+  deadSound: {fileID: 8300000, guid: 39d0c60040609cb4eab26c835b16d81a, type: 3}
   dashSound: {fileID: 8300000, guid: ce543c527a41192469cd175b7077c3a4, type: 3}
+  eatFruitSound: {fileID: 8300000, guid: 6d8f6d5205c53154b8079b9faeb424b0, type: 3}
 --- !u!114 &2030790823311812204
 MonoBehaviour:
   m_ObjectHideFlags: 0

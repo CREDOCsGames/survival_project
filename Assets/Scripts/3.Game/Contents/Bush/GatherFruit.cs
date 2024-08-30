@@ -10,7 +10,6 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Sprite fruitImage;
     [SerializeField] AudioClip gatheringSound;
-    [SerializeField] AudioClip eatFishSound;
 
     bool canGather;
 
@@ -146,8 +145,6 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
         character.getItemUI.gameObject.SetActive(true);
 
         character.currentRecoveryGauge = Mathf.Clamp(character.currentRecoveryGauge + defaultGaugeUpValue * getFruitQuantity, 0, character.maxRecoveryGauge);
-
-        soundManager.PlaySFX(eatFishSound);
     }
 
 

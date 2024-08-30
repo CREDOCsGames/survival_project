@@ -45,9 +45,9 @@ public class TitleOption : MonoBehaviour
         normalToggle.SetActive(!Convert.ToBoolean(PlayerPrefs.GetInt("CursorSize", 0)));
         doubleToggle.SetActive(!normalToggle.activeSelf);
 
-        AllSound.value = 1 - PlayerPrefs.GetFloat("Sound_All");
-        bgmSound.value = 1 - PlayerPrefs.GetFloat("Sound_Bgm");
-        sfxSound.value = 1 - PlayerPrefs.GetFloat("Sound_Sfx");
+        AllSound.value = PlayerPrefs.GetFloat("Sound_All");
+        bgmSound.value = PlayerPrefs.GetFloat("Sound_Bgm");
+        sfxSound.value = PlayerPrefs.GetFloat("Sound_Sfx");
 
         muteAllVolume = Convert.ToBoolean(PlayerPrefs.GetInt("Mute_All", 0));
         muteBgmVolume = Convert.ToBoolean(PlayerPrefs.GetInt("Mute_Bgm", 0));
@@ -306,7 +306,7 @@ public class TitleOption : MonoBehaviour
 
     public void TextFx()
     {
-        soundManager.PlaySFX("SelectButton");
+        soundManager.PlaySFX("WeaponChange");
     }
 
     public void OptionIndex(int index)
