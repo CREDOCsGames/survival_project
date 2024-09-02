@@ -108,8 +108,6 @@ public class Fishing : Singleton<Fishing>
         {
             catchBar.gameObject.SetActive(true);
             isCatchingStart = false;
-
-            randSpeedRatio = Random.Range(1f, 3f);
         }
 
         MoveBar();
@@ -270,7 +268,7 @@ public class Fishing : Singleton<Fishing>
         fishingAnim.isCatch = true;
 
         fishingAnim.CatchSuccess = false;
-        catchText.text = "<color=A52D39>놓쳤다...</color>";
+        catchText.text = $"<color=#A52D39>놓쳤다...</color>";
         soundManager.PlaySFX(failSound);
 
         catchText.gameObject.SetActive(true);

@@ -138,8 +138,6 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
         gameSceneUI.ChangeDayText(0, "아침이 밝았습니다.");
 
-        character.currentHp = 20;
-
         soundManager.PlayBGM(1, true);
 
         isSetPieceEnd = true;
@@ -157,7 +155,6 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
         gameSceneUI.ChangeDayText(1, "밤이 되었습니다.");
         gameSceneUI.CursorChange(CursorType.Attack);
-
 
         isNight = true;
         nightFilter.SetActive(true);
