@@ -134,7 +134,6 @@ public class Fishing : Singleton<Fishing>
         {
             if (Input.GetMouseButtonUp(0))
             {
-                Debug.Log(catchBar.value);
                 CatchFish();
             }
 
