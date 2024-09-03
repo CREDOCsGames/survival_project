@@ -151,7 +151,8 @@ public class Fishing : Singleton<Fishing>
                 else if (catchBar.value == catchBar.maxValue)
                     isMin = false;
 
-                catchBar.value += (isMin ? Time.deltaTime : -Time.deltaTime) * 100 * barMoveSpeed;
+                //catchBar.value += (isMin ? Time.deltaTime : -Time.deltaTime) * 100 * barMoveSpeed;
+                catchBar.value += (isMin ? barMoveSpeed : -barMoveSpeed) * 0.4f;
             }
         }
     }
