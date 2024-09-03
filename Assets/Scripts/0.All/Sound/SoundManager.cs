@@ -184,7 +184,8 @@ public class SoundManager : Singleton<SoundManager>
 
     private void OnReleasePool(EffectSound pool)
     {
-        pool.gameObject.SetActive(false);
+        if (pool.gameObject.activeSelf)
+            pool.gameObject.SetActive(false);
     }
 
     private void OnDestroyPool(EffectSound pool)

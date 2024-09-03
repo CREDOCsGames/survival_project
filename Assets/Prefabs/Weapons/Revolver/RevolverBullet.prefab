@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileDamage: 120
-  penetrateCount: 5
+  penetrateCount: -1
   fireRange: 0
   canCri: 0
   isPenetrate: 1
@@ -146,5 +146,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1291740b199cbc4489f994f9626e1e50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 5
+  range: 20
   speed: 12

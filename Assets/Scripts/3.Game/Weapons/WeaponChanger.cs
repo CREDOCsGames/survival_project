@@ -70,16 +70,16 @@ public class WeaponChanger : MonoBehaviour
 
         beforeIndex = currentIndex;
 
+        soundManager.PlaySFX(changeSound);
+
         if (mouseWheel > 0)
         {
-            soundManager.PlaySFX(changeSound);
             currentIndex = currentIndex + 1 >= weaponImages.Length ? 0 : currentIndex + 1;
             nextIndex = currentIndex + 1 >= weaponImages.Length ? 0 : currentIndex + 1;
         }
 
         else if (mouseWheel < 0)
         {
-            soundManager.PlaySFX(changeSound);
             currentIndex = currentIndex - 1 < 0 ? weaponImages.Length - 1 : currentIndex - 1;
             nextIndex = beforeIndex;
         }

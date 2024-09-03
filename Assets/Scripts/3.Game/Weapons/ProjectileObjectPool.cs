@@ -5,7 +5,6 @@ public class ProjectileObjectPool : MonoBehaviour
 {
     [SerializeField] float projectileDamage;
     [SerializeField] int penetrateCount;
-    [SerializeField] float fireRange;
     public bool canCri;
     bool isCri = false;
 
@@ -21,7 +20,8 @@ public class ProjectileObjectPool : MonoBehaviour
     {
         gameManager = GameManager.Instance;
         character = Character.Instance;
-        currentPenetrateCount = penetrateCount;
+
+        currentPenetrateCount = penetrateCount != -1 ? penetrateCount : 1;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -47,7 +47,8 @@ public class ProjectileObjectPool : MonoBehaviour
                 currentPenetrateCount = 1;
             }
 
-            currentPenetrateCount--;
+            if (penetrateCount > 0)
+                currentPenetrateCount--;
 
             if (currentPenetrateCount <= 0)
                 DestroyProjectile();
@@ -63,7 +64,7 @@ public class ProjectileObjectPool : MonoBehaviour
     {
         if (gameObject.activeSelf)
         {
-            currentPenetrateCount = penetrateCount;
+            currentPenetrateCount = penetrateCount != -1 ? penetrateCount : 1;
             pool.Release(this);
         }
     }

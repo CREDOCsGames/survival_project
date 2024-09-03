@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.PlayerSettings;
 
 public class Fishing : Singleton<Fishing>
 {
+    [SerializeField] float barMoveSpeed;
     [SerializeField] Slider catchBar;
     [SerializeField] RectTransform catchPoint;
     [SerializeField] Text catchText;
@@ -31,14 +33,15 @@ public class Fishing : Singleton<Fishing>
     ItemManager itemManager;
     SoundManager soundManager;
 
-    float randSpeedRatio;
 
-    float catchBarWidth;
     float catchPointStart;
     float catchPointEnd;
 
     float initCatchPointStart;
     float initCatchPointEnd;
+
+    float catchPointWidth;
+    float initCatchPointWidth;
 
     List<DiabolicItemInfo> itemList = new List<DiabolicItemInfo>();
 
@@ -56,12 +59,10 @@ public class Fishing : Singleton<Fishing>
 
         pieceCard.SetActive(false);
 
-        catchBarWidth = catchBar.GetComponent<RectTransform>().sizeDelta.x;
-
         initCatchPointStart = catchPoint.offsetMin.x;
         initCatchPointEnd = -catchPoint.offsetMax.x;
 
-        catchPointEnd = -catchPoint.offsetMax.x;
+        initCatchPointWidth = catchBar.maxValue + catchPoint.offsetMax.x - catchPoint.offsetMin.x;
 
         clickUI.SetActive(false);
     }
@@ -74,9 +75,7 @@ public class Fishing : Singleton<Fishing>
         maxFishingCount.text = maxFishCount.ToString();
         currentFishingCount.text = currentFishCount.ToString();
 
-        catchPointStart = gameManager.specialStatus[SpecialStatus.RustyHarpoon] ? initCatchPointStart - (catchBarWidth - initCatchPointEnd - initCatchPointStart) : initCatchPointStart;
-
-        catchPoint.offsetMin = new Vector2(catchPointStart, catchPoint.offsetMin.y);
+        catchPointWidth = gameManager.specialStatus[SpecialStatus.RustyHarpoon] ? initCatchPointWidth * 2 : initCatchPointWidth;
 
         Initialize();
     }
@@ -108,10 +107,23 @@ public class Fishing : Singleton<Fishing>
         {
             catchBar.gameObject.SetActive(true);
             isCatchingStart = false;
+
+            GetRandomCatchPoint();
         }
 
         MoveBar();
     }
+
+    void GetRandomCatchPoint()
+    {
+        catchPointStart = Random.Range(0, catchBar.maxValue - catchPointWidth);
+        catchPointEnd = Mathf.Clamp(catchPointStart + catchPointWidth, catchPointWidth, catchBar.maxValue);
+
+        catchPoint.offsetMin = new Vector2(catchPointStart, catchPoint.offsetMin.y);
+        catchPoint.offsetMax = new Vector2(catchPointEnd - catchBar.maxValue, catchPoint.offsetMax.y);
+    }
+
+    bool isMin = true;
 
     void MoveBar()
     {
@@ -122,63 +134,55 @@ public class Fishing : Singleton<Fishing>
         {
             if (Input.GetMouseButtonUp(0))
             {
-                isCatch = true;
-                fishingAnim.isCatch = true;
-
-                if (catchBar.value < catchPointStart || catchBar.value > catchBarWidth - catchPointEnd)
-                {
-                    fishingAnim.CatchSuccess = false;
-                    catchText.text = $"<color=#A52D39>놓쳤다...</color>";
-                    soundManager.PlaySFX(failSound);
-                }
-
-                else if (catchBar.value >= catchPointStart && catchBar.value <= catchBarWidth - catchPointEnd)
-                {
-                    GetItem();
-                    fishingAnim.CatchSuccess = true;
-                    catchText.text = $"<color=#B09F5E>낚아챘다!</color>";
-                    soundManager.PlaySFX(successSound);
-                }
-
-                catchText.gameObject.SetActive(true);
+                Debug.Log(catchBar.value);
+                CatchFish();
             }
 
             else if (Input.GetMouseButton(0))
             {
-                if(!isPress)
+                if (!isPress)
                 {
                     clickUI.SetActive(false);
+                    isPress = true;
                 }
 
-                isPress = true;
+                if (catchBar.value == catchBar.minValue)
+                    isMin = true;
 
-                if (Input.GetMouseButtonUp(0))
-                    return;
+                else if (catchBar.value == catchBar.maxValue)
+                    isMin = false;
 
-                catchBar.value += Time.deltaTime * 200 * randSpeedRatio;
-
-                if (catchBar.value >= catchBar.maxValue)
-                {
-                    isCatch = true;
-                    fishingAnim.isCatch = true;
-
-                    fishingAnim.CatchSuccess = false;
-                    catchText.text = $"<color=#A52D39>놓쳤다...</color>";
-                    soundManager.PlaySFX(failSound);
-
-                    catchText.gameObject.SetActive(true);
-
-                    return;
-                }
+                catchBar.value += (isMin ? Time.deltaTime : -Time.deltaTime) * 100 * barMoveSpeed;
             }
         }
+    }
+
+    void CatchFish()
+    {
+        isCatch = true;
+        fishingAnim.isCatch = true;
+
+        if (catchBar.value < catchPointStart || catchBar.value > catchPointEnd)
+        {
+            fishingAnim.CatchSuccess = false;
+            catchText.text = $"<color=#A52D39>놓쳤다...</color>";
+            soundManager.PlaySFX(failSound);
+        }
+
+        else if (catchBar.value >= catchPointStart && catchBar.value <= catchPointEnd)
+        {
+            GetItem();
+            fishingAnim.CatchSuccess = true;
+            catchText.text = $"<color=#B09F5E>낚아챘다!</color>";
+            soundManager.PlaySFX(successSound);
+        }
+
+        catchText.gameObject.SetActive(true);
     }
 
     void GetItem()
     {
         int rand = Random.Range(0, 100);
-
-        rand += (int)((randSpeedRatio - 1) * 5);
 
         int high = gameManager.specialStatus[SpecialStatus.BaitWarm] ? 65 : 85;
 

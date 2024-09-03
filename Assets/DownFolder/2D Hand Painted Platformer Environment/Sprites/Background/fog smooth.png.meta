@@ -119,9 +119,9 @@ TextureImporter:
       name: fog smooth_0
       rect:
         serializedVersion: 2
-        x: 655
+        x: 0
         y: 0
-        width: 5793
+        width: 7680
         height: 1466
       alignment: 0
       pivot: {x: 0.5, y: 0.5}

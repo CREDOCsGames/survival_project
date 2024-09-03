@@ -114,6 +114,7 @@ GameObject:
   - component: {fileID: 4918108379380069775}
   - component: {fileID: 289213144344291184}
   - component: {fileID: 2030790823311812204}
+  - component: {fileID: 6647390453161408462}
   m_Layer: 6
   m_Name: Pirate
   m_TagString: Character
@@ -266,6 +267,17 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 262144
+--- !u!210 &6647390453161408462
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289213144344291185}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 2
 --- !u!1 &289213144383534345
 GameObject:
   m_ObjectHideFlags: 0
@@ -5749,7 +5761,7 @@ Animator:
   m_GameObject: {fileID: 3087141058172693515}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: d8f12c61914430f4a89449874624b7cc, type: 2}
+  m_Controller: {fileID: 9100000, guid: c8f46930449af74408f846ce96fd79ec, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -6874,7 +6886,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: a81e43acb7738b94faa7a678cd6f72ec, type: 3}
     - target: {fileID: 2988402651215989648, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
       propertyPath: m_SortingOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2988402651215989648, guid: bb75ec3e36879e84098fbbd3f8dd056a, type: 3}
       propertyPath: m_WasSpriteAssigned
@@ -7055,7 +7067,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 95083074069677158, guid: cedc7bc35d28ac5418d3797670a41177, type: 3}
       propertyPath: m_SortingOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 95083074069677158, guid: cedc7bc35d28ac5418d3797670a41177, type: 3}
       propertyPath: m_SortingLayerID

@@ -36,8 +36,7 @@ public class BowCatchBar : MonoBehaviour
     {
         if (gameManager.isPause || character.isDead)
             return;
-
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
             if (GetComponent<ShootArrow>().checkCanFire())
             {
@@ -45,13 +44,13 @@ public class BowCatchBar : MonoBehaviour
                 {
                     currentSfx = soundManager.PlaySFXAndReturn(chargingSound, false);
                 }
+            }
+        }
 
-                else
-                {
-                    if (!currentSfx.source.isPlaying)
-                        currentSfx = null;
-                }
-
+        else if (Input.GetMouseButton(0))
+        {
+            if (GetComponent<ShootArrow>().checkCanFire())
+            {
                 catchBar.gameObject.SetActive(true);
                 MoveBar();
             }
@@ -59,8 +58,10 @@ public class BowCatchBar : MonoBehaviour
 
         else if (Input.GetMouseButtonUp(0))
         {
-            if (!currentSfx.source.isPlaying)
+            if (currentSfx != null)       // null 에러 발생
+            {
                 soundManager.StopLoopSFX(currentSfx);
+            }
 
             currentSfx = null;
 

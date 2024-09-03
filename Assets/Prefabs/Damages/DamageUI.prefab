@@ -180,7 +180,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &7694887781048525288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,6 +211,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageText: {fileID: 7694887780445064421}
-  realDamage: 0
   swordBulletDamage: 0
   isMiss: 0

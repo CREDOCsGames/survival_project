@@ -57,12 +57,17 @@ public class FireBullet : FireProjectile
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.R))
         {
-            foreach (Transform bullet in bulletParent)
+            currentBulletCount = gameManager.totalBulletCount < maxBulletCount ? gameManager.totalBulletCount : maxBulletCount;
+
+            for (int i = 0; i < currentBulletCount; ++i)
             {
-                bullet.gameObject.SetActive(true);
+                bulletParent.GetChild(i).gameObject.SetActive(true);
             }
 
-            currentBulletCount = 5;
+            for (int i = currentBulletCount; i < bulletParent.childCount; ++i)
+            {
+                bulletParent.GetChild(i).gameObject.SetActive(false);
+            }
         }
 #endif
     }
