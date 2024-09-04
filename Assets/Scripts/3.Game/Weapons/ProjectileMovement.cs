@@ -15,9 +15,6 @@ public class ProjectileMovement : MonoBehaviour
         {
             GetComponent<ProjectileObjectPool>().DestroyProjectile();
         }
-
-        angle = Mathf.Atan2(dir.z, dir.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(90, -angle, 0);
     }
 
     private void FixedUpdate()
@@ -31,6 +28,9 @@ public class ProjectileMovement : MonoBehaviour
         this.dir = dir;
         this.initPos = initPos;
         this.speed = speed;
+
+        angle = Mathf.Atan2(dir.z, dir.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(90, -angle, 0);
     }
 
     public virtual void Shoot(Vector3 dir, Vector3 initPos)
@@ -38,5 +38,8 @@ public class ProjectileMovement : MonoBehaviour
         dir.y = 0;
         this.dir = dir;
         this.initPos = initPos;
+
+        angle = Mathf.Atan2(dir.z, dir.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(90, -angle, 0);
     }
 }

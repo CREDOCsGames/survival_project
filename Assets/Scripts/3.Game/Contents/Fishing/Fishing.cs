@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEditor.PlayerSettings;
 
-public class Fishing : Singleton<Fishing>
+public class Fishing : Singleton<Fishing>, IPointerUpHandler
 {
     [SerializeField] float barMoveSpeed;
     [SerializeField] Slider catchBar;
@@ -134,15 +135,26 @@ public class Fishing : Singleton<Fishing>
         {
             if (Input.GetMouseButtonUp(0))
             {
+                Debug.Log($"마우스 up: {catchBar.value}");
                 CatchFish();
+            }
+
+            else if (Input.GetMouseButtonDown(0))
+            {
+                if (isPress)
+                {
+                    return;
+                }
+
+                clickUI.SetActive(false);
+                isPress = true;
             }
 
             else if (Input.GetMouseButton(0))
             {
-                if (!isPress)
+                if(!isPress)
                 {
-                    clickUI.SetActive(false);
-                    isPress = true;
+                    return;
                 }
 
                 if (catchBar.value == catchBar.minValue)
@@ -150,9 +162,14 @@ public class Fishing : Singleton<Fishing>
 
                 else if (catchBar.value == catchBar.maxValue)
                     isMin = false;
+ 
+                //Debug.Log(100 * barMoveSpeed * Time.deltaTime);
+                catchBar.value += (isMin ? Time.deltaTime : -Time.deltaTime) * 100 * barMoveSpeed;
+                Debug.Log(catchBar.value);
 
-                //catchBar.value += (isMin ? Time.deltaTime : -Time.deltaTime) * 100 * barMoveSpeed;
-                catchBar.value += (isMin ? barMoveSpeed : -barMoveSpeed) * 0.4f;
+                // 컴퓨터 성능에 따른 deltatime 차이로 인한 마우스 클릭 입력 지연에 따른 난이도 차이 조절을 위해
+                // deltatime 이 클 수록 (클릭 반응이 느릴 수록) 바 움직임 속도가 느려짐
+                //catchBar.value += (isMin ? barMoveSpeed : -barMoveSpeed) * 1.5f / Time.deltaTime / 100;
             }
         }
     }
@@ -309,5 +326,24 @@ public class Fishing : Singleton<Fishing>
 
             fishingAnim.isCatch = false;
         }
+    }
+
+    private void OnMouseUp()
+    {
+        Debug.Log("mouse up");
+
+        if (!isCatch && !isCatchingStart)
+        {
+            Debug.Log("mouse up");
+        }
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        /*if (!isCatch && !isCatchingStart)
+        {
+            Debug.Log("on pointer up");
+            Debug.Log(Time.time);
+        }*/
     }
 }
