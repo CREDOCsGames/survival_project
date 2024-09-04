@@ -163,9 +163,9 @@ public class Fishing : Singleton<Fishing>, IPointerUpHandler
                 else if (catchBar.value == catchBar.maxValue)
                     isMin = false;
  
-                //Debug.Log(100 * barMoveSpeed * Time.deltaTime);
+                Debug.Log(100 * barMoveSpeed * Time.deltaTime);
                 catchBar.value += (isMin ? Time.deltaTime : -Time.deltaTime) * 100 * barMoveSpeed;
-                Debug.Log(catchBar.value);
+                //Debug.Log(catchBar.value);
 
                 // 컴퓨터 성능에 따른 deltatime 차이로 인한 마우스 클릭 입력 지연에 따른 난이도 차이 조절을 위해
                 // deltatime 이 클 수록 (클릭 반응이 느릴 수록) 바 움직임 속도가 느려짐
