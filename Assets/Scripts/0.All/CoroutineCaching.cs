@@ -10,6 +10,7 @@ public static class CoroutineCaching
 
     private static Dictionary<float, WaitForSeconds> waitForSeconds = new Dictionary<float, WaitForSeconds>();
     private static Dictionary<Func<bool>, WaitWhile> waitWhile = new Dictionary<Func<bool>, WaitWhile>();
+    private static Dictionary<Func<bool>, WaitUntil> waitUntil = new Dictionary<Func<bool>, WaitUntil>();
 
     public static WaitForSeconds WaitForSeconds(float seconds)
     {
@@ -29,5 +30,15 @@ public static class CoroutineCaching
         }
 
         return _waitWhile;
+    }
+
+    public static WaitUntil WaitUntil(Func<bool> predicate)
+    {
+        if (!waitUntil.TryGetValue(predicate, out var _waitUntil))
+        {
+            waitUntil.Add(predicate, _waitUntil = new WaitUntil(predicate));
+        }
+
+        return _waitUntil;
     }
 }

@@ -110,11 +110,6 @@ public class GameManager : Singleton<GameManager>
         Cursor.lockState = CursorLockMode.Confined;
         //Cursor.visible = false;
 
-        //PlayerPrefs.SetInt("GameTuto", 1);
-        /*PlayerPrefs.SetInt("ShopTuto", 1);
-        PlayerPrefs.SetInt("BossTuto", 1);
-        PlayerPrefs.SetInt("BagicClear", 0);
-*/
         isPause = false;
         Time.timeScale = 1;
         isPause = false;

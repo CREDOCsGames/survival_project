@@ -5230,6 +5230,7 @@ GameObject:
   - component: {fileID: 936130856}
   - component: {fileID: 936130854}
   - component: {fileID: 936130857}
+  - component: {fileID: 936130858}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -5258,8 +5259,8 @@ MonoBehaviour:
   bulletStorage: {fileID: 1005871281}
   damageStorage: {fileID: 1692643827}
   characterPrefab: {fileID: 289213144344291185, guid: 8d77a8f4167ea0b469ec40c27f9686ea, type: 3}
-  gameDayTime: 111
-  gameNightTime: 111
+  gameDayTime: 0
+  gameNightTime: 0
   round: 0
   woodCount: 30
   fishHighGradeCount: 2
@@ -5380,6 +5381,19 @@ MonoBehaviour:
     attackCount: 3
     moveDelay: 0.9
     itemDropPercent: 5
+--- !u!114 &936130858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936130853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55311b3565eddb84885b0eb595ff27d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTuto: 0
 --- !u!1 &1005871280
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,7 +17,6 @@ public class GameSceneUI : Singleton<GameSceneUI>
     Texture2D cursorNormal;
 
     [SerializeField] public GameObject monsterSpawn;
-    [SerializeField] GameObject tutoPanel;
     public GameObject tamingGame;
 
     [Header("HP")]
@@ -85,6 +84,11 @@ public class GameSceneUI : Singleton<GameSceneUI>
     [SerializeField] TypingText gameClearText;
     [SerializeField] TypingText gameOverText;
 
+    [Header("Tuto")]
+    [SerializeField] GameObject tutoTextPanel;
+    [SerializeField] GameObject tutoClickText;
+    [SerializeField] Text tutoText;
+
     Color initTimeColor;
 
     Coroutine currentCoroutine;
@@ -95,7 +99,6 @@ public class GameSceneUI : Singleton<GameSceneUI>
         bossSceneText.gameObject.SetActive(false);
         dash.SetActive(false);
         statWindow.SetActive(false);
-        tutoPanel.SetActive(false);
         tamingGame.SetActive(false);
         fishingGame.SetActive(false);
         weaponUI.SetActive(false);
@@ -109,25 +112,9 @@ public class GameSceneUI : Singleton<GameSceneUI>
         gameClearText.gameObject.SetActive(false);
         gameOverText.gameObject.SetActive(false);
 
+        tutoTextPanel.SetActive(false);
+
         gameManager = GameManager.Instance;
-
-        if (gameManager.round == 1)
-        {
-            if (Convert.ToBoolean(PlayerPrefs.GetInt("GameTuto", 1)))
-            {
-                monsterSpawn.SetActive(!Convert.ToBoolean(PlayerPrefs.GetInt("GameTuto", 1)));
-                tutoPanel.SetActive(Convert.ToBoolean(PlayerPrefs.GetInt("GameTuto", 1)));
-            }
-        }
-
-        else if(gameManager.round == 10)
-        {
-            if (Convert.ToBoolean(PlayerPrefs.GetInt("BossTuto", 1)))
-            {
-                monsterSpawn.SetActive(!Convert.ToBoolean(PlayerPrefs.GetInt("BossTuto", 1)));
-                tutoPanel.SetActive(Convert.ToBoolean(PlayerPrefs.GetInt("BossTuto", 1)));
-            }
-        }
     }
 
     private void Start()
@@ -157,6 +144,11 @@ public class GameSceneUI : Singleton<GameSceneUI>
         spotlight.transform.position = pos;
 
         spotlight.SetActive(true);
+    }
+
+    public void ActiveTutoPanel(TutoType tutoType)
+    {
+        TutorialManager.Instance.ActiveTutoText(tutoTextPanel, tutoClickText, tutoText, tutoType);
     }
 
     IEnumerator BlinkBossSceneText()

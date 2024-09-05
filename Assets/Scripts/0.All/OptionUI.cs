@@ -63,7 +63,7 @@ public class OptionUI : MonoBehaviour
         bUnMark.SetActive(muteBgmVolume);
         sUnMark.SetActive(muteSfxVolume);
 
-        if (!gameManager.isTuto || !gameManager.isClear)
+        if (!TutorialManager.Instance.IsTutoProgressing && !gameManager.isClear)
         {
             if (Input.GetKeyDown(KeyCode.Escape) && !gameManager.isPause)
                 PauseGame();

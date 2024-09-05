@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,9 +11,23 @@ public class TypingText : MonoBehaviour
 
     [HideInInspector] public bool isOver = false;
 
-    private void Start()
+    /*private void Start()
     {
         StartCoroutine(Typing(typingText, textMasage, typingSpeed));
+    }*/
+
+    private void OnEnable()
+    {
+        if (textMasage == "")
+            StartCoroutine(Typing(typingText, typingText.text, typingSpeed));
+
+        else
+            StartCoroutine(Typing(typingText, textMasage, typingSpeed));
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
     }
 
     IEnumerator Typing(Text typingText, string message, float speed)

@@ -109,6 +109,13 @@ public class GamesceneManager : Singleton<GamesceneManager>
         isSetPieceEnd = false;
         character.isCanControll = false;
         //yield return new WaitWhile(() => cardSelecter.activeSelf);
+
+        gameSceneUI.ActiveTutoPanel(TutoType.StartTuto);
+
+        yield return CoroutineCaching.WaitUntil(() => !TutorialManager.Instance.IsTutoProgressing);
+
+        gameSceneUI.ActiveTutoPanel(TutoType.StartItemTuto);
+
         yield return CoroutineCaching.WaitWhile(() => cardSelecter.activeSelf);
 
         character.transform.position = gameManager.round == 0 ? initSpawnPos.transform.position : new Vector3(-1f, 0f, -41f);
