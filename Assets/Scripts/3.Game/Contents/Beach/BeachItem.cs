@@ -116,8 +116,6 @@ public class BeachItem : MonoBehaviour, IMouseInteraction
         character.getItemUI.GetComponent<GetItemUI>().SetGetItemImage(GetComponent<SpriteRenderer>().sprite, 1);
         character.getItemUI.gameObject.SetActive(true);
 
-        //int rand = Random.Range(0, 100);
-
         if (Random.Range(0, 100) >= 96)
         {
             GetRandomPiece();
@@ -129,6 +127,8 @@ public class BeachItem : MonoBehaviour, IMouseInteraction
         character.ChangeAnimationController(0);
 
         Destroy(gameObject);
+
+        GameSceneUI.Instance.ActiveTutoPanel(TutoType.MoveTuto);
     }
 
     public void InteractionLeftButtonFuc(GameObject hitObject)

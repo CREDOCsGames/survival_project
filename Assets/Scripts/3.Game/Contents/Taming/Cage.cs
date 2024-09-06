@@ -95,8 +95,8 @@ public class Cage : MonoBehaviour, IMouseInteraction
         if (gameSceneManager.isNight)
             yield break;
 
+        gameSceneUI.ActiveTutoPanel(TutoType.TamingGameTuto);
         soundManager.PlayBGM(3, true);
-
         gameSceneUI.tamingGame.SetActive(true);
     }
 }

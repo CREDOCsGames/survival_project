@@ -33,6 +33,10 @@ public class GamesceneManager : Singleton<GamesceneManager>
     ItemSpawner beach;
     SoundManager soundManager;
 
+    bool canCharacterContact = false;
+
+    public bool CanCharacterContact => canCharacterContact;
+
     private void Start()
     {
         gameManager = GameManager.Instance;
@@ -44,16 +48,13 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
         character.GetComponent<NavMeshAgent>().enabled = true;
 
-        /*for (int i = 0; i < itemManager.startPieceList.Length; ++i)
-        {
-            itemManager.pieceItemsList.
-        }*/
-
         itemManager.pieceItemsList = itemManager.startPieceList;
 
         currentGameTime = gameManager.gameDayTime;
 
         soundManager.StopBGM();
+
+        nightFilter.SetActive(false);
 
         StartCoroutine(DayRoutine());
     }
@@ -90,7 +91,6 @@ public class GamesceneManager : Singleton<GamesceneManager>
         gameSceneUI.CursorChange(CursorType.Normal);
 
         isNight = false;
-        nightFilter.SetActive(false);
         character.ChangeAnimationController(0);
 
         character.UpdateStat();
@@ -108,14 +108,10 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
         isSetPieceEnd = false;
         character.isCanControll = false;
+
+        gameSceneUI.ActiveTutoPanel(TutoType.StartTuto, null, TutoType.StartItemTuto);
+
         //yield return new WaitWhile(() => cardSelecter.activeSelf);
-
-        gameSceneUI.ActiveTutoPanel(TutoType.StartTuto);
-
-        yield return CoroutineCaching.WaitUntil(() => !TutorialManager.Instance.IsTutoProgressing);
-
-        gameSceneUI.ActiveTutoPanel(TutoType.StartItemTuto);
-
         yield return CoroutineCaching.WaitWhile(() => cardSelecter.activeSelf);
 
         character.transform.position = gameManager.round == 0 ? initSpawnPos.transform.position : new Vector3(-1f, 0f, -41f);
@@ -127,6 +123,8 @@ public class GamesceneManager : Singleton<GamesceneManager>
         {
             soundManager.PlayBGM(5, true);
             multicellInvenPanel.SetActive(true);
+
+            gameSceneUI.ActiveTutoPanel(TutoType.MulticellTuto);
         }
 
         character.canWeaponChange = true;
@@ -143,9 +141,13 @@ public class GamesceneManager : Singleton<GamesceneManager>
         //yield return new WaitWhile(() => multicellInvenPanel.activeSelf);
         yield return CoroutineCaching.WaitWhile(() => multicellInvenPanel.activeSelf);
 
+        canCharacterContact = true;
+        nightFilter.SetActive(false);
         gameSceneUI.ChangeDayText(0, "아침이 밝았습니다.");
 
         soundManager.PlayBGM(1, true);
+
+        gameSceneUI.ActiveTutoPanel(TutoType.BeachTuto);
 
         isSetPieceEnd = true;
         character.isCanControll = true;
@@ -160,11 +162,14 @@ public class GamesceneManager : Singleton<GamesceneManager>
     {
         soundManager.PlayBGM(4, true);
 
+        canCharacterContact = false;
         gameSceneUI.ChangeDayText(1, "밤이 되었습니다.");
         gameSceneUI.CursorChange(CursorType.Attack);
 
         isNight = true;
         nightFilter.SetActive(true);
+
+        gameSceneUI.ActiveTutoPanel(TutoType.NightTuto);
 
         character.UpdateStat();
         character.weaponParent.gameObject.SetActive(true);
@@ -175,6 +180,8 @@ public class GamesceneManager : Singleton<GamesceneManager>
         currentGameTime = gameManager.gameNightTime;
 
         character.isCanControll = true;
+
+
         //yield return new WaitForSeconds(gameManager.gameNightTime);
         yield return CoroutineCaching.WaitForSeconds(gameManager.gameNightTime);
 

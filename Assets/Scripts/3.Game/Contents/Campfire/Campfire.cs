@@ -20,6 +20,7 @@ public class Campfire : MonoBehaviour, IMouseInteraction
     [SerializeField] BuffDescription buffDescriptionPanel;
     [SerializeField] AudioClip buffSound;
     [SerializeField] AudioClip igniteSound;
+    [SerializeField] Sprite dashTutoImage;
 
     GameManager gameManager;
     Character character;
@@ -107,12 +108,20 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         if (!isWoodRefill)
             return;
 
+        beforeBuff = Buff.SPEED;
+        buffValues[Buff.SPEED] = 3;
+
         for (int i = 0; i < buffValues.Count; i++)
         {
             if (i != (int)beforeBuff)
             {
                 buffValues[(Buff)i] = 0;
             }
+        }
+
+        if (beforeBuff == Buff.SPEED && buffValues[Buff.SPEED] == 3)
+        {
+            StartCoroutine(GameSceneUI.Instance.IActiveTutoPanel(TutoType.DashTuto, dashTutoImage));
         }
 
         SettingBuff(0);
@@ -128,7 +137,8 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         character.speed *= (100 + speeds[buffValues[Buff.SPEED] - num]) * 0.01f;
         character.avoid += avoids[buffValues[Buff.SPEED] - num];
         //gameManager.dashCount = buffValues[Buff.SPEED] - num == 3 ? 1 : 0;
-        character.dashCount = dash[buffValues[Buff.SPEED - num]];
+        gameManager.dashCount = dash[buffValues[Buff.SPEED - num]];
+        character.dashCount = gameManager.dashCount;
 
         character.percentDamage += dmgs[buffValues[Buff.POWER] - num];
         character.defence += dfs[buffValues[Buff.POWER] - num];
@@ -191,9 +201,11 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         fireImage.transform.localScale = fireInitScale;
         isWoodRefill = true;
 
+        interactionUI.SetActive(false);
+
         soundManager.PlaySFX(igniteSound);
 
-        StartCoroutine(BuffCoolTime(1.5f));
+        StartCoroutine(BuffCoolTime(0.7f));
     }
 
     void EatFish()
@@ -259,6 +271,7 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         {
             interactionUI.SetActive(true);
         }
+
         canCookFish = true;
     }
 

@@ -25,6 +25,8 @@ public class FishingPoint : MonoBehaviour
 
         if (other.CompareTag("Character"))
         {
+            GameSceneUI.Instance.ActiveTutoPanel(TutoType.FishingEnterTuto);
+
             round = currentRound;
 
             soundManager.PlayBGM(2, true);

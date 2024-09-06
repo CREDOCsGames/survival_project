@@ -88,6 +88,8 @@ public class GameSceneUI : Singleton<GameSceneUI>
     [SerializeField] GameObject tutoTextPanel;
     [SerializeField] GameObject tutoClickText;
     [SerializeField] Text tutoText;
+    [SerializeField] Image tutoImage;
+    [SerializeField] GameObject tutoImagePanel;
 
     Color initTimeColor;
 
@@ -113,6 +115,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
         gameOverText.gameObject.SetActive(false);
 
         tutoTextPanel.SetActive(false);
+        tutoImagePanel.gameObject.SetActive(false);
 
         gameManager = GameManager.Instance;
     }
@@ -122,17 +125,6 @@ public class GameSceneUI : Singleton<GameSceneUI>
         character = Character.Instance;
         soundManager = SoundManager.Instance;
         gamesceneManager = GamesceneManager.Instance;
-
-        /*if (gameManager.round == 10 || gameManager.round == 20 || gameManager.round == 30)
-        {
-            soundManager.PlayBGM(2, true);
-            soundManager.PlayES("Alert");
-            bossSceneText.gameObject.SetActive(true);
-            StartCoroutine(BlinkBossSceneText());
-        }
-
-        else
-            soundManager.PlayBGM(1, true);*/
 
         initTimeColor = timeText.color;
     }
@@ -146,9 +138,38 @@ public class GameSceneUI : Singleton<GameSceneUI>
         spotlight.SetActive(true);
     }
 
-    public void ActiveTutoPanel(TutoType tutoType)
+    public void ActiveTutoPanel(TutoType tutoType, Sprite _tutoImage = null, TutoType nextTuto = TutoType.Null)
     {
-        TutorialManager.Instance.ActiveTutoText(tutoTextPanel, tutoClickText, tutoText, tutoType);
+        TutorialManager.Instance.ActiveTutoText(tutoTextPanel, tutoClickText, tutoText, tutoType, nextTuto);
+
+        if(_tutoImage != null)
+        {
+            tutoImage.sprite = _tutoImage;
+            tutoImagePanel.gameObject.SetActive(true);
+        }
+
+        else
+        {
+            tutoImagePanel.gameObject.SetActive(false);
+        }
+    }
+
+    public IEnumerator IActiveTutoPanel(TutoType tutoType, Sprite _tutoImage = null)
+    {
+        StartCoroutine(TutorialManager.Instance.IActiveTutoText(tutoTextPanel, tutoClickText, tutoText, tutoType));
+
+        yield return CoroutineCaching.WaitWhile(() => TutorialManager.Instance.IsTutoProgressing);
+
+        if (_tutoImage != null)
+        {
+            tutoImage.sprite = _tutoImage;
+            tutoImagePanel.gameObject.SetActive(true);
+        }
+
+        else
+        {
+            tutoImagePanel.gameObject.SetActive(false);
+        }
     }
 
     IEnumerator BlinkBossSceneText()

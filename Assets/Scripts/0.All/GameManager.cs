@@ -110,7 +110,6 @@ public class GameManager : Singleton<GameManager>
         Cursor.lockState = CursorLockMode.Confined;
         //Cursor.visible = false;
 
-        isPause = false;
         Time.timeScale = 1;
         isPause = false;
         isClear = false;
@@ -174,6 +173,12 @@ public class GameManager : Singleton<GameManager>
         currentScene = sceneName;
 
         SceneManager.LoadScene(sceneName);
-        //isClear = false;
+    }
+
+    public void GamePause(bool _isPause)
+    {
+        isPause = _isPause;
+
+        Time.timeScale = _isPause ? 0 : 1;
     }
 }

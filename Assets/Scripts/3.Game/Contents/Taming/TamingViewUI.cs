@@ -35,7 +35,7 @@ public class TamingViewUI : MonoBehaviour
         catchText.gameObject.SetActive(false);
         failText.gameObject.SetActive(false);
 
-        Cursor.visible = false;     // esc 누르면 다시 초기화됨.
+        Cursor.visible = false;
     }
 
     private void OnDisable()

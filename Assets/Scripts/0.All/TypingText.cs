@@ -36,10 +36,10 @@ public class TypingText : MonoBehaviour
         {
             typingText.text = message.Substring(0, i + 1);
 
-            yield return CoroutineCaching.WaitForSeconds(speed);
+            yield return CoroutineCaching.WaitForSecondsRealTime(speed);
         }
 
-        yield return CoroutineCaching.WaitForSeconds(1);
+        yield return CoroutineCaching.WaitForSecondsRealTime(1);
 
         isOver = true;
     }

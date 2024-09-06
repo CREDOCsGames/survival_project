@@ -189,8 +189,9 @@ public class OptionUI : MonoBehaviour
                 statPanel.SetActive(true);
 
             panel.SetActive(true);
-            gameManager.isPause = true;
-            Time.timeScale = 0;
+            //gameManager.isPause = true;
+            //Time.timeScale = 0;
+            gameManager.GamePause(true);
         }
     }
 
@@ -222,8 +223,9 @@ public class OptionUI : MonoBehaviour
                 statPanel.SetActive(false);
 
             panel.SetActive(false);
-            gameManager.isPause = false;
-            Time.timeScale = 1;
+            //gameManager.isPause = false;
+            //Time.timeScale = 1;
+            gameManager.GamePause(false);
         }
     }
 

@@ -5,6 +5,9 @@ public class CheckCharacter : MonoBehaviour
     [SerializeField] GameObject arrow;
     [SerializeField] GameObject clickUI;
     [SerializeField] Collider coll;
+    [SerializeField] TutoType tutoType;
+    [SerializeField] TutoType nextTuto;
+    [SerializeField] Sprite tutoImage;
 
     GamesceneManager gamesceneManager;
 
@@ -28,10 +31,12 @@ public class CheckCharacter : MonoBehaviour
         if (gamesceneManager == null)
             gamesceneManager = GamesceneManager.Instance;
 
-        if (gamesceneManager.isNight)
+        if (!gamesceneManager.CanCharacterContact)
         {
             if (coll.enabled)
+            {
                 coll.enabled = false;
+            }
 
             if (arrow != null)
             {
@@ -50,8 +55,15 @@ public class CheckCharacter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!gamesceneManager.CanCharacterContact)
+        {
+            return;
+        }
+
         if (other.CompareTag("Character"))
         {
+            GameSceneUI.Instance.ActiveTutoPanel(tutoType, tutoImage, nextTuto);
+
             if (arrow != null)
             {
                 arrow.SetActive(true);
@@ -65,6 +77,11 @@ public class CheckCharacter : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        if (!gamesceneManager.CanCharacterContact)
+        {
+            return;
+        }
+
         if (other.CompareTag("Character"))
         {
             if (arrow != null)
@@ -72,7 +89,7 @@ public class CheckCharacter : MonoBehaviour
                 Vector3 logDir = -(Character.Instance.transform.position - transform.position).normalized;
 
                 //if (transform.parent.GetComponent<IMouseInteraction>().ReturnCanInteraction())
-                    ArrowRatateToDir(logDir);
+                ArrowRatateToDir(logDir);
             }
 
             if(!transform.parent.GetComponent<IMouseInteraction>().ReturnCanInteraction())
@@ -84,7 +101,7 @@ public class CheckCharacter : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (gamesceneManager.isNight)
+        if (!gamesceneManager.CanCharacterContact)
             return;
 
         if (other.CompareTag("Character"))
