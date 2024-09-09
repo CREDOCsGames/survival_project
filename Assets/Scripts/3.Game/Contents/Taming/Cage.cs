@@ -48,6 +48,7 @@ public class Cage : MonoBehaviour, IMouseInteraction
         soundManager.PlayBGM(1, true);
 
         Cursor.visible = true;
+        gameManager.isCursorVisible = true;
         gameSceneUI.tamingGame.SetActive(false);
         character.isCanControll = true;
     }

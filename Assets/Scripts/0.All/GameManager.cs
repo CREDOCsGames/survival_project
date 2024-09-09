@@ -91,6 +91,8 @@ public class GameManager : Singleton<GameManager>
 
     public int totalBulletCount;
 
+    public bool isCursorVisible = true;
+
     protected override void Awake()
     {
         base.Awake();
@@ -126,7 +128,7 @@ public class GameManager : Singleton<GameManager>
         woodCount = 0;
         round = 0;
         maxHp = 100;
-        recoverHp = 1;
+        recoverHp = 0;
         defence = 3;
         attackSpeed = 1;
         speed = 3;

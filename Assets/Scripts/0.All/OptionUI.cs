@@ -226,6 +226,8 @@ public class OptionUI : MonoBehaviour
             //gameManager.isPause = false;
             //Time.timeScale = 1;
             gameManager.GamePause(false);
+
+            Cursor.visible = gameManager.isCursorVisible;
         }
     }
 

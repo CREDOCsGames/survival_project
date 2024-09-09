@@ -738,6 +738,8 @@ MonoBehaviour:
   clickUI: {fileID: 7412166656126384603}
   coll: {fileID: 4352276052961228892}
   tutoType: 6
+  nextTuto: 0
+  tutoImage: {fileID: 1036297187, guid: 060d9ec6fbc132849954b3b5007452ba, type: 3}
 --- !u!1 &7007229096887857488
 GameObject:
   m_ObjectHideFlags: 0

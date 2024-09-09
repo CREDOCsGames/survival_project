@@ -36,6 +36,7 @@ public class TamingViewUI : MonoBehaviour
         failText.gameObject.SetActive(false);
 
         Cursor.visible = false;
+        gameManager.isCursorVisible = false;
     }
 
     private void OnDisable()
@@ -48,6 +49,7 @@ public class TamingViewUI : MonoBehaviour
         if(gamesceneManager.isNight)
         {
             Cursor.visible = true;
+            gameManager.isCursorVisible = true;
             gameObject.SetActive(false);
             character.isCanControll = true;
         }
@@ -96,6 +98,7 @@ public class TamingViewUI : MonoBehaviour
     public void ExitGame()
     {
         Cursor.visible = true;
+        gameManager.isCursorVisible = true;
         gameObject.SetActive(false);
         character.isCanControll = true;
     }
@@ -103,6 +106,7 @@ public class TamingViewUI : MonoBehaviour
     public void OverExitButton(bool isEnter)
     {
         Cursor.visible = isEnter;
+        gameManager.isCursorVisible = isEnter;
         tamingMouseUI.gameObject.SetActive(!isEnter);
     }
 }

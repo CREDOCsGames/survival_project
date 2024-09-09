@@ -231,6 +231,7 @@ public class Character : Singleton<Character>
     IEnumerator ConvertRecoveryGauge()
     {
         isCanControll = false;
+        
         currentHp += Mathf.RoundToInt(recoveryValue * (100 + recoverHpRatio) * 0.01f);
         currentRecoveryGauge -= recoveryValue;
 

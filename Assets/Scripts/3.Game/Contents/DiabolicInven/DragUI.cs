@@ -34,6 +34,7 @@ public class DragUI : Singleton<DragUI>
             dragItemImage.gameObject.SetActive(true);
 
             Cursor.visible = false;
+            GameManager.Instance.isCursorVisible = false;
         }
     }
 
@@ -50,5 +51,6 @@ public class DragUI : Singleton<DragUI>
         dragItem = null;
 
         Cursor.visible = true;
+        GameManager.Instance.isCursorVisible = true;
     }
 }
