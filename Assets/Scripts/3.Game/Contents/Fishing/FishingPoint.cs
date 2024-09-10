@@ -3,6 +3,7 @@ using UnityEngine;
 public class FishingPoint : MonoBehaviour
 {
     [SerializeField] GameObject fishingGame;
+    [SerializeField] Sprite fishingTutoImage;
 
     int round = 0;
     int currentRound = 0;
@@ -25,7 +26,7 @@ public class FishingPoint : MonoBehaviour
 
         if (other.CompareTag("Character"))
         {
-            GameSceneUI.Instance.ActiveTutoPanel(TutoType.FishingEnterTuto);
+            GameSceneUI.Instance.ActiveTutoPanel(TutoType.FishingEnterTuto, fishingTutoImage);
 
             round = currentRound;
 

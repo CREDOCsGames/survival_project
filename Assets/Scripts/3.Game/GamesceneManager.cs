@@ -19,6 +19,8 @@ public class GamesceneManager : Singleton<GamesceneManager>
     [SerializeField] GameObject cardSelecter;
     [SerializeField] GameObject multicellInvenPanel;
     [SerializeField] GameObject initSpawnPos;
+    [SerializeField] Sprite weaponChangeTutoImage;
+    [SerializeField] Sprite multicellTutoImage;
 
     [HideInInspector] public float currentGameTime;
 
@@ -124,7 +126,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
             soundManager.PlayBGM(5, true);
             multicellInvenPanel.SetActive(true);
 
-            gameSceneUI.ActiveTutoPanel(TutoType.MulticellTuto);
+            gameSceneUI.ActiveTutoPanel(TutoType.MulticellTuto, multicellTutoImage);
         }
 
         character.canWeaponChange = true;
@@ -169,7 +171,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
         isNight = true;
         nightFilter.SetActive(true);
 
-        gameSceneUI.ActiveTutoPanel(TutoType.NightTuto);
+        gameSceneUI.ActiveTutoPanel(TutoType.NightTuto, weaponChangeTutoImage);
 
         character.UpdateStat();
         character.weaponParent.gameObject.SetActive(true);
