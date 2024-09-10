@@ -14,6 +14,7 @@ public class LoadSceneManager : MonoBehaviour
 
     void Start()
     {
+        SoundManager.Instance.StopBGM();
         canSkip = PlayerPrefs.GetInt("LoadScene", 0);
         skipButton.SetActive(false);
         StartCoroutine(LoadScene());
