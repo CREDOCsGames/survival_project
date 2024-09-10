@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Fishing : Singleton<Fishing>, IPointerUpHandler
+public class Fishing : Singleton<Fishing>
 {
     [SerializeField] float barMoveSpeed;
     [SerializeField] Slider catchBar;
@@ -135,7 +135,6 @@ public class Fishing : Singleton<Fishing>, IPointerUpHandler
         {
             if (Input.GetMouseButtonUp(0))
             {
-                Debug.Log($"마우스 up: {catchBar.value}");
                 CatchFish();
             }
 
@@ -163,9 +162,7 @@ public class Fishing : Singleton<Fishing>, IPointerUpHandler
                 else if (catchBar.value == catchBar.maxValue)
                     isMin = false;
  
-                Debug.Log(100 * barMoveSpeed * Time.deltaTime);
                 catchBar.value += (isMin ? Time.deltaTime : -Time.deltaTime) * 100 * barMoveSpeed;
-                //Debug.Log(catchBar.value);
 
                 // 컴퓨터 성능에 따른 deltatime 차이로 인한 마우스 클릭 입력 지연에 따른 난이도 차이 조절을 위해
                 // deltatime 이 클 수록 (클릭 반응이 느릴 수록) 바 움직임 속도가 느려짐
@@ -326,24 +323,5 @@ public class Fishing : Singleton<Fishing>, IPointerUpHandler
 
             fishingAnim.isCatch = false;
         }
-    }
-
-    private void OnMouseUp()
-    {
-        Debug.Log("mouse up");
-
-        if (!isCatch && !isCatchingStart)
-        {
-            Debug.Log("mouse up");
-        }
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        /*if (!isCatch && !isCatchingStart)
-        {
-            Debug.Log("on pointer up");
-            Debug.Log(Time.time);
-        }*/
     }
 }

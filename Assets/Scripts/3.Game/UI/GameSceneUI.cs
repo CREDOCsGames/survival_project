@@ -490,27 +490,6 @@ public class GameSceneUI : Singleton<GameSceneUI>
         statWindow.gameObject.SetActive(!statWindow.gameObject.activeSelf);
     }
 
-    public void SelectScene(string sceneName)
-    {
-        gameManager.ToNextScene(sceneName);
-    }
-
-    public void GetRandomSecne()
-    {
-        gameManager.woodCount -= 5;
-
-        int rand = UnityEngine.Random.Range(0, 10);
-        string nextScene;
-
-        if (rand % 2 == 0)
-            nextScene = "Fishing";
-
-        else
-            nextScene = "Logging";
-
-        SelectScene(nextScene);
-    }
-
     public void ShowPieceCard(DiabolicItemInfo getItem)
     {
         StartCoroutine(ShowPieceCardUI(getItem));

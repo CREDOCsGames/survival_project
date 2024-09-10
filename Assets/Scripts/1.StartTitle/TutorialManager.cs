@@ -123,7 +123,7 @@ public class TutorialManager : Singleton<TutorialManager>
 
     void TutoTextContent()
     {
-        tutoTexts[(int)TutoType.StartTuto] = "이 섬, 화물선이 지나다니는 항로에 있는 섬인걸로 기억하는데...\n10일만 버텨보자. 배가 지나갈지도 몰라.";
+        tutoTexts[(int)TutoType.StartTuto] = $"이 섬, 화물선이 지나다니는 항로에 있는 섬인걸로 기억하는데...\n{GameManager.Instance.maxRound}일만 버텨보자. 배가 지나갈지도 몰라.";
         tutoTexts[(int)TutoType.StartItemTuto] = "그 녀석들이 던져주고 간 물품은 챙겨야지.\n하지만 가지고 있을 손이 부족하니 일단 하나만 챙기자.";
         tutoTexts[(int)TutoType.BeachTuto] = "일단 해안가 주변에 떨어진 나무들을 좀 주워서\n불이라도 때워야지.";
         tutoTexts[(int)TutoType.MoveTuto] = "섬 안 쪽으로 좀 더 들어가보자.\n거처를 마련해야할 것 같아.";

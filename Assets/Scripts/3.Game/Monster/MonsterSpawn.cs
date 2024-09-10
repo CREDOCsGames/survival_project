@@ -159,7 +159,9 @@ public class MonsterSpawn : MonoBehaviour
 
             if (!monster.GetComponent<NavMeshAgent>().isOnNavMesh)
             {
+#if UNITY_EDITOR
                 Debug.Log("not");
+#endif
                 Debug.Break();
             }
         }

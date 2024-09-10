@@ -48,6 +48,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] public float gameDayTime;
     [SerializeField] public float gameNightTime;
     [SerializeField] public int round;
+    [SerializeField] public int maxRound;
     [SerializeField] public int woodCount;
     public int fishHighGradeCount = 0;
     public int fishLowGradeCount = 0;
@@ -127,6 +128,7 @@ public class GameManager : Singleton<GameManager>
         gameNightTime = 60;
         woodCount = 0;
         round = 0;
+        maxRound = 10;
         maxHp = 100;
         recoverHp = 0;
         defence = 3;
@@ -174,7 +176,7 @@ public class GameManager : Singleton<GameManager>
         
         currentScene = sceneName;
 
-        SceneManager.LoadScene(sceneName);
+        //SceneManager.LoadScene(sceneName);
     }
 
     public void GamePause(bool _isPause)

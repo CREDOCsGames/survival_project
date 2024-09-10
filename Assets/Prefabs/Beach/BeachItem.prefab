@@ -63,7 +63,7 @@ MonoBehaviour:
   coll: {fileID: 1603947642658152993}
   tutoType: 13
   nextTuto: 0
-  tutoImage: {fileID: -1331469006, guid: 82f706666a6c87e4b9983b42ec673165, type: 3}
+  tutoImage: {fileID: 0}
 --- !u!1 &1619837401552321815
 GameObject:
   m_ObjectHideFlags: 0
