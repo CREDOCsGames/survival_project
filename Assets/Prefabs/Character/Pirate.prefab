@@ -195,6 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 719ee26fe1def4d40b42b130f913b589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackedColl: {fileID: 5849760756085055536}
   rendUpper: {fileID: 7512928228924874939}
   rendLower: {fileID: 6993476235051099263}
   anim: {fileID: 7037617160102815328}
@@ -249,8 +250,8 @@ MonoBehaviour:
   - {fileID: 22100000, guid: 6b85780a447fc2341b177cc4bf2ef51d, type: 2}
   - {fileID: 22100000, guid: 2ba418e42565f6b459e8b6d3a7a81e10, type: 2}
   damagedSound: {fileID: 8300000, guid: 8ebbac2aecd794f4e9ae715ecb673e35, type: 3}
-  deadSound: {fileID: 8300000, guid: 39d0c60040609cb4eab26c835b16d81a, type: 3}
-  dashSound: {fileID: 8300000, guid: ce543c527a41192469cd175b7077c3a4, type: 3}
+  deadSound: {fileID: 8300000, guid: ce543c527a41192469cd175b7077c3a4, type: 3}
+  dashSound: {fileID: 8300000, guid: a8e1da87cb95cfd4897f3f658903cc1e, type: 3}
   eatFruitSound: {fileID: 8300000, guid: 6d8f6d5205c53154b8079b9faeb424b0, type: 3}
 --- !u!114 &2030790823311812204
 MonoBehaviour:

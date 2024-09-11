@@ -29,10 +29,10 @@ public class ItemManager : Singleton<ItemManager>
         itemQuantity = new int[slotParent.childCount];
 
 #if UNITY_EDITOR
-        for (int i = 0; i < testList.Length; ++i)
+        /*for (int i = 0; i < testList.Length; ++i)
         {
             AddItem(testList[i]);
-        }
+        }*/
 #endif
     }
 

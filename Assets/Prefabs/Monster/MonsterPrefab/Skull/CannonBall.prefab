@@ -100,8 +100,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletDamage: 3
+  arrivePointMarkPrefab: {fileID: 1200728744732317688, guid: 422d572233cc35040b6cebd76fb42cde, type: 3}
   destroyPos: {x: 0, y: 0, z: 0}
   parentObject: {fileID: 0}
+  arrivePointMark: {fileID: 0}
 --- !u!135 &7966259111163919104
 SphereCollider:
   m_ObjectHideFlags: 0

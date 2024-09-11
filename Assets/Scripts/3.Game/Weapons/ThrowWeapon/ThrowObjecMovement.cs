@@ -64,6 +64,11 @@ public class ThrowObjecMovement : ParabolaLineRenderer
     {
         startPos = _startPos;
         endPos = _endPos;
+        if (GetComponent<MonsterBullet>().arrivePointMark != null)
+        {
+            GetComponent<MonsterBullet>().arrivePointMark.transform.position = endPos;
+            GetComponent<MonsterBullet>().arrivePointMark.SetActive(true);
+        }
         currentThrowLength = 0;
         isArrive = false;
     }

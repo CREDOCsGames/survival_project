@@ -39,7 +39,7 @@ public class ProjectileObjectPool : MonoBehaviour
                 damage *= isCri ? 2 : 1;
             }
 
-            other.GetComponent<IDamageable>().Attacked(damage, this.gameObject);
+            other.GetComponent<IDamageable>().Attacked(damage, gameObject);
             other.GetComponent<IDamageable>().RendDamageUI(damage, other.transform.position, canCri, isCri);
 
             if (!isPenetrate)

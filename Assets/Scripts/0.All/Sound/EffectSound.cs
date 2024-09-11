@@ -41,6 +41,7 @@ public class EffectSound : MonoBehaviour
 
     public void DestroyPool()
     {
-        managedPool.Release(this);
+        if (gameObject.activeSelf)
+            managedPool.Release(this);
     }
 }

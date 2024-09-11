@@ -88,6 +88,8 @@ public class MonsterSpawn : MonoBehaviour
         }
     }
 
+    Collider spawnTransform;
+
     IEnumerator RendSpawnImage()
     {
         while (gamesceneManager.isNight)
@@ -116,16 +118,15 @@ public class MonsterSpawn : MonoBehaviour
 
     Vector3 SpawnPosition()
     {
-        int rand = Random.Range(0, spawnPoses.Length);
-        Collider spawnTransform = spawnPoses[rand];
+        spawnTransform = spawnPoses[Random.Range(0, spawnPoses.Length)];
 
         float randX = spawnTransform.bounds.size.x;
         float randZ = spawnTransform.bounds.size.z;
 
         randX = Random.Range(-(randX / 2), (randX / 2));
         randZ = Random.Range(-(randZ / 2), (randZ / 2));
-
-        Vector3 spawnPos = spawnTransform.transform.position + new Vector3(randX, 0, randZ);
+       
+        Vector3 spawnPos = new Vector3(randX, 0, randZ) + spawnTransform.bounds.center;
 
         NavMeshHit hit;
 
@@ -179,6 +180,11 @@ public class MonsterSpawn : MonoBehaviour
         {
             spawnPos = pos + Random.onUnitSphere * 2;
             spawnPos.y = 0;
+
+            if (!spawnTransform.bounds.Contains(spawnPos))
+            {
+                spawnPos = spawnTransform.bounds.ClosestPoint(spawnPos);
+            }
 
             GameObject spawnMark = Instantiate(spawnImage, spawnPos, spawnImage.transform.rotation, storageParent);
             Destroy(spawnMark, 1f);

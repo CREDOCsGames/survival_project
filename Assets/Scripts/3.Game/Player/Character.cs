@@ -13,6 +13,7 @@ public enum CHARACTER_NUM
 
 public class Character : Singleton<Character>
 {
+    [SerializeField] Collider attackedColl;
     [SerializeField] SpriteRenderer rendUpper;
     [SerializeField] SpriteRenderer rendLower;
     [SerializeField] public Animator anim;
@@ -217,10 +218,10 @@ public class Character : Singleton<Character>
 
     void UseRecoveyGauege()
     {
-        if (maxHp == currentHp)
+        if (maxHp == currentHp && currentRecoveryGauge <= 0)
             return;
 
-        if (currentRecoveryGauge >= recoveryValue && Input.GetKeyDown((KeyCode)PlayerPrefs.GetInt("Key_Recover")))
+        if (Input.GetKeyDown((KeyCode)PlayerPrefs.GetInt("Key_Recover")))
         {
             StartCoroutine(ConvertRecoveryGauge());
 
@@ -231,9 +232,11 @@ public class Character : Singleton<Character>
     IEnumerator ConvertRecoveryGauge()
     {
         isCanControll = false;
-        
-        currentHp += Mathf.RoundToInt(recoveryValue * (100 + recoverHpRatio) * 0.01f);
-        currentRecoveryGauge -= recoveryValue;
+
+        int realRecoveryValue = recoveryValue < currentRecoveryGauge ? recoveryValue : currentRecoveryGauge;
+
+        currentHp += Mathf.RoundToInt(realRecoveryValue * (100 + recoverHpRatio) * 0.01f);
+        currentRecoveryGauge -= realRecoveryValue;
 
         yield return CoroutineCaching.WaitForSeconds(0.3f);
 
@@ -459,8 +462,6 @@ public class Character : Singleton<Character>
             {
                 if (!isAvoid)
                 {
-                    soundManager.PlaySFX(damagedSound);
-
                     int trueDamage = Mathf.RoundToInt((damage - gameManager.status[Status.Defence]) * (100 + percentDefence) * 0.01f);
 
                     if (gameManager.specialStatus[SpecialStatus.Rum])
@@ -477,13 +478,20 @@ public class Character : Singleton<Character>
 
                     if (gameManager.specialStatus[SpecialStatus.BloodMadness])
                         gameManager.bloodDamage = Mathf.Clamp(gameManager.bloodDamage + 2, 0, 20);
+
+                    if (currentHp <= 0)
+                    {
+                        OnDead();
+                        return;
+                    }
+
+                    soundManager.PlaySFX(damagedSound);
                 }
 
                 ChangeHitColor();
             }
 
-            if (currentHp <= 0)
-                OnDead();
+            
         }
     }
 
@@ -495,6 +503,7 @@ public class Character : Singleton<Character>
         isRun = false;
         isDead = true;
         gameManager.isClear = true;
+        attackedColl.enabled = false;
 
         soundManager.StopBGM();
         soundManager.PlaySFX(deadSound);

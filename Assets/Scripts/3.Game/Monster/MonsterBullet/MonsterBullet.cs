@@ -4,6 +4,7 @@ using UnityEngine.Pool;
 public class MonsterBullet : MonoBehaviour
 {
     public float bulletDamage;
+    [SerializeField] GameObject arrivePointMarkPrefab;
 
     IObjectPool<MonsterBullet> managedPool;
 
@@ -16,10 +17,17 @@ public class MonsterBullet : MonoBehaviour
 
     [HideInInspector] public Transform parentObject;
 
+    [HideInInspector] public GameObject arrivePointMark = null;
+
     private void Start()
     {
         gameManager = GameManager.Instance;
         gameSceneManager = GamesceneManager.Instance;
+
+        if(arrivePointMarkPrefab != null)
+        {
+            arrivePointMark = Instantiate(arrivePointMarkPrefab, GameManager.Instance.monsterBulletStorage);
+        }
     }
 
     void Update()
@@ -50,6 +58,9 @@ public class MonsterBullet : MonoBehaviour
         if (gameObject.activeSelf)
         {
             managedPool.Release(this);
+
+            if (arrivePointMark != null)
+                arrivePointMark.SetActive(false);
         }
     }
 }
