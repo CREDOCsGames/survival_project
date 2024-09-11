@@ -37,25 +37,16 @@ public class BowCatchBar : MonoBehaviour
         if (gameManager.isPause || character.isDead)
             return;
 
-
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             if (GetComponent<ShootArrow>().checkCanFire())
             {
-                Debug.Log(currentSfx);
-
                 if (currentSfx == null)
                 {
-                //    Debug.Log("charging sound");
+                    //    Debug.Log("charging sound");
                     currentSfx = soundManager.PlaySFXAndReturn(chargingSound, false);
                 }
-            }
-        }
 
-        else if (Input.GetMouseButton(0))
-        {
-            if (GetComponent<ShootArrow>().checkCanFire())
-            {
                 catchBar.gameObject.SetActive(true);
                 MoveBar();
             }
