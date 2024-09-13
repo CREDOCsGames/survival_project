@@ -46,13 +46,11 @@ public class Character : Singleton<Character>
     int initMaxRecGauge;
     [HideInInspector] public int currentRecoveryGauge;
     public GameObject getItemUI;
-    int recoveryValue = 5;
+    int recoveryValue;
     public int RecoveryValue => recoveryValue;
 
     [Header("Summon")]
     [SerializeField] GameObject tamedPet;
-
-    Collider ground;
 
     bool isRun, isAttacked = false;
     bool isAvoid = false;
@@ -60,10 +58,9 @@ public class Character : Singleton<Character>
 
     GameManager gameManager;
 
-    [HideInInspector] Vector3 dir;
-    [HideInInspector] public Vector3 charDir => dir;
-    [HideInInspector] public float x;
-    [HideInInspector] public float z;
+    Vector3 dir;
+    float x;
+    float z;
 
     Coroutine currentCoroutine;
 
@@ -74,7 +71,7 @@ public class Character : Singleton<Character>
     NavMeshAgent agent;
 
     [HideInInspector] public bool isCanControll = true;
-    public bool canFlip = true;
+    [HideInInspector] public bool canFlip = true;
 
     bool isTamingPet = false;
     int getPetRound = 0;
@@ -401,9 +398,6 @@ public class Character : Singleton<Character>
 
         agent.speed = speed;
         agent.Move(dir * speed * Time.deltaTime);
-        
-        if (ground == null)
-            ground = GamesceneManager.Instance.walkableArea;
 
         if (dir != Vector3.zero)
             isRun = true;

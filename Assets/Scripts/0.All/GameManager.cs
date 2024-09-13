@@ -75,7 +75,6 @@ public class GameManager : Singleton<GameManager>
 
     [HideInInspector] public bool isPause;
     [HideInInspector] public bool isClear;
-    [HideInInspector] public bool isBossDead;
 
     [HideInInspector] public Texture2D useCursorNormal;
     [HideInInspector] public Texture2D useCursorAttack;
@@ -93,7 +92,7 @@ public class GameManager : Singleton<GameManager>
 
     public int totalBulletCount;
 
-    public bool isCursorVisible = true;
+    [HideInInspector] public bool isCursorVisible = true;
 
     protected override void Awake()
     {
@@ -112,12 +111,10 @@ public class GameManager : Singleton<GameManager>
         Vector2 cursorHotSpot = new Vector3(useCursorNormal.width * 0.5f, useCursorNormal.height * 0.5f);
         Cursor.SetCursor(useCursorNormal, cursorHotSpot, CursorMode.ForceSoftware);
         Cursor.lockState = CursorLockMode.Confined;
-        //Cursor.visible = false;
 
         Time.timeScale = 1;
         isPause = false;
         isClear = false;
-        isBossDead = false;
     }
 
     void InitSetting()
@@ -129,7 +126,7 @@ public class GameManager : Singleton<GameManager>
         gameNightTime = 60;
         woodCount = 0;
         round = 0;
-        maxRound = 10;
+        maxRound = 15;
         maxHp = 100;
         recoverHp = 0;
         defence = 3;
