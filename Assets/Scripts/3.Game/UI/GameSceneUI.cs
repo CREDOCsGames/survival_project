@@ -140,7 +140,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
 
     public void ActiveTutoPanel(TutoType tutoType, Sprite _tutoImage = null, TutoType nextTuto = TutoType.Null)
     {
-        TutorialManager.Instance.ActiveTutoText(tutoTextPanel, tutoClickText, tutoText, tutoType, nextTuto);
+        StartCoroutine(TutorialManager.Instance.IActiveTutoText(tutoTextPanel, tutoClickText, tutoText, tutoType, nextTuto));
 
         if(_tutoImage != null)
         {
@@ -156,7 +156,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
 
     public IEnumerator IActiveTutoPanel(TutoType tutoType, Sprite _tutoImage = null)
     {
-        StartCoroutine(TutorialManager.Instance.IActiveTutoText(tutoTextPanel, tutoClickText, tutoText, tutoType));
+        StartCoroutine(TutorialManager.Instance.IActiveTutoText(tutoTextPanel, tutoClickText, tutoText, tutoType, TutoType.Null));
 
         yield return CoroutineCaching.WaitWhile(() => TutorialManager.Instance.IsTutoProgressing);
 

@@ -86,28 +86,9 @@ public class TutorialManager : Singleton<TutorialManager>
         TutoTextContent2();
     }
 
-    public void ActiveTutoText(GameObject tutoPanel, GameObject closeText, Text characterText, TutoType tutoType, TutoType nextTuto)
-    {
-        if (tutorialClear[tutoType] == 1 || tutoType == TutoType.Null)
-            return;
+    int count = 0;
 
-        isTutoProgressing = true;
-        isTypingEnd = false;
-        //GameManager.Instance.isPause = true;
-        GameManager.Instance.GamePause(true);
-
-        characterText.text = tutoTexts[(int)tutoType];
-
-        if (tutoType != TutoType.Null)
-        {
-            tutoPanel.SetActive(true);
-            closeText.SetActive(false);
-        }
-
-        StartCoroutine(CloseTutoPanel(tutoPanel, closeText, characterText, tutoType, nextTuto));
-    }
-
-    public IEnumerator IActiveTutoText(GameObject tutoPanel, GameObject closeText, Text characterText, TutoType tutoType)
+    public IEnumerator IActiveTutoText(GameObject tutoPanel, GameObject closeText, Text characterText, TutoType tutoType, TutoType nextTuto)
     {
         if (tutorialClear[tutoType] == 1 || tutoType == TutoType.Null)
             yield break;
@@ -119,7 +100,8 @@ public class TutorialManager : Singleton<TutorialManager>
         //GameManager.Instance.isPause = true;
         GameManager.Instance.GamePause(true);
 
-        characterText.text = tutoTexts[(int)tutoType];
+        //characterText.text = tutoTexts[(int)tutoType];
+        characterText.text = tutoText2[tutoType][count];
 
         if (tutoType != TutoType.Null)
         {
@@ -127,7 +109,43 @@ public class TutorialManager : Singleton<TutorialManager>
             closeText.SetActive(false);
         }
 
-        StartCoroutine(CloseTutoPanel(tutoPanel, closeText, characterText, tutoType, TutoType.Null));
+        yield return CoroutineCaching.WaitForSecondsRealTime(0.5f);
+
+        count++;
+        closeText.SetActive(true);
+
+        yield return CoroutineCaching.WaitUntil(() => isTypingEnd && Input.GetMouseButtonDown(0));
+
+        if (tutoText2[tutoType].Count() > count)
+        {
+            Debug.Log("!");
+
+            tutoPanel.SetActive(false);
+            closeText.SetActive(true);
+            isTutoProgressing = false;
+            StartCoroutine(IActiveTutoText(tutoPanel, closeText, characterText, tutoType, nextTuto));
+            yield break;
+        }
+
+        tutoPanel.SetActive(false);
+
+        PlayerPrefs.SetInt((tutoType).ToString(), 1);
+        tutorialClear[tutoType] = 1;
+        count = 0;
+
+        yield return null;
+
+        if (nextTuto != TutoType.Null)
+        {
+            isTutoProgressing = false;
+            StartCoroutine(IActiveTutoText(tutoPanel, closeText, characterText, nextTuto, TutoType.Null));
+        }
+
+        else
+        {
+            isTutoProgressing = false;
+            GameManager.Instance.GamePause(false);
+        }
     }
 
     void TutoTextContent()
@@ -169,40 +187,5 @@ public class TutorialManager : Singleton<TutorialManager>
 
         /*Debug.Log(tutoText2[TutoType.StartTuto].Count());
         Debug.Log(tutoText2[TutoType.StartTuto][1]);*/
-    }
-
-    IEnumerator CloseTutoPanel(GameObject tutoPanel, GameObject closeText, Text text, TutoType tutoType, TutoType nextTuto)
-    {
-        int count = 0;
-
-        yield return CoroutineCaching.WaitForSecondsRealTime(0.5f);
-
-        count++;
-        closeText.SetActive(true);
-
-        if (tutoText2[tutoType].Count() > count)
-        {
-
-        }
-
-        yield return CoroutineCaching.WaitUntil(() => isTypingEnd && Input.GetMouseButtonDown(0));
-
-        tutoPanel.SetActive(false);
-
-        PlayerPrefs.SetInt((tutoType).ToString(), 1);
-        tutorialClear[tutoType] = 1;
-
-        yield return null;
-
-        if(nextTuto != TutoType.Null)
-        {
-            ActiveTutoText(tutoPanel, closeText, text, nextTuto, TutoType.Null);
-        }
-
-        else
-        {
-            isTutoProgressing = false;
-            GameManager.Instance.GamePause(false);
-        }
     }
 }
