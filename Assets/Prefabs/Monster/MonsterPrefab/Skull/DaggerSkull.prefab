@@ -263,8 +263,8 @@ MonoBehaviour:
   anim: {fileID: 7712788725761189160}
   weapon: {fileID: 0}
   agent: {fileID: 0}
-  initMoveTime: 0
-  initWaitTime: 0
+  initMoveTime: 1.5
+  initWaitTime: 0.5
   initSpeed: 0
 --- !u!1 &2908463619809062596
 GameObject:

@@ -185,7 +185,12 @@ public class Character : Singleton<Character>
             gamesceneManager = GamesceneManager.Instance;
 
         maxHp = gameManager.status[Status.Maxhp];
+
+#if UNITY_EDITOR
         currentHp = maxHp;
+#else
+        currentHp = maxHp;
+#endif
         speed = gameManager.status[Status.MoveSpeed];
         avoid = gameManager.status[Status.Avoid];
         recoverHpRatio = gameManager.status[Status.Recover];
@@ -446,6 +451,9 @@ public class Character : Singleton<Character>
 
     public void OnDamaged(float damage, GameObject damagedObject)
     {
+        if (gameManager.isClear)
+            return;
+
         if (!isAttacked)
         {
             avoidRand = Random.Range(1, 100);

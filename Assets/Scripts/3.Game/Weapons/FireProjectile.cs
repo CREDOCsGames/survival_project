@@ -77,7 +77,7 @@ public class FireProjectile : MonoBehaviour
 
     protected virtual void FireAppliedCoolTime()
     {
-        if (gameManager.isPause || character.isDead)
+        if (gameManager.isPause || character.isDead || !character.isCanControll)
             return;
 
         if (canFire)

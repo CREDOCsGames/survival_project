@@ -92,8 +92,11 @@ public class Monster : MonoBehaviour
 
     public void InitMonsterSetting(bool isLeader)
     {
-        hp = stat.monsterMaxHp * (2 + Mathf.Floor(gameManager.round / 5) * Mathf.Floor(gameManager.round / 5) * (1 + Mathf.Floor(gameManager.round / 20) * 0.5f)) * 0.5f;
-        damage = stat.monsterDamage * (1 + Mathf.Floor(gameManager.round / 30)) + Mathf.Floor(gameManager.round / 5) * 2f;
+        /*hp = stat.monsterMaxHp * (2 + Mathf.Floor(gameManager.round / 5) * Mathf.Floor(gameManager.round / 5) * (1 + Mathf.Floor(gameManager.round / 20) * 0.5f)) * 0.5f;
+        damage = stat.monsterDamage * (1 + Mathf.Floor(gameManager.round / 30)) + Mathf.Floor(gameManager.round / 5) * 2f;*/
+
+        hp = stat.monsterMaxHp;
+        damage = stat.monsterDamage;
         maxHp = hp;
         moveSpeed = stat.monsterSpeed;
         initSpeed = moveSpeed;
@@ -224,17 +227,18 @@ public class Monster : MonoBehaviour
 
     public void OnDead()
     {
-        if (hp <= 0 || !gamesceneManager.isNight)
+        if (hp <= 0 || !gamesceneManager.isNight || gameManager.isClear)
         {
             if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Die"))
             {
                 GetComponent<MonsterMove>().agent.enabled = false;
+                canMove = false;
                 rend.sortingOrder = 0;
                 anim.speed = 1f;
                 isDead = true;
                 rend.color = Color.white;
 
-                if (itemDropPercent > 0)
+                if (itemDropPercent > 0 && hp <= 0)
                 {
                     int rand = Random.Range(0, 100);
 

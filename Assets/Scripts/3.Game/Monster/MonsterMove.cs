@@ -42,9 +42,11 @@ public class MonsterMove : MonoBehaviour
         if (weaponBoxCollider != null)
             initWeaponColliderX = weaponBoxCollider.size.x;
 
-        initMoveTime = moveTime;
-        initWaitTime = waitTime;
+        /*initMoveTime = moveTime;
+        initWaitTime = waitTime;*/
 
+        moveTime = initMoveTime;
+        waitTime = initWaitTime;
     }
 
     private void Update()
@@ -74,7 +76,7 @@ public class MonsterMove : MonoBehaviour
                 if (moveTime <= 0)
                 {
                     agent.enabled = false;
-                    moveTime = initMoveTime;
+                    waitTime = initWaitTime;
                 }
             }
         }
@@ -88,7 +90,7 @@ public class MonsterMove : MonoBehaviour
                 if (waitTime <= 0)
                 {
                     agent.enabled = true;
-                    waitTime = initWaitTime;
+                    moveTime = initMoveTime;
                 }
             }
         }

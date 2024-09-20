@@ -108,9 +108,6 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         if (!isWoodRefill)
             return;
 
-        beforeBuff = Buff.SPEED;
-        buffValues[Buff.SPEED] = 3;
-
         for (int i = 0; i < buffValues.Count; i++)
         {
             if (i != (int)beforeBuff)
@@ -201,7 +198,8 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         fireImage.transform.localScale = fireInitScale;
         isWoodRefill = true;
 
-        interactionUI.SetActive(false);
+        //interactionUI.SetActive(false);
+        canInteraction = false;
 
         soundManager.PlaySFX(igniteSound);
 
@@ -213,7 +211,8 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         if (!canCookFish || !isWoodRefill || gameManager.fishLowGradeCount <= 0 && gameManager.fishHighGradeCount <= 0)
             return;
 
-        interactionUI.SetActive(false);
+        //interactionUI.SetActive(false);
+        canInteraction = false;
 
         Buff buffType = (Buff)Random.Range(0, (int)Buff.COUNT);
 
@@ -269,7 +268,8 @@ public class Campfire : MonoBehaviour, IMouseInteraction
 
         if (!gamesceneManager.isNight)
         {
-            interactionUI.SetActive(true);
+            //interactionUI.SetActive(true);
+            canInteraction = true;
         }
 
         canCookFish = true;

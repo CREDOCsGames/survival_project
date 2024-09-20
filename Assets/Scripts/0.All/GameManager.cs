@@ -120,9 +120,31 @@ public class GameManager : Singleton<GameManager>
     void InitSetting()
     {
 #if UNITY_EDITOR
+        /*gameDayTime = 60;
+        gameNightTime = 60;
+        woodCount = 20;
+        round = 14;
+        maxRound = 15;
+        maxHp = 100;
+        recoverHp = 0;
+        defence = 3;
+        attackSpeed = 1;
+        speed = 3;
+        critical = 5;
+        avoid = 3;
 
+        dashCount = 0;
+
+        fishLowGradeCount = 30;
+        fishHighGradeCount = 30;
+
+        percentDamage = 100;
+        percentDefence = 100;
+        bloodDamage = 0;
+
+        totalBulletCount = 1;*/
 #else
-        gameDayTime = 120;
+        gameDayTime = 150;
         gameNightTime = 60;
         woodCount = 0;
         round = 0;

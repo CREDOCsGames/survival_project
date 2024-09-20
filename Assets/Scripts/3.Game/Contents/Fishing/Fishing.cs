@@ -213,10 +213,17 @@ public class Fishing : Singleton<Fishing>
 
             rand = Random.Range(0, 100);
 
+#if UNITY_EDITOR
+            if (rand >= 0)
+            {
+                GetRandomPiece();
+            }
+#else
             if (rand >= 96)
             {
                 GetRandomPiece();
             }
+#endif
         }
     }
 

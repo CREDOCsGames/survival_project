@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1546,6 +1546,7 @@ RectTransform:
   - {fileID: 1223543771}
   - {fileID: 1593211269334126093}
   - {fileID: 1335804717166617295}
+  - {fileID: 1934916724}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5294,14 +5295,14 @@ MonoBehaviour:
   damageStorage: {fileID: 1692643827}
   monsterBulletStorage: {fileID: 457507069}
   characterPrefab: {fileID: 289213144344291185, guid: 8d77a8f4167ea0b469ec40c27f9686ea, type: 3}
-  gameDayTime: 111111
-  gameNightTime: 222
+  gameDayTime: 30
+  gameNightTime: 0
   round: 0
   maxRound: 15
   woodCount: 30
-  fishHighGradeCount: 1
+  fishHighGradeCount: 11
   fishLowGradeCount: 1
-  maxHp: 3333
+  maxHp: 1111
   damage: 0
   closeDamage: 0
   longDamage: 0
@@ -5311,14 +5312,13 @@ MonoBehaviour:
   speed: 3
   critical: 50
   avoid: 1
-  dashCount: 11111
+  dashCount: 1111
   percentDamage: 0
   percentDefence: 0
   bloodDamage: 0
   currentScene: 
   isPause: 0
   isClear: 0
-  isBossDead: 0
   useCursorNormal: {fileID: 0}
   useCursorAttack: {fileID: 0}
   cursorSize: 0
@@ -5369,53 +5369,53 @@ MonoBehaviour:
     monsterName: "\uC554\uC0B4 \uD574\uC801"
     monsterMaxHp: 50
     monsterDamage: 6
-    monsterSpeed: 6
-    attackDelay: 0.5
+    monsterSpeed: 4.5
+    attackDelay: 0.7
     attackCount: 1
     moveDelay: 1
     itemDropPercent: 0
   - monsterNum: 102
     monsterName: "\uB300\uD3EC \uD574\uC801"
     monsterMaxHp: 100
-    monsterDamage: 15
+    monsterDamage: 12
     monsterSpeed: 1
-    attackDelay: 1.6
+    attackDelay: 2
     attackCount: 1
-    moveDelay: 0.5
+    moveDelay: 0.7
     itemDropPercent: 0
   - monsterNum: 103
     monsterName: "\uB9AC\uBCFC\uBC84 \uD574\uC801"
-    monsterMaxHp: 70
-    monsterDamage: 10
+    monsterMaxHp: 50
+    monsterDamage: 6
     monsterSpeed: 2.4
-    attackDelay: 1
+    attackDelay: 2
     attackCount: 1
-    moveDelay: 0.3
-    itemDropPercent: 3
+    moveDelay: 0.7
+    itemDropPercent: 4
   - monsterNum: 201
     monsterName: "\uC554\uC0B4 \uD574\uC801"
-    monsterMaxHp: 80
-    monsterDamage: 9
-    monsterSpeed: 10
-    attackDelay: 0.3
+    monsterMaxHp: 70
+    monsterDamage: 8
+    monsterSpeed: 6
+    attackDelay: 0.5
     attackCount: 1
     moveDelay: 0.7
     itemDropPercent: 0
   - monsterNum: 202
     monsterName: "\uB300\uD3EC \uD574\uC801"
     monsterMaxHp: 250
-    monsterDamage: 40
+    monsterDamage: 17
     monsterSpeed: 1
-    attackDelay: 2
+    attackDelay: 3
     attackCount: 1
-    moveDelay: 0.5
+    moveDelay: 0.7
     itemDropPercent: 0
   - monsterNum: 203
     monsterName: "\uB9AC\uBCFC\uBC84 \uD574\uC801"
-    monsterMaxHp: 100
-    monsterDamage: 14
+    monsterMaxHp: 70
+    monsterDamage: 9
     monsterSpeed: 2.7
-    attackDelay: 1
+    attackDelay: 2
     attackCount: 3
     moveDelay: 0.9
     itemDropPercent: 5
@@ -5431,8 +5431,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55311b3565eddb84885b0eb595ff27d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTuto: 1
+  isTuto: 0
   isTypingEnd: 0
+  tutorialCheck: 0
 --- !u!1 &1005871280
 GameObject:
   m_ObjectHideFlags: 0
@@ -9029,6 +9030,82 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1921975920}
+  m_CullTransparentMesh: 1
+--- !u!1 &1934916723
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1934916724}
+  - component: {fileID: 1934916726}
+  - component: {fileID: 1934916725}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1934916724
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934916723}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 252911335}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 20.41, y: 349}
+  m_SizeDelta: {x: 397.41, y: 187.46}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1934916725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934916723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 7fe458da5307556488d05746fe3fd1bd, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1934916726
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934916723}
   m_CullTransparentMesh: 1
 --- !u!1 &1945718236
 GameObject:

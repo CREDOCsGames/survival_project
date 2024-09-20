@@ -85,7 +85,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
     [SerializeField] TypingText gameOverText;
 
     [Header("Tuto")]
-    [SerializeField] GameObject tutoTextPanel;
+    [SerializeField] public GameObject tutoTextPanel;
     [SerializeField] GameObject tutoClickText;
     [SerializeField] Text tutoText;
     [SerializeField] Image tutoImage;

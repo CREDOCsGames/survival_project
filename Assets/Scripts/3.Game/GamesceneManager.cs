@@ -98,20 +98,27 @@ public class GamesceneManager : Singleton<GamesceneManager>
         character.UpdateStat();
         character.weaponParent.gameObject.SetActive(false);
 
+#if UNITY_EDITOR
+        StartCoroutine(SpawnTree());
+#else
         if (gameManager.round % 5 == 0)
         {
             StartCoroutine(SpawnTree());
         }
+#endif
 
         StartCoroutine(SpawnBush());
         StartCoroutine(beach.SpawnItem(beachParent));
 
-        cardSelecter.SetActive(true);
 
         isSetPieceEnd = false;
         character.isCanControll = false;
 
         gameSceneUI.ActiveTutoPanel(TutoType.StartTuto, null, TutoType.StartItemTuto);
+
+        yield return CoroutineCaching.WaitWhile(() => TutorialManager.Instance.tutorialCheck);
+
+        cardSelecter.SetActive(true);
 
         //yield return new WaitWhile(() => cardSelecter.activeSelf);
         yield return CoroutineCaching.WaitWhile(() => cardSelecter.activeSelf);
@@ -187,7 +194,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
         //yield return new WaitForSeconds(gameManager.gameNightTime);
         yield return CoroutineCaching.WaitForSeconds(gameManager.gameNightTime);
 
-        if (gameManager.round != 30)
+        if (gameManager.round != gameManager.maxRound)
         {
             gameManager.fishLowGradeCount = 0;
             gameManager.fishHighGradeCount = 0;
@@ -204,6 +211,10 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
         else
         {
+            character.isCanControll = false;
+            character.canFlip = false;
+
+            nightFilter.SetActive(false);
             StopAllCoroutines();
             gameManager.isClear = true;
 

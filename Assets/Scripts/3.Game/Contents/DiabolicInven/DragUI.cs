@@ -28,9 +28,9 @@ public class DragUI : Singleton<DragUI>
         {
             dragItemImage.sprite = selectedItem.ItemSprite;
             transform.localScale = new Vector3(selectedItem.ItemShape.Width, selectedItem.ItemShape.Height, 0);
-            //GetComponent<RectTransform>().pivot = new Vector2(1 / (selectedItem.ItemShape.Width * 2f), selectedItem.ItemShape.Width == 1 && selectedItem.ItemShape.Height == 1 ? 0.5f : 0.9f);
+           
             GetComponent<RectTransform>().pivot = new Vector2(1 / (selectedItem.ItemShape.Width * 2f), 1 - 1 / (selectedItem.ItemShape.Height * 2f));
-            //GetComponent<RectTransform>().pivot = new Vector2(1 / (selectedItem.ItemShape.Width * 2.2f), 1 - 1 / (selectedItem.ItemShape.Height * 2.2f));
+           
             dragItemImage.gameObject.SetActive(true);
 
             Cursor.visible = false;

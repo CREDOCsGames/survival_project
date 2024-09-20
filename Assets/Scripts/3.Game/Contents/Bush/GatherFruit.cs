@@ -120,8 +120,14 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
             yield break;
         }
 
+#if UNITY_EDITOR
+        if (Random.Range(0, 100) >= 0)
+            GetRandomPiece();
+#else
+
         if (Random.Range(0, 100) >= 96)
             GetRandomPiece();
+#endif
 
         RecoveryGaugeUp();
         Destroy(gameObject);

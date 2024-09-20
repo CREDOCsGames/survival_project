@@ -46,7 +46,7 @@ public class MonsterSpawn : MonoBehaviour
         gamesceneManager = GamesceneManager.Instance;
 
         //weightValue = new float[] { 100, 0, 0};
-        weightValue = new float[] { 33, 33, 34};
+        weightValue = new float[] { 100, 0, 0};
         //ground = GamesceneManager.Instance.walkableArea;
 
         for (int i = 0; i < weightValue.Length; i++)
@@ -253,9 +253,9 @@ public class MonsterSpawn : MonoBehaviour
 
     int RandomMonster()
     {
-        /*weightValue[0] = Mathf.Clamp(100 - (gameManager.round * 4f), 10, 100);
-        weightValue[1] = ((gameManager.round - 6) * 5f) * 0.3f;
-        weightValue[2] = ((gameManager.round - 13) * 5f) * 0.3f;*/
+        weightValue[0] = Mathf.Clamp(100 - (gameManager.round * 4f), 10, 100);
+        weightValue[1] = ((gameManager.round - 4) * 5f) * 0.3f;
+        weightValue[2] = ((gameManager.round - 9) * 5f) * 0.3f;
 
         float rand = Random.Range(0, totalWeight);
         int spawnNum = 0;

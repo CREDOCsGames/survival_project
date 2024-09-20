@@ -49,7 +49,7 @@ public class SwingCutlass : MonoBehaviour
 
     void Attack()
     {
-        if (!canAttack || gameManager.isPause || character.isDead)
+        if (!canAttack || gameManager.isPause || character.isDead || !character.isCanControll)
             return;
 
         if (Input.GetMouseButton(0) && character.isCanControll)

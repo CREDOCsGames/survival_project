@@ -126,7 +126,6 @@ public class DiabolicInven : Singleton<DiabolicInven>
             {
                 if (itemShape[i * width + j] && !slots[(i + row) * 4 + j + column].GetComponent<DiabolicInvenSlot>().IsEmpty)
                 {
-
                     canSetImage = false;
                     return;
                 }

@@ -17,7 +17,7 @@ public class RotateWeaponArm : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!gameManager.isPause)
+        if (!gameManager.isPause && Character.Instance.isCanControll)
             LookMousePosition();
     }
 

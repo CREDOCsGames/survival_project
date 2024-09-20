@@ -116,10 +116,18 @@ public class BeachItem : MonoBehaviour, IMouseInteraction
         character.getItemUI.GetComponent<GetItemUI>().SetGetItemImage(GetComponent<SpriteRenderer>().sprite, 1);
         character.getItemUI.gameObject.SetActive(true);
 
+#if UNITY_EDITOR
+        if (Random.Range(0, 100) >= 0)
+        {
+            GetRandomPiece();
+        }
+
+#else
         if (Random.Range(0, 100) >= 96)
         {
             GetRandomPiece();
         }
+#endif
 
         anim.SetBool("isLogging", false);
         character.canFlip = true;
@@ -139,7 +147,7 @@ public class BeachItem : MonoBehaviour, IMouseInteraction
         int num = (character.transform.position - transform.position).x > 0 ? 0 : 1;
 
         canInteract = false;
-        StartCoroutine(character.MoveToInteractableObject(gatherPoints[num].position, gameObject, 2, 5, -1, num));
+        StartCoroutine(character.MoveToInteractableObject(gatherPoints[num].position, gameObject, 1.25f, 5, -1, num));
     }
 
     public void InteractionRightButtonFuc(GameObject hitObject)
