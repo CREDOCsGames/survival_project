@@ -198,7 +198,7 @@ public class Fishing : Singleton<Fishing>
     {
         int rand = Random.Range(0, 100);
 
-        int high = gameManager.specialStatus[SpecialStatus.BaitWarm] ? 65 : 85;
+        int high = gameManager.specialStatus[SpecialStatus.BaitWarm] ? 60 : 80;
 
         if (rand < high)
         {
@@ -219,7 +219,7 @@ public class Fishing : Singleton<Fishing>
                 GetRandomPiece();
             }
 #else
-            if (rand >= 96)
+            if (rand >= 100 - gameManager.pieceCardGetRate)
             {
                 GetRandomPiece();
             }

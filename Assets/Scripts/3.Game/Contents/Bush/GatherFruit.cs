@@ -25,6 +25,8 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
 
     EffectSound currentSfx;
 
+    bool isGathering = false;
+
     private void Start()
     {
         canGather = false;
@@ -36,9 +38,27 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
         outlineColor = spriteRenderer.material.GetColor("_SolidOutline");
     }
 
+    private void Update()
+    {
+        if(isGathering && gamesceneManager.isNight)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void OnDisable()
     {
         StopAllCoroutines();
+
+        isGathering = false;
+
+        character.isCanControll = true;
+        character.canFlip = true;
+
+        if (currentSfx != null)
+        {
+            soundManager.StopLoopSFX(currentSfx);
+        }
     }
 
     void GetRandomPiece()
@@ -109,15 +129,25 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
 
     public IEnumerator EndInteraction(Animator anim, float waitTime)
     {
+        isGathering = true;
+
         currentSfx = soundManager.PlaySFXAndReturn(gatheringSound, true);
 
         yield return CoroutineCaching.WaitForSeconds(waitTime);
 
         if (gamesceneManager.isNight)
-        {
-            character.isCanControll = true;
-            character.canFlip = true;
             yield break;
+
+        isGathering = false;
+
+        character.isCanControll = true;
+        character.canFlip = true;
+
+        Destroy(gameObject);
+
+        if (currentSfx != null)
+        {
+            soundManager.StopLoopSFX(currentSfx);
         }
 
 #if UNITY_EDITOR
@@ -125,22 +155,15 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
             GetRandomPiece();
 #else
 
-        if (Random.Range(0, 100) >= 96)
+        if (Random.Range(0, 100) >= 100 - GameManager.Instance.pieceCardGetRate)
             GetRandomPiece();
 #endif
 
         RecoveryGaugeUp();
-        Destroy(gameObject);
-
+        
         anim.SetBool("isLogging", false);
-        character.isCanControll = true;
-        character.canFlip = true;
-        character.ChangeAnimationController(0); 
 
-        if(currentSfx != null)
-        {
-            soundManager.StopLoopSFX(currentSfx);
-        }
+        character.ChangeAnimationController(0); 
     }
 
     void RecoveryGaugeUp()

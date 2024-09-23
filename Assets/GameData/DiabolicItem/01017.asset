@@ -47,6 +47,6 @@ MonoBehaviour:
     _width: 2
     _height: 1
     _shape: 0101
-  specialStatInfo: "\uD3AB\uC758 \uACF5\uACA9\uB825 <color=lime>4</color> \uC99D\uAC00."
+  specialStatInfo: "\uD3AB\uC758 \uACF5\uACA9\uB825 <color=lime>2\uBC30</color> \uC99D\uAC00."
   description: "\uC11C\uB85C\uC758 \uC601\uD63C\uC744 \uAE4A\uC774 \uC774\uD574\uD55C
     \uC874\uC7AC."

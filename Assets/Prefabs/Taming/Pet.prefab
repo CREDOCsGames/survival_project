@@ -152,7 +152,7 @@ MonoBehaviour:
   moveRange: 4
   speed: 3
   detactRange: 5
-  damage: 7
+  damage: 20
   attackLength: 6
   monsterLayer:
     serializedVersion: 2

@@ -26,7 +26,7 @@ MonoBehaviour:
   attackSpeed: 0
   speed: 0
   critical: 0
-  avoid: 4
+  avoid: 10
   isDoubleAxe: 0
   isRum: 0
   isAmmoPouch: 0

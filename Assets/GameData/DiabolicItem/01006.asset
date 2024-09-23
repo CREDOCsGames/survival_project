@@ -18,7 +18,7 @@ MonoBehaviour:
   itemName: "\uD68C\uB791\uD558\uB294 \uD56D\uD574\uC0AC\uC758 \uC601\uD63C"
   equipSound: {fileID: 8300000, guid: b837ac1620e99804f904538082317d72, type: 3}
   maxHp: 10
-  damage: 5
+  damage: 10
   closeDamage: 0
   longDamage: 0
   recoverHp: 0

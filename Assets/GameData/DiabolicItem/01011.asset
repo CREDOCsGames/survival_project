@@ -21,7 +21,7 @@ MonoBehaviour:
   damage: 0
   closeDamage: 0
   longDamage: 0
-  recoverHp: 15
+  recoverHp: 5
   defence: 0
   attackSpeed: 0
   speed: 0

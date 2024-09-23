@@ -45,7 +45,7 @@ MonoBehaviour:
   maxCount: 3
   itemShape:
     _width: 1
-    _height: 2
-    _shape: 0101
+    _height: 1
+    _shape: 01
   specialStatInfo: 
   description: "\uBD80\uB7EC\uC838 \uB0A0\uCE74\uB85C\uC6B4 \uBA74\uB3C4\uB0A0."

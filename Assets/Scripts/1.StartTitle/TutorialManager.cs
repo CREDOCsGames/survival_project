@@ -72,11 +72,11 @@ public class TutorialManager : Singleton<TutorialManager>
                 tutorialClear.Add((TutoType)i, 0);
         }
 #else
+
         for (int i = 0; i < (int)TutoType.Count; i++)
         {
-            tutorial.Add((TutoType)i, PlayerPrefs.GetInt(((TutoType)i).ToString(), 0));
+            tutorialClear.Add((TutoType)i, PlayerPrefs.GetInt(((TutoType)i).ToString(), 0));
         }
-
 #endif
 
         tutoTexts = new string[(int)TutoType.Count];

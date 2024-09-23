@@ -187,9 +187,13 @@ public class Character : Singleton<Character>
         maxHp = gameManager.status[Status.Maxhp];
 
 #if UNITY_EDITOR
-        currentHp = maxHp;
+        if (gameManager.round == 0)
+            currentHp = maxHp;
+
 #else
-        currentHp = maxHp;
+        if(gameManager.round == 0)
+            currentHp = maxHp;
+        
 #endif
         speed = gameManager.status[Status.MoveSpeed];
         avoid = gameManager.status[Status.Avoid];
@@ -198,7 +202,7 @@ public class Character : Singleton<Character>
         defence = gameManager.status[Status.Defence];
 
         maxRecoveryGauge = gameManager.specialStatus[SpecialStatus.Grape] ? initMaxRecGauge + 10 : initMaxRecGauge;
-        speed = gameManager.specialStatus[SpecialStatus.Tabatiere] & !gamesceneManager.isNight ? speed * 1.1f : speed;
+        speed = gameManager.specialStatus[SpecialStatus.Tabatiere] & !gamesceneManager.isNight ? speed * 1.5f : speed;
         invincibleTime = gameManager.specialStatus[SpecialStatus.Invincible] ? 0.2f : 0;
         defence = gameManager.specialStatus[SpecialStatus.SilverBullet] ? defence + 5 : defence;
 
@@ -220,7 +224,7 @@ public class Character : Singleton<Character>
 
     void UseRecoveyGauege()
     {
-        if (maxHp == currentHp && currentRecoveryGauge <= 0)
+        if (maxHp == currentHp || currentRecoveryGauge <= 0)
             return;
 
         if (Input.GetKeyDown((KeyCode)PlayerPrefs.GetInt("Key_Recover")))
@@ -473,13 +477,13 @@ public class Character : Singleton<Character>
 
                     if (gameManager.specialStatus[SpecialStatus.Mirror])
                     {
-                        damagedObject.GetComponent<IDamageable>().Attacked(Mathf.Round(trueDamage / 2), this.gameObject);
-                        damagedObject.GetComponent<IDamageable>().RendDamageUI(Mathf.Round(trueDamage / 2), damagedObject.transform.position, false, false);
+                        damagedObject.GetComponent<IDamageable>().Attacked(Mathf.Round(trueDamage * 3), this.gameObject);
+                        damagedObject.GetComponent<IDamageable>().RendDamageUI(Mathf.Round(trueDamage * 3), damagedObject.transform.position, false, false);
                     }
 
 
                     if (gameManager.specialStatus[SpecialStatus.BloodMadness])
-                        gameManager.bloodDamage = Mathf.Clamp(gameManager.bloodDamage + 2, 0, 20);
+                        gameManager.bloodDamage = Mathf.Clamp(gameManager.bloodDamage + 3, 0, 30);
 
                     if (currentHp <= 0)
                     {

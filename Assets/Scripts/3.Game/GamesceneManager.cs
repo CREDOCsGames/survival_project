@@ -101,7 +101,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
 #if UNITY_EDITOR
         StartCoroutine(SpawnTree());
 #else
-        if (gameManager.round % 5 == 0)
+        if (gameManager.round % 3 == 0)
         {
             StartCoroutine(SpawnTree());
         }

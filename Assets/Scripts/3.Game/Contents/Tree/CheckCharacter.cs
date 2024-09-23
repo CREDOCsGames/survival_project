@@ -11,6 +11,8 @@ public class CheckCharacter : MonoBehaviour
 
     GamesceneManager gamesceneManager;
 
+    public GameObject needItemImage = null;
+
     private void Awake()
     {
         gamesceneManager = GamesceneManager.Instance;
@@ -23,7 +25,13 @@ public class CheckCharacter : MonoBehaviour
             arrow.gameObject.SetActive(false);
         }
 
+        if (needItemImage != null)
+        {
+            needItemImage.SetActive(false);
+        }
+
         clickUI.gameObject.SetActive(false);
+
     }
 
     private void Update()
@@ -41,6 +49,11 @@ public class CheckCharacter : MonoBehaviour
             if (arrow != null)
             {
                 arrow.gameObject.SetActive(false);
+            }
+
+            if (needItemImage != null)
+            {
+                needItemImage.SetActive(false);
             }
 
             clickUI.SetActive(false);
@@ -70,6 +83,11 @@ public class CheckCharacter : MonoBehaviour
                 arrow.GetComponent<SpriteRenderer>().color = Color.blue;
             }
 
+            if(needItemImage != null)
+            {
+                needItemImage.SetActive(true);
+            }
+
             clickUI.SetActive(true);
             transform.parent.GetComponent<IMouseInteraction>().CanInteraction(true);
         }
@@ -93,6 +111,11 @@ public class CheckCharacter : MonoBehaviour
             }
 
             clickUI.SetActive(transform.parent.GetComponent<IMouseInteraction>().ReturnCanInteraction());
+
+            if (needItemImage != null)
+            {
+                needItemImage.SetActive(clickUI.activeSelf);
+            }
         }
     }
 
@@ -106,6 +129,11 @@ public class CheckCharacter : MonoBehaviour
             if (arrow != null)
             {
                 arrow.SetActive(false);
+            }
+
+            if (needItemImage != null)
+            {
+                needItemImage.SetActive(false);
             }
 
             clickUI.SetActive(false);

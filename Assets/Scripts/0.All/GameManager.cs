@@ -94,6 +94,8 @@ public class GameManager : Singleton<GameManager>
 
     [HideInInspector] public bool isCursorVisible = true;
 
+    public int pieceCardGetRate;
+
     protected override void Awake()
     {
         base.Awake();
@@ -138,8 +140,8 @@ public class GameManager : Singleton<GameManager>
         fishLowGradeCount = 30;
         fishHighGradeCount = 30;
 
-        percentDamage = 100;
-        percentDefence = 100;
+        percentDamage = 0;
+        percentDefence = 0;
         bloodDamage = 0;
 
         totalBulletCount = 1;*/
@@ -159,11 +161,13 @@ public class GameManager : Singleton<GameManager>
 
         dashCount = 0;
 
+        pieceCardGetRate = 10;
+
         fishLowGradeCount = 0;
         fishHighGradeCount = 0;
 
-        percentDamage = 100;
-        percentDefence = 100;
+        percentDamage = 0;
+        percentDefence = 0;
         bloodDamage = 0;
 
         totalBulletCount = 1;
@@ -185,7 +189,7 @@ public class GameManager : Singleton<GameManager>
             specialStatus.Add((SpecialStatus)i, false);
         }
 
-        //specialStatus[SpecialStatus.Mirror] = true;
+       //specialStatus[SpecialStatus.Tabatiere] = true;
     }
 
     public void ToNextScene(string sceneName)

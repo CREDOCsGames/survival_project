@@ -95,6 +95,9 @@ public class WeaponChanger : MonoBehaviour
         if(currentIndex == 1)
             bulletText.gameObject.SetActive(true);
 
+        else
+            bulletText.gameObject.SetActive(false);
+
         character.currentWeaponIndex = currentIndex;
 
         StartCoroutine(ScrollCoolDown());

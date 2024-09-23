@@ -112,7 +112,7 @@ public class MonsterSpawn : MonoBehaviour
         {
             yield return CoroutineCaching.WaitForSeconds(time);
 
-            currentDelayTime -= spawnDelayDecrease;
+            currentDelayTime -= spawnDelayDecrease + ((gameManager.round / 2) * 0.2f);
         }
     }
 
@@ -254,8 +254,8 @@ public class MonsterSpawn : MonoBehaviour
     int RandomMonster()
     {
         weightValue[0] = Mathf.Clamp(100 - (gameManager.round * 4f), 10, 100);
-        weightValue[1] = ((gameManager.round - 4) * 5f) * 0.3f;
-        weightValue[2] = ((gameManager.round - 9) * 5f) * 0.3f;
+        weightValue[1] = gameManager.round >= 5 ? (gameManager.round * 0.2f + 1) * 10f : 0;
+        weightValue[2] = gameManager.round >= 10 ? 10 + (gameManager.round - 10) * 6 : 0;
 
         float rand = Random.Range(0, totalWeight);
         int spawnNum = 0;

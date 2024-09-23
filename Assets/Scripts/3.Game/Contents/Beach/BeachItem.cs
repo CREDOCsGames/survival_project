@@ -23,6 +23,8 @@ public class BeachItem : MonoBehaviour, IMouseInteraction
 
     EffectSound currentSfx;
 
+    bool isGathering = false;
+
     private void Start()
     {
         itemManager = ItemManager.Instance;
@@ -36,9 +38,26 @@ public class BeachItem : MonoBehaviour, IMouseInteraction
         canInteract = false;
     }
 
+    private void Update()
+    {
+        if(gamesceneManager.isNight && isGathering)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void OnDisable()
     {
         StopAllCoroutines();
+
+        if (currentSfx != null)
+        {
+            soundManager.StopLoopSFX(currentSfx);
+        }
+
+        isGathering = false;
+        character.canFlip = true;
+        character.isCanControll = true;
     }
 
     void GetRandomPiece()
@@ -97,18 +116,24 @@ public class BeachItem : MonoBehaviour, IMouseInteraction
 
     public IEnumerator EndInteraction(Animator anim, float waitTime)
     {
+        isGathering = true;
+
         currentSfx = soundManager.PlaySFXAndReturn(getWoodSound, true);
 
         yield return CoroutineCaching.WaitForSeconds(waitTime);
 
-        if(currentSfx != null)
+        isGathering = false;
+
+        if (currentSfx != null)
         {
             soundManager.StopLoopSFX(currentSfx);
         }
 
+        character.canFlip = true;
+        character.isCanControll = true;
+
         if (gamesceneManager.isNight)
         {
-            character.canFlip = true;
             yield break;
         }
 
@@ -123,15 +148,14 @@ public class BeachItem : MonoBehaviour, IMouseInteraction
         }
 
 #else
-        if (Random.Range(0, 100) >= 96)
+        if (Random.Range(0, 100) >= 100 - gameManager.pieceCardGetRate)
         {
             GetRandomPiece();
         }
 #endif
 
         anim.SetBool("isLogging", false);
-        character.canFlip = true;
-        character.isCanControll = true;
+        
         character.ChangeAnimationController(0);
 
         Destroy(gameObject);

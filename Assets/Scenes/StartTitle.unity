@@ -294,7 +294,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -100.49994, y: 32}
+  m_AnchoredPosition: {x: -110.99994, y: 26}
   m_SizeDelta: {x: -201, y: 413.2}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &84502446
@@ -1541,6 +1541,7 @@ RectTransform:
   m_Children:
   - {fileID: 1019256289}
   - {fileID: 84502445}
+  - {fileID: 708176179}
   - {fileID: 873912361}
   - {fileID: 1451531008}
   - {fileID: 1223543771}
@@ -4071,6 +4072,102 @@ RectTransform:
   m_AnchoredPosition: {x: 484, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &708176178
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 708176179}
+  - component: {fileID: 708176182}
+  - component: {fileID: 708176181}
+  - component: {fileID: 708176180}
+  m_Layer: 5
+  m_Name: TitleText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &708176179
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708176178}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 252911335}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -25.00177}
+  m_SizeDelta: {x: 0, y: 300}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &708176180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708176178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 1.5, y: 1.5}
+  m_UseGraphicAlpha: 1
+--- !u!114 &708176181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708176178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: f888483bc4abd2b4ca630b389aeea6cf, type: 3}
+    m_FontSize: 140
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 300
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: "\uD574\uB839\uC12C"
+--- !u!222 &708176182
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708176178}
+  m_CullTransparentMesh: 1
 --- !u!1 &717787829
 GameObject:
   m_ObjectHideFlags: 0
@@ -4855,7 +4952,7 @@ RectTransform:
   - {fileID: 1031973232}
   - {fileID: 1851451978}
   m_Father: {fileID: 252911335}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -5295,14 +5392,14 @@ MonoBehaviour:
   damageStorage: {fileID: 1692643827}
   monsterBulletStorage: {fileID: 457507069}
   characterPrefab: {fileID: 289213144344291185, guid: 8d77a8f4167ea0b469ec40c27f9686ea, type: 3}
-  gameDayTime: 30
+  gameDayTime: 0
   gameNightTime: 0
   round: 0
   maxRound: 15
   woodCount: 30
-  fishHighGradeCount: 11
-  fishLowGradeCount: 1
-  maxHp: 1111
+  fishHighGradeCount: 0
+  fishLowGradeCount: 11
+  maxHp: 100
   damage: 0
   closeDamage: 0
   longDamage: 0
@@ -5326,6 +5423,7 @@ MonoBehaviour:
   characterSpawnPos: {x: 0, y: 0, z: -69}
   totalBulletCount: 10
   isCursorVisible: 1
+  pieceCardGetRate: 0
 --- !u!4 &936130855
 Transform:
   m_ObjectHideFlags: 0
@@ -6188,7 +6286,7 @@ RectTransform:
   - {fileID: 1598506495}
   - {fileID: 1442299855}
   m_Father: {fileID: 252911335}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -7001,7 +7099,7 @@ RectTransform:
   m_Children:
   - {fileID: 1468131853}
   m_Father: {fileID: 252911335}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -9062,7 +9160,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 252911335}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10020,7 +10118,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 182, y: -57.00021}
+  m_AnchoredPosition: {x: 178, y: -60}
   m_SizeDelta: {x: 201.00012, y: 300}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2050112246
@@ -10383,7 +10481,7 @@ RectTransform:
   - {fileID: 1335804717026733291}
   - {fileID: 265519418}
   m_Father: {fileID: 252911335}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -10880,7 +10978,7 @@ RectTransform:
   - {fileID: 1593211269176213545}
   - {fileID: 363460958}
   m_Father: {fileID: 252911335}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

@@ -47,8 +47,8 @@ MonoBehaviour:
     _width: 3
     _height: 3
     _shape: 000100010101000100
-  specialStatInfo: "\uD53C\uACA9\uC2DC \uACF5\uACA9\uB825 <color=lime>+2</color>
-    \uCD94\uAC00.\n(\uCD5C\uB300 <color=lime>20</color> \uC81C\uD55C)"
+  specialStatInfo: "\uD53C\uACA9\uC2DC \uACF5\uACA9\uB825 <color=lime>3</color> \uC99D\uAC00.\n(\uCD5C\uB300
+    <color=lime>30</color> \uC81C\uD55C)"
   description: "\uBC14\uB2E4\uC758 \uC804\uC7A5\uC5D0 \uB2E4\uC2DC \uB6F0\uC5B4\uB4E0
     \uB4EF\uD55C \uC0C1\uCF8C\uD568.\n\uB0B4\uAC00 \uC5B4\uB5A4 \uC774\uB984\uC73C\uB85C
     \uBD88\uB838\uB294\uC9C0\n\uBA38\uB9AC\uD1B5\uC5D0 \uAE4A\uAC8C \uC0C8\uACA8\uC8FC\uB9C8."

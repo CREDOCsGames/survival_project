@@ -109,7 +109,7 @@ public class Pet : MonoBehaviour
         //if (other.CompareTag("Monster") && other.transform.parent.GetComponent<Monster>() != null)
         if(other.GetComponent<IDamageable>() != null)
         {
-            float realDamage = gameManager.specialStatus[SpecialStatus.Soulmate] ? damage + 4 : damage;
+            float realDamage = gameManager.specialStatus[SpecialStatus.Soulmate] ? damage * 2 : damage;
 
             other.GetComponent<IDamageable>().Attacked(realDamage, gameObject);
             other.GetComponent<IDamageable>().RendDamageUI(realDamage, other.transform.position, false, false);

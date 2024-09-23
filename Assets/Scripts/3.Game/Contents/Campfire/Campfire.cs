@@ -21,6 +21,8 @@ public class Campfire : MonoBehaviour, IMouseInteraction
     [SerializeField] AudioClip buffSound;
     [SerializeField] AudioClip igniteSound;
     [SerializeField] Sprite dashTutoImage;
+    [SerializeField] GameObject needWoodImage;
+    [SerializeField] GameObject needFishImage;
 
     GameManager gameManager;
     Character character;
@@ -63,6 +65,10 @@ public class Campfire : MonoBehaviour, IMouseInteraction
 
         buffIcon.SetActive(false);
         debuffIcon.SetActive(false);
+        needFishImage.SetActive(false);
+        needWoodImage.SetActive(false);
+
+        GetComponentInChildren<CheckCharacter>().needItemImage = needWoodImage;
 
         fireImage.transform.localScale = Vector3.zero;
     }
@@ -127,7 +133,7 @@ public class Campfire : MonoBehaviour, IMouseInteraction
     void SettingBuff(int num)
     {
         character.maxHp = Mathf.RoundToInt(character.maxHp * (100 + mxHps[buffValues[Buff.MAXHEALTH]- num]) * 0.01f);
-        character.currentHp = character.maxHp;
+        //character.currentHp = character.maxHp;
 
         character.recoverHpRatio += reHps[buffValues[Buff.RECOVERY_HEALTH] - num];
 
@@ -154,8 +160,9 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         OffBuffNDebuff();
         character.UpdateStat();
         gameManager.dashCount = 0;
-        gameManager.percentDamage = 1;
+        gameManager.percentDamage = 0;
         isWoodRefill = false;
+        GetComponentInChildren<CheckCharacter>().needItemImage = needWoodImage;
 
         character.InitailizeDashCool();
     }
@@ -193,6 +200,9 @@ public class Campfire : MonoBehaviour, IMouseInteraction
     {
         if (isWoodRefill || gameManager.woodCount < 10)
             return;
+
+        needWoodImage.SetActive(false);
+        GetComponentInChildren<CheckCharacter>().needItemImage = needFishImage;
 
         gameManager.woodCount -= 10;
         fireImage.transform.localScale = fireInitScale;

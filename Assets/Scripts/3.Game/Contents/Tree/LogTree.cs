@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LogTree : MonoBehaviour, IMouseInteraction
@@ -25,6 +26,8 @@ public class LogTree : MonoBehaviour, IMouseInteraction
 
     EffectSound currentSfx;
 
+    bool isLogging = false;
+
     private void Start()
     {
         canLog = false;
@@ -38,13 +41,32 @@ public class LogTree : MonoBehaviour, IMouseInteraction
 
     private void Update()
     {
-        if (gamesceneManager.isNight && canLog)
-            canLog = false;
+        if (gamesceneManager.isNight)
+        {
+            if (canLog)
+            {
+                canLog = false;
+            }
+
+            else if (isLogging)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 
     private void OnDisable()
     {
         StopAllCoroutines();
+
+        if (currentSfx != null)
+        {
+            soundManager.StopLoopSFX(currentSfx);
+        }
+
+        isLogging = false;
+        character.canFlip = true;
+        character.isCanControll = true;
     }
 
     Vector3 LogAngle()
@@ -113,6 +135,8 @@ public class LogTree : MonoBehaviour, IMouseInteraction
 
     public IEnumerator EndInteraction(Animator anim, float waitTime)
     {
+        isLogging = true;
+
         if (gameManager.specialStatus[SpecialStatus.DoubleAxe])
         {
             waitTime *= 0.5f;
@@ -122,26 +146,30 @@ public class LogTree : MonoBehaviour, IMouseInteraction
 
         yield return CoroutineCaching.WaitForSeconds(waitTime);
 
-        if (gamesceneManager.isNight)
-            yield break;
+        isLogging = false;
+
+        character.isCanControll = true;
+        character.canFlip = true;
 
         if (currentSfx != null)
         {
             soundManager.StopLoopSFX(currentSfx);
         }
 
+        if (gamesceneManager.isNight)
+            yield break;
+
         soundManager.PlaySFX(instanceObstacleSound);
 
         SpawnObstacle();
 
-        int getWoodQuantity = Random.Range(1, 5);
+        int getWoodQuantity = Random.Range(1, 6);
 
         character.getItemUI.GetComponent<GetItemUI>().SetGetItemImage(woodSprite, getWoodQuantity);
         character.getItemUI.gameObject.SetActive(true);
         gameManager.woodCount += getWoodQuantity;
         anim.SetBool("isLogging", false);
-        character.isCanControll = true;
-        character.canFlip = true;
+
         character.ChangeAnimationController(0);
     }
 

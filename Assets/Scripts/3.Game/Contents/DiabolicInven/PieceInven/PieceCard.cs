@@ -74,8 +74,8 @@ public class PieceCard : MonoBehaviour
             {
                 if (i < item.ItemShape.Height && j < item.ItemShape.Width)
                 {
-                    //itemShapeViewParent.GetChild(i * 3 + j).GetComponent<Image>().color = item.ItemShape.Shape[i * item.ItemShape.Width + j] ? shapeColors[1] : shapeColors[0];
-                    itemShapeViewParent.GetChild(i * 3 + j).gameObject.SetActive(item.ItemShape.Shape[i * item.ItemShape.Width + j]);
+                    itemShapeViewParent.GetChild(i * 3 + j).GetComponent<Image>().color = item.ItemShape.Shape[i * item.ItemShape.Width + j] ? shapeColors[1] : shapeColors[0];
+                    itemShapeViewParent.GetChild(i * 3 + j).gameObject.SetActive(true);
                 }
 
                 else

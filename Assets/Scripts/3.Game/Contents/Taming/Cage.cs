@@ -4,6 +4,7 @@ using UnityEngine;
 public class Cage : MonoBehaviour, IMouseInteraction
 {
     [SerializeField] GameObject tamingPet;
+    [SerializeField] GameObject needFishImage;
 
     Character character;
     GameSceneUI gameSceneUI;
@@ -12,6 +13,8 @@ public class Cage : MonoBehaviour, IMouseInteraction
     SoundManager soundManager;
 
     bool isCanInteraction = false;
+
+    bool isTamingGamePlay = false;
 
     private void Start()
     {
@@ -23,17 +26,19 @@ public class Cage : MonoBehaviour, IMouseInteraction
 
         gameSceneUI.tamingGame.SetActive(false);
         tamingPet.SetActive(false);
+
+        GetComponentInChildren<CheckCharacter>().needItemImage = needFishImage;
     }
 
     private void Update()
     {
-        if (gameSceneManager.isNight && isCanInteraction && character.IsTamingPet)
+        if (gameSceneManager.isNight || isTamingGamePlay || character.IsTamingPet)
             isCanInteraction = false;
     }
 
     public void CanInteraction(bool _canInteraction)
     {
-        if (character.IsTamingPet)
+        if (character.IsTamingPet || isTamingGamePlay)
             return;
 
         isCanInteraction = _canInteraction;
@@ -55,7 +60,7 @@ public class Cage : MonoBehaviour, IMouseInteraction
 
     public void InteractionLeftButtonFuc(GameObject hitObject)
     {
-        if (character.IsTamingPet || gameManager.round % 5 != 1)
+        if (character.IsTamingPet)
             return;
 
         if (isCanInteraction && (gameManager.fishHighGradeCount + gameManager.fishLowGradeCount) > 0)
@@ -86,6 +91,8 @@ public class Cage : MonoBehaviour, IMouseInteraction
 
     IEnumerator StartTamingGame(GameObject hitObject)
     {
+        isTamingGamePlay = true;
+
         yield return CoroutineCaching.WaitWhile(() => tamingPet.transform.position != transform.position);
 
         gameSceneUI.tamingGame.GetComponent<TamingViewUI>().catchPet = hitObject;

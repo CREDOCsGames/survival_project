@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
-  damage: 26
+  damage: 40
 --- !u!1 &3285831500780197140
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  damage: 13
+  damage: 25
 --- !u!1 &4942740927780279737
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,7 +257,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileDamage: 0
   penetrateCount: 10
-  fireRange: 0
   canCri: 0
   isPenetrate: 0
 --- !u!114 &5259115044987806317
