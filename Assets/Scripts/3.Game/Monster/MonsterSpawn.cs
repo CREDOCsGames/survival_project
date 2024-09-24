@@ -112,7 +112,7 @@ public class MonsterSpawn : MonoBehaviour
         {
             yield return CoroutineCaching.WaitForSeconds(time);
 
-            currentDelayTime -= spawnDelayDecrease + ((gameManager.round / 2) * 0.2f);
+            currentDelayTime -= spawnDelayDecrease + ((gameManager.round / 2) * 0.05f);
         }
     }
 

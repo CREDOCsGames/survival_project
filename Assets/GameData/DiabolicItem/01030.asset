@@ -24,7 +24,7 @@ MonoBehaviour:
   recoverHp: 0
   defence: 0
   attackSpeed: 0
-  speed: 1
+  speed: 0
   critical: 0
   avoid: 0
   isDoubleAxe: 0

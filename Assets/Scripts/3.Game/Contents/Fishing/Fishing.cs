@@ -70,7 +70,11 @@ public class Fishing : Singleton<Fishing>
 
     private void OnEnable()
     {
-        maxFishCount = 5;
+#if UNITY_EDITOR
+        maxFishCount = 55;
+#else
+        maxFishCount = 10;
+#endif
         currentFishCount = maxFishCount;
 
         maxFishingCount.text = maxFishCount.ToString();
@@ -198,7 +202,11 @@ public class Fishing : Singleton<Fishing>
     {
         int rand = Random.Range(0, 100);
 
+#if UNITY_EDITOR
+        int high = gameManager.specialStatus[SpecialStatus.BaitWarm] ? 0 : 0;
+#else
         int high = gameManager.specialStatus[SpecialStatus.BaitWarm] ? 60 : 80;
+#endif
 
         if (rand < high)
         {
@@ -241,7 +249,9 @@ public class Fishing : Singleton<Fishing>
             else
             {
                 if (itemManager.getItems[fishingPieceList[i]] < fishingPieceList[i].MaxCount)
+                {
                     itemList.Add(fishingPieceList[i]);
+                }
             }
         }
 

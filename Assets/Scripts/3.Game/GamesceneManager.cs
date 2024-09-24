@@ -126,15 +126,17 @@ public class GamesceneManager : Singleton<GamesceneManager>
         character.transform.position = gameManager.round == 0 ? initSpawnPos.transform.position : new Vector3(-1f, 0f, -41f);
 
         gameManager.round++;
-        currentGameTime = gameManager.gameDayTime;
 
         if (gameManager.round > 1)
         {
+            gameManager.gameDayTime -= 7;
             soundManager.PlayBGM(5, true);
             multicellInvenPanel.SetActive(true);
 
             gameSceneUI.ActiveTutoPanel(TutoType.MulticellTuto, multicellTutoImage);
         }
+
+        currentGameTime = gameManager.gameDayTime;
 
         character.canWeaponChange = true;
 

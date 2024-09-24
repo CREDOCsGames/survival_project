@@ -22,7 +22,7 @@ MonoBehaviour:
   closeDamage: 0
   longDamage: 0
   recoverHp: 0
-  defence: 3
+  defence: 0
   attackSpeed: 0
   speed: 0
   critical: 0

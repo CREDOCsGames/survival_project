@@ -14,7 +14,7 @@ public class Cage : MonoBehaviour, IMouseInteraction
 
     bool isCanInteraction = false;
 
-    bool isTamingGamePlay = false;
+    public int beforeTamingDay;
 
     private void Start()
     {
@@ -27,18 +27,20 @@ public class Cage : MonoBehaviour, IMouseInteraction
         gameSceneUI.tamingGame.SetActive(false);
         tamingPet.SetActive(false);
 
+        beforeTamingDay = -1;
+
         GetComponentInChildren<CheckCharacter>().needItemImage = needFishImage;
     }
 
     private void Update()
     {
-        if (gameSceneManager.isNight || isTamingGamePlay || character.IsTamingPet)
+        if (gameSceneManager.isNight || beforeTamingDay == gameManager.round || character.IsTamingPet)
             isCanInteraction = false;
     }
 
     public void CanInteraction(bool _canInteraction)
     {
-        if (character.IsTamingPet || isTamingGamePlay)
+        if (character.IsTamingPet)
             return;
 
         isCanInteraction = _canInteraction;
@@ -91,7 +93,7 @@ public class Cage : MonoBehaviour, IMouseInteraction
 
     IEnumerator StartTamingGame(GameObject hitObject)
     {
-        isTamingGamePlay = true;
+        beforeTamingDay = gameManager.round;
 
         yield return CoroutineCaching.WaitWhile(() => tamingPet.transform.position != transform.position);
 

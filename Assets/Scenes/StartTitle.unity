@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -275,7 +275,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &84502445
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5489,14 +5489,14 @@ MonoBehaviour:
   damageStorage: {fileID: 1692643827}
   monsterBulletStorage: {fileID: 457507069}
   characterPrefab: {fileID: 289213144344291185, guid: 8d77a8f4167ea0b469ec40c27f9686ea, type: 3}
-  gameDayTime: 0
+  gameDayTime: 555
   gameNightTime: 0
   round: 0
   maxRound: 15
   woodCount: 30
   fishHighGradeCount: 0
   fishLowGradeCount: 11
-  maxHp: 100
+  maxHp: 1111
   damage: 0
   closeDamage: 0
   longDamage: 0
@@ -5563,7 +5563,7 @@ MonoBehaviour:
   - monsterNum: 101
     monsterName: "\uC554\uC0B4 \uD574\uC801"
     monsterMaxHp: 50
-    monsterDamage: 6
+    monsterDamage: 8
     monsterSpeed: 4.5
     attackDelay: 0.7
     attackCount: 1
@@ -5572,7 +5572,7 @@ MonoBehaviour:
   - monsterNum: 102
     monsterName: "\uB300\uD3EC \uD574\uC801"
     monsterMaxHp: 100
-    monsterDamage: 12
+    monsterDamage: 15
     monsterSpeed: 1
     attackDelay: 2
     attackCount: 1
@@ -5581,7 +5581,7 @@ MonoBehaviour:
   - monsterNum: 103
     monsterName: "\uB9AC\uBCFC\uBC84 \uD574\uC801"
     monsterMaxHp: 50
-    monsterDamage: 6
+    monsterDamage: 8
     monsterSpeed: 2.4
     attackDelay: 2
     attackCount: 1
@@ -5590,7 +5590,7 @@ MonoBehaviour:
   - monsterNum: 201
     monsterName: "\uC554\uC0B4 \uD574\uC801"
     monsterMaxHp: 70
-    monsterDamage: 8
+    monsterDamage: 10
     monsterSpeed: 6
     attackDelay: 0.5
     attackCount: 1
@@ -5599,7 +5599,7 @@ MonoBehaviour:
   - monsterNum: 202
     monsterName: "\uB300\uD3EC \uD574\uC801"
     monsterMaxHp: 250
-    monsterDamage: 17
+    monsterDamage: 20
     monsterSpeed: 1
     attackDelay: 3
     attackCount: 1
@@ -5608,7 +5608,7 @@ MonoBehaviour:
   - monsterNum: 203
     monsterName: "\uB9AC\uBCFC\uBC84 \uD574\uC801"
     monsterMaxHp: 70
-    monsterDamage: 9
+    monsterDamage: 12
     monsterSpeed: 2.7
     attackDelay: 2
     attackCount: 3
@@ -10294,7 +10294,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2015208395
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10313,7 +10313,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -117, y: -1}
+  m_AnchoredPosition: {x: -116.99994, y: -1}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2015208396
@@ -10409,7 +10409,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 178, y: -60}
+  m_AnchoredPosition: {x: 173, y: -60}
   m_SizeDelta: {x: 201.00012, y: 300}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2050112246

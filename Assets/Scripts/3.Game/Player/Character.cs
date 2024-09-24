@@ -187,7 +187,6 @@ public class Character : Singleton<Character>
         maxHp = gameManager.status[Status.Maxhp];
 
 #if UNITY_EDITOR
-        if (gameManager.round == 0)
             currentHp = maxHp;
 
 #else
@@ -468,7 +467,7 @@ public class Character : Singleton<Character>
             {
                 if (!isAvoid)
                 {
-                    int trueDamage = Mathf.RoundToInt((damage - gameManager.status[Status.Defence]) * (100 + percentDefence) * 0.01f);
+                    int trueDamage = Mathf.RoundToInt((damage - gameManager.status[Status.Defence]) * (100 - percentDefence) * 0.01f);
 
                     if (gameManager.specialStatus[SpecialStatus.Rum])
                         trueDamage = Mathf.RoundToInt(trueDamage * 1.5f);
@@ -534,9 +533,12 @@ public class Character : Singleton<Character>
 
     void ChangeHitColor()
     {
+        if (currentHp <= 0)
+            return;
+
         isAttacked = true;
 
-        if (currentHp > 0 && !isAvoid)
+        if (!isAvoid)
         {
             if (currentCoroutine != null)
                 StopCoroutine(currentCoroutine);
@@ -544,7 +546,7 @@ public class Character : Singleton<Character>
             currentCoroutine = StartCoroutine(PlayerColorBlink());
         }
 
-        if(currentHp > 0 && isAvoid)
+        else if(isAvoid)
         {
             //SoundManager.Instance.PlaySFX("Avoid");
             if (currentCoroutine != null)
@@ -601,6 +603,8 @@ public class Character : Singleton<Character>
         Color semiRed = new Color(1, 0, 0, 0.5f);
         Color semiWhite = new Color(1, 1, 1, 0.5f);
 
+        int weaponIndex = currentWeaponIndex;
+
         rendUpper.color = semiRed;
         rendLower.color = semiRed;
         if (weaponImages[currentWeaponIndex] != null)
@@ -632,6 +636,11 @@ public class Character : Singleton<Character>
         rendLower.color = Color.white;
         if (weaponImages[currentWeaponIndex] != null)
             weaponImages[currentWeaponIndex].color = Color.white;
+
+        if(weaponIndex != currentWeaponIndex && weaponImages[weaponIndex] != null)
+        {
+            weaponImages[weaponIndex].color = Color.white;
+        }
 
         isAttacked = false;
     }

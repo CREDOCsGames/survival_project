@@ -189,7 +189,7 @@ public class GameManager : Singleton<GameManager>
             specialStatus.Add((SpecialStatus)i, false);
         }
 
-       //specialStatus[SpecialStatus.Tabatiere] = true;
+       //specialStatus[SpecialStatus.BloodMadness] = true;
     }
 
     public void ToNextScene(string sceneName)
