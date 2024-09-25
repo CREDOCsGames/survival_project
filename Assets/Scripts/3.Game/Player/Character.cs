@@ -1,8 +1,9 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
-using System.Linq;
 
 public enum CHARACTER_NUM
 {
@@ -645,8 +646,14 @@ public class Character : Singleton<Character>
         isAttacked = false;
     }
 
-    public IEnumerator MoveToInteractableObject(Vector3 movePos, GameObject interactionObejct, float animTime, int animNum, int clipNum = -1, int flipNum = -1)
+    public void MoveToInteractableObject(Vector3 movePos, GameObject interactionObejct, float animTime, int animNum, int clipNum = -1, int flipNum = -1)
     {
+        StartCoroutine(IMoveToInteractableObject(movePos, interactionObejct, animTime, animNum, clipNum, flipNum));
+    }
+
+    IEnumerator IMoveToInteractableObject(Vector3 movePos, GameObject interactionObejct, float animTime, int animNum, int clipNum = -1, int flipNum = -1)
+    {
+        bool isArrive = false;
         isCanControll = false;
         agent.enabled = false;
 
@@ -663,11 +670,12 @@ public class Character : Singleton<Character>
             ChangeAnimClip(clipNum);
         }
 
-        while (transform.position != movePos)
+        while (!isArrive)
         {
-            if(gamesceneManager.isNight)
+            if (gamesceneManager.isNight)
             {
                 isCanControll = true;
+                agent.enabled = true;
                 yield break;
             }
 
@@ -678,7 +686,7 @@ public class Character : Singleton<Character>
 
             if (transform.position == movePos && !gamesceneManager.isNight)
             {
-                if(flipNum != -1)
+                if (flipNum != -1)
                 {
                     canFlip = false;
                     rendUpper.flipX = flipNum != 0;
@@ -692,12 +700,15 @@ public class Character : Singleton<Character>
 
                 anim.SetBool("isLogging", true);
                 StartCoroutine(interactionObejct.GetComponent<IMouseInteraction>().EndInteraction(anim, animTime));
-
-                agent.enabled = true;
+                isArrive = true;
             }
 
             yield return null;
         }
+        
+        //yield return CoroutineCaching.WaitUntil(() => isCanControll);
+        
+        agent.enabled = true;
     }
 
     void ChangeAnimClip(int num)

@@ -123,7 +123,7 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
 
             int num = (character.transform.position - transform.position).x > 0 ? 0 : 1;
 
-            StartCoroutine(character.MoveToInteractableObject(gatherPoint[num].position, gameObject, 3, 5, -1, num));
+            character.MoveToInteractableObject(gatherPoint[num].position, gameObject, 3, 5, -1, num);
         }
     }
 
@@ -143,8 +143,6 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
         character.isCanControll = true;
         character.canFlip = true;
 
-        Destroy(gameObject);
-
         if (currentSfx != null)
         {
             soundManager.StopLoopSFX(currentSfx);
@@ -163,7 +161,9 @@ public class GatherFruit : MonoBehaviour, IMouseInteraction
         
         anim.SetBool("isLogging", false);
 
-        character.ChangeAnimationController(0); 
+        character.ChangeAnimationController(0);
+
+        Destroy(gameObject);
     }
 
     void RecoveryGaugeUp()

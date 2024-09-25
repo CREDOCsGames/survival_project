@@ -29,7 +29,16 @@ public class EffectSound : MonoBehaviour
     IEnumerator CheckPlay()
     {
         while (source.isPlaying)        // 만약 플레잉 중이라면
+        {
             yield return null;          // 한프레임 대기
+
+            if (GameManager.Instance.isPause)
+                source.Pause();
+
+            yield return CoroutineCaching.WaitWhile(() => GameManager.Instance.isPause);
+
+            source.UnPause();
+        }
 
         DestroyPool();
     }
@@ -42,6 +51,8 @@ public class EffectSound : MonoBehaviour
     public void DestroyPool()
     {
         if (gameObject.activeSelf)
+        {
             managedPool.Release(this);
+        }
     }
 }

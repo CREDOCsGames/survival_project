@@ -109,7 +109,7 @@ public class LogTree : MonoBehaviour, IMouseInteraction
             arrow.SetActive(false);
             obstacleAngle = LogAngle();
             canLog = false;
-            StartCoroutine(character.MoveToInteractableObject(logPoses[posNum].position, gameObject, 3, 1, posNum, -1));
+            character.MoveToInteractableObject(logPoses[posNum].position, gameObject, 3, 1, posNum, -1);
 
             if(posNum == 0)
             {
@@ -161,8 +161,6 @@ public class LogTree : MonoBehaviour, IMouseInteraction
 
         soundManager.PlaySFX(instanceObstacleSound);
 
-        SpawnObstacle();
-
         int getWoodQuantity = Random.Range(1, 6);
 
         character.getItemUI.GetComponent<GetItemUI>().SetGetItemImage(woodSprite, getWoodQuantity);
@@ -171,6 +169,8 @@ public class LogTree : MonoBehaviour, IMouseInteraction
         anim.SetBool("isLogging", false);
 
         character.ChangeAnimationController(0);
+
+        SpawnObstacle();
     }
 
     /*private void OnDrawGizmos()

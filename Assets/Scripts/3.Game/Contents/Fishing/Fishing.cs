@@ -180,6 +180,10 @@ public class Fishing : Singleton<Fishing>
         isCatch = true;
         fishingAnim.isCatch = true;
 
+#if UNITY_EDITOR
+        catchBar.value = catchPointStart;
+#endif
+
         if (catchBar.value < catchPointStart || catchBar.value > catchPointEnd)
         {
             fishingAnim.CatchSuccess = false;

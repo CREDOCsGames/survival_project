@@ -5489,7 +5489,7 @@ MonoBehaviour:
   damageStorage: {fileID: 1692643827}
   monsterBulletStorage: {fileID: 457507069}
   characterPrefab: {fileID: 289213144344291185, guid: 8d77a8f4167ea0b469ec40c27f9686ea, type: 3}
-  gameDayTime: 20
+  gameDayTime: 5
   gameNightTime: 20
   round: 0
   maxRound: 15
