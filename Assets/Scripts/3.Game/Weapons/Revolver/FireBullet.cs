@@ -27,7 +27,7 @@ public class FireBullet : FireProjectile
             bulletParent.GetChild(i).gameObject.SetActive(true);
         }
 
-        for(int i = maxBulletCount; i<bulletParent.childCount; ++i) 
+        for (int i = maxBulletCount; i < bulletParent.childCount; ++i)
         {
             bulletParent.GetChild(i).gameObject.SetActive(false);
         }
@@ -80,7 +80,10 @@ public class FireBullet : FireProjectile
 
             character.canWeaponChange = false;
             SetFire();
-            bulletParent.GetChild(currentBulletCount - 1).gameObject.SetActive(false);
+
+            if (bulletParent.gameObject.activeSelf)
+                bulletParent.GetChild(currentBulletCount - 1).gameObject.SetActive(false);
+
             currentBulletCount--;
             gameManager.totalBulletCount--;
 

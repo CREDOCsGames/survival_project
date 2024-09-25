@@ -94,7 +94,7 @@ public class GameManager : Singleton<GameManager>
 
     [HideInInspector] public bool isCursorVisible = true;
 
-    public int pieceCardGetRate;
+    public int pieceCardGetRate = 10;
 
     protected override void Awake()
     {
@@ -189,7 +189,9 @@ public class GameManager : Singleton<GameManager>
             specialStatus.Add((SpecialStatus)i, false);
         }
 
-       //specialStatus[SpecialStatus.BloodMadness] = true;
+#if UNITY_EDITOR
+        specialStatus[SpecialStatus.AmmoPouch] = true;
+#endif
     }
 
     public void ToNextScene(string sceneName)

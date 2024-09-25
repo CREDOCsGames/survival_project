@@ -181,11 +181,24 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
         gameSceneUI.ActiveTutoPanel(TutoType.NightTuto, weaponChangeTutoImage);
 
+        if (gameManager.specialStatus[SpecialStatus.AmmoPouch])
+        {
+            if (gameManager.totalBulletCount <= 0)
+                gameManager.totalBulletCount++;
+        }
+
         character.UpdateStat();
         character.weaponParent.gameObject.SetActive(true);
         character.transform.position = new Vector3(-1f, 0f, -41f);
 
         campFire.GetComponent<Campfire>().ToNightScene();
+
+        if (gameManager.specialStatus[SpecialStatus.Rum])
+        {
+            character.speed *= 1.2f;
+        }
+
+        
 
         currentGameTime = gameManager.gameNightTime;
 
