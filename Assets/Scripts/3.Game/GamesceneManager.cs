@@ -1,7 +1,7 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class GamesceneManager : Singleton<GamesceneManager>
 {
@@ -84,11 +84,6 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
     IEnumerator DayRoutine()
     {
-#if UNITY_EDITOR
-
-#else
-        gameManager.dashCount = 0;
-#endif
         gameManager.bloodDamage = 0;
         gameSceneUI.CursorChange(CursorType.Normal);
 
@@ -129,7 +124,10 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
         if (gameManager.round > 1)
         {
+#if UNITY_EDITOR
+#else
             gameManager.gameDayTime -= 7;
+#endif
             soundManager.PlayBGM(5, true);
             multicellInvenPanel.SetActive(true);
 
@@ -164,7 +162,8 @@ public class GamesceneManager : Singleton<GamesceneManager>
         character.isCanControll = true;
 
         //yield return new WaitForSeconds(gameManager.gameDayTime);
-        yield return CoroutineCaching.WaitForSeconds(gameManager.gameDayTime);
+        //yield return CoroutineCaching.WaitForSeconds(gameManager.gameDayTime);
+        yield return CoroutineCaching.WaitUntil(() => currentGameTime <= 0);
 
         StartCoroutine(NightRoutine()); 
     }
@@ -194,12 +193,16 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
 
         //yield return new WaitForSeconds(gameManager.gameNightTime);
-        yield return CoroutineCaching.WaitForSeconds(gameManager.gameNightTime);
+        //yield return CoroutineCaching.WaitForSeconds(gameManager.gameNightTime);
+        yield return CoroutineCaching.WaitUntil(() => currentGameTime <= 0);
 
         if (gameManager.round != gameManager.maxRound)
         {
+#if UNITY_EDITOR
+#else
             gameManager.fishLowGradeCount = 0;
             gameManager.fishHighGradeCount = 0;
+#endif
 
             if (character.IsTamingPet)
                 character.TamedPed.GetComponent<Pet>().RunAway();
@@ -286,4 +289,33 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
         return new Vector3(groundX, 0, groundZ);
     }
+
+#if UNITY_EDITOR
+    void OnGUI () 
+    {
+        float width = Screen.width;
+        float height = Screen.height;
+
+        GUIStyle styleBox = new GUIStyle("box");
+        styleBox.fontSize = (int)(30 * width/1920);
+
+        GUIStyle style = new GUIStyle("button");
+        style.fontSize = (int)(50 * width / 1920);
+
+        // 배경 박스 만들기
+        GUI.Box(new Rect(0,0,width * 0.2f , height * 0.4f), "Menu", styleBox);
+    
+        // 버튼 하나 만들고 클릭시 true가되어 함수 호출
+        if(GUI.Button(new Rect(width * 0.02f, height * 0.05f, width * 0.16f, height * 0.09f ), "스킵",style)) 
+        {
+            currentGameTime = 0;
+        }
+    
+        /*// 두번 째 버튼 만들기
+        if(GUI.Button(new Rect(width * 0.02f, height * 0.15f, width * 0.16f, height * 0.09f), "Level 2")) 
+        {
+            //Application.LoadLevel(2);
+        }*/
+    }
+#endif
 }

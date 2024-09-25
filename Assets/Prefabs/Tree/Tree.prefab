@@ -793,8 +793,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.8463199, y: 2.807707, z: 0.2}
-  m_Center: {x: -0.029690415, y: 0.4719777, z: -3.98219e-16}
+  m_Size: {x: 1.8463199, y: 2.7582405, z: 0.2}
+  m_Center: {x: -0.029690385, y: 0.49671096, z: -4.673843e-17}
 --- !u!114 &2434142344764085353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -917,7 +917,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &7824597457452975679

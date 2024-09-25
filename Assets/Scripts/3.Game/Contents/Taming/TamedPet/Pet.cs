@@ -38,6 +38,14 @@ public class Pet : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+
+        isAttack = false;
+        canAttack = true;
+    }
+
     private void Update()
     {
         if (!isAttack)
@@ -164,7 +172,7 @@ public class Pet : MonoBehaviour
 
     public void RunAway()
     {
-        if (character.GetPetRound + 5 == gameManager.round)
+        if (character.GetPetRound + 4 == gameManager.round)
             character.RunAwayPet();
     }
 

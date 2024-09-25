@@ -95,6 +95,7 @@ MonoBehaviour:
   tutoType: 5
   nextTuto: 0
   tutoImage: {fileID: -1331469006, guid: 82f706666a6c87e4b9983b42ec673165, type: 3}
+  needItemImage: {fileID: 0}
 --- !u!1 &2418993141755308113
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,8 +199,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.9064731, y: 1.0142248, z: 0.1}
-  m_Center: {x: 0.008954614, y: 0.38338935, z: -1.6571353e-15}
+  m_Size: {x: 0.9064731, y: 0.7007919, z: 0.1}
+  m_Center: {x: 0.008954614, y: 0.22667283, z: -3.314982e-16}
 --- !u!114 &4065876531615089374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,12 +346,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 12
-  m_Sprite: {fileID: 1426382303, guid: bd9ee9e4f98d254448b1edfa62fede89, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ead5fab9c777d7b41a8ef746c3c88149, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 8.533334, y: 8.533334}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

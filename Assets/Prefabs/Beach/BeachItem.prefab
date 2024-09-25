@@ -64,6 +64,7 @@ MonoBehaviour:
   tutoType: 13
   nextTuto: 0
   tutoImage: {fileID: 0}
+  needItemImage: {fileID: 0}
 --- !u!1 &1619837401552321815
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,8 +188,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.6215019, y: 2.2227616, z: 0.20000005}
-  m_Center: {x: 0.20041943, y: 0.15747255, z: 4.614631e-16}
+  m_Size: {x: 2.8200946, y: 3.2073195, z: 0.20000005}
+  m_Center: {x: 0.071998596, y: 0.05045557, z: -1.7116143e-16}
 --- !u!54 &1248216460410623440
 Rigidbody:
   m_ObjectHideFlags: 0

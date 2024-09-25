@@ -127,24 +127,27 @@ public class Campfire : MonoBehaviour, IMouseInteraction
             StartCoroutine(GameSceneUI.Instance.IActiveTutoPanel(TutoType.DashTuto, dashTutoImage));
         }
 
-        SettingBuff(0);
+        SettingBuff();
     }
 
-    void SettingBuff(int num)
+    void SettingBuff()
     {
-        character.maxHp = Mathf.RoundToInt(character.maxHp * (100 + mxHps[buffValues[Buff.MAXHEALTH]- num]) * 0.01f);
+        character.maxHp = Mathf.RoundToInt(character.maxHp * (100 + mxHps[buffValues[Buff.MAXHEALTH]]) * 0.01f);
         //character.currentHp = character.maxHp;
 
-        character.recoverHpRatio += reHps[buffValues[Buff.RECOVERY_HEALTH] - num];
+        character.recoverHpRatio += reHps[buffValues[Buff.RECOVERY_HEALTH]];
 
-        character.speed *= (100 + speeds[buffValues[Buff.SPEED] - num]) * 0.01f;
-        character.avoid += avoids[buffValues[Buff.SPEED] - num];
-        //gameManager.dashCount = buffValues[Buff.SPEED] - num == 3 ? 1 : 0;
-        gameManager.dashCount = dash[buffValues[Buff.SPEED - num]];
+        character.speed *= (100 + speeds[buffValues[Buff.SPEED]]) * 0.01f;
+        character.avoid += avoids[buffValues[Buff.SPEED]];
+        //gameManager.dashCount = buffValues[Buff.SPEED] == 3 ? 1 : 0;
+#if UNITY_EDITOR
+#else
+        gameManager.dashCount = dash[buffValues[Buff.SPEED]];
         character.dashCount = gameManager.dashCount;
+#endif
 
-        character.percentDamage += dmgs[buffValues[Buff.POWER] - num];
-        character.defence += dfs[buffValues[Buff.POWER] - num];
+        character.percentDamage += dmgs[buffValues[Buff.POWER]];
+        character.defence += dfs[buffValues[Buff.POWER]];
     }
 
     public void ToNightScene()
@@ -159,8 +162,7 @@ public class Campfire : MonoBehaviour, IMouseInteraction
     {
         OffBuffNDebuff();
         character.UpdateStat();
-        gameManager.dashCount = 0;
-        gameManager.percentDamage = 0;
+
         isWoodRefill = false;
         GetComponentInChildren<CheckCharacter>().needItemImage = needWoodImage;
 
@@ -171,14 +173,17 @@ public class Campfire : MonoBehaviour, IMouseInteraction
     {
         for (int i = 0; i < (int)Buff.COUNT; i++)
         {
-            buffValues[(Buff)i] = 1;
+            buffValues[(Buff)i] = 0;
             debuffValues[(Debuff)i] = 0;
         }
 
-        SettingBuff(1);
+        beforeBuff = Buff.COUNT;
+
+        SettingBuff();
 
         debuffIcon.SetActive(false);
         buffIcon.SetActive(false);
+        buffDescriptionPanel.gameObject.SetActive(false);
     }
 
     public void InteractionLeftButtonFuc(GameObject hitObject)
@@ -208,7 +213,6 @@ public class Campfire : MonoBehaviour, IMouseInteraction
         fireImage.transform.localScale = fireInitScale;
         isWoodRefill = true;
 
-        //interactionUI.SetActive(false);
         canInteraction = false;
 
         soundManager.PlaySFX(igniteSound);
@@ -236,6 +240,9 @@ public class Campfire : MonoBehaviour, IMouseInteraction
 
         else
         {
+            if (buffValues[buffType] < 1)
+                buffValues[buffType] = 1;
+
             gameManager.fishLowGradeCount--;
         }
 
