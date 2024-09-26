@@ -47,6 +47,6 @@ MonoBehaviour:
     _width: 2
     _height: 1
     _shape: 0101
-  specialStatInfo: "\uB09A\uC2DC \uCE90\uCE58 \uD3EC\uC778\uD2B8 \uD06C\uAE30 <color=lime>2\uBC30</color>\uB85C
-    \uC99D\uAC00."
+  specialStatInfo: "\uB09A\uC2DC \uCE90\uCE58 \uD3EC\uC778\uD2B8 \uD06C\uAE30\uAC00
+    <color=lime>2\uBC30</color>\uB85C \uC99D\uAC00."
   description: "\uC5B4\uB5A4 \uD574\uC801\uC774 \uC4F0\uB358 \uC791\uC0B4\uC774\uB2E4."

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
 using UnityEngine.TextCore.Text;
+using System.Collections;
 
 public class OptionUI : MonoBehaviour
 {
@@ -194,7 +195,6 @@ public class OptionUI : MonoBehaviour
             gameManager.GamePause(true);
         }
     }
-
     virtual public void ReturnToGame()
     {
         if (gameManager.isPause)
@@ -225,10 +225,15 @@ public class OptionUI : MonoBehaviour
             panel.SetActive(false);
             //gameManager.isPause = false;
             //Time.timeScale = 1;
-            gameManager.GamePause(false);
+            Invoke("UnPauseGame", Time.deltaTime);
 
             Cursor.visible = gameManager.isCursorVisible;
         }
+    }
+
+    void UnPauseGame()
+    {
+        gameManager.GamePause(false);
     }
 
     public void OpenCheckHomePanel()

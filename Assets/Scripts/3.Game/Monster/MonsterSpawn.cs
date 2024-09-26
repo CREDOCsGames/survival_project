@@ -101,7 +101,9 @@ public class MonsterSpawn : MonoBehaviour
 
             SpawnSubordinateMonster(pos, currentSpawnAmount);
 
-            //yield return new WaitForSeconds(time);
+            Debug.Log(gamesceneManager.currentGameTime);
+            Debug.Log("delay: " + currentDelayTime);
+
             yield return CoroutineCaching.WaitForSeconds(currentDelayTime);
         }
     }
