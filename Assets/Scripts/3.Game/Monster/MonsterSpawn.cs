@@ -70,7 +70,6 @@ public class MonsterSpawn : MonoBehaviour
     {
         while (true)
         {
-            //yield return new WaitUntil(() => gamesceneManager.isNight);
             yield return CoroutineCaching.WaitWhile(() => !gamesceneManager.isNight);
 
             if (gameManager.round % 3 == 1 && gameManager.round != 1)
@@ -80,7 +79,6 @@ public class MonsterSpawn : MonoBehaviour
             currentCoroutine = StartCoroutine(RendSpawnImage());
             StartCoroutine(DecreaseSpawnDelay(10));
 
-            //yield return new WaitUntil(() => !gamesceneManager.isNight);
             yield return CoroutineCaching.WaitWhile(() => gamesceneManager.isNight);
 
             if (currentCoroutine != null)
@@ -92,7 +90,7 @@ public class MonsterSpawn : MonoBehaviour
 
     IEnumerator RendSpawnImage()
     {
-        while (gamesceneManager.isNight)
+        while (gamesceneManager.currentGameTime >= currentDelayTime)
         {
             Vector3 pos = SpawnPosition();
             GameObject spawnMark = Instantiate(spawnImage, pos, spawnImage.transform.rotation, storageParent);
@@ -100,9 +98,6 @@ public class MonsterSpawn : MonoBehaviour
             StartCoroutine(SpawnMonster(true, pos, leaderColor));
 
             SpawnSubordinateMonster(pos, currentSpawnAmount);
-
-            Debug.Log(gamesceneManager.currentGameTime);
-            Debug.Log("delay: " + currentDelayTime);
 
             yield return CoroutineCaching.WaitForSeconds(currentDelayTime);
         }
@@ -256,8 +251,8 @@ public class MonsterSpawn : MonoBehaviour
     int RandomMonster()
     {
         weightValue[0] = Mathf.Clamp(100 - (gameManager.round * 4f), 10, 100);
-        weightValue[1] = gameManager.round >= 5 ? (gameManager.round * 0.2f + 1) * 10f : 0;
-        weightValue[2] = gameManager.round >= 10 ? 10 + (gameManager.round - 10) * 6 : 0;
+        weightValue[1] = gameManager.round >= 10 ? 10 + (gameManager.round - 10) * 6 : 0;
+        weightValue[2] = gameManager.round >= 5 ? (gameManager.round * 0.2f + 1) * 10f : 0;
 
         float rand = Random.Range(0, totalWeight);
         int spawnNum = 0;

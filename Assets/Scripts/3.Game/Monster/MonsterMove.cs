@@ -49,17 +49,19 @@ public class MonsterMove : MonoBehaviour
         waitTime = initWaitTime;
     }
 
+    private void OnEnable()
+    {
+        moveTime = initMoveTime;
+        waitTime = initWaitTime;
+    }
+
     private void Update()
     {
         anim.SetBool("isWalk", agent.enabled);
 
-        if (!GetComponent<Monster>().CanMove || gameManager.isClear)
+        if (!GetComponent<Monster>().CanMove || GetComponent<Monster>().IsDead)
         {
-            if(gameManager.isClear) 
-            {
-                agent.enabled = false;
-            }
-
+            agent.enabled = false;
             return;
         }
 

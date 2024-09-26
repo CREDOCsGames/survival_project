@@ -468,7 +468,7 @@ public class Character : Singleton<Character>
             {
                 if (!isAvoid)
                 {
-                    int trueDamage = Mathf.RoundToInt((damage - gameManager.status[Status.Defence]) * (100 - percentDefence) * 0.01f);
+                    int trueDamage = Mathf.RoundToInt((damage - Mathf.Clamp(gameManager.status[Status.Defence], 0, 6)) * (100 - percentDefence) * 0.01f);
 
                     if (gameManager.specialStatus[SpecialStatus.Rum])
                         trueDamage = Mathf.RoundToInt(trueDamage * 1.5f);

@@ -24,6 +24,8 @@ public class Monster : MonoBehaviour
 
     [HideInInspector] protected bool isDead = false, isAttack = false;
 
+    public bool IsDead => isDead;
+
     public float hp;
     public float maxHp;
 
@@ -83,11 +85,20 @@ public class Monster : MonoBehaviour
 
     void Update()
     {
+        if (!gamesceneManager.isNight || gameManager.isClear)
+        {
+            OnDead();
+        }
+
+        if(isDead)
+        {
+            CheckDieAnimation();
+        }
+
         Attack();
         AttackEnd();
         AttackDelay();
         MoveDelay();
-        OnDead();
     }
 
     public void InitMonsterSetting(bool isLeader)
@@ -110,6 +121,7 @@ public class Monster : MonoBehaviour
         isDead = false;
         isAttack = false;
         canAttack = false;
+        canMove = true;
         anim.speed = 1f;
         transform.localScale = initScale;
         rend.color = initcolor;
@@ -141,7 +153,7 @@ public class Monster : MonoBehaviour
     {
         if (other.CompareTag("Character") && !isDead)
         {
-           character.OnDamaged(damage, gameObject.transform.GetComponentInChildren<MonsterHit>().gameObject);
+            character.OnDamaged(damage, gameObject.transform.GetComponentInChildren<MonsterHit>().gameObject);
         }
     }
 
@@ -211,61 +223,68 @@ public class Monster : MonoBehaviour
             moveDelay = initMoveDelay;
         }
     }
+
     public void OnDamaged(float damage)
     {
         hp -= damage;
 
-        if (runningCoroutine != null)
-            StopCoroutine(runningCoroutine);
-
-        runningCoroutine = MonsterColorBlink();
-        StartCoroutine(runningCoroutine);
-
-        if(hp <= 0)
+        if (hp <= 0)
+        {
             soundManager.PlaySFX(damagedSound);
+            OnDead();
+        }
+
+        else
+        {
+            if (runningCoroutine != null)
+                StopCoroutine(runningCoroutine);
+
+            runningCoroutine = MonsterColorBlink();
+            StartCoroutine(runningCoroutine);
+        }
     }
 
     public void OnDead()
     {
-        if (hp <= 0 || !gamesceneManager.isNight || gameManager.isClear)
+        if (isDead)
+            return;
+
+        isDead = true;
+        GetComponent<MonsterMove>().agent.enabled = false;
+        canMove = false;
+        rend.sortingOrder = 0;
+        anim.speed = 1f;
+        rend.color = Color.white;
+
+        if (itemDropPercent > 0 && hp <= 0)
         {
-            if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Die"))
+            int rand = Random.Range(0, 100);
+
+            if (rand < itemDropPercent)
             {
-                GetComponent<MonsterMove>().agent.enabled = false;
-                canMove = false;
-                rend.sortingOrder = 0;
-                anim.speed = 1f;
-                isDead = true;
-                rend.color = Color.white;
+                gameManager.totalBulletCount++;
 
-                if (itemDropPercent > 0 && hp <= 0)
-                {
-                    int rand = Random.Range(0, 100);
-
-                    if (rand < itemDropPercent)
-                    {
-                        gameManager.totalBulletCount++;
-
-                        character.getItemUI.GetComponent<GetItemUI>().SetBulletGetImage();
-                        character.getItemUI.gameObject.SetActive(true);
-                    }
-                }
-
-                if (runningCoroutine != null)
-                    StopCoroutine(runningCoroutine);
-
-                if (attackColl != null)
-                    attackColl.enabled = false;
-
-                anim.SetTrigger("Die");
+                character.getItemUI.GetComponent<GetItemUI>().SetBulletGetImage();
+                character.getItemUI.gameObject.SetActive(true);
             }
+        }
 
-            else if (anim.GetCurrentAnimatorStateInfo(0).IsName("Die"))
+        if (runningCoroutine != null)
+            StopCoroutine(runningCoroutine);
+
+        if (attackColl != null)
+            attackColl.enabled = false;
+
+        anim.SetTrigger("Die");
+    }
+
+    void CheckDieAnimation()
+    {
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Die"))
+        {
+            if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f)
             {
-                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f)
-                {
-                    DestroyMonster();
-                }
+                DestroyMonster();
             }
         }
     }

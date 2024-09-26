@@ -38,7 +38,7 @@ public class DescriptionUI : MonoBehaviour
                 break;
 
             case StatText.Def:
-                descriptionText.text = "몬스터에게 공격받을 경우 입는 피해를 감소시켜 주는 수치.";
+                descriptionText.text = "몬스터에게 공격받을 경우 입는 피해를 감소시켜 주는 수치.\n(최대 6까지 적용)";
                 break;
 
             case StatText.Avoid:
@@ -50,11 +50,11 @@ public class DescriptionUI : MonoBehaviour
                 break;
 
             case StatText.CAtk:
-                descriptionText.text = "근거리 무기에 적용되는 공격력 수치.";
+                descriptionText.text = "커틀러스에 적용되는 공격력 수치.";
                 break;
 
             case StatText.LAtk:
-                descriptionText.text = "원거리 무기에 적용되는 공격력 수치.";
+                descriptionText.text = "석궁, 리볼버에 적용되는 공격력 수치.";
                 break;
 
             case StatText.ASpd:

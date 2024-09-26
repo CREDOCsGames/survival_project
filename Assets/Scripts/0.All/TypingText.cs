@@ -13,11 +13,6 @@ public class TypingText : MonoBehaviour
 
     [HideInInspector] public bool isOver = false;
 
-    /*private void Start()
-    {
-        StartCoroutine(Typing(typingText, textMasage, typingSpeed));
-    }*/
-
     string typingString;
 
     private void OnEnable()

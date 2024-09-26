@@ -310,7 +310,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
         float height = Screen.height;
 
         GUIStyle styleBox = new GUIStyle("box");
-        styleBox.fontSize = (int)(30 * width/1920);
+        styleBox.fontSize = (int)(30 * width / 1920);
 
         GUIStyle style = new GUIStyle("button");
         style.fontSize = (int)(50 * width / 1920);

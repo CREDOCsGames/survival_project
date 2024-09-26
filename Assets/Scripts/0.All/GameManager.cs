@@ -190,6 +190,7 @@ public class GameManager : Singleton<GameManager>
         }
 
 #if UNITY_EDITOR
+        specialStatus[SpecialStatus.Rum] = true;
         specialStatus[SpecialStatus.AmmoPouch] = true;
 #endif
     }
