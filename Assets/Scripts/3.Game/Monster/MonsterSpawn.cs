@@ -45,7 +45,6 @@ public class MonsterSpawn : MonoBehaviour
         gameManager = GameManager.Instance;
         gamesceneManager = GamesceneManager.Instance;
 
-        //weightValue = new float[] { 100, 0, 0};
         weightValue = new float[] { 100, 0, 0};
         //ground = GamesceneManager.Instance.walkableArea;
 
@@ -77,12 +76,28 @@ public class MonsterSpawn : MonoBehaviour
 
             currentDelayTime = spawnDelay;
             currentCoroutine = StartCoroutine(RendSpawnImage());
-            StartCoroutine(DecreaseSpawnDelay(10));
+            Coroutine delayCoroutine = StartCoroutine(DecreaseSpawnDelay(10));
 
             yield return CoroutineCaching.WaitWhile(() => gamesceneManager.isNight);
 
             if (currentCoroutine != null)
+            {
                 StopCoroutine(currentCoroutine);
+                currentCoroutine = null;
+                Debug.Log("1");
+            }
+
+            if(delayCoroutine != null)
+            {
+                StopCoroutine(delayCoroutine);
+            }
+
+            pool.Clear();
+
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                Destroy(transform.GetChild(i).gameObject);
+            }
         }
     }
 
@@ -105,11 +120,14 @@ public class MonsterSpawn : MonoBehaviour
 
     IEnumerator DecreaseSpawnDelay(float time)
     {
-        while (gamesceneManager.isNight)
+        Debug.Log(time);
+
+        while (true)
         {
             yield return CoroutineCaching.WaitForSeconds(time);
 
             currentDelayTime -= spawnDelayDecrease + ((gameManager.round / 2) * 0.05f);
+            Debug.Log(currentDelayTime);
         }
     }
 
@@ -139,7 +157,31 @@ public class MonsterSpawn : MonoBehaviour
     {
         yield return CoroutineCaching.WaitForSeconds(1);
 
+        /*int rand = RandomMonster();
+        bool isInPool = false;
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).gameObject.activeSelf)
+                continue;
+
+            if (transform.GetChild(i).GetComponent<Monster>()?.monsterNum == rand)
+            {
+                GetPoolMonster(isLeader, pos, color, transform.GetChild(i).GetComponent<Monster>());
+                isInPool = true;
+                Debug.Log("1");
+                break;
+            }
+        }
+
+        if (!isInPool)
+        {
+            Debug.Log("2");
+            GetNewMonster(isLeader, pos, color, rand);
+        }*/
+
         Monster monster = pool.Get();
+
         monster.stat = isLeader ? MonsterInfo.Instance.monsterInfos[monster.monsterNum + (normalMonsterPrefab.Length)] : MonsterInfo.Instance.monsterInfos[monster.monsterNum];
         monster.ChangeOutline(color);
         monster.InitMonsterSetting(isLeader);
@@ -167,7 +209,66 @@ public class MonsterSpawn : MonoBehaviour
         /*if (currentCoroutine != null)
             StopCoroutine(currentCoroutine);*/
     }
+    void GetPoolMonster(bool isLeader, Vector3 pos, Color color, Monster poolMonster)
+    {
+        //Monster monster = pool.Get();
+        Monster monster = poolMonster;
 
+        OnGetMonster(monster);
+
+        monster.stat = isLeader ? MonsterInfo.Instance.monsterInfos[monster.monsterNum + (normalMonsterPrefab.Length)] : MonsterInfo.Instance.monsterInfos[monster.monsterNum];
+        monster.ChangeOutline(color);
+        monster.InitMonsterSetting(isLeader);
+
+        NavMeshHit hit;
+
+        if (NavMesh.SamplePosition(pos, out hit, 500, NavMesh.AllAreas))
+        {
+            monster.transform.position = hit.position;
+        }
+
+        if (monster.GetComponent<NavMeshAgent>())
+        {
+            monster.GetComponent<NavMeshAgent>().enabled = true;
+
+            if (!monster.GetComponent<NavMeshAgent>().isOnNavMesh)
+            {
+#if UNITY_EDITOR
+                Debug.Log("not");
+#endif
+                Debug.Break();
+            }
+        }
+    }
+
+    void GetNewMonster(bool isLeader, Vector3 pos, Color color , int monsterNum)
+    {
+        Monster monster = CreateMonster(monsterNum);
+
+        monster.stat = isLeader ? MonsterInfo.Instance.monsterInfos[monster.monsterNum + (normalMonsterPrefab.Length)] : MonsterInfo.Instance.monsterInfos[monster.monsterNum];
+        monster.ChangeOutline(color);
+        monster.InitMonsterSetting(isLeader);
+
+        NavMeshHit hit;
+
+        if (NavMesh.SamplePosition(pos, out hit, 500, NavMesh.AllAreas))
+        {
+            monster.transform.position = hit.position;
+        }
+
+        if (monster.GetComponent<NavMeshAgent>())
+        {
+            monster.GetComponent<NavMeshAgent>().enabled = true;
+
+            if (!monster.GetComponent<NavMeshAgent>().isOnNavMesh)
+            {
+#if UNITY_EDITOR
+                Debug.Log("not");
+#endif
+                Debug.Break();
+            }
+        }
+    }
 
     void SpawnSubordinateMonster(Vector3 pos, int count)
     {
@@ -219,6 +320,16 @@ public class MonsterSpawn : MonoBehaviour
         return monster;
     }
 
+    private Monster CreateMonster(int num)
+    {
+        Monster monster = Instantiate(normalMonsterPrefab[num]).GetComponent<Monster>();
+        monster.monsterNum = num;
+        monster.SetManagedPool(pool);
+        monster.transform.SetParent(storageParent);
+
+        return monster;
+    }
+
     private IEnumerator CreateBossMonster(int round)
     {
         yield return new WaitForSeconds(2);
@@ -253,6 +364,9 @@ public class MonsterSpawn : MonoBehaviour
         weightValue[0] = Mathf.Clamp(100 - (gameManager.round * 4f), 10, 100);
         weightValue[1] = gameManager.round >= 10 ? 10 + (gameManager.round - 10) * 6 : 0;
         weightValue[2] = gameManager.round >= 5 ? (gameManager.round * 0.2f + 1) * 10f : 0;
+
+        /*Debug.Log(gameManager.round);
+        Debug.Log(weightValue[0] + " " + weightValue[2] + " " + weightValue[1]);*/
 
         float rand = Random.Range(0, totalWeight);
         int spawnNum = 0;

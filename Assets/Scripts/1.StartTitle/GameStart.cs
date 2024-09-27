@@ -18,6 +18,8 @@ public class GameStart : MonoBehaviour
 
         soundManager = SoundManager.Instance;
         soundManager.PlayBGM(0, true);
+
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void ClickStart(string scene)

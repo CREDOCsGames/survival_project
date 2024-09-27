@@ -61,7 +61,9 @@ public class WeaponChanger : MonoBehaviour
     void Update()
     {
         if (!canScroll || !character.isCanControll || !character.canWeaponChange || gameManager.isPause)
+        {
             return;
+        }
 
         float mouseWheel = Input.GetAxis("Mouse ScrollWheel");
 
@@ -102,6 +104,8 @@ public class WeaponChanger : MonoBehaviour
 
         StartCoroutine(ScrollCoolDown());
     }
+
+
 
     IEnumerator ScrollCoolDown()
     {

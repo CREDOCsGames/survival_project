@@ -112,7 +112,6 @@ public class GameManager : Singleton<GameManager>
 
         Vector2 cursorHotSpot = new Vector3(useCursorNormal.width * 0.5f, useCursorNormal.height * 0.5f);
         Cursor.SetCursor(useCursorNormal, cursorHotSpot, CursorMode.ForceSoftware);
-        Cursor.lockState = CursorLockMode.Confined;
 
         Time.timeScale = 1;
         isPause = false;
@@ -153,7 +152,7 @@ public class GameManager : Singleton<GameManager>
         maxRound = 15;
         maxHp = 100;
         recoverHp = 0;
-        defence = 3;
+        defence = 0;
         attackSpeed = 1;
         speed = 3;
         critical = 5;

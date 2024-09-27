@@ -41,6 +41,8 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+
         gameManager = GameManager.Instance;
         character = Character.Instance;
         gameSceneUI = GameSceneUI.Instance;
