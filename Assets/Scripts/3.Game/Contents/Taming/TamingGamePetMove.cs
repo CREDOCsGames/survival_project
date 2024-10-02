@@ -56,9 +56,6 @@ public class TamingGamePetMove : MonoBehaviour
         StartCoroutine(GetRandomSpeedRatio());
         StartCoroutine(SetMoveType());
         StartCoroutine(Dash());
-
-        /*moveType = MoveType.RANDOM;
-        offsetX = 1000; offsetY = 1000;*/
     }
 
     private void OnDisable()

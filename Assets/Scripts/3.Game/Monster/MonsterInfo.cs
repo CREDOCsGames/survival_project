@@ -23,6 +23,7 @@ public class MonsterStat
         this.monsterSpeed = monsterSpeed;
         this.attackDelay = attackDelay;
         this.moveDelay = moveDelay;
+        this.attackCount = attackCount;
         this.itemDropPercent = itemDropPercent;
     }
 }

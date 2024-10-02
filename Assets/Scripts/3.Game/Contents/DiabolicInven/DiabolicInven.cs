@@ -63,7 +63,8 @@ public class DiabolicInven : Singleton<DiabolicInven>
 
         soundManager.PlaySFX(item.EquipSound);
 
-        Instantiate(itemImage, itemImageParent).GetComponent<DiabolicSlotItem>().ItemSetOnInventory(setPos, item, TransferIndexesNum(), currentIndex, pieceSlotIndex, itemQuantity);
+        Instantiate(itemImage, itemImageParent).GetComponent<DiabolicSlotItem>().
+            ItemSetOnInventory(setPos, item, TransferIndexesNum(), currentIndex, pieceSlotIndex, itemQuantity);
         blockImage.SetActive(true);
 
         AddStatus(pieceSlotIndex);

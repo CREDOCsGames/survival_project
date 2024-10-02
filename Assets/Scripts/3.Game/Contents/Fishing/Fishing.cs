@@ -38,9 +38,6 @@ public class Fishing : Singleton<Fishing>
     float catchPointStart;
     float catchPointEnd;
 
-    float initCatchPointStart;
-    float initCatchPointEnd;
-
     float catchPointWidth;
     float initCatchPointWidth;
 
@@ -59,9 +56,6 @@ public class Fishing : Singleton<Fishing>
         soundManager = SoundManager.Instance;
 
         pieceCard.SetActive(false);
-
-        initCatchPointStart = catchPoint.offsetMin.x;
-        initCatchPointEnd = -catchPoint.offsetMax.x;
 
         initCatchPointWidth = catchBar.maxValue + catchPoint.offsetMax.x - catchPoint.offsetMin.x;
 
@@ -167,10 +161,6 @@ public class Fishing : Singleton<Fishing>
                     isMin = false;
  
                 catchBar.value += (isMin ? Time.deltaTime : -Time.deltaTime) * 100 * barMoveSpeed;
-
-                // 컴퓨터 성능에 따른 deltatime 차이로 인한 마우스 클릭 입력 지연에 따른 난이도 차이 조절을 위해
-                // deltatime 이 클 수록 (클릭 반응이 느릴 수록) 바 움직임 속도가 느려짐
-                //catchBar.value += (isMin ? barMoveSpeed : -barMoveSpeed) * 1.5f / Time.deltaTime / 100;
             }
         }
     }

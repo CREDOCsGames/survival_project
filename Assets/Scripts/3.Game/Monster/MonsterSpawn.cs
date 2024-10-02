@@ -17,7 +17,6 @@ public class MonsterSpawn : MonoBehaviour
     [SerializeField] float spawnDelay;
     [SerializeField] float spawnDelayDecrease;
     [SerializeField] int spawnAmount;
-    Collider ground;
 
     private IObjectPool<Monster> pool;
 
@@ -46,7 +45,6 @@ public class MonsterSpawn : MonoBehaviour
         gamesceneManager = GamesceneManager.Instance;
 
         weightValue = new float[] { 100, 0, 0};
-        //ground = GamesceneManager.Instance.walkableArea;
 
         for (int i = 0; i < weightValue.Length; i++)
         {
@@ -58,12 +56,6 @@ public class MonsterSpawn : MonoBehaviour
 
         StartCoroutine(UpdateSpawn());
     }
-
-    /*private void Update()
-    {
-        if (bosssParent.transform.childCount == 0)
-            gameManager.isBossDead = true;
-    }*/
 
     IEnumerator UpdateSpawn()
     {
@@ -84,7 +76,6 @@ public class MonsterSpawn : MonoBehaviour
             {
                 StopCoroutine(currentCoroutine);
                 currentCoroutine = null;
-                Debug.Log("1");
             }
 
             if(delayCoroutine != null)
