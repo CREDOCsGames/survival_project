@@ -89,8 +89,6 @@ public class MonsterInfo : Singleton<MonsterInfo>
 
     private MonsterStat[] RefreshJson()
     {
-        string json = LoadFile("monsterStatData");
-        object convert = JsonUtility.FromJson(json, typeof(MonsterStatJson));
         MonsterStat[] allMonsterArray = monsterInfos;
 
         return allMonsterArray;

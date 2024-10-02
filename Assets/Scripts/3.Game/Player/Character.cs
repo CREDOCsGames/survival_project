@@ -352,36 +352,14 @@ public class Character : Singleton<Character>
 
     void Move()
     {
-        bool xInput = (Input.GetKey((KeyCode)PlayerPrefs.GetInt("Key_Left"))) || (Input.GetKey((KeyCode)PlayerPrefs.GetInt("Key_Right")));
+        bool xInput = (Input.GetKey((KeyCode)PlayerPrefs.GetInt("Key_Left"))) 
+            || (Input.GetKey((KeyCode)PlayerPrefs.GetInt("Key_Right")));
         bool zInput = (Input.GetKey((KeyCode)PlayerPrefs.GetInt("Key_Up"))) || (Input.GetKey((KeyCode)PlayerPrefs.GetInt("Key_Down")));
 
         if (!xInput)
             x = 0;
 
-        if (!zInput)
-            z = 0;
-
-        if (zInput)
-        {
-            if (Input.GetKey((KeyCode)PlayerPrefs.GetInt("Key_Up")))
-            {
-                z = 1;
-
-                if (!isDownUp && Input.GetKey((KeyCode)PlayerPrefs.GetInt("Key_Down")))
-                    z = -1;
-            }
-
-            else if (Input.GetKey((KeyCode)PlayerPrefs.GetInt("Key_Down")))
-            {
-                z = -1;
-                isDownUp = true;
-            }
-
-            if (Input.GetKeyUp((KeyCode)PlayerPrefs.GetInt("Key_Down")))
-                isDownUp = false;
-        }
-
-        if (xInput)
+        else if (xInput)
         {
             if (Input.GetKey((KeyCode)PlayerPrefs.GetInt("Key_Left")))
             {
@@ -402,6 +380,30 @@ public class Character : Singleton<Character>
             if (Input.GetKeyUp((KeyCode)PlayerPrefs.GetInt("Key_Right")))
                 isLeftRight = false;
         }
+
+        if (!zInput)
+            z = 0;
+
+        else if (zInput)
+        {
+            if (Input.GetKey((KeyCode)PlayerPrefs.GetInt("Key_Up")))
+            {
+                z = 1;
+
+                if (!isDownUp && Input.GetKey((KeyCode)PlayerPrefs.GetInt("Key_Down")))
+                    z = -1;
+            }
+
+            else if (Input.GetKey((KeyCode)PlayerPrefs.GetInt("Key_Down")))
+            {
+                z = -1;
+                isDownUp = true;
+            }
+
+            if (Input.GetKeyUp((KeyCode)PlayerPrefs.GetInt("Key_Down")))
+                isDownUp = false;
+        }
+
 
         dir = (Vector3.right * x + Vector3.forward * z).normalized;
 
