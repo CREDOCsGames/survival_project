@@ -24,7 +24,7 @@ Visual Studio 2022</br>
 - 몬스터와의 전투 시스템
 
 ## ℹ️코드 설명
-<https://www.notion.so/114387f650d1804fa171d7de7e3dbb5d?pvs=4>
+<[https://www.notion.so/114387f650d1804fa171d7de7e3dbb5d?pvs=4](https://wandering-carp-21a.notion.site/114387f650d1804fa171d7de7e3dbb5d?pvs=4)>
 
 ## 🎞️플레이 영상
 <https://youtu.be/ILs5cTjaqJY>
