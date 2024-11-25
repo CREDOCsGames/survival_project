@@ -15,7 +15,6 @@ TagManager:
   - CamBound
   - Obstacle
   - MouseInteraction
-  - MouseInteration
   - MonsterAttacked
   layers:
   - Default

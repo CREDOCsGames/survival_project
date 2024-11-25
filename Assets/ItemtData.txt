@@ -1,0 +1,28 @@
+{
+    "items": [
+        {
+            "itemId": 10000,
+            "itemName": "손거울",
+            "itemType": 0,
+            "needMaterialTypes": "0,1",
+            "needMaterialCounts": "10,2",
+            "pieceId": 1030
+        },
+        {
+            "itemId": 10001,
+            "itemName": "사과",
+            "itemType": 1,
+            "needMaterialTypes": "3",
+            "needMaterialCounts": "5",
+            "pieceId": -1
+        },
+        {
+            "itemId": 10001,
+            "itemName": " ㅅㄷㄴㅅ",
+            "itemType": 1,
+            "needMaterialTypes": "3",
+            "needMaterialCounts": "5",
+            "pieceId": -1
+        }
+    ]
+}

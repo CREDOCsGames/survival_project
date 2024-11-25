@@ -28,11 +28,17 @@ public class MonsterMove : MonoBehaviour
 
     [SerializeField] float initSpeed;
 
+    Vector3 housePos;
+
+    Vector3 destination;
+
     private void Awake()
     {
         character = Character.Instance;
         gameManager = GameManager.Instance;
         agent = GetComponent<NavMeshAgent>();
+
+        housePos = GameObject.Find("House").transform.position;
 
         agent.updateRotation = false;
 
@@ -47,6 +53,8 @@ public class MonsterMove : MonoBehaviour
 
         moveTime = initMoveTime;
         waitTime = initWaitTime;
+
+        destination = housePos;
     }
 
     private void OnEnable()
@@ -69,7 +77,9 @@ public class MonsterMove : MonoBehaviour
 
         if (agent.enabled)
         {
-            agent.SetDestination(character.transform.position);
+            //destination = character.transform.position;
+
+            agent.SetDestination(destination);
 
             if (initMoveTime != 0)
             {
@@ -125,7 +135,7 @@ public class MonsterMove : MonoBehaviour
 
             else
             {
-                dir = (character.transform.position - transform.position).normalized;
+                dir = (destination - transform.position).normalized;
             }
         }
 

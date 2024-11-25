@@ -19,7 +19,11 @@ public class ItemSpawner : Singleton<ItemSpawner>
 
         for (int i = 0; i < spawnAmount; ++i)
         {
-            Instantiate(dropItem, GetSpawnPosWithCheck(), dropItem.transform.rotation, instanceParent);
+            Vector3 spawnPos = GetSpawnPosWithCheck();
+
+            if (spawnPos != Vector3.zero)
+                Instantiate(dropItem, GetSpawnPosWithCheck(), dropItem.transform.rotation, instanceParent);
+
             yield return null;
         }
     }
@@ -31,8 +35,19 @@ public class ItemSpawner : Singleton<ItemSpawner>
         if (!isCheckOtherItem)
             return spawnPos;
 
+        int count = 0;
+
         while (true)
         {
+            count++;
+
+            if(count > 99999)
+            {
+                Debug.LogError("Infinite Loop Skip");
+                spawnPos = Vector3.zero; 
+                break;
+            }
+
             if (Physics.OverlapSphere(spawnPos, 2f, interactionLayer).Length <= 0)
             {
                 break;

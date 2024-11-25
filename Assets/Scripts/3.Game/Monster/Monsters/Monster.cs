@@ -61,12 +61,16 @@ public class Monster : MonoBehaviour
 
     public int monsterNum;
 
+    Vector3 housePos;
+
     private void Awake()
     {
         gameManager = GameManager.Instance;
         gamesceneManager = GamesceneManager.Instance;
         character = Character.Instance;
         soundManager = SoundManager.Instance;
+
+        housePos = GameObject.Find("House").transform.position;
 
         StartSetting();
     }
@@ -151,9 +155,16 @@ public class Monster : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Character") && !isDead)
+        if(isDead) return;
+
+        if (other.CompareTag("Character"))
         {
             character.OnDamaged(damage, gameObject.transform.GetComponentInChildren<MonsterHit>().gameObject);
+        }
+
+        else if (other.GetComponentInChildren<IDamageable>() is House)
+        {
+            other.GetComponent<IDamageable>().Attacked(damage, null);
         }
     }
 
@@ -162,12 +173,16 @@ public class Monster : MonoBehaviour
         if (isDead || !canAttack)
             return;
 
-        xDistance = Mathf.Abs(character.transform.position.x - transform.position.x);
-        zDistance = Mathf.Abs(character.transform.position.z - transform.position.z);
+        /*xDistance = Mathf.Abs(character.transform.position.x - transform.position.x);
+        zDistance = Mathf.Abs(character.transform.position.z - transform.position.z);*/
+
+        xDistance = Mathf.Abs(housePos.x - transform.position.x);
+        zDistance = Mathf.Abs(housePos.z - transform.position.z);
 
         if (!isAttack && !gameManager.isClear)
         {
-            if (xDistance <= attackRange.x && zDistance <= attackRange.y)
+            //if (xDistance <= attackRange.x && zDistance <= attackRange.y)
+            if (xDistance <= attackRange.x + 0.5f && zDistance <= attackRange.y+0.5f)
             {
                 isAttack = true;
                 GetComponent<MonsterMove>().agent.enabled = false;

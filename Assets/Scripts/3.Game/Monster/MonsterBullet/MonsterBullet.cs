@@ -52,6 +52,12 @@ public class MonsterBullet : MonoBehaviour
         {
             DestroyBullet();
         }
+
+        else if(other.GetComponentInChildren<IDamageable>() is House)
+        {
+            other.GetComponent<IDamageable>().Attacked(realDamage, null);
+            DestroyBullet();
+        }
     }
 
     public void SetManagedPool(IObjectPool<MonsterBullet> pool)

@@ -111,14 +111,11 @@ public class MonsterSpawn : MonoBehaviour
 
     IEnumerator DecreaseSpawnDelay(float time)
     {
-        Debug.Log(time);
-
         while (true)
         {
             yield return CoroutineCaching.WaitForSeconds(time);
 
             currentDelayTime -= spawnDelayDecrease + ((gameManager.round / 2) * 0.05f);
-            Debug.Log(currentDelayTime);
         }
     }
 

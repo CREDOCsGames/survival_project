@@ -5460,6 +5460,7 @@ GameObject:
   - component: {fileID: 936130854}
   - component: {fileID: 936130857}
   - component: {fileID: 936130858}
+  - component: {fileID: 936130859}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -5489,8 +5490,8 @@ MonoBehaviour:
   damageStorage: {fileID: 1692643827}
   monsterBulletStorage: {fileID: 457507069}
   characterPrefab: {fileID: 289213144344291185, guid: 8d77a8f4167ea0b469ec40c27f9686ea, type: 3}
-  gameDayTime: 0.1
-  gameNightTime: 60
+  gameDayTime: 0
+  gameNightTime: 111
   round: 0
   maxRound: 15
   woodCount: 11111
@@ -5517,7 +5518,7 @@ MonoBehaviour:
   useCursorAttack: {fileID: 0}
   cursorSize: 0
   isTuto: 0
-  characterSpawnPos: {x: 0, y: 0, z: -69}
+  characterSpawnPos: {x: 0, y: 0, z: -56}
   totalBulletCount: 1111
   isCursorVisible: 1
   pieceCardGetRate: 0
@@ -5629,6 +5630,31 @@ MonoBehaviour:
   isTuto: 0
   isTypingEnd: 0
   tutorialCheck: 0
+--- !u!114 &936130859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936130853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33d409549d24b85409ad75603b6a8a11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemInfos:
+  - itemId: 10000
+    itemName: "\uC190\uAC70\uC6B8"
+    itemType: 0
+    needMaterialTypes: 0,1
+    needMaterialCounts: 10,2
+    pieceId: 1030
+  - itemId: 10001
+    itemName: "\uC0AC\uACFC"
+    itemType: 1
+    needMaterialTypes: 3
+    needMaterialCounts: 5
+    pieceId: -1
 --- !u!1 &1005871280
 GameObject:
   m_ObjectHideFlags: 0

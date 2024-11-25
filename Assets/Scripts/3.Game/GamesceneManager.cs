@@ -54,7 +54,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
         itemManager.pieceItemsList = itemManager.startPieceList;
 
-        currentGameTime = gameManager.gameDayTime;
+        currentGameTime = 60f;
 
         soundManager.StopBGM();
 
@@ -96,7 +96,11 @@ public class GamesceneManager : Singleton<GamesceneManager>
         character.weaponParent.gameObject.SetActive(false);
 
 #if UNITY_EDITOR
-        StartCoroutine(SpawnTree());
+        //StartCoroutine(SpawnTree());
+        if (gameManager.round % 3 == 0)
+        {
+            StartCoroutine(SpawnTree());
+        }
 #else
         if (gameManager.round % 3 == 0)
         {
@@ -106,7 +110,6 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
         StartCoroutine(SpawnBush());
         StartCoroutine(beach.SpawnItem(beachParent));
-
 
         isSetPieceEnd = false;
         character.isCanControll = false;
@@ -120,7 +123,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
         //yield return new WaitWhile(() => cardSelecter.activeSelf);
         yield return CoroutineCaching.WaitWhile(() => cardSelecter.activeSelf);
 
-        character.transform.position = gameManager.round == 0 ? initSpawnPos.transform.position : new Vector3(-1f, 0f, -41f);
+        character.transform.position = gameManager.round == 0 ? gameManager.characterSpawnPos : new Vector3(-1f, 0f, -41f);
 
         gameManager.round++;
 
@@ -134,9 +137,8 @@ public class GamesceneManager : Singleton<GamesceneManager>
             multicellInvenPanel.SetActive(true);
 
             gameSceneUI.ActiveTutoPanel(TutoType.MulticellTuto, multicellTutoImage);
+            currentGameTime = gameManager.gameDayTime;
         }
-
-        currentGameTime = gameManager.gameDayTime;
 
         character.canWeaponChange = true;
 
@@ -250,7 +252,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
             Destroy(trees.gameObject);
         }
 
-        for (int i = 0; i < 25; i++)
+        for (int i = 0; i < 20; i++)
         {
             SpawnOneBushOrTree(treePrefab, treeParent);
             yield return null;      // 약 0.002초
@@ -265,7 +267,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
         }
 
 
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < 12; i++)
         {
             SpawnOneBushOrTree(bushPrefab, bushParent);
             yield return null;
@@ -275,9 +277,19 @@ public class GamesceneManager : Singleton<GamesceneManager>
     Vector3 SpawnTreeAndBushPos()
     {
         Vector3 spawnPos = TreeAndBushPos();
+        int count = 0;
 
         while (true)
         {
+            count++;
+
+            if(count > 99999)
+            {
+                Debug.LogError("Infinite Loop Skip");
+                spawnPos = Vector3.zero;
+                break;
+            }
+
             if (Physics.OverlapSphere(spawnPos, 2f, interactionLayer).Length <= 0)
             {
                 break;
@@ -291,6 +303,11 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
     void SpawnOneBushOrTree(GameObject spawnObject, Transform parent)
     {
+        Vector3 spawnPos = SpawnTreeAndBushPos();
+
+        if (spawnPos == Vector3.zero)
+            return;
+
         Instantiate(spawnObject, SpawnTreeAndBushPos(), spawnObject.transform.rotation, parent);
     }
 

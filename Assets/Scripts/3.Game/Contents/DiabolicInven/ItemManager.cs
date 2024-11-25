@@ -7,6 +7,7 @@ public class ItemManager : Singleton<ItemManager>
     public DiabolicItemInfo[] startPieceList;
     public DiabolicItemInfo[] nightPieceList;
     [HideInInspector] public DiabolicItemInfo[] pieceItemsList;
+    [SerializeField] DiabolicItemInfo[] allPieceList;
     [SerializeField] DiabolicItemInfo[] testList;
     [SerializeField] AudioClip getPieceSound;
 
@@ -59,5 +60,31 @@ public class ItemManager : Singleton<ItemManager>
         getItems.Add(items[emptyIndex], itemQuantity[emptyIndex]);
 
         soundManager.PlaySFX(getPieceSound);
+    }
+
+    public void AddItem(int id)
+    {
+        for (int i = 0; i < allPieceList.Length; ++i)
+        {
+            if (allPieceList[i].ItemNum == id)
+            {
+                AddItem(allPieceList[i]);
+                break;
+            }
+        }
+    }
+
+    public DiabolicItemInfo GetPieceInfo(int Id)
+    {
+        foreach (var piece in allPieceList) 
+        {
+            if (piece.ItemNum == Id)
+            {
+                return piece;
+            }
+        }
+
+        Debug.LogWarning("해당 Id를 가지는 Piece가 없습니다.");
+        return null;
     }
 }

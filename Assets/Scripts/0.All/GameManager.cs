@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.SceneManagement;
 
 public enum Status
 {
@@ -83,7 +82,7 @@ public class GameManager : Singleton<GameManager>
 
     [HideInInspector] public bool isTuto = false;
 
-    public Vector3 characterSpawnPos = new Vector3(0, 0, -69f);
+    public Vector3 characterSpawnPos = new Vector3(0, 0, -56f);
 
     public Dictionary<Status, int> status = new Dictionary<Status, int>();
     public Dictionary<SpecialStatus, bool> specialStatus = new Dictionary<SpecialStatus, bool>();
@@ -95,6 +94,10 @@ public class GameManager : Singleton<GameManager>
     [HideInInspector] public bool isCursorVisible = true;
 
     public int pieceCardGetRate = 10;
+
+    public Dictionary<Item.MaterialType, int> haveMaterials = new Dictionary<Item.MaterialType, int>();
+
+    public static List<Item> itemDatas = new List<Item>();
 
     protected override void Awake()
     {
@@ -116,6 +119,8 @@ public class GameManager : Singleton<GameManager>
         Time.timeScale = 1;
         isPause = false;
         isClear = false;
+
+        LoadItemData();
     }
 
     void InitSetting()
@@ -192,6 +197,8 @@ public class GameManager : Singleton<GameManager>
         specialStatus[SpecialStatus.Rum] = true;
         specialStatus[SpecialStatus.AmmoPouch] = true;
 #endif
+
+        haveMaterials.Add(Item.MaterialType.Wood, woodCount);
     }
 
     public void ToNextScene(string sceneName)
@@ -210,5 +217,15 @@ public class GameManager : Singleton<GameManager>
         isPause = _isPause;
 
         Time.timeScale = _isPause ? 0 : 1;
+    }
+
+    void LoadItemData()
+    {
+        ItemInfo[] itemInfos = ItemData.Instance.itemInfos;
+
+        for (int i = 0; i < itemInfos.Length; ++i)
+        {
+            itemDatas.Add(new Item((ulong)itemInfos[i].itemId, itemInfos[i].itemType, itemInfos[i].needMaterialTypes, itemInfos[i].needMaterialCounts, itemInfos[i].pieceId));
+        }
     }
 }
