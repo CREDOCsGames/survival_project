@@ -4,104 +4,119 @@ using UnityEngine;
 
 public class Mining : MonoBehaviour
 {
-    [SerializeField] List<GameObject> objects;
+    [SerializeField] GameObject currentObj;
+    [SerializeField] List<GameObject> ObjectList;
     [SerializeField] List<int> objectProbability;
     [SerializeField] UnityEngine.UI.Text stoneTimerText;
-    [SerializeField] GameObject currentObj;
+    
 
-    int probability=0;
+    int currentType = 0;
+    int probability = 0;
     int stoneMaxValue = 10;
     int stoneInputValue = 0;
+    float stoneTimer = 0.3f;
     bool stone = false;
     float time = 0;
 
+    
+    public bool play = true;
     private void Awake()
     {
-        for(int i=0;i<objectProbability.Count-1;i++)
+        Application.targetFrameRate = 60;
+        for(int i=0;i<objectProbability.Count;i++)
         {
             probability += objectProbability[i];
         }
-        RandomCreateObject();
-        print(currentObj.name);
-        print(currentObj.activeSelf);
+        RandomObjectSet();
     }
 
-    void OpenUI()
+    public void OpenUI()
     {
         gameObject.SetActive(true);
-        RandomCreateObject();
+        RandomObjectSet();
     }
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.RightArrow))
+        if (play)
         {
             KeyInputJudgement();
         }
-        
     }
 
     //키 입력
     void KeyInputJudgement()
     {
-        int selectType = 0;
+        //박쥐 오브젝트일때
+        if (currentType < 2)
+        {
+            //왼쪽 방향키 입력
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                selectType = 1;
-                print(selectType);
+                if (currentType == 0)
+                {
+                    StartCoroutine(BatFlyAnimetion(0));
+                }
+                else
+                {
+                    StartCoroutine(BatAttackAnimetion());
+                }
+                play = false;
             }
+            //오른쪽 방향키 입력
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                selectType = 2;
-                print(selectType);
+                if (currentType == 1)
+                {
+                    StartCoroutine(BatFlyAnimetion(1));
+                }
+                else
+                {
+                    StartCoroutine(BatAttackAnimetion());
+                }
+                play = false;
             }
-            BatJudgement(selectType);
-      if (Input.GetKeyDown(KeyCode.Space))
+        }
+        else
         {
-            stoneInputValue++;
-            if(stoneMaxValue <stoneInputValue)
+            if (Input.GetKeyDown(KeyCode.Space))
             {
+                stoneInputValue++;
+                stoneTimer = 0.03f;
+                StopCoroutine(StoneAnimetion());
                 StartCoroutine(StoneAnimetion());
             }
         }
     }
-
-    //키입력을 통해 맞는 오브젝트인지 확인후 애니메이션 재생
-    void BatJudgement(int type)
+    void RandomObjectSet()
     {
-        if(currentObj == objects[type])
-        {
-            StartCoroutine(BatFlyAnimetion(type));
-        }
-        else
-        {
-            StartCoroutine(BatAttackAnimetion());
-        }
-        RandomCreateObject();
-    }
-
-    void RandomCreateObject()
-    {
-        print("1");
+        currentObj.SetActive(false);
         int type = Random.Range(0, probability);
-        if(type < objectProbability[0])
+        int minJudgement = 0;
+        int maxJudgement = objectProbability[0];
+        for (int i = 0; i < objectProbability.Count;i++)
         {
-            currentObj = objects[0];
-            objects[0].SetActive(true);
+            if(minJudgement <= type && maxJudgement > type)
+            {
+                currentType = i;
+                currentObj = ObjectList[i];
+                break;
+            }
+            minJudgement += objectProbability[i];
+            maxJudgement += objectProbability[i];
         }
-        else if(type < objectProbability[2] + objectProbability[1])
-        {
-            currentObj = objects[1];
-            objects[1].SetActive(true);
-        }
-        else
+        currentObj.GetComponent<RectTransform>().localPosition = Vector3.zero;
+        currentObj.SetActive(true);
+        if (currentType > 1)
         {
             stone = true;
-            currentObj = objects[2];
-            objects[2].SetActive(true);
-            StartCoroutine(StoneObjectTimer());
             time = 10;
+            StartCoroutine(StoneObjectTimer());
         }
-        currentObj.SetActive(true);
+        else
+        {
+            time = 0;
+        }
+
     }
     //박쥐가 날아가는 애니메이션
     IEnumerator BatFlyAnimetion(int type)
@@ -124,31 +139,50 @@ public class Mining : MonoBehaviour
             float t = time;
             float xPosition = Mathf.Pow(1 - t, 2) * startPosition.x + 2 * (1 - t) * t * peakPosition.x + Mathf.Pow(t, 2) * endPosition.x;
             float yPosition = Mathf.Pow(1 - t, 2) * startPosition.y + 2 * (1 - t) * t * peakPosition.y + Mathf.Pow(t, 2) * endPosition.y;
-            currentObj.transform.localPosition = new Vector2(xPosition, yPosition);
+            currentObj.GetComponent<RectTransform>().localPosition = new Vector2(xPosition,yPosition)*100;
             time += Time.deltaTime;
+            yield return null;
         }
-        currentObj.SetActive(false);
-        yield return null;
+        play = true;
+        RandomObjectSet();
+        yield break;
     }
     //박쥐가 공격하는 애니메이션
     IEnumerator BatAttackAnimetion()
     {
-        yield return null;
+        while (time < 0.5f)
+        {
+            float t = time * 2;
+            currentObj.GetComponent<RectTransform>().localScale = Vector3.one * (1.5f+t);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        currentObj.GetComponent<RectTransform>().localScale = Vector3.one;
+        play = true;
+        RandomObjectSet();
+        yield break;
     }
 
     //바위 오브젝트일때 타이머
     IEnumerator StoneObjectTimer()
     {
+        stoneTimerText.gameObject.SetActive(true);
+        bool stop = false;
         while (time > 0)
         {
             time -= Time.deltaTime;
             stoneTimerText.text = time.ToString("0.00");
+            if(stoneMaxValue < stoneInputValue)
+            {
+                stop = true;
+                break;
+            }
             yield return null;
         }
-        if (time < 0)
+        if (time < 0 || stop)
         {
             stoneTimerText.gameObject.SetActive(false);
-            RandomCreateObject();
+            RandomObjectSet();
             stone = false;
             yield break;
         }
@@ -157,7 +191,14 @@ public class Mining : MonoBehaviour
 
     IEnumerator StoneAnimetion()
     {
+        while (stoneTimer > 0)
+        {
+            stoneTimer -= Time.deltaTime;
+            float angle = stoneTimer * 10;
+            currentObj.transform.rotation = Quaternion.EulerAngles(0,0,angle);
+            yield return null;
+        }
+        currentObj.transform.rotation = Quaternion.EulerAngles(0, 0, 0);
         yield return null;
     }
-    
 }
