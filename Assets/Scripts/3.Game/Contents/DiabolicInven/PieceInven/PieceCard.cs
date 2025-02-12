@@ -96,7 +96,7 @@ public class PieceCard : MonoBehaviour
         {
             if (itemStatus[(Status)i] > 0)
             {
-                descriptPrefabs[count].transform.GetChild(0).GetComponent<Text>().text = $"{GameManager.statNames[i]}   :   <color=#60B015>+{itemStatus[(Status)i] * itemQuantity}</color>";
+                descriptPrefabs[count].transform.GetChild(0).GetComponent<Text>().text = $"{GameManager.Instance.statNames[i]}   :   <color=#60B015>+{itemStatus[(Status)i] * itemQuantity}</color>";
 
                 /*if (gameManager.status[(Status)i] < 0)
                 {

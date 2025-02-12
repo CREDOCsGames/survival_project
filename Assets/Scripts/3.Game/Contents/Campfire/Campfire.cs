@@ -23,6 +23,7 @@ public class Campfire : MonoBehaviour, IMouseInteraction
     [SerializeField] Sprite dashTutoImage;
     [SerializeField] GameObject needWoodImage;
     [SerializeField] GameObject needFishImage;
+    [SerializeField] GameObject createPanel;
 
     GameManager gameManager;
     Character character;
@@ -190,6 +191,9 @@ public class Campfire : MonoBehaviour, IMouseInteraction
     {
         if (!canInteraction)
             return;
+
+        createPanel.GetComponent<CreatePanel>().SetCreateAcquisition(Acquisition.CampFire);
+        createPanel.SetActive(true);
 
         OnFire();
 

@@ -2,47 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateDesk : MonoBehaviour
+public class CreateDesk : MonoBehaviour, IMouseInteraction
 {
-    [SerializeField] DiabolicItemInfo piece;
+    [SerializeField] GameObject createPanel;
 
-    GameManager gameManager;
-    Item item1;
-
-    private void Start()
+    public void CanInteraction(bool _canInteraction)
     {
-        gameManager = GameManager.Instance;
-
-        Dictionary<Item.MaterialType, int> item1Materials = new Dictionary<Item.MaterialType, int>()
-        {
-            { Item.MaterialType.Wood, 10 }
-        };
-
-        item1 = new Item(1, Item.ItemType.PieceItem, item1Materials, piece);
+        throw new System.NotImplementedException();
     }
 
-    private void Update()
+    public IEnumerator EndInteraction(Animator anim, float waitTime)
     {
-        if (Input.GetKeyDown(KeyCode.F))
-            CreateItem(item1);
+        throw new System.NotImplementedException();
     }
 
-    void CreateItem(Item item)
+    public void InteractionLeftButtonFuc(GameObject hitObject)
     {
-        foreach (var material in item.NeedMaterials)
-        {
-            if (!gameManager.haveMaterials.ContainsKey(material.Key))
-                return;
+        createPanel.GetComponent<CreatePanel>().SetCreateAcquisition(Acquisition.CraftTable);
+        createPanel.SetActive(true);
+    }
 
-            else if (gameManager.haveMaterials[material.Key] < material.Value)
-                return;
-        }
+    public void InteractionRightButtonFuc(GameObject hitObject)
+    {
+        throw new System.NotImplementedException();
+    }
 
-        foreach (var material in item.NeedMaterials)
-        {
-            gameManager.haveMaterials[material.Key] -= material.Value;
-        }
+    public bool ReturnCanInteraction()
+    {
+        throw new System.NotImplementedException();
+    }
 
-        item.AddItem();
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }

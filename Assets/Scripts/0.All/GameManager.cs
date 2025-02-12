@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -35,7 +36,7 @@ public enum SpecialStatus
     Count,
 }
 
-public class GameManager : Singleton<GameManager>       
+public class GameManager : Singleton<GameManager>
 {
     [SerializeField] public Texture2D[] cursorNormal;
     [SerializeField] public Texture2D[] cursorAttack;
@@ -87,7 +88,7 @@ public class GameManager : Singleton<GameManager>
     public Dictionary<Status, int> status = new Dictionary<Status, int>();
     public Dictionary<SpecialStatus, bool> specialStatus = new Dictionary<SpecialStatus, bool>();
 
-    public static string[] statNames = { "최대 체력", "공격력", "근거리 공격력", "원거리 공격력", "회복 수치", "방어력", "공격 속도", "이동 속도", "크리티컬", "회피율" };
+    public string[] statNames = { "최대 체력", "공격력", "근거리 공격력", "원거리 공격력", "회복 수치", "방어력", "공격 속도", "이동 속도", "크리티컬", "회피율" };
 
     public int totalBulletCount;
 
@@ -95,9 +96,32 @@ public class GameManager : Singleton<GameManager>
 
     public int pieceCardGetRate = 10;
 
-    public Dictionary<Item.MaterialType, int> haveMaterials = new Dictionary<Item.MaterialType, int>();
+    public Dictionary<MaterialType, int> haveMaterials = new Dictionary<MaterialType, int>();
 
-    public static List<Item> itemDatas = new List<Item>();
+    public Dictionary<int, ItemInfo> itemInfos = new Dictionary<int, ItemInfo>();
+    public Dictionary<int, int> haveItems = new Dictionary<int, int>();
+
+    public Dictionary<MaterialType, int> idByMaterialType = new Dictionary<MaterialType, int>()
+    {
+        {MaterialType.Wood, 2030000}, {MaterialType.Bamboo, 2030001}, {MaterialType.BlackWood, 2030002},
+        {MaterialType.Branch, 2030003}, {MaterialType.Fruit, 2030004}, {MaterialType.BetterFruit, 2030005},
+        {MaterialType.BestFruit, 2030006}, {MaterialType.Fish, 2030007}, {MaterialType.HighFish, 2030008},
+        {MaterialType.SilkFish, 2030009}, {MaterialType.Patch, 2030010}, {MaterialType.Vodka, 2030011},
+        {MaterialType.Rope, 2030012}, {MaterialType.Bottle, 2030013}, {MaterialType.Flour, 2030014},
+        {MaterialType.Soil, 2030015}, {MaterialType.Salt, 1030002}, {MaterialType.SeeSalt, 1030003},
+        {MaterialType.Mud, 1030001}, {MaterialType.Stick, 1030000}, {MaterialType.WaterBottle, 2020002}
+    };
+
+    public static Dictionary<int, MaterialType> materialTypeById = new Dictionary<int, MaterialType>();
+
+    public Dictionary<Acquisition, string> aquisitionName = new Dictionary<Acquisition, string>()
+    {
+        {Acquisition.CraftTable, "제작대"}, {Acquisition.Logging, "벌목"}, {Acquisition.Fishing, "낚시"},
+        {Acquisition.Bush, "채집" }, {Acquisition.FishPot, "통발"}, {Acquisition.CampFire, "모닥불"},
+        {Acquisition.Item, "아이템 사용" }
+    };
+
+    public List<Item> itemDatas = new List<Item>();
 
     protected override void Awake()
     {
@@ -121,6 +145,26 @@ public class GameManager : Singleton<GameManager>
         isClear = false;
 
         LoadItemData();
+
+#if UNITY_EDITOR
+        foreach (var material in idByMaterialType)
+        {
+            materialTypeById.Add(material.Value, material.Key);
+        }
+
+        int num = 10;
+
+        foreach (var itemInfo in itemInfos)
+        {
+            if (haveItems.ContainsKey(itemInfo.Value.itemId))
+                haveItems[itemInfo.Value.itemId] += num;
+
+            else
+                haveItems.Add(itemInfo.Value.itemId, num);
+
+            num++;
+        }
+#endif
     }
 
     void InitSetting()
@@ -198,7 +242,7 @@ public class GameManager : Singleton<GameManager>
         specialStatus[SpecialStatus.AmmoPouch] = true;
 #endif
 
-        haveMaterials.Add(Item.MaterialType.Wood, woodCount);
+        //haveMaterials.Add(MaterialType.Wood, woodCount);
     }
 
     public void ToNextScene(string sceneName)
@@ -225,7 +269,10 @@ public class GameManager : Singleton<GameManager>
 
         for (int i = 0; i < itemInfos.Length; ++i)
         {
-            itemDatas.Add(new Item((ulong)itemInfos[i].itemId, itemInfos[i].itemType, itemInfos[i].needMaterialTypes, itemInfos[i].needMaterialCounts, itemInfos[i].pieceId));
+            this.itemInfos.Add(itemInfos[i].itemId, itemInfos[i]);
+
+            //f (itemInfos[i].itemId / 1000000 == 01 && !string.IsNullOrEmpty(itemInfos[i].needMaterialTypes))
+            itemDatas.Add(new Item(itemInfos[i].itemId, itemInfos[i].itemName, itemInfos[i].itemType, itemInfos[i].needMaterialTypes, itemInfos[i].needMaterialCounts, itemInfos[i].takeTimeByAcquisition, itemInfos[i].acquisitions, itemInfos[i].isConsumable, itemInfos[i].effect, itemInfos[i].decription));
         }
     }
 }

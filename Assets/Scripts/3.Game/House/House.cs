@@ -8,7 +8,7 @@ public class House : MonoBehaviour, IMouseInteraction, IDamageable
     [SerializeField] GameObject createDesk;
     int houseLevel = 0;
 
-    Dictionary<Item.MaterialType, int> requireMaterials = new Dictionary<Item.MaterialType, int>();
+    Dictionary<MaterialType, int> requireMaterials = new Dictionary<MaterialType, int>();
 
     private void Start()
     {
@@ -20,21 +20,21 @@ public class House : MonoBehaviour, IMouseInteraction, IDamageable
         switch (houseLevel)
         {
             case 0:
-                requireMaterials.Add(Item.MaterialType.Wood, 10);
-                GameObject desk = Instantiate(createDesk, transform);
-                desk.transform.position = transform.position;
+                requireMaterials.Add(MaterialType.Wood, 10);
+                //GameObject desk = Instantiate(createDesk, transform);
+                //desk.transform.position = transform.position;
                 break;
 
             case 1:
-                requireMaterials.Add(Item.MaterialType.Wood, 20);
+                requireMaterials.Add(MaterialType.Wood, 20);
                 break;
 
             case 2:
-                requireMaterials.Add(Item.MaterialType.Wood, 30);
+                requireMaterials.Add(MaterialType.Wood, 30);
                 break;
 
             case 3:
-                requireMaterials.Add(Item.MaterialType.Wood, 30);
+                requireMaterials.Add(MaterialType.Wood, 30);
                 break;
         }
     }
@@ -73,11 +73,11 @@ public class House : MonoBehaviour, IMouseInteraction, IDamageable
         return true;
     }
 
-    void TempMaterialCount(Item.MaterialType type, int count)
+    void TempMaterialCount(MaterialType type, int count)
     {
         switch (type) 
         {
-            case Item.MaterialType.Wood:
+            case MaterialType.Wood:
                 GameManager.Instance.woodCount -= count; 
                 break;
 
