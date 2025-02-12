@@ -92,7 +92,7 @@ public class PieceItemInvenSlot : MonoBehaviour
             if (status[(Status)i] == 0)
                 continue;
 
-            itemDiscriptionText.text += "\n" + GameManager.statNames[i] + ": +" + status[(Status)i] * itemManager.itemQuantity[indexNum];
+            itemDiscriptionText.text += "\n" + GameManager.Instance.statNames[i] + ": +" + status[(Status)i] * itemManager.itemQuantity[indexNum];
         }
 
         itemDiscriptionText.text += "\n" + pieceInven.items[indexNum].SpecialStatInfo;

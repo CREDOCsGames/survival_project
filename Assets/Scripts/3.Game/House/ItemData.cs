@@ -7,19 +7,30 @@ public class ItemInfo
     public int itemId;
     public string itemName;
     public int itemType;
+    public string acquisitions;
     public string needMaterialTypes;
     public string needMaterialCounts;
-    public int pieceId;
+    public string takeTimeByAcquisition;
+    public string takePercentByAcquisition;
+    public int isConsumable;
+    public int maxCount;
+    public string effect;
+    public string decription;
 
-
-    public ItemInfo(int itemId, string itemName, int itemType, string needMaterialTypes, string needMaterialCounts, int pieceId)
+    public ItemInfo(int itemId, string itemName, int itemType, string acquisitions, string needMaterialTypes, string needMaterialCounts, string takeTime, string takePercent, int isConsumable, int maxCount, string effect, string decription)
     {
         this.itemId = itemId;
         this.itemName = itemName;
         this.itemType = itemType;
+        this.acquisitions = acquisitions;
         this.needMaterialTypes = needMaterialTypes;
         this.needMaterialCounts = needMaterialCounts;
-        this.pieceId = pieceId;
+        this.takeTimeByAcquisition = takeTime;
+        this.takePercentByAcquisition = takePercent;
+        this.isConsumable = isConsumable;
+        this.maxCount = maxCount;
+        this.decription = decription;
+        this.effect = effect;
     }
 }
 
@@ -28,6 +39,7 @@ public class ItemData : Singleton<ItemData>
     [SerializeField] public ItemInfo[] itemInfos;
 
     int count;
+
 
     private class ItemJson
     {
@@ -55,7 +67,7 @@ public class ItemData : Singleton<ItemData>
 
         for (int i = 0; i < items.Length; i++)
         {
-            ItemInfo newItem = new ItemInfo(0, "", 0, "", "", 0);
+            ItemInfo newItem = new ItemInfo(0, "", 0, "", "", "", "", "", 0, 0, "", "");
             items[i] = newItem;
         }
 
@@ -115,7 +127,7 @@ public class ItemData : Singleton<ItemData>
 
         for (int j = beforeItems.Length; j < items.Length; j++)
         {
-            ItemInfo newItem = new ItemInfo(0, "", 0, "", "", 0);
+            ItemInfo newItem = new ItemInfo(0, "", 0, "", "", "", "", "", 0, 0, "", "");
             items[j] = newItem;
         }
 

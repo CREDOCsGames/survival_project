@@ -433,9 +433,9 @@ public class GameSceneUI : Singleton<GameSceneUI>
 
     void ItemsCountUI()
     {
-        woodCount.text = gameManager.woodCount.ToString();
-        fish1Count.text = gameManager.fishLowGradeCount.ToString();
-        fish2Count.text = gameManager.fishHighGradeCount.ToString();
+        woodCount.text = gameManager.haveItems[gameManager.idByMaterialType[MaterialType.Wood]].ToString();
+        fish1Count.text = gameManager.haveItems[gameManager.idByMaterialType[MaterialType.Fish]].ToString();
+        fish2Count.text = gameManager.haveItems[gameManager.idByMaterialType[MaterialType.HighFish]].ToString();
         bulletCount.text = gameManager.totalBulletCount.ToString();
     }
 

@@ -285,7 +285,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
 
             if(count > 99999)
             {
-                Debug.LogError("Infinite Loop Skip");
+                //Debug.LogError("Infinite Loop Skip");
                 spawnPos = Vector3.zero;
                 break;
             }
