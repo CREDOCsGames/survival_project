@@ -44,7 +44,7 @@ public class MonsterSpawn : MonoBehaviour
         gameManager = GameManager.Instance;
         gamesceneManager = GamesceneManager.Instance;
 
-        weightValue = new float[] { 100, 0, 0};
+        weightValue = new float[] { 100, 0, 0, 100, 100};
 
         for (int i = 0; i < weightValue.Length; i++)
         {
@@ -52,7 +52,7 @@ public class MonsterSpawn : MonoBehaviour
         }
 
         currentDelayTime = spawnDelay;
-        currentSpawnAmount = spawnAmount;
+        currentSpawnAmount = spawnAmount - 1;
 
         StartCoroutine(UpdateSpawn());
     }
@@ -101,7 +101,8 @@ public class MonsterSpawn : MonoBehaviour
             Vector3 pos = SpawnPosition();
             GameObject spawnMark = Instantiate(spawnImage, pos, spawnImage.transform.rotation, storageParent);
             Destroy(spawnMark, 1f);
-            StartCoroutine(SpawnMonster(true, pos, leaderColor));
+            //StartCoroutine(SpawnMonster(true, pos, leaderColor));
+            StartCoroutine(SpawnMonster(false, pos, Color.white));
 
             SpawnSubordinateMonster(pos, currentSpawnAmount);
 
@@ -170,7 +171,7 @@ public class MonsterSpawn : MonoBehaviour
 
         Monster monster = pool.Get();
 
-        monster.stat = isLeader ? MonsterInfo.Instance.monsterInfos[monster.monsterNum + (normalMonsterPrefab.Length)] : MonsterInfo.Instance.monsterInfos[monster.monsterNum];
+        monster.stat = isLeader ? MonsterInfo.Instance.monsterInfos[monster.monsterNum + normalMonsterPrefab.Length] : MonsterInfo.Instance.monsterInfos[monster.monsterNum];
         monster.ChangeOutline(color);
         monster.InitMonsterSetting(isLeader);
 
@@ -352,6 +353,8 @@ public class MonsterSpawn : MonoBehaviour
         weightValue[0] = Mathf.Clamp(100 - (gameManager.round * 4f), 10, 100);
         weightValue[1] = gameManager.round >= 10 ? 10 + (gameManager.round - 10) * 6 : 0;
         weightValue[2] = gameManager.round >= 5 ? (gameManager.round * 0.2f + 1) * 10f : 0;
+        weightValue[3] = Mathf.Clamp(100 - (gameManager.round * 4f), 10, 100);
+        weightValue[4] = Mathf.Clamp(100 - (gameManager.round * 4f), 10, 100);
 
         /*Debug.Log(gameManager.round);
         Debug.Log(weightValue[0] + " " + weightValue[2] + " " + weightValue[1]);*/

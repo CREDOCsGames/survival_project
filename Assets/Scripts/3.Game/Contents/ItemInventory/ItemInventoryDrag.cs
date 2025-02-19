@@ -12,7 +12,7 @@ public class ItemInventoryDrag : MonoBehaviour
 
     public ItemInfo itemInfo;
 
-    private void Start()
+    private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         gameObject.SetActive(false);

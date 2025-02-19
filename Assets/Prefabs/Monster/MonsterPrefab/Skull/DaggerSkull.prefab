@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 5477607329959436068}
   - component: {fileID: 405998318861722249}
   - component: {fileID: 1961197510592707002}
+  - component: {fileID: 8442714029857743933}
   m_Layer: 7
   m_Name: DaggerSkull
   m_TagString: Monster
@@ -262,10 +263,24 @@ MonoBehaviour:
   weaponBoxCollider: {fileID: 8129587856583149474}
   anim: {fileID: 7712788725761189160}
   weapon: {fileID: 0}
+  characterDetectCollider: {fileID: 8442714029857743933}
   agent: {fileID: 0}
   initMoveTime: 1.5
   initWaitTime: 0.5
   initSpeed: 0
+--- !u!135 &8442714029857743933
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2378124750920518384}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3.04
+  m_Center: {x: 0.15, y: 0, z: 0}
 --- !u!1 &2908463619809062596
 GameObject:
   m_ObjectHideFlags: 0

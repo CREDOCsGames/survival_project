@@ -2,6 +2,12 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum MonsterFocusObject
+{
+    House,
+    Player
+}
+
 public class MonsterMove : MonoBehaviour
 {
     float moveTime;
@@ -11,6 +17,7 @@ public class MonsterMove : MonoBehaviour
     [SerializeField] BoxCollider weaponBoxCollider;
     [SerializeField] Animator anim;
     [SerializeField] GameObject weapon;
+    [SerializeField] SphereCollider characterDetectCollider;
 
     Character character;
     GameManager gameManager;
@@ -31,6 +38,7 @@ public class MonsterMove : MonoBehaviour
     Vector3 housePos;
 
     Vector3 destination;
+    public MonsterFocusObject FocusObject { get; private set; }
 
     private void Awake()
     {
@@ -55,6 +63,7 @@ public class MonsterMove : MonoBehaviour
         waitTime = initWaitTime;
 
         destination = housePos;
+        FocusObject = MonsterFocusObject.House;
     }
 
     private void OnEnable()
@@ -105,6 +114,24 @@ public class MonsterMove : MonoBehaviour
                     moveTime = initMoveTime;
                 }
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Character"))
+        {
+            FocusObject = MonsterFocusObject.Player;
+            destination = character.transform.position;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Character"))
+        {
+            FocusObject = MonsterFocusObject.House;
+            destination = housePos;
         }
     }
 
@@ -176,5 +203,11 @@ public class MonsterMove : MonoBehaviour
 
         else
             weapon.transform.rotation *= Quaternion.Euler(180, 0, 0);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position + characterDetectCollider.center, characterDetectCollider.radius);
     }
 }

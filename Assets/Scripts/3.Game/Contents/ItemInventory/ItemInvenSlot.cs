@@ -55,6 +55,7 @@ public class ItemInvenSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             return;
 
         dragSlot.GetComponent<ItemInventoryDrag>().RectTransform.anchoredPosition = eventData.position;
+        dragSlot.SetActive(true);
     }
 
     public void OnEndDrag(PointerEventData eventData)

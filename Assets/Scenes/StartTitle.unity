@@ -5599,6 +5599,24 @@ MonoBehaviour:
     attackCount: 1
     moveDelay: 0.7
     itemDropPercent: 4
+  - monsterNum: 104
+    monsterName: "\uB291\uB300"
+    monsterMaxHp: 70
+    monsterDamage: 12
+    monsterSpeed: 2.7
+    attackDelay: 2
+    attackCount: 1
+    moveDelay: 0.9
+    itemDropPercent: 0
+  - monsterNum: 105
+    monsterName: "\uBC15\uC950"
+    monsterMaxHp: 70
+    monsterDamage: 12
+    monsterSpeed: 2.7
+    attackDelay: 2
+    attackCount: 1
+    moveDelay: 0.9
+    itemDropPercent: 0
   - monsterNum: 201
     monsterName: "\uC554\uC0B4 \uD574\uC801"
     monsterMaxHp: 70

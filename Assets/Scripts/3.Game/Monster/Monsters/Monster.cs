@@ -63,12 +63,16 @@ public class Monster : MonoBehaviour
 
     Vector3 housePos;
 
+    MonsterMove monsterMove;
+
     private void Awake()
     {
         gameManager = GameManager.Instance;
         gamesceneManager = GamesceneManager.Instance;
         character = Character.Instance;
         soundManager = SoundManager.Instance;
+
+        monsterMove = GetComponent<MonsterMove>();
 
         housePos = GameObject.Find("House").transform.position;
 
@@ -131,7 +135,7 @@ public class Monster : MonoBehaviour
         rend.color = initcolor;
         rend.sortingOrder = initOrder;
 
-        GetComponent<MonsterMove>().InitSetting(moveSpeed);
+        monsterMove.InitSetting(moveSpeed);
 
         hitCollder.enabled = true;
     }
@@ -173,11 +177,17 @@ public class Monster : MonoBehaviour
         if (isDead || !canAttack)
             return;
 
-        /*xDistance = Mathf.Abs(character.transform.position.x - transform.position.x);
-        zDistance = Mathf.Abs(character.transform.position.z - transform.position.z);*/
+        if (monsterMove.FocusObject == MonsterFocusObject.Player)
+        {
+            xDistance = Mathf.Abs(character.transform.position.x - transform.position.x);
+            zDistance = Mathf.Abs(character.transform.position.z - transform.position.z);
+        }
 
-        xDistance = Mathf.Abs(housePos.x - transform.position.x);
-        zDistance = Mathf.Abs(housePos.z - transform.position.z);
+        else if (monsterMove.FocusObject == MonsterFocusObject.House)
+        {
+            xDistance = Mathf.Abs(housePos.x - transform.position.x);
+            zDistance = Mathf.Abs(housePos.z - transform.position.z);
+        }
 
         if (!isAttack && !gameManager.isClear)
         {
@@ -185,7 +195,7 @@ public class Monster : MonoBehaviour
             if (xDistance <= attackRange.x + 0.5f && zDistance <= attackRange.y+0.5f)
             {
                 isAttack = true;
-                GetComponent<MonsterMove>().agent.enabled = false;
+                monsterMove.agent.enabled = false;
                 canMove = false;
                 canAttack = false;
             }
@@ -232,8 +242,8 @@ public class Monster : MonoBehaviour
 
         if(moveDelay <= 0)
         {
-            GetComponent<MonsterMove>().InitailizeCoolTime();
-            GetComponent<MonsterMove>().agent.enabled = true;
+            monsterMove.InitailizeCoolTime();
+            monsterMove.agent.enabled = true;
             canMove = true;
             moveDelay = initMoveDelay;
         }
@@ -265,7 +275,7 @@ public class Monster : MonoBehaviour
             return;
 
         isDead = true;
-        GetComponent<MonsterMove>().agent.enabled = false;
+        monsterMove.agent.enabled = false;
         canMove = false;
         rend.sortingOrder = 0;
         anim.speed = 1f;
@@ -317,7 +327,7 @@ public class Monster : MonoBehaviour
     public void DestroyMonster()
     {
         managedPool.Release(this);
-        GetComponent<MonsterMove>().agent.enabled = false;
+        monsterMove.agent.enabled = false;
         hitCollder.enabled = false;
     }
 

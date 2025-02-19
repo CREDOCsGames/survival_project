@@ -1,15 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Mining : MonoBehaviour
 {
     [SerializeField] GameObject currentObj;
     [SerializeField] List<GameObject> ObjectList;
     [SerializeField] List<int> objectProbability;
-    [SerializeField] UnityEngine.UI.Text stoneTimerText;
+    [SerializeField] Text stoneTimerText;
     
-
     int currentType = 0;
     int probability = 0;
     int stoneMaxValue = 10;
@@ -17,13 +17,13 @@ public class Mining : MonoBehaviour
     float stoneTimer = 0.3f;
     bool stone = false;
     float time = 0;
-
     
     public bool play = true;
+
     private void Awake()
     {
         Application.targetFrameRate = 60;
-        for(int i=0;i<objectProbability.Count;i++)
+        for (int i = 0; i < objectProbability.Count; i++)
         {
             probability += objectProbability[i];
         }
@@ -54,11 +54,11 @@ public class Mining : MonoBehaviour
             {
                 if (currentType == 0)
                 {
-                    StartCoroutine(BatFlyAnimetion(0));
+                    StartCoroutine(BatFlyAnimation(0));
                 }
                 else
                 {
-                    StartCoroutine(BatAttackAnimetion());
+                    StartCoroutine(BatAttackAnimation());
                 }
                 play = false;
             }
@@ -67,11 +67,11 @@ public class Mining : MonoBehaviour
             {
                 if (currentType == 1)
                 {
-                    StartCoroutine(BatFlyAnimetion(1));
+                    StartCoroutine(BatFlyAnimation(1));
                 }
                 else
                 {
-                    StartCoroutine(BatAttackAnimetion());
+                    StartCoroutine(BatAttackAnimation());
                 }
                 play = false;
             }
@@ -82,8 +82,8 @@ public class Mining : MonoBehaviour
             {
                 stoneInputValue++;
                 stoneTimer = 0.03f;
-                StopCoroutine(StoneAnimetion());
-                StartCoroutine(StoneAnimetion());
+                StopCoroutine(StoneAnimation());
+                StartCoroutine(StoneAnimation());
             }
         }
     }
@@ -104,12 +104,14 @@ public class Mining : MonoBehaviour
             minJudgement += objectProbability[i];
             maxJudgement += objectProbability[i];
         }
+
         currentObj.GetComponent<RectTransform>().localPosition = Vector3.zero;
         currentObj.SetActive(true);
         if (currentType > 1)
         {
             stone = true;
             time = 10;
+            stoneInputValue = 0;
             StartCoroutine(StoneObjectTimer());
         }
         else
@@ -119,7 +121,7 @@ public class Mining : MonoBehaviour
 
     }
     //박쥐가 날아가는 애니메이션
-    IEnumerator BatFlyAnimetion(int type)
+    IEnumerator BatFlyAnimation(int type)
     {
         Vector2 startPosition = new Vector2(0, 0);
         Vector2 peakPosition;
@@ -139,7 +141,7 @@ public class Mining : MonoBehaviour
             float t = time;
             float xPosition = Mathf.Pow(1 - t, 2) * startPosition.x + 2 * (1 - t) * t * peakPosition.x + Mathf.Pow(t, 2) * endPosition.x;
             float yPosition = Mathf.Pow(1 - t, 2) * startPosition.y + 2 * (1 - t) * t * peakPosition.y + Mathf.Pow(t, 2) * endPosition.y;
-            currentObj.GetComponent<RectTransform>().localPosition = new Vector2(xPosition,yPosition)*100;
+            currentObj.GetComponent<RectTransform>().localPosition = new Vector2(xPosition, yPosition) * 100;
             time += Time.deltaTime;
             yield return null;
         }
@@ -148,12 +150,12 @@ public class Mining : MonoBehaviour
         yield break;
     }
     //박쥐가 공격하는 애니메이션
-    IEnumerator BatAttackAnimetion()
+    IEnumerator BatAttackAnimation()
     {
         while (time < 0.5f)
         {
             float t = time * 2;
-            currentObj.GetComponent<RectTransform>().localScale = Vector3.one * (1.5f+t);
+            currentObj.GetComponent<RectTransform>().localScale = Vector3.one * (1.5f + t);
             time += Time.deltaTime;
             yield return null;
         }
@@ -189,16 +191,16 @@ public class Mining : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator StoneAnimetion()
+    IEnumerator StoneAnimation()
     {
         while (stoneTimer > 0)
         {
             stoneTimer -= Time.deltaTime;
             float angle = stoneTimer * 10;
-            currentObj.transform.rotation = Quaternion.EulerAngles(0,0,angle);
+            currentObj.transform.localRotation = Quaternion.Euler(0,0,angle);
             yield return null;
         }
-        currentObj.transform.rotation = Quaternion.EulerAngles(0, 0, 0);
+        currentObj.transform.localRotation = Quaternion.Euler(0, 0, 0);
         yield return null;
     }
 }

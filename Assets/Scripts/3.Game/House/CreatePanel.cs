@@ -98,13 +98,25 @@ public class CreatePanel : MonoBehaviour
 
         int index = 0;
 
-        foreach(var material in item.NeedMaterials)
+        for(int i = 0; i< itemMaterialSlot.childCount; ++i)
+            itemMaterialSlot.GetChild(i).gameObject.SetActive(false);
+
+        foreach (var material in item.NeedMaterials)
         {
-            GameObject materialPrefab = itemMaterialSlot.childCount <= index ? Instantiate(createMaterialSlotPrefab, itemMaterialSlot) : itemMaterialSlot.GetChild(index).gameObject;
+            GameObject materialPrefab = null;
+
+            if (itemMaterialSlot.childCount <= index)
+                materialPrefab = Instantiate(createMaterialSlotPrefab, itemMaterialSlot);
+            else
+            {
+                materialPrefab = itemMaterialSlot.GetChild(index).gameObject;
+                materialPrefab.SetActive(true);
+            }
+
             materialPrefab.transform.Find("MatImage").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Item/{GameManager.Instance.idByMaterialType[material.Key]}");
             TextMeshProUGUI countText = materialPrefab.transform.Find("Count").GetComponent<TextMeshProUGUI>();
             int haveItemAmount = !gameManager.haveItems.ContainsKey(gameManager.idByMaterialType[material.Key]) ? 0 : gameManager.haveItems[gameManager.idByMaterialType[material.Key]];
-            countText.text = $"{haveItemAmount}/{material.Value * createCount}";
+            countText.text = $"{material.Value * createCount} / {haveItemAmount}";
             countText.color = haveItemAmount < material.Value * createCount ? Color.red : Color.white;
 
             if (canCreate)

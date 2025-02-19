@@ -115,12 +115,11 @@ public class House : MonoBehaviour, IMouseInteraction, IDamageable
     {
         hp -= damage;
 
-        Debug.Log(hp);
-
         if (hp <= 0)
         {
             hp = 0;
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 
