@@ -149,27 +149,20 @@ public class CreatePanel : MonoBehaviour
 
         foreach (var material in item.NeedMaterials)
         {
-            if (!gameManager.haveItems.ContainsKey(gameManager.idByMaterialType[material.Key]))
-                return;
-
-            else if (gameManager.haveItems[gameManager.idByMaterialType[material.Key]] < material.Value)
-                return;
+            int need = material.Value * createCount;
+            int have = gameManager.haveItems[gameManager.idByMaterialType[material.Key]];
+            if (have < need) return;
         }
 
         foreach (var material in item.NeedMaterials)
         {
-            gameManager.haveItems[gameManager.idByMaterialType[material.Key]] -= material.Value * createCount;
-            Debug.Log($"{gameManager.itemInfos[GameManager.Instance.idByMaterialType[material.Key]].itemName}: {material.Value * createCount}개 소모");
+            int id = gameManager.idByMaterialType[material.Key];
+            int need = material.Value * createCount;
+            gameManager.haveItems[id] -= need;
+            Debug.Log($"{gameManager.itemInfos[id].itemName}: {need}개 소모");
         }
 
-        //item.AddItem();
-        GameManager.Instance.haveItems[item.ItemId] += createCount;
-
-        SetCreateItemPanelInfo();
-
-        CreateSuccessPanel.transform.Find("BackPanel/ItemImage").GetComponent<Image>().sprite = Resources.Load<Sprite>($"Item/{item.ImageId}");
-        CreateSuccessPanel.transform.Find("BackPanel/CreateCount").GetComponent<TextMeshProUGUI>().text = $"{item.ItemName}\n{createCount}개 제작";
-        CreateSuccessPanel.SetActive(true);
+        StartCoroutine(CraftRoutine());
     }
 
     public void CreateItem(Item item)
@@ -192,6 +185,27 @@ public class CreatePanel : MonoBehaviour
         item.AddItem();
         Debug.Log($"{item.ItemName}을 제작했습니다.");
     }
+    private IEnumerator CraftRoutine()
+    {
+        float craftTime = item.CreateTime; // 인스펙터에서 설정한 제작시간(초)
+
+        for (int i = 0; i < createCount; i++)
+        {
+            if (craftTime > 0f)
+                yield return CoroutineCaching.WaitForSeconds(craftTime);
+
+            GameManager.Instance.haveItems[item.ItemId] += 1;
+            Debug.Log($"[제작 완료] {item.ItemName} 1개 제작 (소요시간 {craftTime}초)");
+        }
+
+        SetCreateItemPanelInfo();
+        CreateSuccessPanel.transform.Find("BackPanel/ItemImage")
+            .GetComponent<Image>().sprite = Resources.Load<Sprite>($"Item/{item.ImageId}");
+        CreateSuccessPanel.transform.Find("BackPanel/CreateCount")
+            .GetComponent<TextMeshProUGUI>().text = $"{item.ItemName}\n{createCount}개 제작";
+        CreateSuccessPanel.SetActive(true);
+    }
+
 
     public void ChangeItemList(Acquisition aquisition)
     {

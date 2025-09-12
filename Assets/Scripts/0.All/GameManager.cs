@@ -272,7 +272,7 @@ public class GameManager : Singleton<GameManager>
             this.itemInfos.Add(itemInfos[i].itemId, itemInfos[i]);
 
             //f (itemInfos[i].itemId / 1000000 == 01 && !string.IsNullOrEmpty(itemInfos[i].needMaterialTypes))
-            itemDatas.Add(new Item(itemInfos[i].itemId, itemInfos[i].itemName, itemInfos[i].itemType, itemInfos[i].needMaterialTypes, itemInfos[i].needMaterialCounts, itemInfos[i].takeTimeByAcquisition, itemInfos[i].acquisitions, itemInfos[i].isConsumable, itemInfos[i].effect, itemInfos[i].decription));
+            itemDatas.Add(new Item(itemInfos[i].itemId, itemInfos[i].itemName, itemInfos[i].itemType, itemInfos[i].needMaterialTypes, itemInfos[i].needMaterialCounts, itemInfos[i].takeTimeByAcquisition, itemInfos[i].acquisitions, itemInfos[i].isConsumable, itemInfos[i].effect, itemInfos[i].decription, itemInfos[i].creatTime));
         }
     }
 }

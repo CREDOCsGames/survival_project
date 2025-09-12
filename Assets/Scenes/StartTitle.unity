@@ -5685,6 +5685,7 @@ MonoBehaviour:
     effect: 
     decription: "\uC9D1\uC744 \uBCF4\uD638\uD558\uB294 \uAE30\uCD08 \uBC29\uC5B4
       \uC2DC\uC124\uC774\uB2E4. "
+    creatTime: 3
   - itemId: 1000001
     itemName: "\uB300\uB098\uBB34 \uC6B8\uD0C0\uB9AC"
     itemType: 0
@@ -5698,6 +5699,7 @@ MonoBehaviour:
     effect: 
     decription: "\uC9D1\uC744 \uBCF4\uD638\uD558\uB294 \uC870\uAE08 \uB2E8\uB2E8\uD574\uC9C4
       \uBC29\uC5B4 \uC2DC\uC124\uC774\uB2E4. "
+    creatTime: 4
   - itemId: 1000002
     itemName: "\uC9C4\uD759 \uBCBD\uB3CC"
     itemType: 0
@@ -5711,6 +5713,7 @@ MonoBehaviour:
     effect: 
     decription: "\uC9D1\uC744 \uBCF4\uD638\uD558\uB294 \uB2E8\uB2E8\uD55C \uBC29\uC5B4
       \uC2DC\uC124\uC774\uB2E4. "
+    creatTime: 5
   - itemId: 1000003
     itemName: "\uB098\uBB34 \uCC3D"
     itemType: 0
@@ -5724,6 +5727,7 @@ MonoBehaviour:
     effect: "\uBAAC\uC2A4\uD130\uC5D0\uAC8C\uC11C \uC9D1\uC744 \uBC29\uC5B4\uD55C\uB2E4. "
     decription: "\uC811\uADFC\uD558\uB294 \uBAAC\uC2A4\uD130\uC5D0\uAC8C \uB370\uBBF8\uC9C0\uB97C
       \uC785\uD788\uB294 \uBC29\uC5B4 \uC2DC\uC124\uC774\uB2E4. "
+    creatTime: 4
   - itemId: 1000004
     itemName: "\uB300\uB098\uBB34 \uCC3D"
     itemType: 0
@@ -5738,6 +5742,7 @@ MonoBehaviour:
     decription: "\uC811\uADFC\uD558\uB294 \uBAAC\uC2A4\uD130\uC5D0\uAC8C \uB370\uBBF8\uC9C0\uB97C
       \uC785\uD788\uB294 \uBC29\uC5B4 \uC2DC\uC124\uC774\uB2E4. \uB098\uBB34 \uCC3D\uBCF4\uB2E4
       \uACF5\uACA9\uB825\uC774 \uBC1C\uC804\uD558\uC600\uB2E4."
+    creatTime: 5
   - itemId: 1010000
     itemName: "\uB9DB \uC5C6\uB294 \uC0DD\uC120 \uAD6C\uC774 "
     itemType: 1
@@ -5751,6 +5756,7 @@ MonoBehaviour:
     effect: "\uCCB4\uB825\uC744 20 \uD68C\uBCF5\uD55C\uB2E4. "
     decription: "\uBE44\uB9B0\uB0B4\uAC00 \uB35C \uC7A1\uD600 \uB9DB\uC774 \uC5C6\uB294
       \uC0DD\uC120 \uAD6C\uC774\uB2E4. "
+    creatTime: 3
   - itemId: 1010001
     itemName: "\uB9DB\uC788\uB294 \uC0DD\uC120 \uAD6C\uC774 "
     itemType: 1
@@ -5765,6 +5771,7 @@ MonoBehaviour:
     decription: "\uBE44\uB9B0\uB0B4\uAC00 \uC5B4\uB290\uC815\uB3C4 \uC7A1\uD788\uACE0
       \uC18C\uAE08\uAC04\uC774 \uCD94\uAC00 \uB3FC \uBA39\uC744\uB9CC\uD55C \uC0DD\uC120
       \uAD6C\uC774\uB2E4. "
+    creatTime: 4
   - itemId: 1010002
     itemName: "\uD669\uD640\uD55C \uC0DD\uC120 \uAD6C\uC774 "
     itemType: 1
@@ -5778,6 +5785,7 @@ MonoBehaviour:
     effect: "\uCCB4\uB825\uC744 \uC601\uAD6C\uC801\uC73C\uB85C 10 \uC0C1\uC2B9\uC2DC\uD0A8\uB2E4. "
     decription: "\uD669\uD640\uD55C \uB9DB\uC744 \uC790\uC544\uB0B4\uB294 \uC0DD\uC120
       \uAD6C\uC774\uB2E4. \uBA39\uC73C\uBA74 \uD2B9\uBCC4\uD55C \uC77C\uC774 \uC0DD\uAE38\uC9C0\uB3C4?"
+    creatTime: 5
   - itemId: 1010003
     itemName: "\uD654\uC5FC\uBCD1 "
     itemType: 5
@@ -5791,6 +5799,7 @@ MonoBehaviour:
     effect: "\uB113\uC740 \uBC94\uC704\uC758 \uC801\uC744 \uACF5\uACA9\uD55C\uB2E4. "
     decription: "\uB113\uC740 \uBC94\uC704\uC758 \uBAAC\uC2A4\uD130\uB97C \uACF5\uACA9\uD560
       \uC218 \uC788\uC744 \uAC83 \uAC19\uB2E4. "
+    creatTime: 5
   - itemId: 1020000
     itemName: "\uB300\uB098\uBB34 \uD1B5\uBC1C"
     itemType: 2
@@ -5804,6 +5813,7 @@ MonoBehaviour:
     effect: "\uBB3C\uC5D0 \uB5A0\uB0B4\uB824\uC628 \uC544\uC774\uD15C\uC744 \uCC44\uC9D1\uD55C\uB2E4. "
     decription: "\uB09A\uC2DC\uB85C\uB294 \uAC74\uC9C8 \uC218 \uC5C6\uB294 \uAC83\uB4E4\uC744
       \uAC74\uC9C8 \uC218 \uC788\uC744\uC9C0\uB3C4? "
+    creatTime: 5
   - itemId: 1020001
     itemName: "\uBB3C \uB728\uAE30 \uC88B\uC740 \uBCD1"
     itemType: 2
@@ -5816,6 +5826,7 @@ MonoBehaviour:
     maxCount: 0
     effect: "\uBB3C\uC744 \uCC44\uC9D1\uD55C\uB2E4. "
     decription: "\uBB3C\uC744 \uCC44\uC9D1\uD560 \uC218 \uC788\uAC8C \uB410\uB2E4. "
+    creatTime: 5
   - itemId: 1030000
     itemName: "\uAF2C\uCE58"
     itemType: 3
@@ -5829,6 +5840,7 @@ MonoBehaviour:
     effect: "\uC0DD\uC120 \uAD6C\uC774 \uC81C\uC791"
     decription: "\uBB3C\uACE0\uAE30\uB97C \uAF42\uAE30 \uC88B\uC544\uBCF4\uC774\uB294
       \uAF2C\uCE58\uB2E4. "
+    creatTime: 3
   - itemId: 1030001
     itemName: "\uC9C4\uD759"
     itemType: 3
@@ -5841,6 +5853,7 @@ MonoBehaviour:
     maxCount: 0
     effect: "\uC9C4\uD759 \uBCBD\uB3CC \uC81C\uC791"
     decription: "\uBB3C\uC744 \uC774\uC6A9\uD574 \uC9C4\uD759\uC744 \uB9CC\uB4E4\uC5C8\uB2E4. "
+    creatTime: 5
   - itemId: 2020000
     itemName: "\uC2A4\uC704\uC2A4 \uC544\uBBF8 \uB098\uC774\uD504"
     itemType: 2
@@ -5856,6 +5869,7 @@ MonoBehaviour:
     decription: "\uC0DD\uC874 \uD544\uC218 \uC6A9\uD488\uC778 \uC77C\uBA85 \uB9E5\uAC00\uC774\uBC84
       \uCE7C\uC774\uB2E4.\\n\uB2E4\uC591\uD558\uAC8C \uC0AC\uC6A9\uD560 \uC218 \uC788\uC744
       \uAC83 \uAC19\uB2E4."
+    creatTime: 0
   - itemId: 2020001
     itemName: "\uC0BD "
     itemType: 2
@@ -5869,6 +5883,7 @@ MonoBehaviour:
     effect: "\uD759 \uCC44\uC9D1 \uB3C4\uAD6C"
     decription: "\uB531\uB531\uD55C \uD759\uC744 \uD37C\uB0BC \uC218 \uC788\uC744
       \uAC83 \uAC19\uC740 \uC0BD\uC774\uB2E4. "
+    creatTime: 0
   - itemId: 2020002
     itemName: "\uBB3C\uC774 \uB2F4\uAE34 \uBCD1"
     itemType: 2
@@ -5882,6 +5897,7 @@ MonoBehaviour:
     effect: "\uC9C4\uD759 \uC81C\uC791 \uB3C4\uAD6C\\n\uC18C\uAE08 \uC81C\uC791 \uB3C4\uAD6C\\n\uCC9C\uC77C\uC5FC
       \uC81C\uC791 \uB3C4\uAD6C"
     decription: "\uBE48 \uBCD1\uC5D0 \uBB3C\uC744 \uAC00\uB4DD \uCC44\uC6E0\uB2E4."
+    creatTime: 0
   - itemId: 2030000
     itemName: "\uB098\uBB34 "
     itemType: 3
@@ -5896,6 +5912,7 @@ MonoBehaviour:
       \uCC3D \uC81C\uC791 \uC7AC\uB8CC"
     decription: "\uC774\uB984 \uBAA8\uB97C \uB098\uBB34\uB2E4.\\n\uC5B4\uB514\uC5D0
       \uC4F8\uC9C0 \uACE0\uBBFC\uD574\uBCF4\uC790."
+    creatTime: 0
   - itemId: 2030001
     itemName: "\uB300\uB098\uBB34"
     itemType: 3
@@ -5911,6 +5928,7 @@ MonoBehaviour:
       \uC7AC\uB8CC"
     decription: "\uC0DD\uC874\uB825\uC774 \uAC15\uD558\uACE0 \uB2E8\uB2E8\uD55C \uB300\uB098\uBB34\uB2E4.\\n\uC81C\uC791
       \uC7AC\uB8CC\uB85C \uC6A9\uC774\uD558\uAC8C \uC4F0\uC77C \uAC83 \uAC19\uB2E4."
+    creatTime: 0
   - itemId: 2030002
     itemName: "\uD751\uB2E8 \uB098\uBB34"
     itemType: 3
@@ -5925,6 +5943,7 @@ MonoBehaviour:
     decription: "\uB098\uBB34 \uC911 \uACE0\uAE09 \uD488\uC885\uC778 \uD751\uB2E8
       \uB098\uBB34\uB2E4.\\n\uC774 \uB098\uBB34\uB97C \uC0AC\uC6A9\uD574\uC11C \uBC30\uB97C
       \uB9CC\uB4E4 \uC218 \uC788\uC744 \uAC83 \uAC19\uB2E4."
+    creatTime: 0
   - itemId: 2030003
     itemName: "\uB098\uBB47 \uAC00\uC9C0 "
     itemType: 3
@@ -5937,6 +5956,7 @@ MonoBehaviour:
     maxCount: 0
     effect: "\uAF2C\uCE58 \uC81C\uC791 \uC7AC\uB8CC"
     decription: "\uBC8C\uBAA9 \uD558\uB2E4 \uB5A8\uC5B4\uC9C4 \uB098\uBB47\uAC00\uC9C0\uB2E4."
+    creatTime: 0
   - itemId: 2030004
     itemName: "\uC5F4\uB9E4"
     itemType: 3
@@ -5951,6 +5971,7 @@ MonoBehaviour:
     decription: "\uD5A5\uC774 \uC870\uAE08 \uC788\uB294 \uC5F4\uB9E4\uB2E4.\\n\uC0DD\uC120
       \uBE44\uB9B0\uB0B4\uB97C \uC7A1\uB294\uB370 \uC870\uAE08 \uB3C4\uC6C0\uC774
       \uB420\uC9C0\uB3C4?"
+    creatTime: 0
   - itemId: 2030005
     itemName: "\uD5A5\uC774 \uC88B\uC740 \uC5F4\uB9E4"
     itemType: 3
@@ -5964,6 +5985,7 @@ MonoBehaviour:
     effect: "\uB9DB\uC788\uB294 \uC0DD\uC120 \uAD6C\uC774 \uC81C\uC791 \uC7AC\uB8CC"
     decription: "\uD5A5\uC774 \uC88B\uC740 \uC5F4\uB9E4\uB2E4.\\n\uC0DD\uC120 \uBE44\uB9B0\uB0B4\uB97C
       \uC7A1\uB294\uB370 \uB3C4\uC6C0\uC774 \uB420 \uAC83 \uAC19\uB2E4."
+    creatTime: 0
   - itemId: 2030006
     itemName: "\uD5A5\uC774 \uC77C\uD488\uC778 \uC5F4\uB9E4"
     itemType: 3
@@ -5977,6 +5999,7 @@ MonoBehaviour:
     effect: "\uD669\uD640\uD55C \uC0DD\uC120 \uAD6C\uC774 \uC81C\uC791 \uC7AC\uB8CC"
     decription: "\uD5A5\uC774 \uC544\uC8FC \uC77C\uD488\uC778 \uC5F4\uB9E4\uB2E4.\\n\uC88B\uC740
       \uD5A5\uC2E0\uB8CC\uAC00 \uB420 \uAC83 \uAC19\uB2E4."
+    creatTime: 0
   - itemId: 2030007
     itemName: "\uBB3C\uACE0\uAE30"
     itemType: 3
@@ -5990,6 +6013,7 @@ MonoBehaviour:
     effect: "\uC0DD\uC120 \uAF2C\uCE58 \uC81C\uC791 \uC7AC\uB8CC"
     decription: "\uADFC\uBC29\uC5D0 \uC790\uC8FC \uBCF4\uC774\uB294 \uBB3C\uACE0\uAE30\uB2E4.\\n\uBE44\uB9B0\uB0B4\uAC00
       \uC2EC\uD574\uC11C \uBA39\uC744 \uC218 \uC788\uC744\uAE4C?"
+    creatTime: 0
   - itemId: 2030008
     itemName: "\uBA39\uC74C\uC9C1\uD55C \uBB3C\uACE0\uAE30 "
     itemType: 3
@@ -6003,6 +6027,7 @@ MonoBehaviour:
     effect: "\uB9DB\uC788\uB294 \uC0DD\uC120 \uAF2C\uCE58 \uC81C\uC791 \uC7AC\uB8CC"
     decription: "\uBA39\uC74C\uC9C1\uC2A4\uB7EC\uC6B4 \uBB3C\uACE0\uAE30\uB2E4.\\n\uB9DB\uC740
       \uADF8\uB7ED\uC800\uB7ED \uBA39\uC744\uB9CC\uD558\uB2E4."
+    creatTime: 0
   - itemId: 2030009
     itemName: "\uBE44\uB2E8 \uBB3C\uACE0\uAE30"
     itemType: 3
@@ -6016,6 +6041,7 @@ MonoBehaviour:
     effect: "\uD669\uD640\uD55C \uC0DD\uC120 \uAF2C\uCE58 \uC81C\uC791 \uC7AC\uB8CC"
     decription: "\uC544\uC8FC \uD76C\uADC0\uD558\uAC8C \uBCFC \uC218 \uC788\uB294
       \uBB3C\uACE0\uAE30\uB2E4.\\n\uCC9C\uC0C1\uC758 \uB9DB\uC744 \uC790\uB791\uD55C\uB2E4."
+    creatTime: 0
   - itemId: 2030010
     itemName: "\uD5DD\uAC8A"
     itemType: 3
@@ -6028,6 +6054,7 @@ MonoBehaviour:
     maxCount: 0
     effect: "\uD654\uC5FC\uBCD1 \uC81C\uC791 \uC7AC\uB8CC\\n\uBC30 \uC81C\uC791 \uC7AC\uB8CC"
     decription: "\uAC00\uC5F0\uC131\uC774 \uC88B\uC740 \uD5DD\uAC8A\uC774\uB2E4. "
+    creatTime: 0
   - itemId: 2030011
     itemName: "\uBCF4\uB4DC\uCE74"
     itemType: 3
@@ -6041,6 +6068,7 @@ MonoBehaviour:
     effect: "\uD654\uC5FC\uBCD1 \uC81C\uC791 \uC7AC\uB8CC"
     decription: "\uAC1C\uBD09\uB418\uC9C0 \uC54A\uC740 \uBCF4\uB4DC\uCE74\uB2E4.\\n\uC5B4\uB514\uC5D0
       \uC4F8\uC9C0 \uACE0\uBBFC\uD574\uBCF4\uC790."
+    creatTime: 0
   - itemId: 2030012
     itemName: "\uBC27\uC904"
     itemType: 3
@@ -6056,6 +6084,7 @@ MonoBehaviour:
       \uC7AC\uB8CC\\n\uBC30 \uC81C\uC791 \uC7AC\uB8CC"
     decription: "\uBB3C\uC5D0 \uB5A0\uB0B4\uB824\uC628 \uBC27\uC904\uC774 \uB09A\uC2EF\uB300\uC5D0
       \uAC78\uB838\uB2E4.\\n\uC5B4\uB514\uC5D0 \uC4F8\uC9C0 \uACE0\uBBFC\uD574\uBCF4\uC790."
+    creatTime: 0
   - itemId: 2030013
     itemName: "\uBE48 \uBCD1"
     itemType: 3
@@ -6068,6 +6097,7 @@ MonoBehaviour:
     maxCount: 1
     effect: "\uBB3C \uB728\uAE30 \uC88B\uC740 \uBCD1 \uC81C\uC791 \uC7AC\uB8CC"
     decription: "\uBE48 \uBCD1\uC774\uB2E4.\\n\uC5B4\uB514\uC5D0 \uC4F8\uC9C0 \uACE0\uBBFC\uD574\uBCF4\uC790."
+    creatTime: 0
   - itemId: 2030014
     itemName: "\uBC00\uAC00\uB8E8"
     itemType: 3
@@ -6081,6 +6111,7 @@ MonoBehaviour:
     effect: "\uC9C4\uD759 \uBCBD\uB3CC \uC81C\uC791 \uC7AC\uB8CC"
     decription: "\uC720\uD1B5\uAE30\uD55C\uC774 \uC9C0\uB09C \uBC00\uAC00\uB8E8\uB2E4.\\n\uBA39\uC744
       \uC21C \uC5C6\uC744 \uAC83 \uAC19\uB2E4."
+    creatTime: 0
   - itemId: 2030015
     itemName: "\uD759"
     itemType: 3
@@ -6094,6 +6125,7 @@ MonoBehaviour:
     effect: "\uC9C4\uD759 \uC81C\uC791 \uC7AC\uB8CC"
     decription: "\uC0BD\uC744 \uC774\uC6A9\uD574\uC11C \uD37C\uC628 \uD759\uC774\uB2E4.\\n\uC5B4\uB514\uC5D0
       \uC4F8\uC9C0 \uACE0\uBBFC\uD574\uBCF4\uC790."
+    creatTime: 0
   - itemId: 1030002
     itemName: "\uC18C\uAE08"
     itemType: 3
@@ -6107,6 +6139,7 @@ MonoBehaviour:
     effect: "\uB9DB\uC788\uB294 \uC0DD\uC120 \uAD6C\uC774 \uC81C\uC791 \uC7AC\uB8CC"
     decription: "\uBC14\uB2F7\uBB3C\uC744 \uAC00\uC5F4\uD574\uC11C \uC5BB\uC740 \uC18C\uAE08\uC774\uB2E4.\\n\uC694\uB9AC\uC5D0
       \uC4F0\uBA74 \uC88B\uC744 \uAC83 \uAC19\uB2E4."
+    creatTime: 0
   - itemId: 1030003
     itemName: "\uCC9C\uC77C\uC5FC"
     itemType: 3
@@ -6120,6 +6153,7 @@ MonoBehaviour:
     effect: "\uD669\uD640\uD55C \uC0DD\uC120 \uAD6C\uC774 \uC81C\uC791 \uC7AC\uB8CC"
     decription: "\uBC14\uB2F7\uBB3C\uC744 \uAC00\uC5F4\uD574\uC11C \uC5BB\uC740 \uC18C\uAE08\uC774\uB2E4.\\n\uC77C\uBC18\uC18C\uAE08\uACFC
       \uC0C9\uC774 \uC870\uAE08 \uB2E4\uB978 \uAC83 \uAC19\uB2E4."
+    creatTime: 0
 --- !u!1 &1005871280
 GameObject:
   m_ObjectHideFlags: 0

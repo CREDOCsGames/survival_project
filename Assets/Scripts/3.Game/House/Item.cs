@@ -65,7 +65,7 @@ public class Item
         PieceId = info.ItemNum;
     }*/
 
-    public Item(int itemId, string itemName, int type, string needMaterialTypes, string needMaterialCounts, string takeTimes, string acquisitions, int isConsumable, string effect, string decription)
+    public Item(int itemId, string itemName, int type, string needMaterialTypes, string needMaterialCounts, string takeTimes, string acquisitions, int isConsumable, string effect, string decription, float createTime = 0f)
     {
         ItemId = itemId;
         ItemName = itemName;
@@ -110,6 +110,7 @@ public class Item
         IsConsumable = Convert.ToBoolean(isConsumable);
         ItemEffect = effect.Replace("\\n", "\n");
         Description = decription;
+        CreateTime = createTime;
     }
 
     public void AddItem()

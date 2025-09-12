@@ -1,5 +1,6 @@
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class ItemInfo
@@ -16,8 +17,9 @@ public class ItemInfo
     public int maxCount;
     public string effect;
     public string decription;
+    public float creatTime = 0;
 
-    public ItemInfo(int itemId, string itemName, int itemType, string acquisitions, string needMaterialTypes, string needMaterialCounts, string takeTime, string takePercent, int isConsumable, int maxCount, string effect, string decription)
+    public ItemInfo(int itemId, string itemName, int itemType, string acquisitions, string needMaterialTypes, string needMaterialCounts, string takeTime, string takePercent, int isConsumable, int maxCount, string effect, string decription, float createTime = 0f)
     {
         this.itemId = itemId;
         this.itemName = itemName;
@@ -31,6 +33,7 @@ public class ItemInfo
         this.maxCount = maxCount;
         this.decription = decription;
         this.effect = effect;
+        this.creatTime = createTime;
     }
 }
 
