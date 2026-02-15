@@ -155,52 +155,56 @@ public class Monster : MonoBehaviour
         }
 
         rend.color = initcolor;
-    }   
+    }
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if(isDead) return;
+        if (isDead) return;
 
         if (other.CompareTag("Character"))
         {
             character.OnDamaged(damage, gameObject.transform.GetComponentInChildren<MonsterHit>().gameObject);
         }
-
-        else if (other.GetComponentInChildren<IDamageable>() is House)
+        else
         {
-            other.GetComponent<IDamageable>().Attacked(damage, null);
+            IDamageable damageable = other.GetComponentInChildren<IDamageable>();
+            if (damageable != null)
+            {
+                if (other.CompareTag("House")) return; // 집에 데미지 적용 안함
+                damageable.Attacked(damage, null);
+            }
         }
     }
 
     void Attack()
     {
-        if (isDead || !canAttack)
+        if (isDead || !canAttack || monsterMove.FocusObject == MonsterFocusObject.Nothing)
             return;
 
-        if (monsterMove.FocusObject == MonsterFocusObject.Player)
+        if (monsterMove.FocusObject == MonsterFocusObject.House)
+        {
+
+            isAttack = true;
+            monsterMove.agent.enabled = false;
+            canMove = false;
+            canAttack = false;
+        }
+        else if (monsterMove.FocusObject == MonsterFocusObject.Player)
         {
             xDistance = Mathf.Abs(character.transform.position.x - transform.position.x);
             zDistance = Mathf.Abs(character.transform.position.z - transform.position.z);
-        }
-
-        else if (monsterMove.FocusObject == MonsterFocusObject.House)
-        {
-            xDistance = Mathf.Abs(housePos.x - transform.position.x);
-            zDistance = Mathf.Abs(housePos.z - transform.position.z);
-        }
-
-        if (!isAttack && !gameManager.isClear)
-        {
-            //if (xDistance <= attackRange.x && zDistance <= attackRange.y)
-            if (xDistance <= attackRange.x + 0.5f && zDistance <= attackRange.y+0.5f)
+            if (!isAttack && !gameManager.isClear)
             {
-                isAttack = true;
-                monsterMove.agent.enabled = false;
-                canMove = false;
-                canAttack = false;
+                //if (xDistance <= attackRange.x && zDistance <= attackRange.y)
+                if (xDistance <= attackRange.x + 0.5f && zDistance <= attackRange.y+0.5f)
+                {
+                    isAttack = true;
+                    monsterMove.agent.enabled = false;
+                    canMove = false;
+                    canAttack = false;
+                }
             }
         }
-
         anim.SetBool("isAttack", isAttack);
     }
 
