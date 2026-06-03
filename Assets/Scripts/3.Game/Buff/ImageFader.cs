@@ -13,6 +13,7 @@ public enum FadeType
 public class ImageFader : MonoBehaviour
 {
     [Header("Cache")]
+    [Tooltip("Sould be Panel")]
     [SerializeField] Image filterImage;
 
     [Header("Option")]

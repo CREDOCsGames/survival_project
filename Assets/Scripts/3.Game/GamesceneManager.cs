@@ -195,6 +195,7 @@ public class GamesceneManager : Singleton<GamesceneManager>
         character.UpdateStat();
         character.weaponParent.gameObject.SetActive(true);
         character.transform.position = new Vector3(-1f, 0f, -41f);
+        character.RefreshNavmeshState();
 
         campFire.GetComponent<Campfire>().ToNightScene();
 

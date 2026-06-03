@@ -251,6 +251,7 @@ MonoBehaviour:
   deadSound: {fileID: 8300000, guid: ce543c527a41192469cd175b7077c3a4, type: 3}
   dashSound: {fileID: 8300000, guid: a8e1da87cb95cfd4897f3f658903cc1e, type: 3}
   eatFruitSound: {fileID: 8300000, guid: 6d8f6d5205c53154b8079b9faeb424b0, type: 3}
+  footPosition: {fileID: 315125761682846038}
 --- !u!114 &2030790823311812204
 MonoBehaviour:
   m_ObjectHideFlags: 0

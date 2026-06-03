@@ -294,7 +294,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -110.99994, y: 26}
+  m_AnchoredPosition: {x: -110.99988, y: 26}
   m_SizeDelta: {x: -201, y: 413.2}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &84502446
@@ -4205,7 +4205,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -190.99994, y: 65}
+  m_AnchoredPosition: {x: -190.99988, y: 65}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &708176180
@@ -5486,6 +5486,9 @@ MonoBehaviour:
   cursorAttack:
   - {fileID: 2800000, guid: 4c5435ae5fb5dcf4086a3ecc19c7d0c4, type: 3}
   - {fileID: 2800000, guid: caad54c9fa635be4e81f110b3e11f607, type: 3}
+  cursorSpecial:
+  - {fileID: 2800000, guid: 97f1f08cc157cab4b88438bdaa0f8dc7, type: 3}
+  - {fileID: 2800000, guid: 9abd30eec4434504398332bc0d899996, type: 3}
   bulletStorage: {fileID: 1005871281}
   damageStorage: {fileID: 1692643827}
   monsterBulletStorage: {fileID: 457507069}
@@ -5516,6 +5519,7 @@ MonoBehaviour:
   isClear: 0
   useCursorNormal: {fileID: 0}
   useCursorAttack: {fileID: 0}
+  useCursorSpecial: {fileID: 0}
   cursorSize: 0
   isTuto: 0
   characterSpawnPos: {x: 0, y: 0, z: -56}
@@ -11059,7 +11063,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -116.99994, y: -1}
+  m_AnchoredPosition: {x: -116.99988, y: -1}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2015208396

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public interface IMouseInteraction
@@ -10,22 +11,36 @@ public interface IMouseInteraction
     bool ReturnCanInteraction();
     IEnumerator EndInteraction(Animator anim, float waitTime);
 }
+public interface IMouseHover
+{
+    void OnHoverEnter();
+    void OnHoverStay();
+    void OnHoverExit();
+}
 
 public class MouseInteraction : MonoBehaviour
-{
+{   
     [SerializeField] LayerMask layerMask;
 
     Character character;
 
+    RaycastHit[] hoverhitBuffer;
+    HashSet<IMouseHover> prevHovers = new();
+    HashSet<IMouseHover> currHovers = new();
+
     private void Start()
     {
         character = Character.Instance;
+
+        hoverhitBuffer = new RaycastHit[32];
     }
 
     private void Update()
     {
         if (!character.isCanControll)
             return;
+
+        HandleHover();
 
         if (Input.GetMouseButtonUp(0))
         {
@@ -60,5 +75,50 @@ public class MouseInteraction : MonoBehaviour
                 return;
             }
         }
+    }
+    private void HandleHover()
+    {
+        currHovers.Clear();
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        int hitCount = Physics.RaycastNonAlloc(ray, hoverhitBuffer, 100f, layerMask);
+
+        // 수집 및 중복 제거
+        for (int i = 0; i < hitCount; i++)
+        {
+            var tr = hoverhitBuffer[i].transform;
+            if (!tr) continue;
+
+            var hovers = tr.GetComponentsInParent<IMouseHover>();
+            for (int j = 0; j < hovers.Length; j++)
+                currHovers.Add(hovers[j]);
+        }
+        
+        // Exit
+        foreach (var h in prevHovers)
+        {
+            if (!currHovers.Contains(h))
+                h.OnHoverExit();
+        }
+
+        // Enter
+        foreach (var h in currHovers)
+        {
+            if (!prevHovers.Contains(h))
+            {
+                h.OnHoverEnter();
+            }
+        }
+
+        // Stay
+        foreach (var h in currHovers)
+        {
+            h.OnHoverStay();
+        }
+
+        // prev <- curr 복사
+        prevHovers.Clear();
+        foreach (var h in currHovers)
+            prevHovers.Add(h);
     }
 }

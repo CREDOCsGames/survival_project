@@ -9,12 +9,14 @@ public enum CursorType
 {
     Normal,
     Attack,
+    Special,
 }
 
 public class GameSceneUI : Singleton<GameSceneUI>
 {
     Texture2D cursorAttack;
     Texture2D cursorNormal;
+    Texture2D cursorSpecial;
 
     [SerializeField] public GameObject monsterSpawn;
     public GameObject tamingGame;
@@ -291,6 +293,7 @@ public class GameSceneUI : Singleton<GameSceneUI>
     {
         cursorNormal = gameManager.useCursorNormal;
         cursorAttack = gameManager.useCursorAttack;
+        cursorSpecial = gameManager.useCursorSpecial;
 
         Texture2D currentCursor;
 
@@ -302,6 +305,10 @@ public class GameSceneUI : Singleton<GameSceneUI>
 
             case CursorType.Attack:
                 currentCursor = cursorAttack;
+                break;
+
+            case CursorType.Special:
+                currentCursor = cursorSpecial;
                 break;
 
             default:

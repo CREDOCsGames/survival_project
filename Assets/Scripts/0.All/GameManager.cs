@@ -49,6 +49,7 @@ public class GameManager : Singleton<GameManager>
 {
     [SerializeField] public Texture2D[] cursorNormal;
     [SerializeField] public Texture2D[] cursorAttack;
+    [SerializeField] public Texture2D[] cursorSpecial;
     [SerializeField] public Transform bulletStorage;
     [SerializeField] public Transform damageStorage;
     [SerializeField] public Transform monsterBulletStorage;
@@ -87,6 +88,7 @@ public class GameManager : Singleton<GameManager>
 
     [HideInInspector] public Texture2D useCursorNormal;
     [HideInInspector] public Texture2D useCursorAttack;
+    [HideInInspector] public Texture2D useCursorSpecial;
 
     [HideInInspector] public int cursorSize;
 
@@ -153,6 +155,7 @@ public class GameManager : Singleton<GameManager>
         cursorSize = PlayerPrefs.GetInt("CursorSize", 0);
         useCursorNormal = cursorNormal[cursorSize];
         useCursorAttack = cursorAttack[cursorSize];
+        useCursorSpecial = cursorSpecial[cursorSize];
 
         Vector2 cursorHotSpot = new Vector3(useCursorNormal.width * 0.5f, useCursorNormal.height * 0.5f);
         Cursor.SetCursor(useCursorNormal, cursorHotSpot, CursorMode.ForceSoftware);

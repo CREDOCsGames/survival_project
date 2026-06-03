@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FishingAnim : Singleton<FishingAnim>
+public class FishingAnim : MonoBehaviour
 {
     [SerializeField] AudioClip throwSound;
     [SerializeField] AudioClip catchingSound;
@@ -12,15 +12,14 @@ public class FishingAnim : Singleton<FishingAnim>
     [HideInInspector] public bool isCatch;
     [HideInInspector] public bool CatchSuccess;
 
-    Fishing fishing;
     SoundManager soundManager;
 
     EffectSound currentSfx;
 
+    [SerializeField] Fishing fishing;
     private void Start()
     {
         anim = GetComponent<Animator>();
-        fishing = Fishing.Instance;
         soundManager = SoundManager.Instance;
 
         isCatch = false;

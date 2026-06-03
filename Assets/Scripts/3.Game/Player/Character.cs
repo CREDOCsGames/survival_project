@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
+using static UnityEditor.Recorder.OutputPath;
+using static UnityEngine.GraphicsBuffer;
 
 public enum CHARACTER_NUM
 {
@@ -99,6 +101,9 @@ public class Character : Singleton<Character>
 
     int walkLayer;
 
+    private IReplaceDash currentDashReplacer;
+    [SerializeField] Transform footPosition;
+
     protected override void Awake()
     {
         base.Awake();
@@ -175,7 +180,7 @@ public class Character : Singleton<Character>
             if (currentHp > 0 && agent.enabled)
                 Move();
 
-            anim.SetFloat("moveSpeed", 1 + (speed * 0.1f));
+                anim.SetFloat("moveSpeed", 1 + (speed * 0.1f));
             anim.SetBool("isRun", isRun);
         }
     }
@@ -289,6 +294,14 @@ public class Character : Singleton<Character>
 
             if (Input.GetKeyDown((KeyCode)PlayerPrefs.GetInt("Key_Dash")))
             {
+                if (currentDashReplacer != null)
+                {
+                    currentDashReplacer.Execute();
+                    return;
+                }
+
+                if (!agent.isOnNavMesh) return;
+
                 particle.GetComponentInChildren<Renderer>().enabled = true;
 
                 if (x == 0 && z == 0)
@@ -408,7 +421,11 @@ public class Character : Singleton<Character>
         dir = (Vector3.right * x + Vector3.forward * z).normalized;
 
         agent.speed = speed;
-        agent.Move(dir * speed * Time.deltaTime);
+        if (agent.isOnNavMesh)
+        {
+            agent.Move(dir * speed * Time.deltaTime);
+
+        }
 
         if (dir != Vector3.zero)
             isRun = true;
@@ -728,5 +745,57 @@ public class Character : Singleton<Character>
     public void ChangeAnimationController(int num)
     {
         anim.runtimeAnimatorController = currentController[num];
+    }
+
+    public void SetDashReplacer(IReplaceDash replacer)
+    {
+        currentDashReplacer = replacer;
+    }
+
+    public void ClearDashReplacer(IReplaceDash replacer)
+    {
+        if (currentDashReplacer == replacer)
+            currentDashReplacer = null;
+    }
+    public void JumpTo(Vector3 targetPos, float duration = 0.4f, float jumpHeight = 1.5f)
+    {
+        StartCoroutine(IJumpTo(targetPos, duration, jumpHeight));
+    }
+    public void RefreshNavmeshState()
+    {
+        if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1f, walkLayer))
+        {
+            float dist = Vector3.Distance(transform.position, hit.position);
+            if (dist > 0.1f) return;
+            agent.enabled = true;
+            agent.Warp(hit.position);
+        }
+    }
+
+    private IEnumerator IJumpTo(Vector3 target, float duration, float jumpHeight)
+    {
+        agent.enabled = false;
+
+        Vector3 offset = footPosition.position - transform.position;
+        Vector3 rootTarget = target - offset;
+
+        Vector3 start = transform.position;
+
+        float t = 0;
+
+        anim.SetTrigger("Jump");
+
+        while (t < 1f)
+        {
+            t += Time.deltaTime / 0.3f;
+
+            transform.position = Vector3.Lerp(start, rootTarget, t);
+
+            yield return null;
+        }
+
+        transform.position = rootTarget;
+
+        RefreshNavmeshState();
     }
 }
