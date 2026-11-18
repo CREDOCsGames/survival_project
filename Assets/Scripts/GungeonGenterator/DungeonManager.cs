@@ -67,11 +67,14 @@ public class DungeonManager : MonoBehaviour
         portal.SetDoorState(false);
 
         //몬스터를 스폰하지 않는 방이라면 바로 클리어 처리
-        if (!GetDungeonSetting(roomType).UseMonsterSpawn) { RoomComplete(); }
+        RoomTypeSettings roomSetting = GetDungeonSetting(roomType);
+        if (roomSetting == null) return; // 방 타입 누락 시 방어
+
+        if (!roomSetting.UseMonsterSpawn) { RoomComplete(); }
 
         //플레이어 위치 이동
         GameObject player = GameManager.Instance.Player.gameObject;
-        player.transform.position = GetDungeonSetting(roomType).PlayerSpawnPosition;
+        player.transform.position = roomSetting.PlayerSpawnPosition;
 
         //카메라 갱신 후 맵 닫기
         StartCoroutine(FinishRoomMove(player));

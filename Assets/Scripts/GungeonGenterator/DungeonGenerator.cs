@@ -96,32 +96,20 @@ public class DungeonGenerator
         //직진은 교차하지 않음
         if (fromIndex == toIndex) return false;
 
-        //오른쪽 이동: 오른쪽 위 방에서 왼쪽 아래로 향하는 길 검사
-        if (toIndex > fromIndex)
-        {
-            int otherRoomId = SetRoomId(floor - 1, fromIndex + 1);
-            int otherTargetId = SetRoomId(floor, fromIndex);
+        //이동 방향 결정 (왼쪽: -1, 오른쪽: +1)
+        //왼쪽 이동 시: 왼쪽 아래 방(fromIndex - 1)
+        //오른쪽 이동 시: 오른쪽 아래 방(fromIndex + 1)
+        int direction = toIndex > fromIndex ? 1 : -1;
+        int otherRoomId = SetRoomId(floor - 1, fromIndex + direction);
+        //교차하는 경로가 도착해야 하는 방
+        int otherTargetId = SetRoomId(floor, fromIndex);
 
-            return DungeonMap.ContainsKey(otherRoomId)
-                && DungeonMap[otherRoomId].Neighbors.Contains(otherTargetId);
-        }
-
-        //왼쪽 이동: 왼쪽 위 방에서 오른쪽 아래로 향하는 길 검사
-        if (toIndex < fromIndex)
-        {
-            int otherRoomId = SetRoomId(floor - 1, fromIndex - 1);
-            int otherTargetId = SetRoomId(floor, fromIndex);
-
-            return DungeonMap.ContainsKey(otherRoomId)
-                && DungeonMap[otherRoomId].Neighbors.Contains(otherTargetId);
-        }
-
-        return false;
+        //인접 방이 존재하고, 내 현재 위치 위쪽 방과 이미 연결(X자 교차)되어 있는지 반환
+        return DungeonMap.ContainsKey(otherRoomId) && DungeonMap[otherRoomId].Neighbors.Contains(otherTargetId);
     }
 
     private void AssignRoomTypes()
     {
-        float weightChance = 1f / (settings.Depth - 2);
         Dictionary<RoomType, float> chances = new();
         HashSet<RoomType> registeredTypes = new();
 
@@ -149,6 +137,8 @@ public class DungeonGenerator
             chances.Add(data.RoomType, data.StartChance);
             validRooms.Add(data);
         }
+
+        float weightChance = 1f / (settings.Depth - 2);
 
         //층별 특수방 생성
         for (int floor = 1; floor < settings.Depth; floor++)

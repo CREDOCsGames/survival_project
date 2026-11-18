@@ -76,10 +76,7 @@ public class DungeonMapViewBuilder
             int roomId = (floorIndex * 100) + idx;
 
             if (roomList.Contains(roomId)) CreateRoomButton(roomId, floorObj.transform);
-            else
-            {
-                GameObject emptyObj = Object.Instantiate(emptyRoomPrefab, floorObj.transform);
-            }
+            else { GameObject emptyObj = Object.Instantiate(emptyRoomPrefab, floorObj.transform); }
         }
     }
 

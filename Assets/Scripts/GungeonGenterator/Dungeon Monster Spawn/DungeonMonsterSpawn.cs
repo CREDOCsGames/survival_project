@@ -61,7 +61,7 @@ public class DungeonMonsterSpawn : MonoBehaviour
 
     private GameObject GetRandomMonsterPrefab(RoomTypeSettings setting)
     {
-        // 전체 가중치 합
+        //전체 가중치 합
         int totalWeight = 0;
         foreach (var data in setting.MonsterSpawnList)
         {
