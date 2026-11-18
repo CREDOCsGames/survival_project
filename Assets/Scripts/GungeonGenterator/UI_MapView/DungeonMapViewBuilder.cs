@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 using Room = DungeonRoomNode;
 
 public class DungeonMapViewBuilder
 {
+    private readonly DungeonMapView mapView;
+
     private readonly Transform floorContainer;
     private readonly GameObject floorPrefab;
     private readonly GameObject roomPrefab;
@@ -15,6 +18,7 @@ public class DungeonMapViewBuilder
     private readonly float lineWidth;
 
     public DungeonMapViewBuilder(
+        DungeonMapView mapView,
         Transform floorContainer,
         GameObject floorPrefab,
         GameObject roomPrefab,
@@ -23,6 +27,7 @@ public class DungeonMapViewBuilder
         GameObject linePrefab,
         float lineWidth)
     {
+        this.mapView = mapView;
         this.floorContainer = floorContainer;
         this.floorPrefab = floorPrefab;
         this.roomPrefab = roomPrefab;
@@ -51,7 +56,7 @@ public class DungeonMapViewBuilder
         if (btnScript != null)
         {
             btnScript.SetId(roomId);
-            DungeonManager.Instance.DungeonData.RoomButtons[roomId] = btnScript;
+            mapView.RoomButtons[roomId] = btnScript;
         }
     }
 
@@ -71,17 +76,14 @@ public class DungeonMapViewBuilder
             int roomId = (floorIndex * 100) + idx;
 
             if (roomList.Contains(roomId)) CreateRoomButton(roomId, floorObj.transform);
-            else
-            {
-                GameObject emptyObj = Object.Instantiate(emptyRoomPrefab, floorObj.transform);
-            }
+            else { GameObject emptyObj = Object.Instantiate(emptyRoomPrefab, floorObj.transform); }
         }
     }
 
     public void DrawAllLines()
     {
         var map = DungeonManager.Instance.getDungeonRoom();
-        var roomButtons = DungeonManager.Instance.DungeonData.RoomButtons;
+        var roomButtons = mapView.RoomButtons;
 
         foreach (var pair in map)
         {
@@ -97,27 +99,27 @@ public class DungeonMapViewBuilder
                 if (roomButtons.TryGetValue(neighborId, out DungeonRoomButton targetBtn))
                 {
                     RectTransform targetNode = targetBtn.GetComponent<RectTransform>();
-                    CreateLine(startNode, targetNode);
+                    Image line = CreateLine(startNode, targetNode);
+                    mapView.RoomLines[(currentId, neighborId)] = line;
                 }
             }
         }
     }
 
-    private void CreateLine(RectTransform startNode, RectTransform targetNode)
+    private Image CreateLine(RectTransform startNode, RectTransform targetNode)
     {
         GameObject lineObj = Object.Instantiate(linePrefab, linesContainer);
 
         RectTransform lineRect = lineObj.GetComponent<RectTransform>();
 
-        Vector3 startWorldPos = startNode.position;
-        Vector3 targetWorldPos = targetNode.position;
-
-        Vector3 direction = targetWorldPos - startWorldPos;
+        Vector3 direction = targetNode.position - startNode.position;
         float distance = direction.magnitude;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        lineRect.position = startWorldPos;
+        lineRect.position = startNode.position;
         lineRect.rotation = Quaternion.Euler(0, 0, angle - 90f);
         lineRect.sizeDelta = new Vector2(lineWidth, distance);
+
+        return lineObj.GetComponent<Image>();
     }
 }
