@@ -143,9 +143,13 @@ public class ComboAttackController : MonoBehaviour
 
     private void TryReflectArrowDuringCurrentStep()
     {
-        if (!_isAttacking || _weaponData == null || _hitDetector == null) return;
+        if (!_isAttacking || _weaponData == null || _hitDetector == null) 
+        {
+            return;
+        }
 
         AttackStepData step = _weaponData.ComboData.GetStep(_currentStepIndex);
+        
         if (_hitDetector.TryReflectNearestArrow(step, _attackDirection))
         {
             PlayHitImpulse();

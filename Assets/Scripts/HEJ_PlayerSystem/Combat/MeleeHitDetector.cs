@@ -12,12 +12,16 @@ public class MeleeHitDetector : MonoBehaviour
     public void BeginReflectionWindow(AttackStepData step, System.Action onArrowNearby)
     {
         EndReflectionWindow();
-        if (_hasReflectedArrowThisStep || step == null || step.MaxDistance <= 0f) return;
+        if (_hasReflectedArrowThisStep || step == null || step.MaxDistance <= 0f) 
+        {
+            return;
+        }
 
         if (_reflectionTrigger == null)
         {
             GameObject sensor = new GameObject("Arrow Reflection Trigger");
-            // 일반적인 대상 선택과 레이캐스트에서 감지 영역을 제외합니다.
+
+            // 일반적인 대상 선택과 레이캐스트에서 감지 영역을 제외
             sensor.layer = LayerMask.NameToLayer("Ignore Raycast");
             sensor.transform.SetParent(transform, false);
             _reflectionTrigger = sensor.AddComponent<ArrowReflectionTrigger>();
@@ -28,7 +32,10 @@ public class MeleeHitDetector : MonoBehaviour
 
     public void EndReflectionWindow()
     {
-        if (_reflectionTrigger != null) _reflectionTrigger.Close();
+        if (_reflectionTrigger != null) 
+        {
+            _reflectionTrigger.Close();
+        }
     }
 
     private void OnDisable()
@@ -60,7 +67,7 @@ public class MeleeHitDetector : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(origin, step.MaxDistance, detectionLayers, QueryTriggerInteraction.Collide);
         bool hasHit = false;
 
-        // 이번 타수에서 화살을 반사했다면 해당 타수의 적 타격 판정은 생략합니다.
+        // 이번 타수에서 화살을 반사했다면 해당 타수의 적 타격 판정은 생략
         if (_hasReflectedArrowThisStep) return false;
         if (TryReflectNearestArrow(step, attackDirection)) return true;
         //
@@ -96,11 +103,18 @@ public class MeleeHitDetector : MonoBehaviour
 
     public bool TryReflectNearestArrow(AttackStepData step, Vector3 attackDirection)
     {
-        if (_hasReflectedArrowThisStep || step == null || step.MaxDistance <= 0f) return false;
+        if (_hasReflectedArrowThisStep || step == null || step.MaxDistance <= 0f) 
+        {
+            return false;
+        }
 
         attackDirection.y = 0f;
         bool checkAngle = step.RangeType == AttackRangeType.Sector && step.CenterAngle < 360f;
-        if (checkAngle && attackDirection.sqrMagnitude < 0.0001f) return false;
+
+        if (checkAngle && attackDirection.sqrMagnitude < 0.0001f) 
+        {
+            return false;
+        }
 
         Vector3 origin = transform.position;
         Collider[] colliders = Physics.OverlapSphere(
@@ -115,20 +129,33 @@ public class MeleeHitDetector : MonoBehaviour
         foreach (Collider hitCollider in colliders)
         {
             ArcherArrow arrow = hitCollider.GetComponentInParent<ArcherArrow>();
-            if (arrow == null) continue;
+            if (arrow == null) 
+            {
+                continue;
+            }
 
             Vector3 toArrow = arrow.transform.position - origin;
             toArrow.y = 0f;
 
             float distance = toArrow.magnitude;
-            if (!IsInsideAttackArea(step, attackDirection, toArrow, distance, checkAngle)) continue;
-            if (distance >= nearestArrowDistance) continue;
+            if (!IsInsideAttackArea(step, attackDirection, toArrow, distance, checkAngle)) 
+            {
+                continue;
+            }
+
+            if (distance >= nearestArrowDistance) 
+            {
+                continue;
+            }
 
             nearestArrow = arrow;
             nearestArrowDistance = distance;
         }
 
-        if (nearestArrow == null || !nearestArrow.TryReflect(transform)) return false;
+        if (nearestArrow == null || !nearestArrow.TryReflect(transform)) 
+        {
+            return false;
+        }
 
         _hasReflectedArrowThisStep = true;
         EndReflectionWindow();

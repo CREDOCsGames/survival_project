@@ -16,6 +16,6 @@ MonoBehaviour:
   animatorController: {fileID: 9100000, guid: 74381080057c2e64e81e6d77ad267f9e, type: 2}
   enterHealthRatio: 1
   patterns:
-  - {fileID: 11400000, guid: 1de6d9dbc908a364194d599f681155a2, type: 2}
-  - {fileID: 11400000, guid: 5946bb2096e1a3243b2e92f6e430468e, type: 2}
+  - {fileID: 11400000, guid: 254de24c685541268e84f5ef15f77c31, type: 2}
+  - {fileID: 11400000, guid: 02598a4b414d4d8e89c9b1ff908d5a98, type: 2}
   - {fileID: 11400000, guid: 5d10c493a0d511f4fa5fb188373079ed, type: 2}
