@@ -10,6 +10,9 @@ public class EquipmentSlotUI : MonoBehaviour,
     [SerializeField] private EquipmentManager equipmentManager;
     [SerializeField] private Image itemIcon;
     [SerializeField] private ItemInventoryDrag dragSlot;
+ 
+    [SerializeField] private GameObject durabilityBar;
+    [SerializeField] private Image durabilityFill;
 
     // 퀵슬롯에서 장착 상태를 변경할 때 사용
     public EquipmentManager EquipmentManager => equipmentManager;
@@ -103,14 +106,20 @@ public class EquipmentSlotUI : MonoBehaviour,
     {
         ItemInfo item = equipmentManager.GetEquippedItem();
 
-        itemIcon.enabled = item != null;
+        // 장착 아이템 이미지 갱신
+        itemIcon.sprite = item == null ? null : Resources.Load<Sprite>($"Item/{item.itemId}");
 
-        if (item == null)
+        itemIcon.enabled = itemIcon.sprite != null;
+
+        // 내구도 데이터가 있는 무기만 Progress Bar 표시
+        bool hasWeapon = equipmentManager.EquippedWeaponData != null;
+
+        durabilityBar.SetActive(hasWeapon);
+
+        if (hasWeapon)
         {
-            itemIcon.sprite = null;
-            return;
+            durabilityFill.fillAmount = equipmentManager.GetDurabilityNormalized();
         }
-
-        itemIcon.sprite = Resources.Load<Sprite>($"Item/{item.itemId}");
     }
+
 }
